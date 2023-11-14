@@ -1327,17 +1327,19 @@ function mailVerificationTemplate($user) {
         'created_at'    => now(),
     ];
 
+    
+
     DB::beginTransaction();
     try{
         UserAuthorization::where("user_id",$user->id)->delete();
         DB::table("user_authorizations")->insert($data);
-        $user->notify(new SendAuthorizationCode((object) $data));
+        // $user->notify(new SendAuthorizationCode((object) $data));
         DB::commit();
     }catch(Exception $e) {
         DB::rollBack();
         return back()->with(['error' => ['Something went wrong! Please try again']]);
     }
-
+    
     return redirect()->route('user.authorize.mail',$data['token'])->with(['warning' => ['Please verify your mail address. Check your mail inbox to get verification code']]);
 }
 

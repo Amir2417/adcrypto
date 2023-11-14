@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ get_default_language_code() }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -36,7 +36,15 @@
 
 <div class="main-section-wrapper">
 
-    @include('frontend.partials.header')
+@php
+    $class = "";
+    if(!Route::is("index")) {
+        $class = "";
+    }
+@endphp 
+@include('frontend.partials.header',[
+    'class'     => $class,
+])
 
     @yield('content')
 

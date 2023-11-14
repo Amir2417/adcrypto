@@ -16,7 +16,7 @@ class SetupPageSeeder extends Seeder
      */
     public function run()
     {
-        $pages =  ["Home" => "/","About" => "/about","Contact" => "/contact"];
+        $pages =  ["Home" => "/","About" => "/about","Service" => "/service","Web Journal" => "/journal","Contact" => "/contact"];
         $data = [];
         foreach($pages as $item => $url) {
             $data[] = [

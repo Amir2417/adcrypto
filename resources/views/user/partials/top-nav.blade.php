@@ -6,12 +6,16 @@
                     <i class="fas fa-exchange-alt"></i>
                 </button>
             </div>
-            @yield('breadcrumb')
+            <div class="dashboard-path">
+                <span class="main-path"><a href="dashboard.html">Dashboard</a></span>
+                <i class="las la-angle-right"></i>
+                <span class="active-path">Dashboard</span>
+            </div>
         </div>
         <div class="right">
             <form class="header-search-wrapper">
                 <div class="position-relative">
-                    <input class="form-control" type="text" placeholder="Ex: Transaction, Add Money" aria-label="Search">
+                    <input class="form-control" type="text" placeholder="Ex: Buy Crypto, Sell Crypto" aria-label="Search">
                     <span class="las la-search"></span>
                 </div>
             </form>
@@ -21,16 +25,16 @@
                 </button>
                 <div class="notification-wrapper">
                     <div class="notification-header">
-                        <h5 class="title">{{ __("Notification") }}</h5>
+                        <h5 class="title">Notification</h5>
                     </div>
                     <ul class="notification-list">
                         <li>
                             <div class="thumb">
-                                <img src="{{ asset('public/frontend/images/client/client-1.jpg') }}" alt="user">
+                                <img src="assets/images/user/user-1.png" alt="user">
                             </div>
                             <div class="content">
                                 <div class="title-area">
-                                    <h5 class="title">Cristina Pride</h5>
+                                    <h6 class="title">Buy Crypto</h6>
                                     <span class="time">Thu 3.30PM</span>
                                 </div>
                                 <span class="sub-title">Hi, How are you? What about our next meeting</span>
@@ -38,11 +42,11 @@
                         </li>
                         <li>
                             <div class="thumb">
-                                <img src="{{ asset('public/frontend/images/client/client-2.jpg') }}" alt="user">
+                                <img src="assets/images/user/user-2.png" alt="user">
                             </div>
                             <div class="content">
                                 <div class="title-area">
-                                    <h5 class="title">Add money request</h5>
+                                    <h6 class="title">Sell Crypto</h6>
                                     <span class="time">Thu 3.30PM</span>
                                 </div>
                                 <span class="sub-title">Hi, How are you? What about our next meeting</span>
@@ -50,11 +54,11 @@
                         </li>
                         <li>
                             <div class="thumb">
-                                <img src="{{ asset('public/frontend/images/client/client-3.jpg') }}" alt="user">
+                                <img src="assets/images/user/user-3.png" alt="user">
                             </div>
                             <div class="content">
                                 <div class="title-area">
-                                    <h5 class="title">Money out request</h5>
+                                    <h6 class="title">Withdraw Crypto</h6>
                                     <span class="time">Thu 3.30PM</span>
                                 </div>
                                 <span class="sub-title">Hi, How are you? What about our next meeting</span>
@@ -65,7 +69,7 @@
             </div>
             <div class="header-user-wrapper">
                 <div class="header-user-thumb">
-                    <a href="{{ setRoute('user.profile.index') }}"><img src="{{ auth()->user()->userImage }}" alt="client"></a>
+                    <a href="user-profile.html"><img src="assets/images/user/user-3.png" alt="user"></a>
                 </div>
             </div>
         </div>

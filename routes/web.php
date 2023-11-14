@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\SiteController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('frontend.index');
-})->name('index');
+Route::controller(SiteController::class)->group(function(){
+    Route::get('/','index')->name('index');
+    Route::get('about','about')->name('about');
+    Route::get('service','service')->name('service');
+    Route::get('journal','journal')->name('journal');
+    Route::get('contact','contact')->name('contact');
+});

@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ (isset($page_title) ? __($page_title) : __("Dashboard")) }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     @include('partials.header-asset')
     
@@ -41,6 +40,25 @@
         </div>
     </div>
 </div>
+<div class="main-section-wrapper">
+  <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      Start Dashboard
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+  <div class="page-wrapper">
+    @include('user.partials.side-nav')
+      <div class="main-wrapper">
+          <div class="main-body-wrapper">
+            @include('user.partials.top-nav')
+            <div class="body-wrapper">
+            @yield('content')
+            </div>
+          </div>
+      </div>
+  </div>
+  <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      End Dashboard
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+  </div> 
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     End Dashboard
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

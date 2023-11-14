@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin\Currency;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Auth;
-use App\Models\UserWallet;
 use App\Traits\User\LoggedInUsers;
-use Exception;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
@@ -27,12 +24,14 @@ class LoginController extends Controller
 
     protected $request_data;
 
-    use AuthenticatesUsers, LoggedInUsers;
+    use AuthenticatesUsers,LoggedInUsers;
 
     public function showLoginForm() {
-        $page_title = setPageTitle("User Login");
+        $page_title           = "| User Login";
+        
         return view('user.auth.login',compact(
             'page_title',
+            
         ));
     }
 
@@ -120,7 +119,9 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        $this->refreshUserWallets($user);
+        $user->two_factor_verified = 0;
+        $user->save();
+
         $this->createLoginLog($user);
         return redirect()->intended(route('user.dashboard'));
     }

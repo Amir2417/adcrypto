@@ -38,9 +38,6 @@ trait LoggedInUsers {
 
         $agent = new Agent();
 
-        // $mac = exec('getmac');
-        // $mac = explode(" ",$mac);
-        // $mac = array_shift($mac);
         $mac = "";
 
         $data = [

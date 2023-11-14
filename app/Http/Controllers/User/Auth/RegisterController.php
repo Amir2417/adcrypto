@@ -49,7 +49,7 @@ class RegisterController extends Controller
         $client_ip = request()->ip() ?? false;
         $user_country = geoip()->getLocation($client_ip)['country'] ?? "";
 
-        $page_title = setPageTitle("User Registration");
+        $page_title = "- User Registration";
         return view('user.auth.register',compact(
             'page_title',
             'user_country',
@@ -65,30 +65,20 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $validated = $this->validator($request->all())->validate();
-        try{
-            $validated['phone_code'] = get_country_phone_code($validated['country']);
-        }catch(Exception $e) {
-            return $this->breakAuthentication($e->getMessage());
-        }
         $basic_settings             = $this->basic_settings;
-        $validated['mobile']        = remove_speacial_char($validated['phone']);
-        $validated['mobile_code']   = remove_speacial_char($validated['phone_code']);
-        $complete_phone             = $validated['mobile_code'] . $validated['mobile'];
 
-        if(User::where('full_mobile',$complete_phone)->exists()) {
-            throw ValidationException::withMessages([
-                'phone'     => 'Phone number is already exists',
-            ]); 
-        }
-
-        $validated['full_mobile']       = $complete_phone;
-        $validated = Arr::except($validated,['agree','phone_code','phone']);
-        $validated['email_verified']    = ($basic_settings->email_verification == true) ? false : true; 
+        $validated = Arr::except($validated,['agree']);
+        $validated['email_verified']    = ($basic_settings->email_verification == true) ? false : true;
         $validated['sms_verified']      = ($basic_settings->sms_verification == true) ? false : true;
         $validated['kyc_verified']      = ($basic_settings->kyc_verification == true) ? false : true;
         $validated['password']          = Hash::make($validated['password']);
         $validated['username']          = make_username($validated['firstname'],$validated['lastname']);
-        $validated['address']           = ['country' => $validated['country']];
+
+        if(User::where("username",$validated['username'])->exists()) {
+            throw ValidationException::withMessages([
+                'unknown'       => "Username already exists!",
+            ]);
+        }
 
         event(new Registered($user = $this->create($validated)));
         $this->guard()->login($user);
@@ -116,9 +106,6 @@ class RegisterController extends Controller
             'lastname'      => 'required|string|max:60',
             'email'         => 'required|string|email|max:150|unique:users,email',
             'password'      => $passowrd_rule,
-            'country'       => 'required|string|max:15',
-            'phone_code'    => 'required|string|max:10',
-            'phone'         => 'required|string|max:20',
             'agree'         => 'required|in:on',
         ]);
     }

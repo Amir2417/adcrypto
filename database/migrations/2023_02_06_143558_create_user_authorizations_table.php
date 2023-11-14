@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger("user_id");
             $table->integer("code");
-            $table->string("token")->nullable();
+            $table->text("token")->nullable();
             $table->timestamps();
         });
     }

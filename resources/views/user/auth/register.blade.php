@@ -5,110 +5,62 @@
 @endpush
 
 @section('content')
-    <section class="account-section bg_img" data-background="{{ asset("public/frontend/images/element/account.png") }}">
-        <div class="right float-end">
-            <div class="account-header text-center">
-                <a class="site-logo" href="{{ route('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="logo"></a>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div class="account-section">
+    <div class="account-inner">
+        <div class="account-area change-form">
+            <div class="account-thumb">
+                <img src="{{ asset('public/frontend') }}/images/element/account.png" alt="element">
             </div>
-            <div class="account-middle">
-                <div class="account-form-area">
-                    <h3 class="title">{{ __('Register Information') }}</h3>
-                    <p>{{ __("Please input your details and register to your account to get access to your dashboard.") }}</p>
-                    <form action="{{ setRoute('user.register.submit') }}" class="account-form" method="POST">
-                        @csrf
-                        <div class="row ml-b-20">
-                            <div class="col-lg-6 form-group">
-                                @include('admin.components.form.input',[
-                                    'name'          => "firstname",
-                                    'placeholder'   => "First Name",
-                                    'value'         => old("firstname"),
-                                ])
-                            </div>
-                            <div class="col-lg-6 form-group">
-                                @include('admin.components.form.input',[
-                                    'name'          => "lastname",
-                                    'placeholder'   => "Last Name",
-                                    'value'         => old("lastname"),
-                                ])
-                            </div>
-                            <div class="col-lg-6 form-group">
-                                <select name="country" class="form--control country-select" data-old="{{ old('country',$user_country) }}">
-                                    <option selected disabled>Select Country</option>
-                                </select>
-                            </div>
-                            <div class="col-lg-6 form-group">
-                                <div class="input-group">
-                                    <div class="input-group-text phone-code">--</div>
-                                    <input class="phone-code" type="hidden" name="phone_code" />
-                                    <input type="text" class="form--control" placeholder="Enter Phone" name="phone" value="{{ old('phone') }}">
-                                </div>
-                                @error("phone")
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'type'          => "email",
-                                    'name'          => "email",
-                                    'placeholder'   => "Email",
-                                    'value'         => old("email"),
-                                ])
-                            </div>
-                            <div class="col-lg-12 form-group" id="show_hide_password">
-                                <input type="password" class="form--control" name="password" placeholder="Password" required>
-                                <a href="javascript:void(0)" class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
-                                @error("password")
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                <div class="custom-check-group mb-0">
-                                    <input type="checkbox" id="level-1" name="agree">
-                                    <label for="level-1" class="mb-0">{{ __("I have read agreed with the") }} <a href="#0" class="text--base">{{ __("Terms Of Use , Privacy Policy & Warning") }}</a></label>
-                                </div>
-                                @error("agree")
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-lg-12 form-group text-center">
-                                <button type="submit" class="btn--base w-100">{{ __("Register Now") }}</button>
-                            </div>
-                            <div class="col-lg-12 text-center">
-                                <div class="account-item mt-10">
-                                    <label>{{ __("Already Have An Account?") }} <a href="{{ setRoute('user.login') }}" class="text--base">{{ _("Login Now") }}</a></label>
-                                </div>
+            <div class="account-form-area">
+                <div class="account-logo">
+                    <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
+                </div>
+                <h4 class="title">{{ __("Register for an Account Today") }}</h4>
+                <p>{{ __("Become a part of our community by registering for an account today. Enjoy a range of benefits and features tailored to meet your needs. Our registration page makes it easy to create your account, providing a seamless and user-friendly experience.") }}</p>
+                <form action="{{ setRoute('user.register.submit') }}" class="account-form" method="POST" autocomplete="on">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <input type="text" class="form-control form--control" name="firstname" placeholder="{{ __("First Name") }}" required>
+                        </div>
+                        <div class="col-lg-6 col-md-12 form-group">
+                            <input type="text" class="form-control form--control" name="lastname" placeholder="{{ __("Last Name") }}" required>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <input type="email" class="form-control form--control" name="email" placeholder="{{ __("Email") }}" required>
+                        </div>
+                        <div class="col-lg-12 form-group show_hide_password">
+                            <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Password") }}" required>
+                            <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="col-lg-12 form-group">
+                            <div class="custom-check-group">
+                                <input type="checkbox" name="agree" id="level-1">
+                                <label for="level-1">{{ __("I have agreed with") }} <a href="#0">{{ __("Terms Of Use & Privacy Policy") }}</a></label>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="account-footer text-center">
-                <p>{{ __("Copyright") }} © {{ date("Y",time()) }} {{ __("All Rights Reserved.") }}</a></p>
+                        <div class="col-lg-12 form-group text-center">
+                            <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Register Now") }}</span></button>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <div class="account-item">
+                                <label>{{ __("Already Have An Account?") }} <a href="{{ setRoute('user.login') }}" class="account-control-btn">{{ __("Login Now") }}</a></label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    End Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 @endsection
 
 @push('script')
-    <script>
-        getAllCountries("{{ setRoute('global.countries') }}",$(".country-select"));
-        $(document).ready(function(){
-            $("select[name=country]").change(function(){
-                var phoneCode = $("select[name=country] :selected").attr("data-mobile-code");
-                placePhoneCode(phoneCode);
-            });
-
-            setTimeout(() => {
-                var phoneCodeOnload = $("select[name=country] :selected").attr("data-mobile-code");
-                placePhoneCode(phoneCodeOnload);
-            }, 400);
-        });
-    </script>
 
 @endpush
