@@ -41,7 +41,8 @@ return new class extends Migration
             $table->text('broadcast_config',1000)->nullable();
             $table->text('broadcast_activity',1000)->nullable();
             $table->text('sms_config',500)->nullable();
-            $table->text('sms_activity',1000)->nullable();      
+            $table->text('sms_activity',1000)->nullable();   
+            $table->string('web_version')->nullable();         
             $table->timestamps();
         });
     }

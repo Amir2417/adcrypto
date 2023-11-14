@@ -67,7 +67,7 @@ input::-moz-focus-inner {
     background-color: #28c76f;
 }
 .btn--danger {
-    background-color: #d63384;
+    background-color: #ea5455;
 }
 .btn--warning {
     background-color: #ff9f43;
@@ -95,7 +95,7 @@ input::-moz-focus-inner {
 }
 .badge--danger {
     &::before{
-        background-color: #d63384;
+        background-color: #ea5455;
     }
 }
 .badge--warning {
@@ -154,38 +154,40 @@ input::-moz-focus-inner {
 }
 .btn--base {
     position: relative;
-    background: $base--color;
-    border-radius: 15px;
-    color: $white;
-    padding: 20px 40px;
-    font-size: 15px;
+    overflow: hidden;
     font-weight: 600;
+    background: $base--color;
+    color: $white;
+    padding: 13px 40px;
+    border-radius: 30px;
     text-align: center;
-    -webkit-transition: all ease 0.5s;
-    -moz-transition: all ease 0.5s;
-    transition: all ease 0.5s;
-    i{
-        font-size: 16px;
-        position: relative;
-        top: 1px;
-    }
-    &.active{
-        background: transparent;
-        color: $base--color;
-        &:focus,
-        &:hover {
-            color: $white;
-            background: $base--color;
-        }
+    z-index: 2;
+    transition: all 0.5s;
+    &::before{
+        position: absolute;
+        content: '';
+        top: 0;
+        right: 0;
+        width: 0;
+        height: 100%;
+        background: $white;
+        z-index: -1;
+        transition: all 0.5s;
     }
     &:focus,
     &:hover {
-        color: $white;
-        box-shadow: 0 10px 20px rgba($base--color,.4);
+        color: $base--color;
+        &::before{
+            right: auto;
+            left: 0;
+            width: 100%;
+        }
     }
-    @media only screen and (max-width: 991px) {
-        padding: 10px 25px;
-        font-size: 13px;
+    &.bg--danger{
+        &:focus,
+        &:hover {
+            color: #ea5455;
+        }
     }
 }
 .custom-btn{

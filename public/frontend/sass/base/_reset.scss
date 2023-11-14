@@ -39,22 +39,6 @@ img {
 	max-width: 100%;
 	height: auto;
 }
-.exchange-area{
-    code{
-        font-size: 20px;
-        color: #1e9ff2;
-    }
-}
-code{
-    color: #ff9f43;
-    font-weight: 600;
-    span{
-        display: block;
-        text-align: center;
-        font-size: 16px;
-        padding-bottom: 10px;
-    }
-}
 button:focus,
 input:focus,
 textarea:focus {
@@ -75,19 +59,20 @@ a,a:focus, a:hover {
     text-decoration: none;
     color: inherit;
 }
+code{
+    color: $base--color;
+}
 blockquote{
-    background-color: $bg--gray;
+    background: $bg--gray;
     padding: 40px;
     border-radius: 10px;
     font-weight: 500;
     font-style: italic;
     position: relative;
+    text-align: center;
+    font-size: 18px;
     .quote-icon{
-        position: absolute;
-        top: 0;
-        left: 5%;
-        font-size: 120px;
-        opacity: .1;
+        margin-bottom: 15px;
     }
 }
 /*-------------------------------------------------
@@ -346,10 +331,10 @@ blockquote{
     background-color: $base--color;
 }
 .bg--success {
-    background-color: #28c76f;
+    background-color: #28c76f !important;
 }
 .bg--danger {
-    background-color: #d63384 !important;
+    background: #ea5455 !important;
 }
 .bg--warning {
     background-color: #ff9f43 !important;
@@ -372,11 +357,8 @@ blockquote{
 .text--success {
     color: #28c76f;
 }
-.text-danger{
-    color: #d63384 !important;
-}
 .text--danger {
-    color: #d63384;
+    color: #ea5455;
 }
 .text--warning {
     color: #ff9f43;
@@ -400,7 +382,7 @@ blockquote{
     border: 1px solid #28c76f;
 }
 .border--danger {
-    border: 1px solid #ea5455;
+    border: 1px solid #ea5455 !important;
 }
 .border--warning {
     border: 1px solid #ff9f43;
@@ -428,6 +410,18 @@ blockquote{
 }
 .box-shadow{
     box-shadow: 0 2px 8px 0 rgba(0,0,0,.08);
+}
+.gradient-text{
+    background: linear-gradient(264.28deg, #DEC7FF -38.2%, #5C27FE 103.12%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.splitting.animated .char {
+    -webkit-animation: fadeInUp 0.4s cubic-bezier(0.3, 0, 0.7, 1) both;
+    animation: fadeInUp 0.4s cubic-bezier(0.3, 0, 0.7, 1) both;
+    -webkit-animation-delay: calc(30ms * var(--char-index));
+    animation-delay: calc(30ms * var(--char-index));
 }
 /*-------------------------------------------------
     [ ## scrollbar ]
@@ -469,25 +463,19 @@ html::-webkit-scrollbar-corner {
     position: fixed;
     bottom: 0;
     right: 30px;
-    width: 35px;
-    height: 35px;
-    padding: 7px;
-    line-height: 1;
+    width: 45px;
+    height: 45px;
+    line-height: 47px;
     font-weight: 600;
     background-color: $base--color;
-    border-radius: 7px;
-    color: $white;
-    font-size: 11px;
+    border-radius: 62% 38% 46% 54%/60% 63% 37% 40%;
+    color: $white !important;
+    font-size: 20px;
     text-align: center;
     z-index: 9;
     cursor: pointer;
     transition: all 1s;
-    transform: translateY(-50000%);
-    small{
-        display: block;
-        text-transform: uppercase;
-        font-size: 8px;
-    }
+    transform: translateY(-5000%);
     &.active{
         bottom: 30px;
         transform: translateY(0%);
@@ -498,9 +486,9 @@ html::-webkit-scrollbar-corner {
     [ ## Table ]
 */
 .table-wrapper{
-    background-color: $body--bg;
+    background-color: $section--bg;
     padding: 30px;
-    border-radius: 15px;
+    border-radius: 5px;
 }
 .custom-table{
     width: 100%;
@@ -523,9 +511,6 @@ html::-webkit-scrollbar-corner {
     tbody{
         tr{
             border-bottom: 1px solid $border--base;
-            &:nth-of-type(2n){
-                background-color: $section--bg;
-            }
             td{
                 border: none;
                 font-weight: 500;
@@ -538,10 +523,12 @@ html::-webkit-scrollbar-corner {
                 button,.btn--base{
                     padding: 8px 25px;
                     font-size: 14px;
-                    border-radius: 8px;
                 }
                 .btn{
                     padding: 6px 10px;
+                    &:hover{
+                        color: $color--text;
+                    }
                 }
             }
         }
@@ -559,20 +546,18 @@ html::-webkit-scrollbar-corner {
     display: flex;
     justify-content: center;
     margin-top: 60px;
+    z-index: 8;
     .swiper-pagination-bullet{
-        height: 10px;
-        width: 10px;
-        border-radius: 50%;
-        background-color: rgba($base--color, 0.2);
+        height: 6px;
+        width: 70px;
+        border-radius: 100px;
+        background-color: rgba(255, 255, 255, 0.1);
         opacity: 1;
     }
     .swiper-pagination-bullet-active{
-        background-color: $base--color;
-        width: 25px;
-        border-radius: 10px;
+        background-color: $white;
     }
 }
-
 .slider-next, .slider-prev{
     width: 35px;
     height: 35px;
@@ -604,36 +589,37 @@ html::-webkit-scrollbar-corner {
     [ ## pagination ]
 */
 .pagination {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    margin-top: 20px;
     .page-item{
         text-align: center;
         padding: 3px;
         a,span{
             width: 30px;
             height: 30px;
-            border-radius: 8px;
+            border-radius: 5px;
             background: transparent;
             border: 1px solid $border--base;
             color: $color--heading;
             padding: 0;
             font-weight: 600;
             line-height: 30px;
+            font-size: 14px;
             display: block;
             margin: 0;
         }
         &.disabled{
             span{
-                border-radius: 8px;
+                border-radius: 5px;
                 background: transparent;
                 border: 1px solid $border--base;
                 color: $color--heading;
             }
         }
         .page-link{
-            border-radius: 8px;
+            border-radius: 5px;
             transition: all 0.3s;
         }
         &.active,
@@ -653,56 +639,29 @@ html::-webkit-scrollbar-corner {
 .nav-tabs{
     margin: 0;
     border: 0;
-    justify-content: center;
     margin-bottom: 30px;
     .nav-link{
-        padding: 30px;
+        padding: 8px 20px;
         border: none;
         font-weight: 600;
-        font-size: 16px;
+        font-size: 14px;
         background-color: $white;
-        border-radius: 15px;
-        border: none;
-        text-align: center;
+        border: 1px solid $border--base;
+        border-radius: 3px;
+        font-family: $font_heading;
         transition: all 0.3s;
-        .icon{
-            width: 50px;
-            height: 50px;
-            font-size: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-radius: 30%;
+        &:hover{
+            background-color: $base--color;
+            border: 1px solid $base--color;
             color: $white;
-            margin: 0 auto;
-            margin-bottom: 20px;
         }
         &.active{
-            box-shadow: 0px 0px 15px rgb(0 0 0 / 10%);
-            border: none;
-            color: $color--heading;
-        }
-        &:nth-of-type(1n){
-            .icon{
-                background-color: #7367f0;
-                box-shadow: 0 2px 10px 0 rgb(115 103 240 / 30%);
-            }
-        }
-        &:nth-of-type(2n){
-            .icon{
-                background-color: #28c76f;
-                box-shadow: 0 2px 10px 0 rgb(40 199 111 / 30%);
-            }
-        }
-        &:nth-of-type(3n){
-            .icon{
-                background-color: #107BE9;
-                box-shadow: 0 2px 10px 0 rgb(16 123 233 / 30%);
-            }
+            background-color: $base--color;
+            border: 1px solid $base--color;
+            color: $white;
         }
         &:not(:last-child){
-            margin-right: 30px;
+            margin-right: 10px;
             @media only screen and (max-width: 1199px) {
                 margin-right: 5px;
             }
@@ -720,37 +679,84 @@ html::-webkit-scrollbar-corner {
         justify-content: space-between;
     }
     .card-body{
-        background: $body--bg;
+        background: $section--bg;
+        border-radius: 5px;
         padding: 30px;
-        border-radius: 20px;
         @media only screen and (max-width: 575px) {
             padding: 20px;
         }
     }
-    button,.btn--base{
-        padding: 12px 30px;
-    }
 }
 
 /*-------------------------------------------------
-    [ ## modal ]
+    [ ## switch ]
 */
-.modal-content{
-    background-color: $body--bg;
-    .close{
-        border-radius: 3px;
+.toggle-container{
+    .switch-toggles{
+        position: relative;
+        width: 100%;
+        height: 45px;
+        border-radius: 5px;
+        background-color: $bg--gray;
+        &::after{
+            position: absolute;
+            content: "";
+            width: 50%;
+            height: 45px;
+            background: #00ABB3;
+            right: -1px;
+            top: 0;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.7s cubic-bezier(0.545, 0, 0.05, 1);
+        }
+        .switch{
+            position: relative;
+            width: 50%;
+            line-height: 45px;
+            float: left;
+            text-align: center;
+            z-index: 2;
+            cursor: pointer;
+            transition: color 0.7s cubic-bezier(0.545, 0, 0.05, 1);
+            font-weight: 500;
+            font-size: 14px;
+            border-radius: 5px;
+            color: $color--text;
+            margin-bottom: 0;
+            &:nth-child(odd){
+                color: $white;
+            }
+        }
+        &.active{
+            &::after{
+                background: $base--color;
+                right: 50%;
+                border-radius: 5px 0 0 5px;
+            }
+            .switch{
+                color: $color--text;
+                &:nth-child(even){
+                    color: $white;
+                }
+            }
+        }
     }
+}
+
+// Modal
+.modal-content{
+    background: $section--bg;
+    backdrop-filter: blur(4px);
+    border-radius: 16px;
 }
 .modal-header{
     border-color: $border--base;
 }
 .modal-footer{
     border-color: $border--base;
-    button{
+    a,button{
         padding: 8px 25px;
         font-size: 14px;
-        border-radius: 8px;
-        color: $white !important;
     }
 }
 .btn-close {

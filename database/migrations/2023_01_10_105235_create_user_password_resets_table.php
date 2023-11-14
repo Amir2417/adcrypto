@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('email')->nullable();
             $table->unsignedBigInteger('code')->nullable()->unique();
-            $table->string('token')->unique();
+            $table->string('token',250)->unique();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
 

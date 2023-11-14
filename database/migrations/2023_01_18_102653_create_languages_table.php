@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string("name",100)->unique();
             $table->string("code",20)->unique();
+            $table->string('dir')->default('ltr');
             $table->boolean("status")->default(true);
             $table->unsignedBigInteger("last_edit_by");
             $table->timestamps();

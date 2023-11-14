@@ -20,6 +20,35 @@ class User extends Authenticatable
      */
     protected $guarded = ["id"];
 
+    protected $casts = [
+        'firstname'           => 'string',
+        'lastname'            => 'string',
+        'username'            => 'string',
+        'email'               => 'string',
+        'mobile_code'         => 'string',
+        'mobile'              => 'string',
+        'full_mobile'         => 'string',
+        'password'            => 'string',
+        'refferal_user_id'    => 'integer',
+        'image'               => 'string',
+        'status'              => 'integer',
+        'email_verified_at'   => 'datetime',
+        'address'             => 'object',
+        'email_verified'      => 'integer',
+        'sms_verified'        => 'integer',
+        'kyc_verified'        => 'integer',
+        'ver_code'            => 'integer',
+        'ver_code_send_at'    => 'datetime',
+        'two_factor_verified' => 'integer',
+        'two_factor_status'   => 'integer',
+        'device_id'           => 'string',
+        'social_type'         => 'string',
+        'remember_token'      => 'string',
+        'coupon_status'       => 'integer',
+        'deleted_at'          => 'datetime',
+        'created_at'          => 'datetime',
+        'updated_at'          => 'datetime',
+    ];
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -28,16 +57,6 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-        'address'           => 'object',
     ];
 
     public function scopeEmailUnverified($query)

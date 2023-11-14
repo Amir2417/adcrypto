@@ -12,6 +12,22 @@ class TransactionSetting extends Model
 
     protected $guarded = ['id','slug'];
 
+    protected $casts = [
+        'admin_id'       => 'integer',
+        'slug'           => 'string',
+        'title'          => 'string',
+        'fixed_charge'   => 'decimal:16',
+        'percent_charge' => 'decimal:16',
+        'min_limit'      => 'decimal:16',
+        'max_limit'      => 'decimal:16',
+        'monthly_limit'  => 'decimal:16',
+        'daily_limit'    => 'decimal:16',
+        'intervals'      => 'object',
+        'status'         => 'integer',
+        'feature_text'   => 'string',
+        'created_at'          => 'date:Y-m-d',
+        'updated_at'          => 'date:Y-m-d',
+    ];
 
     protected $with = ['admin'];
 

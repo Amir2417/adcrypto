@@ -1,115 +1,182 @@
+.main-section-wrapper{
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+}
 .banner-section{
     position: relative;
-    padding-top: 170px;
-    padding-bottom: 120px;
-    overflow: hidden;
-    @media only screen and (max-width: 575px) {
-        padding-top: 130px;
-        padding-bottom: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    z-index: 2;
+    background-color: #142B57;
+    background: linear-gradient(180deg, transparent, #142B57, transparent, #05060a, transparent);
+    @media only screen and (max-width: 1199px) {
+        padding-top: 150px;
+        padding-bottom: 130px;
+    }
+    .banner-element{
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
     }
     .banner-thumb{
-        position: relative;
-        text-align: right;
-        @media only screen and (max-width: 991px) {
-            text-align: left;
-        }
         img{
-            width: 80%;
-            margin-left: auto;
+            max-width: initial;
             @media only screen and (max-width: 991px) {
-                margin-left: 0;
-            }
-        }
-        .banner-element-one{
-            position: absolute;
-            top: -8%;
-            right: -12%;
-            animation: scroll-down 6s cubic-bezier(.75,.02,.31,.87) infinite;
-            @media only screen and (max-width: 991px) {
-                right: -8px;
-            }
-            img{
-                width: 90%;
+                display: none;
             }
         }
     }
-    .banner-content{
-        .title{
-            width: 95%;
-            color: $white;
-            line-height: 1.2;
-            margin-bottom: 20px;
-            @media only screen and (max-width: 1199px) {
-                width: 100%;
+    .banner-content-wrapper{
+        position: relative;
+        padding-left: 40px;
+        @media only screen and (max-width: 575px) {
+            padding-left: 15px;
+        }
+        &::before{
+            position: absolute;
+            content: "";
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 410px;
+            background: linear-gradient(to bottom, $base--color, $body--bg);
+        }
+        .title-badge{
+            display: inline-block;
+            color: $base--color;
+            font-size: 18px;
+            font-weight: 600;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            left: 21px;
+            top: -19px;
+            &::before{
+                position: absolute;
+                content: "";
+                width: 40px;
+                height: 40px;
+                line-height: 35px;
+                text-align: center;
+                background: $base--color;
+                border-radius: 50%;
+                z-index: -1;
+                left: -14px;
+                top: -6px;
             }
+            &::after{
+                position: absolute;
+                content: "$";
+                width: 25px;
+                height: 25px;
+                text-align: center;
+                background: $white;
+                border-radius: 50%;
+                z-index: -1;
+                left: -7px;
+                top: 1px;
+            }
+        }
+        .sub-title{
+            display: inline-block;
+            padding: 12px 50px;
+            background: $bg--gray;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 500;
+            @media only screen and (max-width: 575px) {
+                font-size: 12px;
+            }
+        }
+        .title{
+            margin-top: 20px;
+            margin-bottom: 15px;
             span{
+                position: relative;
                 color: $base--color;
-                display: initial;
+                z-index: 2;
+                svg{
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    width: calc(100% + 10px);
+                    height: calc(100% + 40px);
+                    transform: translate(-50%, -50%);
+                    z-index: -1;
+                    path{
+                        stroke: $base--color;
+                        stroke-width: 0.5rem;
+                        fill: transparent;
+                    }
+                }
             }
         }
         p{
-            color: $white;
-            font-size: 18px;
+            font-size: 16px;
+            width: 80%;
             @media only screen and (max-width: 575px) {
+                width: 100%;
                 font-size: 14px;
             }
         }
         .banner-btn{
-            margin-top: 40px;
-        }
-    }
-}
-.inner-banner-section{
-    .banner-content{
-        text-align: center;
-        .title{
-            font-size: 45px;
-            @media only screen and (max-width: 991px) {
-                font-size: 35px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: -10px;
+            margin-top: 20px;
+            a{
+                margin: 10px;
             }
-            @media only screen and (max-width: 575px) {
-                font-size: 26px;
+            .video-icon{
+                position: relative;
+                width: 70px;
+                height: 70px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: $base--color;
+                border-radius: 50%;
+                &::before{
+                    content: "";
+                    border: 2px solid #37A3FE;
+                    position: absolute;
+                    z-index: 0;
+                    left: 50%;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+                    display: block;
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    animation: zoomBig 3.25s linear infinite;
+                    -webkit-animation-delay: .75s;
+                    animation-delay: .75s;
+                }
+                &::after{
+                    content: "";
+                    border: 2px solid #37A3FE;
+                    position: absolute;
+                    z-index: 0;
+                    left: 50%;
+                    top: 50%;
+                    transform: translateX(-50%) translateY(-50%);
+                    display: block;
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    animation: zoomBig 3.25s linear infinite;
+                    -webkit-animation-delay: 0s;
+                    animation-delay: 0s;
+                }
+                img{
+                    width: 40%;
+                }
             }
         }
-    }
-}
-.breadcrumb {
-    background-color: $base--color;
-    padding: 15px;
-    margin-bottom: 0;
-    margin-top: -30px;
-    position: relative;
-    justify-content: center;
-    border-radius: 15px;
-}
-.breadcrumb li{
-    font-size: 16px;
-    font-weight: 600;
-}
-.breadcrumb-item a{
-    position: relative;
-    z-index: 2;
-    color: $white;
-    @media only screen and (max-width: 991px) {
-        font-size: 18px;
-    }
-}
-.breadcrumb-item.active{
-    color: $white;
-    position: relative;
-    z-index: 2;
-    @media only screen and (max-width: 991px) {
-        font-size: 18px;
-    }
-}
-.breadcrumb-item.active::before{
-    content: "/";
-    font-weight: 600;
-    color: $white;
-    left: 0;
-    top: 1px;
-    position: relative;
-    @media only screen and (max-width: 991px) {
-        font-size: 18px;
     }
 }

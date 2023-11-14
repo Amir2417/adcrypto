@@ -11,6 +11,16 @@ class Language extends Model
 
     protected $guarded = ['id'];
 
+    protected $casts = [
+        'name'         => 'string',
+        'code'         => 'string',
+        'dir'          => 'string',
+        'status'       => 'boolean',
+        'last_edit_by' => 'integer',
+        'created_at'   => 'date:Y-m-d',
+        'updated_at'   => 'date:Y-m-d',
+    ];
+
     public function scopeDefault($query) {
         return $query->where("status",true);
     }

@@ -12,9 +12,16 @@ class BasicSettings extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'mail_config'               => 'object',
-        'push_notification_config'  => 'object',
-        'broadcast_config'          => 'object',
+        'mail_config'              => 'object',
+        'sms_config'               => 'object',
+        'push_notification_config' => 'object',
+        'broadcast_config'         => 'object',
+        'site_logo_dark'           => 'string',
+        'site_logo'                => 'string',
+        'site_fav_dark'            => 'string',
+        'site_fav'                 => 'string',
+        'email_notification'          => 'boolean',
+        'email_verification'          => 'boolean',
     ];
 
 

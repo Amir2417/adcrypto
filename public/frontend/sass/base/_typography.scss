@@ -7,14 +7,11 @@ h1, h2, h3, h4, h5, h6 {
 	color: $color--heading;
   -webkit-font-smoothing: antialiased;
   font-family: $font_heading;
-  font-weight: 600;
+  font-weight: 700;
 }
 h1 {
   font-size: $heading__one;
   @media only screen and (max-width: 1199px) {
-    font-size: 50px;
-  }
-  @media only screen and (max-width: 991px) {
     font-size: 40px;
   }
   @media only screen and (max-width: 575px) {
@@ -33,13 +30,13 @@ h2 {
 h3 {
   font-size: $heading__three;
   @media only screen and (max-width: 991px) {
-    font-size: 18px;
+    font-size: 20px;
   }
 }
 h4 {
   font-size: $heading__four;
   @media only screen and (max-width: 991px) {
-    font-size: 16px;
+    font-size: 18px;
   }
 }
 h5 {
@@ -69,24 +66,75 @@ h4 a:hover {
 .section-header{
   margin-bottom: 40px;
   position: relative;
-  @media only screen and (max-width: 991px) {
-    margin-bottom: 30px;
+  .title-badge{
+    display: inline-block;
+    color: $base--color;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    left: 21px;
+    top: 0;
+    line-height: 26px;
+    &::before{
+        position: absolute;
+        content: "";
+        width: 40px;
+        height: 40px;
+        line-height: 35px;
+        text-align: center;
+        background: $base--color;
+        border-radius: 50%;
+        z-index: -1;
+        left: -14px;
+        top: -6px;
+    }
+    &::after{
+        position: absolute;
+        content: "";
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        background: $white;
+        border-radius: 50%;
+        z-index: -1;
+        left: -7px;
+        top: 1px;
+    }
   }
   .section-sub-title{
-    font-size: 11px;
-    padding: 5px 10px;
-    background-color: $bg--gray;
-    text-transform: uppercase;
-    border-radius: 7px;
-    color: $base--color;
-    margin-bottom: 20px;
-    font-weight: 600;
+    display: inline-block;
+    padding: 12px 50px;
+    background: $bg--gray;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 500;
+    @media only screen and (max-width: 575px) {
+      font-size: 12px;
+    }
   }
   .section-title {
+    margin-top: 10px;
     margin-bottom: 0;
-    text-transform: capitalize;
     span{
+      position: relative;
       color: $base--color;
+      z-index: 2;
+      svg{
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          width: calc(100% + 10px);
+          height: calc(100% + 40px);
+          transform: translate(-50%, -50%);
+          z-index: -1;
+          path{
+              stroke: $base--color;
+              stroke-width: 0.5rem;
+              fill: transparent;
+          }
+      }
     }
   }
   p{

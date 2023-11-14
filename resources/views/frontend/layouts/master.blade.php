@@ -1,29 +1,52 @@
 <!DOCTYPE html>
-<html lang="{{ get_default_language_code() }}">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ (isset($page_title) ? __($page_title) : __("Public")) }}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    @php
+        $current_url = URL::current();
+    @endphp
 
+    @if($current_url == setRoute('index'))
+        <title>{{$basic_settings->site_name ?? ''}}  - {{ $basic_settings->site_title ?? "" }}</title>
+    @else
+        <title>{{$basic_settings->site_name ?? ''}}  {{ $page_title ?? '' }}</title>
+    @endif
     @include('partials.header-asset')
-
     @stack('css')
 </head>
 <body>
 
-{{-- @include('frontend.partials.preloader') --}}
-@include('frontend.partials.scroll-to-top')
-@include('frontend.partials.header')
 
-@yield("content")
+    
+@include('frontend.partials.preloader')
 
-@include('frontend.partials.footer')
+
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Start Body Overlay
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div id="body-overlay" class="body-overlay"></div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    End Body Overlay
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+<div class="main-section-wrapper">
+
+    @include('frontend.partials.header')
+
+    @yield('content')
+
+    @include('frontend.partials.footer')
+</div>
+
+
 @include('partials.footer-asset')
+@include('admin.partials.notify')
 @include('frontend.partials.extensions.tawk-to')
-
 @stack('script')
 
 </body>

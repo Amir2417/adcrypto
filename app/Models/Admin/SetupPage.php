@@ -10,4 +10,9 @@ class SetupPage extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
+
+    protected $casts = [
+        'title'   => 'string',
+        'details' => 'object'
+    ];
 }
