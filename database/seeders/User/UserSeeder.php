@@ -20,10 +20,10 @@ class UserSeeder extends Seeder
             [
                 'firstname'         => "Test",
                 'lastname'          => "User",
-                'email'             => "testuser@gmail.com",
+                'email'             => "user@appdevs.net",
                 'username'          => "testuser",
                 'status'            => true,
-                'password'          => Hash::make("rokondev"),
+                'password'          => Hash::make("appdevs"),
                 'email_verified'    => true,
                 'sms_verified'      => true,
                 'created_at'        => now(),

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ (isset($page_title) ? __($page_title) : __("Dashboard")) }}</title>
+    <title>{{ $basic_settings->site_name }} {{ $page_title ?? '' }}</title>
 
     @include('partials.header-asset')
     
@@ -17,8 +17,8 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Preloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-{{-- <div id="preloader"></div> --}}
-{{-- @include('frontend.partials.preloader') --}}
+
+@include('frontend.partials.preloader')
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     End Preloader
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -27,19 +27,6 @@
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Dashboard
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<div class="page-wrapper bg-overlay-base bg_img" data-background="{{ asset('public/frontend/images/element/banner-bg.jpg') }}">
-
-    @include('user.partials.side-nav')
-
-    <div class="main-wrapper">
-        <div class="main-body-wrapper">
-            @include('user.partials.top-nav')
-            <div class="body-wrapper">
-                @yield('content')
-            </div>
-        </div>
-    </div>
-</div>
 <div class="main-section-wrapper">
   <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       Start Dashboard
@@ -49,9 +36,9 @@
       <div class="main-wrapper">
           <div class="main-body-wrapper">
             @include('user.partials.top-nav')
-            <div class="body-wrapper">
+            
             @yield('content')
-            </div>
+           
           </div>
       </div>
   </div>
@@ -66,8 +53,8 @@
 
 @include('partials.footer-asset')
 <script src="{{ asset('public/frontend/js/apexcharts.min.js') }}"></script>
+@stack('script')
 
-@stack("script")
 
 <script>
     var options = {

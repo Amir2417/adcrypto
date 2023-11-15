@@ -5,6 +5,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use App\Constants\GlobalConst;
 use App\Constants\LanguageConst;
+use App\Models\UserNotification;
 use App\Constants\AdminRoleConst;
 use App\Constants\ExtensionConst;
 use App\Models\UserAuthorization;
@@ -22,8 +23,8 @@ use App\Constants\PaymentGatewayConst;
 use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Models\Admin\AdminNotification;
 use App\Providers\Admin\CurrencyProvider;
-use App\Providers\Admin\BasicSettingsProvider;
 
+use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\User\Auth\SendAuthorizationCode;
 
@@ -1333,7 +1334,7 @@ function mailVerificationTemplate($user) {
     try{
         UserAuthorization::where("user_id",$user->id)->delete();
         DB::table("user_authorizations")->insert($data);
-        // $user->notify(new SendAuthorizationCode((object) $data));
+        
         DB::commit();
     }catch(Exception $e) {
         DB::rollBack();
@@ -1385,4 +1386,109 @@ function get_file_basename_ext_from_link(string $link) {
 
 function payment_gateway_const() {
     return PaymentGatewayConst::class;
+}
+
+function remove_special_char($string,$replace_string = "") {
+    return preg_replace("/[^A-Za-z0-9]/",$replace_string,$string);
+}
+
+
+function get_auth_guard() {
+    if(auth()->guard("web")->check()) {
+        return "web";
+    }else if(auth()->guard("admin")->check()) {
+        return "admin";
+    }else if(auth()->guard("api")->check()) {
+        return "api";
+    }else{
+        return "";
+    }
+}
+
+function get_files_public_path($slug)
+{
+    $files_path = files_path($slug)->path ?? "";
+    return "public/" . $files_path;
+}
+
+function files_asset_path_basename($slug) {
+    return "public/" . files_path($slug)->path;
+}
+function get_only_numeric_data($string) {
+    return preg_replace("/[^0-9]/","",$string);
+}
+function get_user_notifications(){
+    $notifications  = UserNotification::auth()->latest()->take(5)->get();
+    return $notifications;
+}
+function generate_random_number($length = 12)
+{
+    $numbers = '0123456789';
+    $numbersLength = strlen($numbers);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $numbers[rand(0, $numbersLength - 1)];
+    }
+    return $randomString;
+}
+function generateTrxString($table,$column,$prefix = '',$length = 8) {
+    do{
+       $generate_number = generate_random_number($length);
+       $generate_number = $prefix.''.$generate_number;
+       $unique = DB::table($table)->where($column,$generate_number)->exists();
+       $loop = false;
+       if($unique) {
+        $loop = true;
+       }
+       $unique_number = $generate_number;
+    }while($loop);
+
+    return $unique_number;
+}
+
+function generateTransactionReference()
+{
+    return 'TXREF_' . time();
+}
+if(!function_exists('dateFormat')){
+    function dateFormat($format, $date){
+        return date($format, strtotime($date));
+    }
+}
+function getTrxNum($length = 8)
+{
+    $characters = '123456789';
+    $charactersLength = strlen($characters);
+    $randomString = '';
+    for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+    }
+    return $randomString;
+}
+function getAmount($amount, $length = 8)
+{
+    $amount = round($amount, $length);
+    return $amount + 0;
+}
+
+if (!function_exists('formatNumberInKNotation')) {
+    function formatNumberInKNotation (Int $number, Int $decimals = 1) : String {
+        # Define the unit size and supported units.
+        $unitSize = 1000;
+        $units = ["", "K", "M", "B", "T"];
+
+        # Calculate the number of units as the logarithm of the absolute value with the
+        # unit size as base.
+        $unitsCount = ($number === 0) ? 0 : floor(log(abs($number), $unitSize));
+
+        # Decide the unit to be used based on the counter.
+        $unit = $units[min($unitsCount, count($units) - 1)];
+
+        # Divide the value by unit size in the power of the counter and round it to keep
+        # at most the given number of decimal digits.
+        $value = round($number / pow($unitSize, $unitsCount), $decimals);
+
+        # Assemble and return the string.
+        return $value . $unit;
+    }
 }

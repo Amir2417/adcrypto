@@ -7,9 +7,7 @@
                 </button>
             </div>
             <div class="dashboard-path">
-                <span class="main-path"><a href="dashboard.html">Dashboard</a></span>
-                <i class="las la-angle-right"></i>
-                <span class="active-path">Dashboard</span>
+                @yield('breadcrumb')
             </div>
         </div>
         <div class="right">
@@ -69,7 +67,7 @@
             </div>
             <div class="header-user-wrapper">
                 <div class="header-user-thumb">
-                    <a href="user-profile.html"><img src="assets/images/user/user-3.png" alt="user"></a>
+                    <a href="{{ setRoute('user.profile.index')}}"><img src="{{ auth()->user()->userImage ?? asset('public/frontend/images/user/user-3.png') }}"  alt="user"></a>
                 </div>
             </div>
         </div>

@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="{{ asset('public/frontend/css/animate.css') }}">
 <!-- nice select css -->
 <link rel="stylesheet" href="{{ asset('public/frontend/css/nice-select.css') }}">
+ <!-- Popup  -->
+ <link rel="stylesheet" href="{{ asset('public/backend/library/popup/magnific-popup.css') }}">
 <!-- main style css link -->
 <link rel="stylesheet" href="{{ asset('public/frontend/css/style.css') }}">
+<!-- file holder css -->
+<link rel="stylesheet" href="https://cdn.appdevs.net/fileholder/v1.0/css/fileholder-style.css" type="text/css">
 

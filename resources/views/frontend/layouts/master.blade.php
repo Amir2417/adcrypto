@@ -36,24 +36,25 @@
 
 <div class="main-section-wrapper">
 
-@php
-    $class = "";
-    if(!Route::is("index")) {
+    @php
         $class = "";
-    }
-@endphp 
-@include('frontend.partials.header',[
-    'class'     => $class,
-])
+        if(!Route::is("index")) {
+            $class = "";
+        }
+    @endphp 
+    @include('frontend.partials.header',[
+        'class'     => $class,
+    ])
 
     @yield('content')
 
     @include('frontend.partials.footer')
+
 </div>
 
 
 @include('partials.footer-asset')
-@include('admin.partials.notify')
+
 @include('frontend.partials.extensions.tawk-to')
 @stack('script')
 

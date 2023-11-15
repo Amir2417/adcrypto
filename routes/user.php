@@ -9,6 +9,7 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('dashboard','index')->name('dashboard');
         Route::post('logout','logout')->name('logout');
+        Route::delete('delete/account','deleteAccount')->name('delete.account');
     });
 
     Route::controller(ProfileController::class)->prefix("profile")->name("profile.")->group(function(){

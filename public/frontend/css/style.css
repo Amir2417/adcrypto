@@ -1632,11 +1632,11 @@ option {
 }
 
 .fileholder.active {
-  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border: 2px dashed rgba(255, 255, 255, 0.1) !important;
 }
 
 .fileholder-drag-drop-title {
-  color: #c4c5cf;
+  color: #c4c5cf !important;
 }
 
 .fileholder-drag-drop-icon svg path:nth-child(2) {
@@ -5045,6 +5045,8 @@ option {
   font-size: 13px;
   border-radius: 5px;
   color: #ffffff;
+  white-space: pre-wrap;
+
 }
 .chat-container .media .media-body p::before {
   position: absolute;

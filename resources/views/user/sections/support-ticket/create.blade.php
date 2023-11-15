@@ -14,11 +14,12 @@
 @endsection
 
 @section('content')
-    <div class="row mb-20-none">
+<div class="body-wrapper">
+    <div class="row mt-30 mb-20-none">
         <div class="col-xl-12 col-lg-12 mb-20">
             <div class="custom-card mt-10">
                 <div class="dashboard-header-wrapper">
-                    <h4 class="title">{{ __("Add New Ticket") }}</h4>
+                    <h5 class="title">{{ __("Add New Ticket") }}</h5>
                 </div>
                 <div class="card-body">
                     <form class="card-form" action="{{ route('user.support.ticket.store') }}" method="POST" enctype="multipart/form-data">
@@ -26,45 +27,53 @@
                         <div class="row">
                             <div class="col-xl-6 col-lg-6 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => "Name<span>*</span>",
+                                    'label'         => __("Name")."<span>*</span>",
                                     'name'          => "name",
-                                    'placeholder'   => "Enter Name...",
+                                    'attribute'     => "readonly",
+                                    'placeholder'   => __("Enter Name")."...",
+                                    'value'         => old('name',auth()->user()->full_name)
                                 ])
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => "Email<span>*</span>",
+                                    'label'         => __("Email")."<span>*</span>",
+                                    'type'          => "email",
                                     'name'          => "email",
-                                    'placeholder'   => "Enter Email...",
+                                    'attribute'     => "readonly",
+                                    'placeholder'   => __("Enter Email")."...",
+                                    'value'         => old('email',auth()->user()->email)
                                 ])
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => "Subject<span>*</span>",
+                                    'label'         => __("Subject")."<span>*</span>",
                                     'name'          => "subject",
-                                    'placeholder'   => "Enter Subject...",
+                                    'placeholder'   => __("Enter Subject")."...",
                                 ])
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 @include('admin.components.form.textarea',[
-                                    'label'         => "Message <span class='text--base'>(Optional)</span>",
+                                    'label'         => __('Message').'<span class="text--base">'.'('.__("Optional").')'.'</span>',
                                     'name'          => "desc",
-                                    'placeholder'   => "Write Here…",
+                                    'placeholder'   => "Write Here...",
                                 ])
                             </div>
-                            <div class="col-xl-12 col-lg-12 form-group">
+                            <div class="col-xl-4 col-lg-6 form-group">
                                 <label>{{ __("Attachments") }}<span>*</span></label>
-                                <input type="file" class="file-holder" name="attachment[]" id="attachment" multiple>
+                                <div class="file-holder-wrapper">
+                                    <input type="file" class="file-holder" name="attachment[]" id="fileUpload" data-height="130" accept="image/*" data-max_size="20" data-file_limit="15" multiple>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <button type="submit" class="btn--base w-100">{{ __("Add New") }}</button>
+                            <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Add New") }}</span></button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection
 
 @push('script')

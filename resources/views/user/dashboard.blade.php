@@ -11,6 +11,7 @@
 
 @section('content')
 
+<div class="body-wrapper">
     <div class="dashboard-area mt-20">
         <div class="dashboard-header-wrapper">
             <h4 class="title">My Wallets</h4>
@@ -40,7 +41,7 @@
                             <h4 class="title">500.00 <span class="text--danger">ETH</span></h4>
                         </div>
                         <div class="dashboard-icon">
-                            <img src="assets/images/flag/eth.webp" alt="flag">
+                            <img src="{{ asset('public/frontend') }}/images/flag/eth.webp" alt="flag">
                         </div>
                     </a>
                 </div>
@@ -570,5 +571,6 @@
             </div>
         </div>
     </div>
+</div>
 
 @endsection

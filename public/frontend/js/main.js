@@ -274,3 +274,170 @@ $(document).ready(function() {
   
 
 })(jQuery);
+
+
+function openLoginModal() {
+  if($('.account').hasClass('active')) {
+    $('.account').removeClass('active');
+    $('.body-overlay').removeClass('active');
+  }else {
+    $('.account').addClass('active');
+    $('.body-overlay').addClass('active');
+    $('.navbar-collapse').removeClass('show');
+  }
+}
+/**
+ * Function For Get All Country list by AJAX Request
+ * @param {HTML DOM} targetElement
+ * @param {Error Place Element} errorElement
+ * @returns
+ */
+var allCountries = "";
+function getAllCountries(hitUrl,targetElement = $(".country-select"),errorElement = $(".country-select").siblings(".select2")) {
+  if(targetElement.length == 0) {
+    return false;
+  }
+  var CSRF = $("meta[name=csrf-token]").attr("content");
+  var data = {
+    _token      : CSRF,
+  };
+  $.post(hitUrl,data,function() {
+    // success
+    $(errorElement).removeClass("is-invalid");
+    $(targetElement).siblings(".invalid-feedback").remove();
+  }).done(function(response){
+    // Place States to States Field
+    var options = "<option selected disabled>Select Country</option>";
+    var selected_old_data = "";
+    if($(targetElement).attr("data-old") != null) {
+        selected_old_data = $(targetElement).attr("data-old");
+    }
+    $.each(response,function(index,item) {
+        options += `<option value="${item.name}" data-id="${item.id}" data-mobile-code="${item.mobile_code}" ${selected_old_data == item.name ? "selected" : ""}>${item.name}</option>`;
+    });
+
+    allCountries = response;
+
+    $(targetElement).html(options);
+  }).fail(function(response) {
+    var faildMessage = "Something went wrong! Please try again.";
+    var faildElement = `<span class="invalid-feedback" role="alert">
+                            <strong>${faildMessage}</strong>
+                        </span>`;
+    $(errorElement).addClass("is-invalid");
+    if($(targetElement).siblings(".invalid-feedback").length != 0) {
+        $(targetElement).siblings(".invalid-feedback").text(faildMessage);
+    }else {
+      errorElement.after(faildElement);
+    }
+  });
+}
+// getAllCountries();
+
+/**
+ * Function for open delete modal with method DELETE
+ * @param {string} URL 
+ * @param {string} target 
+ * @param {string} message 
+ * @returns 
+ */
+function openAlertModal(URL,target,message,actionBtnText = "Remove",method = "DELETE"){
+  console.log("test");
+  if(URL == "" || target == "") {
+      return false;
+  }
+
+  if(message == "") {
+      message = "Are you sure to delete ?";
+  }
+  var method = `<input type="hidden" name="_method" value="${method}">`;
+  openModalByContent(
+      {
+          content: `<div class="card modal-alert border-0">
+                      <div class="card-body">
+                          <form method="POST" action="${URL}">
+                              <input type="hidden" name="_token" value="${laravelCsrf()}">
+                              ${method}
+                              <div class="head mb-3">
+                                  ${message}
+                                  <input type="hidden" name="target" value="${target}">
+                              </div>
+                              <div class="foot d-flex align-items-center justify-content-between">
+                                  <button type="button" class="modal-close btn--base btn-for-modal">Close</button>
+                                  <button type="submit" class="alert-submit-btn btn--base bg-danger btn-loading btn-for-modal">${actionBtnText}</button>
+                              </div>    
+                          </form>
+                      </div>
+                  </div>`,
+      },
+
+  );
+}
+
+/**
+ * Function For Open Modal Instant by pushing HTML Element
+ * @param {Object} data
+ */
+function openModalByContent(data = {
+  content:"",
+  animation: "mfp-move-horizontal",
+  size: "medium",
+}) {
+  $.magnificPopup.open({
+    removalDelay: 500,
+    items: {
+      src: `<div class="white-popup mfp-with-anim ${data.size ?? "medium"}">${data.content}</div>`, // can be a HTML string, jQuery object, or CSS selector
+    },
+    callbacks: {
+      beforeOpen: function() {
+        this.st.mainClass = data.animation ?? "mfp-move-horizontal";
+      },
+      open: function() {
+        var modalCloseBtn = this.contentContainer.find(".modal-close");
+        $(modalCloseBtn).click(function() {
+          $.magnificPopup.close();
+        });
+      },
+    },
+    midClick: true,
+  });
+}
+
+/**
+ * Function for getting CSRF token for form submit in laravel
+ * @returns string
+ */
+function laravelCsrf() {
+  return $("head meta[name=csrf-token]").attr("content");
+}
+
+function placePhoneCode(code) {
+  if(code != undefined) {
+      code = code.replace("+","");
+      code = "+" + code;
+      $("input.phone-code").val(code);
+      $("div.phone-code").html(code);
+  }
+}
+
+// select-2 init
+$('.select2-basic').select2();
+$('.select2-multi-select').select2();
+$(".select2-auto-tokenize").select2({
+tags: true,
+tokenSeparators: [',']
+});
+
+$('textarea').keydown(function (e) {
+  const keyCode = e.which || e.keyCode;
+  if (keyCode === 13 && !e.shiftKey) {
+    e.preventDefault();
+  }
+});
+
+$('textarea').keydown(function (e) {
+  const keyCode = e.which || e.keyCode;
+  if (keyCode === 13 && !e.shiftKey) {
+    e.preventDefault();
+  }
+});

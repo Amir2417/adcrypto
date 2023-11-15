@@ -1,22 +1,19 @@
+
 @push('script')
     @if (isset($support_ticket) && isset($support_ticket->token))
         @if ($basic_settings->broadcast_config != null && $basic_settings->broadcast_config->method == "pusher")
 
-
-            <script src="https://js.pusher.com/7.2/pusher.min.js"></script>
+            <script src="https://js.pusher.com/7.2/pusher.js"></script>
             <script>
                 var primaryKey = "{{ $basic_settings->broadcast_config->primary_key ?? '' }}";
                 var cluster = "{{ $basic_settings->broadcast_config->cluster ?? "" }}";
                 var userProfile = "{{ get_image(auth()->user()->userImage,'user-profile') }}";
 
-
                 var pusher = new Pusher(primaryKey,{cluster: cluster});
-
 
                 var token = "{{ $support_ticket->token ?? "" }}";
                 var URL = "{{ $route ?? "" }}";
                 var channel = pusher.subscribe('support.conversation.'+token);
-
 
                 channel.bind('support-conversation', function(data) {
                     data = JSON.stringify(data);
@@ -36,26 +33,21 @@
                     $(".support-chat-area .messages ul").append(chatBlock);
                 });
 
-
                 $(document).on("keyup",".message-input-event",function(event){
-                    
-
-
+                   
                     if(event.keyCode == 13 && !event.shiftKey) {
                         
-
 
                         $(this).removeClass("message-input-event");
                         eventInit($(this),'message-input-event');
                     }
                 });
-               
+                
                 $(document).on("click",".chat-submit-btn-event",function(e) {
                     e.preventDefault();
                     $(this).removeClass("chat-submit-btn-event");
                     eventInit($(this),'chat-submit-btn-event');
                 });
-
 
                 function eventInit(e,removeClass) {
                     
@@ -69,10 +61,9 @@
                         support_token: token,
                     };
 
-
-                   
+                    
                     $.post(URL,data,function(response) {
-                        
+                       
                     }).done(function(response){
                         $(".message-input").val("");
                         $(e).addClass(removeClass);
@@ -82,7 +73,6 @@
                         $(e).addClass(removeClass);
                     });
                 }
-
 
             </script>
         @endif

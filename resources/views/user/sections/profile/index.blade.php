@@ -14,11 +14,17 @@
 @endsection
 
 @section('content')
-    <div class="row mb-20-none">
+<div class="body-wrapper">
+    <div class="row mt-30 mb-20-none">
         <div class="col-xl-6 col-lg-6 mb-20">
-            <div class="custom-card mt-10">
+            <div class="custom-card">
                 <div class="dashboard-header-wrapper">
                     <h4 class="title">{{ __("Profile Settings") }}</h4>
+                    <div class="dashboard-btn-wrapper">
+                        <div class="dashboard-btn">
+                            <a href="javascript:void(0)" class="btn--base bg--danger delete-btn">{{ __("Delete Profile") }}</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body profile-body-wrapper">
                     <form class="card-form" method="POST" action="{{ setRoute('user.profile.update') }}" enctype="multipart/form-data">
@@ -27,23 +33,24 @@
                         <div class="profile-settings-wrapper">
                             <div class="preview-thumb profile-wallpaper">
                                 <div class="avatar-preview">
-                                    <div class="profilePicPreview bg_img" data-background="{{ asset('public/frontend/images/element/account.png') }}"></div>
+                                    <div class="profilePicPreview bg_img" data-background="{{ asset('public/frontend') }}/images/element/wel-map.png"></div>
                                 </div>
                             </div>
                             <div class="profile-thumb-content">
                                 <div class="preview-thumb profile-thumb">
                                     <div class="avatar-preview">
-                                        <div class="profilePicPreview bg_img" data-background="{{ auth()->user()->userImage }}"></div>
+                                        <div class="profilePicPreview bg_img" data-background="{{ auth()->user()->userImage ?? asset('public/frontend/images/user/user-3.png') }}"></div>
                                     </div>
                                     <div class="avatar-edit">
-                                        <input type='file' class="profilePicUpload" name="image" id="profilePicUpload2" accept=".png, .jpg, .jpeg, .webp, .svg" />
+                                        <input type='file' class="profilePicUpload" name="image" id="profilePicUpload2"
+                                            accept=".png, .jpg, .jpeg" />
                                         <label for="profilePicUpload2"><i class="las la-upload"></i></label>
                                     </div>
                                 </div>
                                 <div class="profile-content">
                                     <h6 class="username">{{ auth()->user()->username }}</h6>
                                     <ul class="user-info-list mt-md-2">
-                                        <li><i class="las la-envelope"></i>{{ auth()->user()->email }}</li>
+                                        <li><i class="las la-envelope"></i>{{  auth()->user()->email  }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -52,73 +59,63 @@
                             <div class="row">
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
-                                        'label'         => "First Name<span>*</span>",
+                                        'label'         => __("First Name")."<span>*</span>",
                                         'name'          => "firstname",
-                                        'placeholder'   => "Enter First Name...",
+                                        'placeholder'   => __("Enter First Name")."...",
                                         'value'         => old('firstname',auth()->user()->firstname)
                                     ])
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
-                                        'label'         => "Last Name<span>*</span>",
+                                        'label'         => __("Last Name")."<span>*</span>",
                                         'name'          => "lastname",
-                                        'placeholder'   => "Enter Last Name...",
+                                        'placeholder'   => __("Enter Last Name")."...",
                                         'value'         => old('lastname',auth()->user()->lastname)
                                     ])
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
-                                    <label>{{ __("Country") }}<span>*</span></label>
-                                    <select name="country" class="form--control select2-auto-tokenize country-select" data-placeholder="Select Country" data-old="{{ old('country',auth()->user()->address->country ?? "") }}"></select>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 form-group">
-                                    <label>{{ __("Phone") }}<span>*</span></label>
-                                    <div class="input-group">
-                                        <div class="input-group-text phone-code">+{{ auth()->user()->mobile_code }}</div>
-                                        <input class="phone-code" type="hidden" name="phone_code" value="{{ auth()->user()->mobile_code }}" />
-                                        <input type="text" class="form--control" placeholder="Enter Phone ..." name="phone" value="{{ old('phone',auth()->user()->mobile) }}">
-                                    </div>
-                                    @error("phone")
-                                        <span class="invalid-feedback d-block" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="col-xl-6 col-lg-6 form-group">
-                                    @php
-                                        $old_state = old('state',auth()->user()->address->state ?? "");
-                                    @endphp
-                                    <label>{{ __("State") }}</label>
-                                    <select name="state" class="form--control select2-auto-tokenize state-select" data-placeholder="Select State" data-old="{{ $old_state }}">
-                                        @if ($old_state)
-                                            <option value="{{ $old_state }}" selected>{{ $old_state }}</option>
-                                        @endif
-                                    </select>
-                                </div>
-                                <div class="col-xl-6 col-lg-6 form-group">
-                                    @php
-                                        $old_city = old('city',auth()->user()->address->city ?? "");
-                                    @endphp
-                                    <label>{{ __("City") }}</label>
-                                    <select name="city" class="form--control select2-auto-tokenize city-select" data-placeholder="Select City" data-old="{{ $old_city }}">
-                                        @if ($old_city)
-                                            <option value="{{ $old_city }}" selected>{{ $old_city }}</option>
-                                        @endif
-                                    </select>
+                                    <label>{{__("Country")}}<span>*</span></label>
+                                    <select class="form--control select2-auto-tokenize country-select" data-placeholder="Select Country" data-old="{{ old('country',auth()->user()->address->country ?? "") }}" name="country"></select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
-                                        'label'         => "Zip Code",
-                                        'name'          => "zip_code",
-                                        'placeholder'   => "Enter Zip...",
-                                        'value'         => old('zip_code',auth()->user()->address->zip ?? "")
+                                        'label'         => __("Phone"),
+                                        'name'          => "phone",
+                                        'type'          => "number",
+                                        'placeholder'   => __("Enter Number")."...",
+                                        'value'         => old('full_mobile',auth()->user()->full_mobile ?? "" )
                                     ])
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
-                                        'label'         => "Address",
+                                        'label'         => __("Address"),
                                         'name'          => "address",
-                                        'placeholder'   => "Enter Address...",
+                                        'placeholder'   => __("Enter Address")."...",
                                         'value'         => old('address',auth()->user()->address->address ?? "")
+                                    ])
+                                </div>
+                                <div class="col-xl-6 col-lg-6 form-group">
+                                    @include('admin.components.form.input',[
+                                        'label'         => __("City"),
+                                        'name'          => "city",
+                                        'placeholder'   => __("Enter City")."...",
+                                        'value'         => old('city',auth()->user()->address->city ?? "")
+                                    ])
+                                </div>
+                                <div class="col-xl-6 col-lg-6 form-group">
+                                    @include('admin.components.form.input',[
+                                        'label'         => __("State"),
+                                        'name'          => "state",
+                                        'placeholder'   => __("Enter State")."...",
+                                        'value'         => old('state',auth()->user()->address->state ?? "")
+                                    ])
+                                </div>
+                                <div class="col-xl-6 col-lg-6 form-group">
+                                    @include('admin.components.form.input',[
+                                        'label'         => __("Zip Code"),
+                                        'name'          => "zip_code",
+                                        'placeholder'   => __("Enter Zip")."...",
+                                        'value'         => old('zip_code',auth()->user()->address->zip ?? "")
                                     ])
                                 </div>
                             </div>
@@ -130,9 +127,8 @@
                 </div>
             </div>
         </div>
-
         <div class="col-xl-6 col-lg-6 mb-20">
-            <div class="custom-card mt-10">
+            <div class="custom-card">
                 <div class="dashboard-header-wrapper">
                     <h4 class="title">{{ __("Change Password") }}</h4>
                 </div>
@@ -141,53 +137,60 @@
                         @csrf
                         @method("PUT")
                         <div class="row">
-                            <div class="col-xl-12 col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'label'     => "Current Password<span>*</span>",
-                                    'name'      => "current_password",
-                                    'type'      => "password",
-                                    'placeholder'   => "Enter Password...",
-                                ])
+                            <div class="col-xl-12 col-lg-12 form-group show_hide_password">
+                                <label>{{ __("Current Password") }}<span>*</span></label>
+                                <input type="password" class="form--control" name="current_password" placeholder="{{ __("Enter Password") }}...">
+                                <span class="show-pass two"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                             </div>
-                            <div class="col-xl-12 col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'label'     => "New Password<span>*</span>",
-                                    'name'      => "password",
-                                    'type'      => "password",
-                                    'placeholder'   => "Enter Password...",
-                                ])
+                            <div class="col-xl-12 col-lg-12 form-group show_hide_password">
+                                <label>{{ __("New Password") }}<span>*</span></label>
+                                <input type="password" class="form--control" name="password" placeholder="{{ __("Enter Password") }}...">
+                                <span class="show-pass two"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                             </div>
-                            <div class="col-xl-12 col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'label'     => "Confirm Password<span>*</span>",
-                                    'name'      => "password_confirmation",
-                                    'type'      => "password",
-                                    'placeholder'   => "Enter Password...",
-                                ])
+                            <div class="col-xl-12 col-lg-12 form-group show_hide_password">
+                                <label>{{ __("Confirm Password") }}<span>*</span></label>
+                                <input type="password" class="form--control" name="password_confirmation" placeholder="{{ __("Enter Password") }}...">
+                                <span class="show-pass two"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <button type="submit" class="btn--base w-100">{{ __("Change") }}</button>
+                            <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Change") }}</span></button>
                         </div>
                     </form>
                 </div>
             </div>
-            @include('user.components.profile.kyc',compact("kyc_data"))
         </div>
     </div>
+</div>
 @endsection
 
 @push('script')
     <script>
-        getAllCountries("{{ setRoute('global.countries') }}");
-        $(document).ready(function(){
-            $("select[name=country]").change(function(){
-                var phoneCode = $("select[name=country] :selected").attr("data-mobile-code");
-                placePhoneCode(phoneCode);
+        getAllCountries("{{ setRoute('global.countries') }}",$(".country-select"));
+            $(document).ready(function(){
+
+                $(".country-select").select2();
+
+                $("select[name=country]").change(function(){
+                    var phoneCode = $("select[name=country] :selected").attr("data-mobile-code");
+                    placePhoneCode(phoneCode);
+                });
+
+                setTimeout(() => {
+                    var phoneCodeOnload = $("select[name=country] :selected").attr("data-mobile-code");
+                    placePhoneCode(phoneCodeOnload);
+                }, 400);
             });
 
-            countrySelect(".country-select",$(".country-select").siblings(".select2"));
-            stateSelect(".state-select",$(".state-select").siblings(".select2"));
+        //delete profile modal
+        $(".delete-btn").click(function(){
+            var actionRoute =  "{{ setRoute('user.delete.account') }}";
+            var target      = 1;
+            var btnText     = "Delete Account";
+            var projectName = "{{ @$basic_settings->site_name }}";
+            var name        = $(this).data('name');
+            var message     = `Are you sure to delete <strong>your account</strong>?<br>If you do not think you will use “<strong>${projectName}</strong>”  again and like your account deleted, we can take card of this for you. Keep in mind you will not be able to reactivate your account or retrieve any of the content or information you have added. If you would still like your account deleted, click “Delete Account”.?`;
+            openAlertModal(actionRoute,target,message,btnText,"DELETE");
         });
     </script>
 @endpush
