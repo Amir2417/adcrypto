@@ -23,7 +23,7 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('create', 'create')->name('create');
         Route::post('store', 'store')->name('store');
         Route::get('conversation/{encrypt_id}','conversation')->name('conversation');
-        Route::post('message/send','messageSend')->name('messaage.send');
+        Route::post('message/send','messageSend')->name('message.send');
     });
 
 });

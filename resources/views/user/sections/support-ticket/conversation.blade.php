@@ -1,21 +1,17 @@
 @extends('user.layouts.master')
 
-@push('css')
-    
-@endpush
-
 @section('breadcrumb')
     @include('user.components.breadcrumb',['breadcrumbs' => [
         [
-            'name'  => __("Dashboard"),
-            'url'   => setRoute("user.dashboard"),
+            'name'  => __("Support Ticket"),
+            'url'   => setRoute("user.support.ticket.index"),
         ]
-    ], 'active' => __("Support Tickets")])
+    ], 'active' => __("Conversation")])
 @endsection
 
 @section('content')
 <div class="body-wrapper">
-    <div class="custom-card support-card mt-30">
+    <div class="custom-card support-card mt-10">
         <div class="support-card-wrapper">
             <div class="card-header">
                 <div class="card-header-user-area">
@@ -46,12 +42,11 @@
                 </div>
             </div>
             @include('user.components.support-ticket.details',['support_ticket' => $support_ticket])
-        </div>
     </div>
 </div>
 @endsection
 
 @include('admin.components.support-ticket.conversation.connection-user',[
     'support_ticket' => $support_ticket,
-    'route'          => setRoute('user.support.ticket.messaage.send'),
+    'route'          => setRoute('user.support.ticket.message.send'),
 ])
