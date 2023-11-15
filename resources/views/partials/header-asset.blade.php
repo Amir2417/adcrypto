@@ -22,3 +22,16 @@
 <!-- file holder css -->
 <link rel="stylesheet" href="https://cdn.appdevs.net/fileholder/v1.0/css/fileholder-style.css" type="text/css">
 
+@php
+    $base_color = $basic_settings->base_color;
+    $secondary_color = $basic_settings->secondary_color;
+@endphp
+<style>
+    :root {
+        --primary-color: {{ $base_color }};
+    }
+    :root {
+        --secondary-color: {{ $secondary_color }};
+    }
+</style>
+

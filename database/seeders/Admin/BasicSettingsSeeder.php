@@ -18,8 +18,8 @@ class BasicSettingsSeeder extends Seeder
         $data = [
             'site_name'         => "AdCrypto",
             'site_title'        => "Coin Buy & Sale Cryptocurrency Platform",
-            'base_color'        => "#5a5278",
-            'secondary_color'   => "#ea5455",
+            'base_color'        => "#181a44",
+            'secondary_color'   => "#0194FC",
             'otp_exp_seconds'   => "3600",
             'timezone'          => "Asia/Dhaka",
             'user_registration' => 0,

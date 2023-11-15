@@ -14,6 +14,7 @@ use Database\Seeders\Admin\ExtensionSeeder;
 use Database\Seeders\Admin\AppSettingsSeeder;
 use Database\Seeders\Admin\SiteSectionsSeeder;
 use Database\Seeders\Admin\BasicSettingsSeeder;
+use Database\Seeders\Admin\LanguageSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\RoleSeeder;
 use Database\Seeders\Admin\SetupPageSeeder;
@@ -46,8 +47,8 @@ class DatabaseSeeder extends Seeder
             AdminHasRoleSeeder::class,
             UserSeeder::class,
             SetupPageSeeder::class,
-
             PaymentGatewaySeeder::class,
+            LanguageSeeder::class
         ]);
     }
 }
