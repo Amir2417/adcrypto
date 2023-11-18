@@ -9,13 +9,13 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('dashboard','index')->name('dashboard');
         Route::post('logout','logout')->name('logout');
-        Route::delete('delete/account','deleteAccount')->name('delete.account');
+        Route::delete('delete/account','deleteAccount')->name('delete.account')->middleware(['app.mode']);;
     });
 
     Route::controller(ProfileController::class)->prefix("profile")->name("profile.")->group(function(){
         Route::get('/','index')->name('index');
-        Route::put('password/update','passwordUpdate')->name('password.update');
-        Route::put('update','update')->name('update');
+        Route::put('password/update','passwordUpdate')->name('password.update')->middleware(['app.mode']);;
+        Route::put('update','update')->name('update')->middleware(['app.mode']);;
     });
 
     Route::controller(SupportTicketController::class)->prefix("prefix")->name("support.ticket.")->group(function () {
