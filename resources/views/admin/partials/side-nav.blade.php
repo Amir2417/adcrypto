@@ -250,6 +250,7 @@
 
                         $setup_section_childs  = [
                             setRoute('admin.setup.sections.section','banner'),
+                            setRoute('admin.setup.sections.section','security'),
                             setRoute('admin.setup.sections.section','solutions'),
                             setRoute('admin.setup.sections.section','monitoring'),
                             setRoute('admin.setup.sections.section','best-item'),
@@ -262,13 +263,17 @@
                     <li class="sidebar-menu-item sidebar-dropdown @if (in_array($current_url,$setup_section_childs)) active @endif">
                         <a href="javascript:void(0)">
                             <i class="menu-icon las la-terminal"></i>
-                            <span class="menu-title">Setup Section</span>
+                            <span class="menu-title">{{ __("Setup Section") }}</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li class="sidebar-menu-item">
                                 <a href="{{ setRoute('admin.setup.sections.section','banner') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','banner')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Banner Section</span>
+                                    <span class="menu-title">{{ __("Banner Section") }}</span>
+                                </a>
+                                <a href="{{ setRoute('admin.setup.sections.section','security') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','security')) active @endif">
+                                    <i class="menu-icon las la-ellipsis-h"></i>
+                                    <span class="menu-title">{{ __("Security Section") }}</span>
                                 </a>
                                 <a href="{{ setRoute('admin.setup.sections.section','solutions') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','solutions')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
