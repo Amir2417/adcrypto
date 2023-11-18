@@ -19,7 +19,7 @@ class SetupSectionsController extends Controller
 
     public function __construct()
     {
-        $this->languages = Language::whereNot('code',LanguageConst::NOT_REMOVABLE)->get();
+        $this->languages = Language::get();
     }
 
     /**
@@ -30,9 +30,12 @@ class SetupSectionsController extends Controller
      */
     public function section($slug,$type) {
         $sections = [
-            'banner'    => [
-                'view'      => "bannerView",
-                'update'    => "bannerUpdate",
+            'banner'            => [
+                'view'          => "bannerView",
+                'update'        => "bannerUpdate",
+                'itemStore'     => "bannerItemStore",
+                'itemUpdate'    => "bannerItemUpdate",
+                'itemDelete'    => "bannerItemDelete",
             ],
             'solutions'  => [
                 'view'      => "solutionView",
@@ -149,18 +152,47 @@ class SetupSectionsController extends Controller
      * @param \Illuminate\Http\Request  $request
      */
     public function bannerUpdate(Request $request,$slug) {
-        $basic_field_name = ['heading' => "required|string|max:100",'sub_heading' => "required|string|max:255",'button_name' => "required|string|max:50",'button_link' => "required|string|max:255"];
+        $basic_field_name   = [
+            'title'         => "required|string|max:100",
+            'heading'       => "required|string|max:100",
+            'sub_heading'   => "required|string|max:255",
+            'button_name'   => "required|string|max:50",
+        ];
 
         $slug = Str::slug(SiteSectionConst::BANNER_SECTION);
         $section = SiteSections::where("key",$slug)->first();
+
+        if($section      != null){
+            $data         = json_decode(json_encode($section->value),true);
+        }else{
+            $data         = [];
+        }
+
+        $validator  = Validator::make($request->all(),[
+            'image'             => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+            'button_image'             => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+            'button_link'       => "required|string|url|max:255",
+        ]);
+
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
+        $validated = $validator->validate();
+
+        $data['image']          = $section->value->image ?? "";
+        $data['button_image']   = $section->value->button_image ?? "";
+
+        $data['button_link']    = $validated['button_link'];
+
         if($request->hasFile("image")) {
-            $data['image']      = $this->imageValidate($request,"image",$section->value->image ?? null);
+            $data['image']              = $this->imageValidate($request,"image",$section->value->image ?? null);
+        }
+        if($request->hasFile("button_image")){
+            $data['button_image']       = $this->imageValidate($request,"button_image",$section->value->button_image ?? null);
         }
 
         $data['language']  = $this->contentValidate($request,$basic_field_name);
         $update_data['value']  = $data;
         $update_data['key']    = $slug;
-
+        
         try{
             SiteSections::updateOrCreate(['key' => $slug],$update_data);
         }catch(Exception $e) {
@@ -169,7 +201,6 @@ class SetupSectionsController extends Controller
 
         return back()->with(['success' => ['Section updated successfully!']]);
     }
-
     /**
      * Mehtod for show solutions section page
      * @param string $slug

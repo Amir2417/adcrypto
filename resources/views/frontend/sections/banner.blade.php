@@ -1,3 +1,10 @@
+@php
+    $app_local  = get_default_language_code();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::BANNER_SECTION);
+    $banner = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
+
+
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Banner
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -8,13 +15,16 @@
                 <div class="banner-content-wrapper">
                     <div class="banner-content">
                         <span class="title-badge"></span>
-                        <h5 class="sub-title">New era of financial innovation</h5>
-                        <h1 class="title">Make your <span>Crypto</span> Transaction</h1>
-                        <p>Cryptocurrencies have introduced a new era of financial innovation, offering opportunities and challenges. As the technology continues to evolve, their impact on various industries.</p>
+                        @php
+                            $heading    = explode(' ',@$banner->value->language->$app_local->heading);
+                        @endphp
+                        <h5 class="sub-title">{{ @$banner->value->language->$app_local->title ?? '' }}</h5>
+                        <h1 class="title">{{ $heading[0] . ' ' . $heading[1] }} <span>{{ $heading[2] }}</span>{{ implode(' ', array_slice($heading, 3)) }}</h1>
+                        <p>{{ @$banner->value->language->$app_local->subheading ?? '' }}</p>
                         <div class="banner-btn">
-                            <a href="about.html" class="btn--base">Explore Now</a>
-                            <a class="video-icon" data-rel="lightcase:myCollection" href="https://www.youtube.com/embed/7p6hG3plQj4">
-                                <img src="{{ asset('public/frontend/images/element/play-button.png') }}" alt="element">
+                            <a href="{{ setRoute('user.register') }}" class="btn--base">{{ @$banner->value->language->$app_local->button_name ?? '' }}</a>
+                            <a class="video-icon" data-rel="lightcase:myCollection" href="{{ @$banner->value->button_link ?? '' }}">
+                                <img src="{{ get_image(@$banner->value->button_image , 'site-section') }}" alt="element">
                             </a>
                         </div>
                     </div>
@@ -22,7 +32,7 @@
             </div>
             <div class="col-xl-6 col-lg-6 mb-30">
                 <div class="banner-thumb">
-                    <img src="{{ asset('public/frontend/images/banner/coinbox.png') }}" alt="banner">
+                    <img src="{{ get_image(@$banner->value->image , 'site-section') }}" alt="banner">
                 </div>
             </div>
         </div>
