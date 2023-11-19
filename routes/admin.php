@@ -206,6 +206,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('security/status/update/{slug}','securityStatusUpdate')->name('security.status.update');
         Route::put('statistic/status/update/{slug}','statisticStatusUpdate')->name('statistic.status.update');
         Route::put('faq/status/update/{slug}','faqStatusUpdate')->name('faq.status.update');
+        Route::put('service/status/update/{slug}','serviceStatusUpdate')->name('service.status.update');
     });
 
     // Setup Pages Controller

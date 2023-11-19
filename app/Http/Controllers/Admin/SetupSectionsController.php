@@ -79,7 +79,13 @@ class SetupSectionsController extends Controller
                 'itemUpdate'      => "faqItemUpdate",
                 'itemDelete'      => "faqItemDelete",
             ],
-
+            'service'         => [
+                'view'            => "serviceView",
+                'update'          => "serviceUpdate",
+                'itemStore'       => "serviceItemStore",
+                'itemUpdate'      => "serviceItemUpdate",
+                'itemDelete'      => "serviceItemDelete",
+            ],
 
 
             'solutions'  => [
@@ -1287,6 +1293,215 @@ class SetupSectionsController extends Controller
         }
 
         $slug           = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section        = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data       = json_decode(json_encode($section->value),true);
+        }else{
+            $data       = [];
+        }
+        if(array_key_exists("items",$data) && array_key_exists($request->data_target,$data['items'])) {
+            $data['items'][$request->data_target]['status'] = ($request->status == 1) ? 0 : 1;
+        }else {
+            return Response::error(['Items not found or invalid!'],[],404);
+        }
+
+        $section->update([
+            'value'     => $data,
+        ]);
+
+        return Response::success(['Section item status updated successfully!'],[],200);
+        
+    }
+    /**
+     * Method for show service section page
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function serviceView($slug){
+        $page_title     = "Service Section";
+        $section_slug   = Str::slug(SiteSectionConst::SERVICE_SECTION);
+        $data           = SiteSections::getData($section_slug)->first();
+        $languages      = $this->languages;
+        
+        return view('admin.sections.setup-sections.service-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug'
+        ));
+    }
+    /**
+     * Method for update howItsWork section page
+     * @param string $slug
+     * @return view
+     */
+    public function serviceUpdate(Request $request,$slug){
+
+        $basic_field_name = [
+            'title'       => 'required|string|max:100',
+            'heading'     => 'required|string|max:100',
+        ];
+
+        $slug     = Str::slug(SiteSectionConst::SERVICE_SECTION);
+        $section  = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data    = json_decode(json_encode($section->value),true);
+        }else{
+            $data    =[];
+        }
+
+        $data['language']     = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']   = $slug;
+        $update_data['value'] = $data;
+        try{
+            SiteSections::updateOrCreate(["key"=>$slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+
+        return back()->with(['success' => ['Section Updated Successfully!']]);
+     
+    }
+    /**
+     * Method for store service item
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function serviceItemStore(Request $request,$slug) {
+        $basic_field_name = [
+            'item_title'       => 'required|string|max:100',
+            'item_heading'       => 'required|string|max:500',
+        ];
+
+
+        $language_wise_data = $this->contentValidate($request,$basic_field_name,"service-add");
+        if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
+        
+        $slug       = Str::slug(SiteSectionConst::SERVICE_SECTION);
+        $section    = SiteSections::where('key',$slug)->first();
+        if($section != null){
+            $section_data = json_decode(json_encode($section->value),true);
+        }else{
+            $section_data = [];
+        }
+        $unique_id =uniqid();
+
+        $validator  = Validator::make($request->all(),[
+            'icon'            => "required|string|max:100",
+        ]);
+
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput()->with('modal','service-add');
+        $validated = $validator->validate();
+
+        $section_data['items'][$unique_id]['language'] = $language_wise_data;
+        $section_data['items'][$unique_id]['status']   = 1;
+        $section_data['items'][$unique_id]['id']       = $unique_id;
+        $section_data['items'][$unique_id]['icon']     = $validated['icon'];
+
+        $update_data['key']   = $slug;
+        $update_data['value'] = $section_data;
+        
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went worng! Please try again.']]);
+        }
+        return back()->with(['success' => ['Section item added successfully!']]);
+    }
+    
+    /**
+     * Method for update service item
+     * @param string $slug
+     * @return view
+     */
+    public function serviceItemUpdate(Request $request,$slug){
+        $request->validate([
+            'target'           => 'required|string',
+        ]);
+
+        $basic_field_name      = [
+            "item_title_edit"  => "required|string|max:100",
+            "item_heading_edit"  => "required|string|max:500",
+        ];
+        
+        $slug        = Str::slug(SiteSectionConst::SERVICE_SECTION);
+        $section     = SiteSections::getData($slug)->first();
+        if(!$section) return back()->with(['error' => ['Section not found!']]);
+        $section_values = json_decode(json_encode($section->value),true);
+        if(!isset($section_values["items"])) return back()->with(['error' => ['Section item not found']]);
+        if(!array_key_exists($request->target,$section_values['items'])) return back()->with(['error' => ['Section item is invalid!']]);
+
+        $language_wise_data = $this->contentValidate($request,$basic_field_name,"service-edit");
+        if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
+         
+        $language_wise_data = array_map(function($language){
+            return replace_array_key($language,"_edit");
+        },$language_wise_data);
+
+        $validator  = Validator::make($request->all(),[
+            'icon_edit'            => "required|string|max:100",
+        ]);
+
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput()->with('modal','service-edit');
+        $validated = $validator->validate();
+
+        $section_values['items'][$request->target]['language'] = $language_wise_data;
+        $section_values['items'][$request->target]['icon']     = $validated['icon_edit'];
+        
+       
+       try{
+            $section->update([
+                'value' => $section_values,
+            ]);
+       }catch(Exception $e){
+            return back()->with(['error' => ['Something Went wrong! Please try again.']]);
+       }
+       return back()->with(['success' => ['Section item updated successfully!']]);
+    }
+    /**
+     * Method for delete service item
+     * @param string $slug
+     * @return view
+     */
+    public function serviceItemDelete(Request $request,$slug){
+        $request->validate([
+            'target' => 'required|string',
+        ]);
+
+        $slug     = Str::slug(SiteSectionConst::SERVICE_SECTION);
+        $section  = SiteSections::getData($slug)->first();
+        if(!$section) return back()->with(['error' => ['Section not found!']]);
+        $section_values  = json_decode(json_encode($section->value),true);
+        if(!isset($section_values['items'])) return back()->with(['error' => ['Section Item not Found!']]);
+        if(!array_key_exists($request->target,$section_values['items'])) return back()->with(['error' => ['Section item is invalid']]);
+
+        try{
+            unset($section_values['items'][$request->target]);
+            $section->update([
+                'value' => $section_values,
+            ]);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with(['success' => ['Section item deleted successfully!']]);    
+    }
+    /**
+     * Mehtod for update service item status 
+     * @param string $slug
+     * @return view
+     */
+    public function serviceStatusUpdate(Request $request,$slug) {
+        
+        $validator = Validator::make($request->all(),[
+            'status'                    => 'required|boolean',
+            'data_target'               => 'required|string',
+        ]);
+        
+        if ($validator->stopOnFirstFailure()->fails()) {
+            return Response::error($validator->errors()->all(),null,400);
+        }
+
+        $slug           = Str::slug(SiteSectionConst::SERVICE_SECTION);
         $section        = SiteSections::where("key",$slug)->first();
         if($section != null ){
             $data       = json_decode(json_encode($section->value),true);

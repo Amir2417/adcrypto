@@ -1,3 +1,9 @@
+@php
+    $app_local      = get_default_language_code();
+    $slug           = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::SERVICE_SECTION);
+    $service        = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
+
 @extends('frontend.layouts.master')
 
 @push("css")
@@ -18,56 +24,30 @@
             <div class="col-xl-6 col-lg-8 text-center">
                 <div class="section-header">
                     <span class="title-badge">$</span>
-                    <h5 class="section-sub-title">Services</h5>
-                    <h2 class="section-title">Our Upheld What We <span>Serve</span></h2>
+                    <h5 class="section-sub-title">{{ @$service->value->language->$app_local->title ?? '' }}</h5>
+                    @php
+                        $heading    = explode('|' , @$service->value->language->$app_local->heading);
+                    @endphp
+                    <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mb-30-none">
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="lab la-codepen"></i>
+            @foreach (@$service->value->items ?? [] as $item)
+                @if ($item->status == 1)
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div class="service-item">
+                            <div class="service-icon">
+                                <i class="{{ $item->icon }}"></i>
+                            </div>
+                            <div class="service-content">
+                                <h3 class="title">{{ $item->language->$app_local->item_title }}</h3>
+                                <p>{{ $item->language->$app_local->item_heading }}</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="service-content">
-                        <h3 class="title">Digital Payments</h3>
-                        <p>Cryptocurrencies can be used for online and in-person payments, offering an alternative to traditional payment methods.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="las la-print"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3 class="title">Global Access</h3>
-                        <p>Cryptocurrencies can be used for online and in-person payments, offering an alternative to traditional payment methods.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="las la-book-open"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3 class="title">Remittances</h3>
-                        <p>Cryptocurrencies can be used for online and in-person payments, offering an alternative to traditional payment methods.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                <div class="service-item">
-                    <div class="service-icon">
-                        <i class="las la-mobile"></i>
-                    </div>
-                    <div class="service-content">
-                        <h3 class="title">Decentralization</h3>
-                        <p>Cryptocurrencies can be used for online and in-person payments, offering an alternative to traditional payment methods.</p>
-                    </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
     </div>
 </section>

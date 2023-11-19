@@ -15,9 +15,9 @@
                         <span class="title-badge">$</span>
                         <h5 class="section-sub-title">{{ @$statistic->value->language->$app_local->title }}</h5>
                         @php
-                            $heading    = explode(' ', @$statistic->value->language->$app_local->heading);
+                            $heading    = explode('|', @$statistic->value->language->$app_local->heading);
                         @endphp
-                        <h2 class="section-title">{{ $heading[0] . ' ' . $heading[1] . ' ' . $heading[2] . ' '. $heading[3] }} <span>{{ implode(' ', array_slice($heading , 4 )) }}</span></h2>
+                        <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                     </div>
                     <p>{{ @$statistic->value->language->$app_local->sub_heading }}</p>
                     <div class="statistics-wrapper">

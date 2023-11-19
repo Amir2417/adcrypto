@@ -12,11 +12,11 @@
             <div class="col-xl-6 col-lg-8 text-center">
                 <div class="section-header">
                     <span class="title-badge">$</span>
-                    <h5 class="section-sub-title">{{ @$security->value->language->$app_local->title }}</h5>
+                    <h5 class="section-sub-title">{{ @$security->value->language->$app_local->title ?? '' }}</h5>
                     @php
-                        $heading    = explode(' ',$security->value->language->$app_local->heading);
+                        $heading    = explode('|',$security->value->language->$app_local->heading);
                     @endphp
-                    <h2 class="section-title">{{ $heading[0] . ' ' . $heading[1] . ' ' .$heading[2] }} <span>{{ implode(' ', array_slice($heading, 3)) }}</span></h2>
+                    <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                 </div>
             </div>
         </div>
