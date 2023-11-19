@@ -254,6 +254,7 @@
                             setRoute('admin.setup.sections.section','download-app'),
                             setRoute('admin.setup.sections.section','statistic'),
                             setRoute('admin.setup.sections.section','call-to-action'),
+                            setRoute('admin.setup.sections.section','footer'),
                             setRoute('admin.setup.sections.section','solutions'),
                             setRoute('admin.setup.sections.section','monitoring'),
                             setRoute('admin.setup.sections.section','best-item'),
@@ -289,6 +290,10 @@
                                 <a href="{{ setRoute('admin.setup.sections.section','call-to-action') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','call-to-action')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
                                     <span class="menu-title">{{ __("Call To Action Section") }}</span>
+                                </a>
+                                <a href="{{ setRoute('admin.setup.sections.section','footer') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','footer')) active @endif">
+                                    <i class="menu-icon las la-ellipsis-h"></i>
+                                    <span class="menu-title">{{ __("Footer Section") }}</span>
                                 </a>
                                 <a href="{{ setRoute('admin.setup.sections.section','solutions') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','solutions')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>

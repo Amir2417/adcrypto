@@ -8,6 +8,7 @@ class SiteSectionConst{
     const DOWNLOAD_APP_SECTION      = "Download App";
     const STATISTIC_SECTION         = "Statistic Section";
     const CALL_TO_ACTION_SECTION    = "Call To Action Section";
+    const FOOTER_SECTION            = "Footer Section";
     const SOLUTIONS_SECTION         = "Solutions Section";
     const MONITORING_SECTION        = "Monitoring Section";
     const BEST_ITEM_SECTION         = "Best Item Section";

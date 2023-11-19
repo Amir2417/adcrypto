@@ -60,6 +60,10 @@ class SetupSectionsController extends Controller
                 'view'          => "callToActionView",
                 'update'        => "callToActionUpdate",
             ],
+            'footer'            => [
+                'view'          => "footerView",
+                'update'        => "footerUpdate"
+            ],
             'solutions'  => [
                 'view'      => "solutionView",
                 'update'    => "solutionUpdate",
@@ -907,6 +911,73 @@ class SetupSectionsController extends Controller
         }
 
         return back()->with(['success' => ['Section updated successfully!']]);
+    }
+    /**
+     * Method for show footer section
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function footerView($slug){
+        $page_title     = "Footer Section";
+        $section_slug   = Str::slug(SiteSectionConst::FOOTER_SECTION);
+        $data           = SiteSections::getData($section_slug)->first();
+        $languages      = $this->languages;
+
+        return view('admin.sections.setup-sections.footer-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug'
+        ));
+    }
+    /**
+     * Method for update footer section 
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function footerUpdate(Request $request,$slug) {
+        $slug      = Str::slug(SiteSectionConst::FOOTER_SECTION);
+        $section   = SiteSections::where('key',$slug)->first();
+        if($section != null){
+            $data  = json_decode(json_encode($section->value),true);
+        }else{
+            $data = [];
+        }
+
+        $basic_field_name = [
+            'description'   => "required|string|max:255",
+        ];
+
+        $data['footer']['language']   = $this->contentValidate($request,$basic_field_name);
+
+        $validated = Validator::make($request->all(),[
+            'icon'                 => "nullable|array",
+            'icon.*'               => "nullable|string|max:200",
+            'link'                 => "nullable|array",
+            'link.*'               => "nullable|url|max:255",
+        ])->validate();
+
+        $social_links = [];
+        foreach($validated['icon'] ?? [] as $key => $icon) {
+            $social_links[] = [
+                'icon'          => $icon,
+                'link'          => $validated['link'][$key] ?? "",
+            ];
+        }
+        $data['social_links']         = $social_links;
+        $data['footer']['image']      = $section->value->footer->image ?? "";
+        if($request->hasFile("image")) {
+            $data['footer']['image']  = $this->imageValidate($request,"image",$section->value->footer->image ?? null);
+        }
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],[
+                'key'   => $slug,
+                'value' => $data,
+            ]);
+        }catch(Exception $e) {
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+        return back()->with(['success' => ['Section Updated Successfully!']]);
     }
     /**
      * Mehtod for show solutions section page

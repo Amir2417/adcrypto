@@ -1029,6 +1029,21 @@ var storedHtmlMarkup = {
   </div>
 </div>
   `,
+  setup_section_footer_social_link_input:`
+<div class="row align-items-end">
+  <div class="col-xl-3 col-lg-3 form-group">
+      <label>Icon*</label>
+      <input type="text" class="form--control icp icp-auto iconpicker-element iconpicker-input" placeholder="Type Here..." name="icon[]">
+  </div>
+  <div class="col-xl-8 col-lg-8 form-group">
+      <label>Link*</label>
+      <input type="text" class="form--control" placeholder="Type Here..." name="link[]">
+  </div>
+  <div class="col-xl-1 col-lg-1 form-group">
+      <button type="button" class="custom-btn btn--base btn--danger row-cross-btn w-100"><i class="las la-times"></i></button>
+  </div>
+</div>
+`,
   kyc_input_fields:`<div class="row add-row-wrapper align-items-end">
   <div class="col-xl-3 col-lg-3 form-group">
     <label>Field Name*</label>

@@ -1,3 +1,9 @@
+@php
+    $app_local  = get_default_language_code();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::FOOTER_SECTION);
+    $footer = App\Models\Admin\SiteSections::getData($slug)->first();
+    $menues = DB::table('setup_pages')->where('status', 1)->get();
+@endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Footer
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -5,43 +11,31 @@
     <div class="footer-top-area">
         <div class="container">
             <div class="row justify-content-center mb-30-none">
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
                     <div class="footer-widget">
                         <div class="footer-logo">
-                            <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
+                            <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ @$footer->value->footer->image ? get_image(@$footer->value->footer->image,'site-section') : get_logo($basic_settings) }}" alt="site-logo"></a>
                         </div>
-                        <p>Cryptocurrencies have introduced a new era of financial innovation, offering opportunities and challenges.</p>
+                        <p>{{ @$footer->value->footer->language->$app_local->description ?? '' }}</p>
                         <ul class="footer-social">
-                            <li><a href="#0"><i class="fab fa-facebook"></i></a></li>
-                            <li><a href="#0"><i class="fab fa-instagram"></i></a></li>
-                            <li><a href="#0"><i class="fab fa-twitter"></i></a></li>
-                            <li><a href="#0"><i class="fab fa-github"></i></a></li>
+                            @foreach (@$footer->value->social_links ?? [] as $item)
+                                <li><a href="{{ $item->link ?? '' }}"><i class="{{ $item->icon ?? '' }}"></i></a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
                     <div class="footer-widget">
-                        <h4 class="widget-title">Help Links</h4>
+                        <h4 class="widget-title">{{ __("Menus") }}</h4>
+                        
                         <ul class="footer-list">
-                            <li><a href="#0">About</a></li>
-                            <li><a href="#0">Currency</a></li>
-                            <li><a href="#0">Journal</a></li>
-                            <li><a href="#0">FAQ</a></li>
+                            @foreach ($menues as $item)
+                                <li><a href="{{ url($item->url) }}">{{ $item->title }}</a></li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-30">
-                    <div class="footer-widget">
-                        <h4 class="widget-title">Quick Links</h4>
-                        <ul class="footer-list">
-                            <li><a href="#0">Download App</a></li>
-                            <li><a href="#0">Services</a></li>
-                            <li><a href="#0">Join Us</a></li>
-                            <li><a href="#0">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 mb-30">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
                     <div class="footer-widget">
                         <h4 class="widget-title">Newsletter</h4>
                         <p>Check Our Newsletter And Subscribe Us.</p>
@@ -65,7 +59,7 @@
                     <li><a href="#0">Terms of service</a></li>
                 </ul>
                 <div class="copyright-area">
-                    <p>© 2023 <a href="index.html">AdCrypto</a> is Proudly Powered by AppDevs</p>
+                    <p>© 2023 <a href="{{ setRoute('index') }}">{{ $basic_settings->site_name }}</a> {{ __("is Proudly Powered by AppDevs") }}</p>
                 </div>
             </div>
         </div>
