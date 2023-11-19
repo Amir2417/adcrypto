@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Frontend;
 
 use Exception;
 use App\Models\Subscribe;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Admin\UsefulLink;
+use App\Models\Admin\SiteSections;
+use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Blog;
+use App\Models\Admin\BlogCategory;
 use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
@@ -43,9 +48,35 @@ class SiteController extends Controller
      */
     public function journal(){
         $page_title     = "- Journal";
+        $slug           = Str::slug(SiteSectionConst::BLOG_SECTION);
+        $web_journal    = SiteSections::getData($slug)->first();
+        $category       = BlogCategory::where('status',true)->get();
+        $blogs          = Blog::where('status',true)->get();
 
         return view('frontend.pages.journal',compact(
-            'page_title'
+            'page_title',
+            'web_journal',
+            'category',
+            'blogs'
+        ));
+    }
+    /**
+     * Method for view the journal details page
+     * @param $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function journalDetails($slug){
+        $page_title             = "| Blog Details";
+        $blog                   = Blog::where('slug',$slug)->first();
+        if(!$blog) abort(404);
+        $category               = BlogCategory::withCount('blog')->where('status',true)->get();
+        $recent_posts           = Blog::where('status',true)->where('slug','!=',$slug)->get();
+
+        return view('frontend.pages.journal-details',compact(
+            'page_title',
+            'blog',
+            'category',
+            'recent_posts',
         ));
     }
     /**

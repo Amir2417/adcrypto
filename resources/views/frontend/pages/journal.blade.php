@@ -1,3 +1,6 @@
+@php
+    $app_local      = get_default_language_code();
+@endphp
 @extends('frontend.layouts.master')
 
 @push("css")
@@ -18,45 +21,30 @@
             <div class="col-xl-6 col-lg-8 text-center">
                 <div class="section-header">
                     <span class="title-badge">$</span>
-                    <h5 class="section-sub-title">Web Journal</h5>
-                    <h2 class="section-title">Read Our Recent <span>Web Journal</span></h2>
+                    <h5 class="section-sub-title">{{ @$web_journal->value->language->$app_local->title }}</h5>
+                    @php
+                        $heading    = explode('|' , @$web_journal->value->language->$app_local->heading)
+                    @endphp
+                    <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                 </div>
             </div>
         </div>
         <div class="row justify-content-center mb-30-none">
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-30">
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="{{ asset('public/frontend') }}/images/blog/blog-1.jpg" alt="blog">
-                    </div>
-                    <div class="blog-content">
-                        <span class="date"><i class="las la-calendar"></i> February 18, 2023</span>
-                        <h5 class="title"><a href="blog-details.html">We Care About Your Money And Safety far far away.</a></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-30">
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="{{ asset('public/frontend') }}/images/blog/blog-2.jpg" alt="blog">
-                    </div>
-                    <div class="blog-content">
-                        <span class="date"><i class="las la-calendar"></i> February 18, 2023</span>
-                        <h5 class="title"><a href="blog-details.html">The Impact Of Online Payment Use Crypto Currency.</a></h5>
+            @foreach ($blogs ?? [] as $item)
+                <div class="col-xl-4 col-lg-6 col-md-6 mb-30">
+                    <div class="blog-item">
+                        <div class="blog-thumb">
+                            <img src="{{ get_image($item->data->image ,'site-section') }}" alt="blog">
+                        </div>
+                        <div class="blog-content">
+                           
+                            <span class="date"><i class="las la-calendar"></i> {{ \Carbon\Carbon::parse($item->created_at)->format('F j, Y') }}</span>
+                            <span class="date"><i class="las la-calendar"></i> {{ $item->created_at }}</span>
+                            <h5 class="title"><a href="{{ setRoute('journal.details',$item->slug) }}">{{ Str::words($item->data->language->$app_local->title ?? "","5","...") }}</a></h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-xl-4 col-lg-6 col-md-6 mb-30">
-                <div class="blog-item">
-                    <div class="blog-thumb">
-                        <img src="{{ asset('public/frontend') }}/images/blog/blog-3.jpg" alt="blog">
-                    </div>
-                    <div class="blog-content">
-                        <span class="date"><i class="las la-calendar"></i> February 18, 2023</span>
-                        <h5 class="title"><a href="blog-details.html">Is Now A Good Time To Worry More About Financial.</a></h5>
-                    </div>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="view-more-btn text-center mt-60">
             <a href="blog.html" class="btn--base">View More</a>

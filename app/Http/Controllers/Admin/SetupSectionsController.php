@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use Exception;
+use App\Models\Admin\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Language;
 use App\Constants\LanguageConst;
+use App\Models\Admin\BlogCategory;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
@@ -86,6 +88,12 @@ class SetupSectionsController extends Controller
                 'itemUpdate'      => "serviceItemUpdate",
                 'itemDelete'      => "serviceItemDelete",
             ],
+            'blog'        => [
+                'view'       => "blogView",
+                'update'     => "blogUpdate",
+            ],
+
+
 
 
             'solutions'  => [
@@ -1520,6 +1528,69 @@ class SetupSectionsController extends Controller
 
         return Response::success(['Section item status updated successfully!'],[],200);
         
+    }
+    /**
+     *  Method for show journal section page
+     * @param string $slug
+     * @return view
+     */
+    public function blogView($slug){
+        $page_title         = "Blog Section";
+        $section_slug       = Str::slug(SiteSectionConst::BLOG_SECTION);
+        $data               = SiteSections::getData($section_slug)->first();
+        $languages          = $this->languages;
+        $category           = BlogCategory::get();
+        $active_category    = BlogCategory::where('status',true)->get();
+        $blog               = Blog::orderByDesc("id")->get();
+        $blog_active        = Blog::where('status',true)->get();
+        $blog_deactive      = Blog::where('status',false)->get();
+
+
+        return view('admin.sections.setup-sections.blog-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug',
+            'category',
+            'active_category',
+            'blog',
+            'blog_active',
+            'blog_deactive',
+        ));
+    }
+    /**
+     * Mehtod for update webJournal section page
+     * @param string $slug
+     * @return view
+     */
+    public function blogUpdate(Request $request,$slug){
+
+        $basic_field_name       = [
+            'title'             => 'required|string|max:100',
+            'heading'           => 'required|string|max:300',
+        ];
+
+        $slug     = Str::slug(SiteSectionConst::BLOG_SECTION);
+        $section  = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data    = json_decode(json_encode($section->value),true);
+        }else{
+            $data    =[];
+        }
+
+        $data['language']     = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']   = $slug;
+        $update_data['value'] = $data;
+        
+
+        try{
+            SiteSections::updateOrCreate(["key"=>$slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+
+        return back()->with(['success' => ['Section Updated Successfully!']]);
+     
     }
     /**
      * Mehtod for show solutions section page

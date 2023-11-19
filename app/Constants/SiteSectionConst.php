@@ -13,7 +13,7 @@ class SiteSectionConst{
     const ABOUT_SECTION             = "About Section";
     const FAQ_SECTION               = "Faq Section";
     const SERVICE_SECTION           = "Service Section";
-
+    const BLOG_SECTION              = "Blog Section";
 
     const SOLUTIONS_SECTION         = "Solutions Section";
     const MONITORING_SECTION        = "Monitoring Section";

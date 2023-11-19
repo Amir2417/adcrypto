@@ -8,6 +8,8 @@ use App\Http\Controllers\Admin\AddMoneyController;
 use App\Http\Controllers\Admin\AdminCareController;
 use App\Http\Controllers\Admin\AppOnboardScreensController;
 use App\Http\Controllers\Admin\AppSettingsController;
+use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BroadcastingController;
 use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
@@ -207,6 +209,24 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('statistic/status/update/{slug}','statisticStatusUpdate')->name('statistic.status.update');
         Route::put('faq/status/update/{slug}','faqStatusUpdate')->name('faq.status.update');
         Route::put('service/status/update/{slug}','serviceStatusUpdate')->name('service.status.update');
+
+        Route::controller(BlogController::class)->prefix('blog')->name('blog.')->group(function () {
+            Route::get('create','create')->name('create');
+            Route::post('store','store')->name('store');
+            Route::put('status/update','statusUpdate')->name('status.update');
+            Route::delete('delete','delete')->name('delete');
+            Route::get('edit/{slug}','edit')->name('edit');
+            Route::post('update/{slug}','update')->name('update');
+        });
+
+        //Web journal category controller
+        Route::controller(BlogCategoryController::class)->prefix('category')->name('category.')->group(function (){
+            Route::get('index','index')->name('index');
+            Route::post('store','store')->name('store');
+            Route::post('update','update')->name('update');
+            Route::delete('delete','delete')->name('delete');
+            Route::put('status/update','statusUpdate')->name('status.update');
+        });
     });
 
     // Setup Pages Controller
