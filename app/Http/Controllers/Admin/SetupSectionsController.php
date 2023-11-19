@@ -72,6 +72,16 @@ class SetupSectionsController extends Controller
                 'view'          => "aboutView",
                 'update'        => "aboutUpdate",
             ],
+            'faq'         => [
+                'view'            => "faqView",
+                'update'          => "faqUpdate",
+                'itemStore'       => "faqItemStore",
+                'itemUpdate'      => "faqItemUpdate",
+                'itemDelete'      => "faqItemDelete",
+            ],
+
+
+
             'solutions'  => [
                 'view'      => "solutionView",
                 'update'    => "solutionUpdate",
@@ -1099,6 +1109,202 @@ class SetupSectionsController extends Controller
         }
         return back()->with( ['success' => ['Section Updated Successfully!']]);
 
+    }
+    /**
+     * Mehtod for show faq section page
+     * @param string $slug
+     * @return view
+    */
+    public function faqView($slug){
+        $page_title   = "Faq Section";
+        $section_slug = Str::slug(SiteSectionConst::FAQ_SECTION); 
+        $data         = SiteSections::getData($section_slug)->first();
+        $languages    = $this->languages;
+
+        return view('admin.sections.setup-sections.faq-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug'
+        ));
+    }
+    /**
+     * Mehtod for update faq section information
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+    */
+    public function faqUpdate(Request $request,$slug) {
+        
+        $basic_field_name   = [
+            'title'         => 'required|string|max:100',
+            'heading'       => 'required|string|max:100',
+        ];
+
+        $slug           = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section        = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data       = json_decode(json_encode($section->value),true);
+        }else{
+            $data       = [];
+        }
+        
+
+        $data['language']      = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']    = $slug;
+        $update_data['value']  = $data;
+        
+        try{
+            SiteSections::updateOrCreate(['key'=>$slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error'=>'Something went wrong! Please try again.']);
+        }
+        return back()->with(['success'  =>  ['Section updated successfully!']]);
+
+    }
+    /**
+     * Mehtod for store faq item information
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+    */
+    public function faqItemStore(Request $request,$slug) {
+        $basic_field_name  = [
+            'question'     => "required|string|max:255",
+            'answer'       => "required|string|max:500",
+            
+        ];
+
+        $language_wise_data = $this->contentValidate($request,$basic_field_name,"faq-add");
+        if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
+        $slug = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section = SiteSections::where("key",$slug)->first();
+
+        if($section != null) {
+            $section_data = json_decode(json_encode($section->value),true);
+        }else {
+            $section_data = [];
+        }
+        $unique_id = uniqid();
+        $default =get_default_language_code();
+        $section_data['items'][$unique_id]['language'] = $language_wise_data;
+        $section_data['items'][$unique_id]['status']   = 1;
+        $section_data['items'][$unique_id]['id']       = $unique_id;
+
+        $update_data['key']     = $slug;
+        $update_data['value']   = $section_data;
+       
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e) {
+            return back()->with(['error' => ['Something went worng! Please try again']]);
+        }
+
+        return back()->with(['success'   => ['Section item added successfully!']]);
+    }
+    /**
+     * Mehtod for update faq item information
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+    */
+    public function faqItemUpdate(Request $request,$slug) {
+        $request->validate([
+            'target'         =>'required|string',
+        ]);
+
+        $basic_field_name = [
+            'question_edit'  => "required|string|max:255",
+            'answer_edit'    => "required|string|max:500",
+        ];
+
+        $slug              = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section           = SiteSections::getData($slug)->first();
+
+        if(!$section) return back()->with(['error' => ['Section Not Found!']]);
+        $section_values    = json_decode(json_encode($section->value),true);
+        
+        if(!isset($section_values['items'])) return back()->with(['error' => ['Section Item Not Found!']]);
+        if(!array_key_exists($request->target,$section_values['items'])) return back()->with(['[error' => ['Section Item is invalid']]);
+
+        $language_wise_data = $this->contentValidate($request,$basic_field_name,"faq-edit");
+        
+        if($language_wise_data instanceof RedirectResponse) return $language_wise_data;
+        $language_wise_data = array_map(function($language){
+            return replace_array_key($language,'_edit');
+        },$language_wise_data);
+        
+        $section_values['items'][$request->target]['language'] = $language_wise_data;
+
+        try{
+            $section->update([
+                'value'  =>$section_values,
+            ]);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+
+        return back()->with(['success'   => ['Information updated successfully!']]);    
+    }
+    /**
+     * Mehtod for delete faq item information
+     * @param string $slug
+     * @return view
+     */
+    public function faqItemDelete(request $request,$slug){
+        $request->validate([
+            'target'    =>'required|string',
+        ]);
+
+        $slug           = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section        = SiteSections::getData($slug)->first();
+        if(!$section) return back()->with(['error' => ['Section not found!']]);
+        $section_values = json_decode(json_encode($section->value),true);
+
+        if(!isset($section_values['items'])) return back()->with(['error' => ['Section item not found!']]);
+        if(!array_key_exists($request->target,$section_values['items'])) return back()->with(['error' => ['Section item not found!']]);
+        try{
+            unset($section_values['items'][$request->target]);
+            $section->update([
+                'value' => $section_values,
+            ]);
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+        return back()->with(['success' => ['Section item deleted successfully!']]);
+    }
+    /**
+     * Mehtod for update faq item status 
+     * @param string $slug
+     * @return view
+     */
+    public function faqStatusUpdate(Request $request,$slug) {
+        
+        $validator = Validator::make($request->all(),[
+            'status'                    => 'required|boolean',
+            'data_target'               => 'required|string',
+        ]);
+        
+        if ($validator->stopOnFirstFailure()->fails()) {
+            return Response::error($validator->errors()->all(),null,400);
+        }
+
+        $slug           = Str::slug(SiteSectionConst::FAQ_SECTION);
+        $section        = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data       = json_decode(json_encode($section->value),true);
+        }else{
+            $data       = [];
+        }
+        if(array_key_exists("items",$data) && array_key_exists($request->data_target,$data['items'])) {
+            $data['items'][$request->data_target]['status'] = ($request->status == 1) ? 0 : 1;
+        }else {
+            return Response::error(['Items not found or invalid!'],[],404);
+        }
+
+        $section->update([
+            'value'     => $data,
+        ]);
+
+        return Response::success(['Section item status updated successfully!'],[],200);
+        
     }
     /**
      * Mehtod for show solutions section page

@@ -257,6 +257,7 @@
                             setRoute('admin.setup.sections.section','footer'),
                             setRoute('admin.setup.sections.section','news-letter'),
                             setRoute('admin.setup.sections.section','about'),
+                            setRoute('admin.setup.sections.section','faq'),
                             setRoute('admin.setup.sections.section','solutions'),
                             setRoute('admin.setup.sections.section','monitoring'),
                             setRoute('admin.setup.sections.section','best-item'),
@@ -304,6 +305,10 @@
                                 <a href="{{ setRoute('admin.setup.sections.section','about') }}" class="nav-link @if($current_url == setRoute('admin.setup.sections.section','about')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
                                     <span class="menu-title"> {{ __('About Section') }} </span>
+                                </a>
+                                <a href="{{ setRoute('admin.setup.sections.section','faq') }}" class="nav-link @if($current_url == setRoute('admin.setup.sections.section','faq')) active @endif">
+                                    <i class="menu-icon las la-ellipsis-h"></i>
+                                    <span class="menu-title"> {{ __('Faq Section') }} </span>
                                 </a>
                                 <a href="{{ setRoute('admin.setup.sections.section','solutions') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','solutions')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
