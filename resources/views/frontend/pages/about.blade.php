@@ -1,3 +1,9 @@
+@php
+    $app_local      = get_default_language_code();
+    $slug           = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::ABOUT_SECTION);
+    $about         = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
+
 @extends('frontend.layouts.master')
 
 @push("css")
@@ -16,18 +22,20 @@
         <div class="row justify-content-center align-items-center mb-30-none">
             <div class="col-xl-6 col-lg-6 mb-30">
                 <div class="about-thumb">
-                    <img src="{{ asset('public/frontend') }}/images/element/about.png" alt="element">
+                    <img src="{{ get_image(@$about->value->image , 'site-section') }}" alt="element">
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 mb-30">
                 <div class="about-content">
                     <div class="section-header">
                         <span class="title-badge">$</span>
-                        <h5 class="section-sub-title">About us</h5>
-                        <h2 class="section-title">The Way of the <span>Wayfinding Mark</span></h2>
+                        <h5 class="section-sub-title">{{ @$about->value->language->$app_local->title }}</h5>
+                        @php
+                            $heading    = explode(' ',@$about->value->language->$app_local->heading);
+                        @endphp
+                        <h2 class="section-title">{{ $heading[0] . ' ' . $heading[1] . ' ' . $heading[2] . ' ' . $heading[3] }} <span>{{ implode(' ', array_slice($heading , 4)) }}</span></h2>
                     </div>
-                    <p>Cryptocurrencies are not controlled by a central authority. Instead, they rely on distributed ledger technology (blockchain) to record and verify transactions. This decentralization eliminates the need for intermediaries like banks.</p>
-                    <p>While transactions are recorded on a public ledger, users' identities are typically pseudonymous. This provides a level of privacy but has raised concerns about illegal activities.</p>
+                    <p>{{ @$about->value->language->$app_local->sub_heading }}</p>
                 </div>
             </div>
         </div>
