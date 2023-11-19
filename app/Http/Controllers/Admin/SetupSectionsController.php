@@ -56,6 +56,10 @@ class SetupSectionsController extends Controller
                 'itemUpdate'    => "statisticItemUpdate",
                 'itemDelete'    => "statisticItemDelete"
             ],
+            'call-to-action'            => [
+                'view'          => "callToActionView",
+                'update'        => "callToActionUpdate",
+            ],
             'solutions'  => [
                 'view'      => "solutionView",
                 'update'    => "solutionUpdate",
@@ -838,6 +842,71 @@ class SetupSectionsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return back()->with(['success'   => ['Section item deleted successfully!']]);
+    }
+    /**
+     * Mehtod for show banner section page
+     * @param string $slug
+     * @return view
+     */
+    public function callToActionView($slug) {
+        $page_title     = "Call To Action Section";
+        $section_slug   = Str::slug(SiteSectionConst::CALL_TO_ACTION_SECTION);
+        $data           = SiteSections::getData($section_slug)->first();
+        $languages      = $this->languages;
+
+        return view('admin.sections.setup-sections.call-to-action-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug',
+        ));
+    }
+
+    /**
+     * Mehtod for update banner section information
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function callToActionUpdate(Request $request,$slug) {
+        $basic_field_name   = [
+            'heading'       => "required|string|max:100",
+            'sub_heading'   => "required|string|max:255",
+            'button_name'   => "required|string|max:50",
+        ];
+
+        $slug = Str::slug(SiteSectionConst::CALL_TO_ACTION_SECTION);
+        $section = SiteSections::where("key",$slug)->first();
+
+        if($section      != null){
+            $data         = json_decode(json_encode($section->value),true);
+        }else{
+            $data         = [];
+        }
+
+        $validator  = Validator::make($request->all(),[
+            'image'             => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+        ]);
+
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
+        $validated = $validator->validate();
+
+        $data['image']          = $section->value->image ?? "";
+
+        if($request->hasFile("image")) {
+            $data['image']              = $this->imageValidate($request,"image",$section->value->image ?? null);
+        }
+
+        $data['language']  = $this->contentValidate($request,$basic_field_name);
+        $update_data['value']  = $data;
+        $update_data['key']    = $slug;
+        
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e) {
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+
+        return back()->with(['success' => ['Section updated successfully!']]);
     }
     /**
      * Mehtod for show solutions section page

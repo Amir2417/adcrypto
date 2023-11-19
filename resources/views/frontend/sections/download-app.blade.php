@@ -1,7 +1,7 @@
 @php
-    $app_local  = get_default_language_code();
-    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::DOWNLOAD_APP_SECTION);
-    $download_app = App\Models\Admin\SiteSections::getData($slug)->first();
+    $app_local      = get_default_language_code();
+    $slug           = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::DOWNLOAD_APP_SECTION);
+    $download_app   = App\Models\Admin\SiteSections::getData($slug)->first();
 @endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start App

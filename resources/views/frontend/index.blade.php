@@ -16,7 +16,7 @@
 
 @include('frontend.sections.statistics')
 
-@include('frontend.sections.contact')
+@include('frontend.sections.call-to-action')
 @endsection
 
 
