@@ -341,6 +341,11 @@
                     'icon'      => "menu-icon las la-puzzle-piece",
                 ])
 
+                @include('admin.components.side-nav.link',[
+                    'route'     => 'admin.useful.links.index',
+                    'title'     => __("Useful Links"),
+                    'icon'      => "menu-icon las la-link",
+                ])
                 @if (admin_permission_by_name("admin.payment.gateway.view"))
                     <li class="sidebar-menu-header">Payment Methods</li>
                     @php

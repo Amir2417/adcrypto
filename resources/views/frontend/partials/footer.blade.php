@@ -5,6 +5,7 @@
     $newsletter_slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::NEWSLETTER_SECTION);
     $news_letter = App\Models\Admin\SiteSections::getData($newsletter_slug)->first();
     $menues = DB::table('setup_pages')->where('status', 1)->get();
+    $useful_links       = App\Models\Admin\UsefulLink::where('status',true)->get()
 @endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Footer
@@ -57,9 +58,9 @@
         <div class="container">
             <div class="footer-bottom-wrapper">
                 <ul class="footer-list">
-                    <li><a href="#0">Privacy policy</a></li>
-                    <li><a href="#0">Refund Policy</a></li>
-                    <li><a href="#0">Terms of service</a></li>
+                    @foreach (@$useful_links ?? [] as $item)
+                        <li><a href="{{ setRoute('link',$item->slug) }}">{{ $item->title->language->$app_local->title }}</a></li>
+                    @endforeach
                 </ul>
                 <div class="copyright-area">
                     <p>© 2023 <a href="{{ setRoute('index') }}">{{ $basic_settings->site_name }}</a> {{ __("is Proudly Powered by AppDevs") }}</p>

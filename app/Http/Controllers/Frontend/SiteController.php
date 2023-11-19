@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use Exception;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
+use App\Models\Admin\UsefulLink;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 
@@ -77,5 +78,18 @@ class SiteController extends Controller
             return redirect('/#subscribe-form')->with(['error' => ['Failed to subscribe. Try again']]);
         }
         return redirect(url()->previous() . '/#subscribe-form')->with(['success' => ['Subscription successful!']]);
+    }
+    /**
+     * Method for show useful links 
+     */
+    public function link($slug){
+        $link       = UsefulLink::where('slug',$slug)->first();
+        $app_local  = get_default_language_code();
+        $page_title = '-' . ' ' . $link->title->language->$app_local->title;
+
+        return view('frontend.pages.link',compact(
+            'link',
+            'page_title'
+        ));
     }
 }

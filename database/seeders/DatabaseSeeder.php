@@ -19,6 +19,7 @@ use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\RoleSeeder;
 use Database\Seeders\Admin\SetupPageSeeder;
 use Database\Seeders\Admin\TransactionSettingSeeder;
+use Database\Seeders\Admin\UsefulLinkSeeder;
 use Database\Seeders\User\UserSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -48,7 +49,8 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SetupPageSeeder::class,
             PaymentGatewaySeeder::class,
-            LanguageSeeder::class
+            LanguageSeeder::class,
+            UsefulLinkSeeder::class
         ]);
     }
 }

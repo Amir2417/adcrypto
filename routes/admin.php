@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\SetupKycController;
 use App\Http\Controllers\Admin\SetupPagesController;
 use App\Http\Controllers\Admin\SetupSectionsController;
 use App\Http\Controllers\Admin\SupportTicketController;
+use App\Http\Controllers\Admin\UsefulLinkController;
 use App\Http\Controllers\Admin\UserCareController;
 use App\Http\Controllers\Admin\WebSettingsController;
 use Illuminate\Support\Facades\Artisan;
@@ -212,6 +213,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('status/update','statusUpdate')->name('status.update');
     });
 
+    //usefull link
+    Route::controller(UsefulLinkController::class)->prefix('useful-links')->name('useful.links.')->group(function (){
+        Route::get('index','index')->name('index');
+        Route::post("store","store")->name("store");
+        Route::put("status/update","statusUpdate")->name("status.update");
+        Route::get("edit/{slug}","edit")->name("edit");
+        Route::post("update/{slug}","update")->name("update");
+        Route::delete("delete","delete")->name("delete");
+    });
 
     // Extensions Section
     Route::controller(ExtensionsController::class)->prefix('extensions')->name('extensions.')->group(function () {
