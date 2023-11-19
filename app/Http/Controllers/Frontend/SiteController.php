@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Http\Controllers\Controller;
+use Exception;
+use App\Models\Subscribe;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
 {
@@ -53,5 +56,26 @@ class SiteController extends Controller
         return view('frontend.pages.contact',compact(
             'page_title'
         ));
+    }
+    /**
+     * Method for sbscribe
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function subscribe(Request $request) {
+        $validator      = Validator::make($request->all(),[
+            'email'     => "required|string|email|max:255|unique:subscribes",
+        ]);
+        if($validator->fails()) return redirect('/#subscribe-form')->withErrors($validator)->withInput();
+        $validated = $validator->validate();
+        try{
+            Subscribe::create([
+                'email'         => $validated['email'],
+                'created_at'    => now(),
+            ]);
+        }catch(Exception $e) {
+            return redirect('/#subscribe-form')->with(['error' => ['Failed to subscribe. Try again']]);
+        }
+        return redirect(url()->previous() . '/#subscribe-form')->with(['success' => ['Subscription successful!']]);
     }
 }

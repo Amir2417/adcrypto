@@ -2,6 +2,8 @@
     $app_local  = get_default_language_code();
     $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::FOOTER_SECTION);
     $footer = App\Models\Admin\SiteSections::getData($slug)->first();
+    $newsletter_slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::NEWSLETTER_SECTION);
+    $news_letter = App\Models\Admin\SiteSections::getData($newsletter_slug)->first();
     $menues = DB::table('setup_pages')->where('status', 1)->get();
 @endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,12 +39,13 @@
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-6 mb-30">
                     <div class="footer-widget">
-                        <h4 class="widget-title">Newsletter</h4>
-                        <p>Check Our Newsletter And Subscribe Us.</p>
-                        <form class="subscribe-form">
+                        <h4 class="widget-title">{{ @$news_letter->value->language->$app_local->title }}</h4>
+                        <p>{{ @$news_letter->value->language->$app_local->description }}</p>
+                        <form id="subscribe-form" class="subscribe-form" action="{{ setRoute('subscribe') }} " method="POST">
+                            @csrf
                             <div class="form-group">
-                                <input type="email" class="form--control" placeholder="Email Address...">
-                                <button type="submit" class="btn--base subscribe-btn">Subscribe</button>
+                                <input type="email" name="email" class="form--control" placeholder="{{ __("Email Address") }}...">
+                                <button type="submit" class="btn--base subscribe-btn">{{ __("Subscribe") }}</button>
                             </div>
                         </form>
                     </div>

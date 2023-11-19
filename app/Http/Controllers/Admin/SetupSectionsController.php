@@ -64,6 +64,10 @@ class SetupSectionsController extends Controller
                 'view'          => "footerView",
                 'update'        => "footerUpdate"
             ],
+            'news-letter-section' =>[
+                'view'            => "newsLetterView",
+                'update'          => "newsLetterUpdate",    
+            ],
             'solutions'  => [
                 'view'      => "solutionView",
                 'update'    => "solutionUpdate",
@@ -978,6 +982,56 @@ class SetupSectionsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
         return back()->with(['success' => ['Section Updated Successfully!']]);
+    }
+    /**
+     * Method for show newsLetter section page
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function newsLetterView($slug) {
+        $page_title     = "News Letter Section";
+        $section_slug   = Str::slug(SiteSectionConst::NEWSLETTER_SECTION);
+        $data           = SiteSections::getData($section_slug)->first();
+        $languages      = $this->languages;
+
+        return view('admin.sections.setup-sections.news-letter-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug'
+        ));
+    }
+    /**
+     * Mehtod for update newsLetter section
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+    */
+    public function newsLetterUpdate(Request $request,$slug) {
+        
+        $basic_field_name    = [
+            'title'          => 'required|string|max:100',
+            'description'    => 'required|string',
+            
+        ];
+        $slug           = Str::slug(SiteSectionConst::NEWSLETTER_SECTION);
+        $section        = SiteSections::where("key",$slug)->first();
+        if($section != null ){
+            $data       = json_decode(json_encode($section->value),true);
+        }else{
+            $data       = [];
+        }
+
+        $data['language']      = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']    = $slug;
+        $update_data['value']  = $data;
+        // dd($update_data);
+        try{
+            SiteSections::updateOrCreate(['key'=>$slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error'=>'Something went wrong! Please try again.']);
+        }
+        return back()->with(['success'  =>  ['Section updated successfully!']]);
+
     }
     /**
      * Mehtod for show solutions section page
