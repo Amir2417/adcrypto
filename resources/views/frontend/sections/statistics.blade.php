@@ -1,3 +1,8 @@
+@php
+    $app_local  = get_default_language_code();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::STATISTIC_SECTION);
+    $statistic = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Roadmap
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -8,52 +13,38 @@
                 <div class="col-xl-6 col-lg-6 mb-30">
                     <div class="section-header">
                         <span class="title-badge">$</span>
-                        <h5 class="section-sub-title">Overview</h5>
-                        <h2 class="section-title">Last 15 years Crypto <span>Statistics</span></h2>
+                        <h5 class="section-sub-title">{{ @$statistic->value->language->$app_local->title }}</h5>
+                        @php
+                            $heading    = explode(' ', @$statistic->value->language->$app_local->heading);
+                        @endphp
+                        <h2 class="section-title">{{ $heading[0] . ' ' . $heading[1] . ' ' . $heading[2] . ' '. $heading[3] }} <span>{{ implode(' ', array_slice($heading , 4 )) }}</span></h2>
                     </div>
-                    <p>Globally transition ours multidisciplinary applications for bleeding-edge vortals. harness o ours plug-and-plays networks without stand-alone bandwidth market harness competitive channels.</p>
+                    <p>{{ @$statistic->value->language->$app_local->sub_heading }}</p>
                     <div class="statistics-wrapper">
                         <div class="row mb-30-none">
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
-                                <div class="statistics-item">
-                                    <div class="statistics-content">
-                                        <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="10">0</h3>
-                                            <h3 class="title">+</h3>
+                            @foreach (@$statistic->value->items ?? [] as $item)
+                                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
+                                    <div class="statistics-item">
+                                        <div class="statistics-content">
+                                            <div class="odo-area">
+                                                @php
+                                                    $counter_value  = numeric_unit_converter($item->counter_value);
+                                                @endphp
+                                                <h3 class="odo-title odometer" data-odometer-final="{{ $counter_value->number }}">0</h3>
+                                                <h3 class="title">{{ $counter_value->unit }}</h3>
+                                            </div>
+                                            <p>{{ $item->language->$app_local->title }}</p>
                                         </div>
-                                        <p>Payment Gateway</p>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
-                                <div class="statistics-item">
-                                    <div class="statistics-content">
-                                        <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="100">0</h3>
-                                            <h3 class="title">+</h3>
-                                        </div>
-                                        <p>Currencies</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-4 col-md-6 col-sm-6 mb-30">
-                                <div class="statistics-item">
-                                    <div class="statistics-content">
-                                        <div class="odo-area">
-                                            <h3 class="odo-title odometer" data-odometer-final="500">0</h3>
-                                            <h3 class="title">+</h3>
-                                        </div>
-                                        <p>Transactions Per Day</p>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-6 mb-30">
                     <div class="statistics-thumb">
-                        <img src="{{ asset('public/frontend/images/element/statistics.png') }}" alt="element">
-                        <img src="{{ asset('public/frontend/images/element/statistics.png') }}" alt="element">
+                        <img src="{{ get_image(@$statistic->value->image , 'site-section') }}" alt="element">
+                        <img src="{{ get_image(@$statistic->value->image , 'site-section') }}" alt="element">
                     </div>
                 </div>
             </div>

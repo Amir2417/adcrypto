@@ -203,6 +203,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('item/update/{slug}','sectionItemUpdate')->name('section.item.update');
         Route::delete('item/delete/{slug}','sectionItemDelete')->name('section.item.delete');
         Route::put('security/status/update/{slug}','securityStatusUpdate')->name('security.status.update');
+        Route::put('statistic/status/update/{slug}','statisticStatusUpdate')->name('statistic.status.update');
     });
 
     // Setup Pages Controller
