@@ -1,3 +1,8 @@
+@php
+    $app_local  = get_default_language_code();
+    $slug = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::DOWNLOAD_APP_SECTION);
+    $download_app = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start App
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -6,41 +11,34 @@
         <div class="row justify-content-center align-items-center mb-30-none">
             <div class="col-xl-6 col-lg-6 mb-30">
                 <div class="app-thumb">
-                    <img src="{{ asset('public/frontend/images/element/app.png') }}" alt="element">
+                    <img src="{{ get_image(@$download_app->value->image , 'site-section') }}" alt="element">
                 </div>
             </div>
             <div class="col-xl-6 col-lg-6 mb-30">
                 <div class="app-content">
                     <div class="section-header">
                         <span class="title-badge">$</span>
-                        <h5 class="section-sub-title">Download App</h5>
-                        <h2 class="section-title">Download and Register From <span>Mobile App</span></h2>
+                        <h5 class="section-sub-title">{{ @$download_app->value->language->$app_local->title }}</h5>
+                        @php
+                            $heading   = explode(' ',@$download_app->value->language->$app_local->heading);
+                        @endphp
+                        <h2 class="section-title">{{ $heading[0] . ' ' . $heading[1] . ' ' .$heading[2] . ' ' . $heading[3] }} <span>{{ implode(' ',array_slice($heading,4)) }}</span></h2>
                     </div>
-                    <p>Work with the pro, talented people at the most affordable price to get the most out of your time and cost using mobile apps.</p>
-                    <p>In our dolore with people who are important to you, conversations that bring you to closer to each other and those who enjoy our dishes. Quisque pretium dolor turpis, quis blandit turpis semper ut. Nam malesuada eros nec luctus laoreet. Fusce sodales consequat velit eget dictum. Integer ornare magna.</p>
+                    <p>{{ @$download_app->value->language->$app_local->sub_heading }}</p>
                     <div class="app-btn-wrapper">
-                        <a href="#0" class="app-btn">
-                            <div class="content">
-                                <h5 class="title">Android</h5>
-                            </div>
-                            <div class="icon">
-                                <img src="{{ asset('public/frontend/images/element/qr-icon.png') }}" alt="element">
-                            </div>
-                            <div class="app-qr">
-                                <img src="{{ asset('public/frontend/images/element/play-qr.png') }}" alt="element">
-                            </div>
-                        </a>
-                        <a href="#0" class="app-btn">
-                            <div class="content">
-                                <h5 class="title">Apple</h5>
-                            </div>
-                            <div class="icon">
-                                <img src="{{ asset('public/frontend/images/element/qr-icon.png') }}" alt="element">
-                            </div>
-                            <div class="app-qr">
-                                <img src="{{ asset('public/frontend/images/element/app-qr.png') }}" alt="element">
-                            </div>
-                        </a>
+                        @foreach (@$download_app->value->items ?? [] as $item)
+                            <a href="{{ $item->link }}" class="app-btn">
+                                <div class="content">
+                                    <h5 class="title">{{ $item->language->$app_local->item_title }}</h5>
+                                </div>
+                                <div class="icon">
+                                    <img src="{{ get_image($item->image , 'site-section') }}" alt="element">
+                                </div>
+                                <div class="app-qr">
+                                    <img src="{{ get_image($item->image , 'site-section') }}" alt="element">
+                                </div>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

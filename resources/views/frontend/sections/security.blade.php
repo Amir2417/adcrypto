@@ -21,18 +21,20 @@
             </div>
         </div>
         <div class="row justify-content-center mb-30-none">
-            @foreach (@$security->value->items as $item)
-                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
-                    <div class="security-item">
-                        <div class="security-icon">
-                            <i class="{{ $item->icon }}"></i>
-                        </div>
-                        <div class="security-content">
-                            <h3 class="title">{{ $item->language->$app_local->item_title }}</h3>
-                            <p>{{ $item->language->$app_local->item_heading }}</p>
+            @foreach (@$security->value->items ?? [] as $item)
+                @if ($item->status == 1)
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-30">
+                        <div class="security-item">
+                            <div class="security-icon">
+                                <i class="{{ $item->icon }}"></i>
+                            </div>
+                            <div class="security-content">
+                                <h3 class="title">{{ $item->language->$app_local->item_title }}</h3>
+                                <p>{{ $item->language->$app_local->item_heading }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             @endforeach
         </div>
     </div>
