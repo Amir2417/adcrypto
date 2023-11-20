@@ -20,7 +20,7 @@
                         @endphp
                         <h5 class="sub-title">{{ @$banner->value->language->$app_local->title ?? '' }}</h5>
                         <h1 class="title">{{ $heading[0] . ' ' . $heading[1] }} <span>{{ $heading[2] }}</span>{{ implode(' ', array_slice($heading, 3)) }}</h1>
-                        <p>{{ @$banner->value->language->$app_local->subheading ?? '' }}</p>
+                        <p>{{ @$banner->value->language->$app_local->sub_heading ?? '' }}</p>
                         <div class="banner-btn">
                             <a href="{{ setRoute('user.register') }}" class="btn--base">{{ @$banner->value->language->$app_local->button_name ?? '' }}</a>
                             <a class="video-icon" data-rel="lightcase:myCollection" href="{{ @$banner->value->button_link ?? '' }}">
