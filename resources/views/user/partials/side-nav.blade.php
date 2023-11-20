@@ -37,33 +37,33 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="exchange-crypto.html">
+                        <a href="{{ setRoute("user.exchange.crypto.index") }}">
                             <i class="menu-icon lab la-stack-exchange"></i>
-                            <span class="menu-title">Exchange Crypto</span>
+                            <span class="menu-title">{{ __("Exchange Crypto") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item sidebar-dropdown">
                         <a href="javascript:void(0)">
                             <i class="menu-icon las la-wallet"></i>
-                            <span class="menu-title">Transactions</span>
+                            <span class="menu-title">{{ __("Transactions") }}</span>
                         </a>
                         <ul class="sidebar-submenu">
                             <li class="sidebar-menu-item">
-                                <a href="buy-log.html" class="nav-link">
+                                <a href="{{ setRoute("user.transaction.buy.log") }}" class="nav-link">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Buy Log</span>
+                                    <span class="menu-title">{{ __("Buy Log") }}</span>
                                 </a>
-                                <a href="sell-log.html" class="nav-link">
+                                <a href="{{ setRoute("user.transaction.sell.log") }}" class="nav-link">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Sell Log</span>
+                                    <span class="menu-title">{{ __("Sell Log") }}</span>
                                 </a>
-                                <a href="withdraw-log.html" class="nav-link">
+                                <a href="{{ setRoute("user.transaction.withdraw.log") }}" class="nav-link">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Withdraw Log</span>
+                                    <span class="menu-title">{{ __("Withdraw Log") }}</span>
                                 </a>
-                                <a href="exchange-log.html" class="nav-link">
+                                <a href="{{ setRoute("user.transaction.exchange.log") }}" class="nav-link">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Exchange Log</span>
+                                    <span class="menu-title">{{ __("Exchange Log") }}</span>
                                 </a>
                             </li>
                         </ul>

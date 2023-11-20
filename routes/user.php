@@ -3,9 +3,11 @@
 use App\Http\Controllers\User\BuyCryptoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\ExchangeCryptoController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SellCryptoController;
 use App\Http\Controllers\User\SupportTicketController;
+use App\Http\Controllers\User\TransactionController;
 use App\Http\Controllers\User\WithdrawCryptoController;
 
 Route::prefix("user")->name("user.")->group(function(){
@@ -34,6 +36,19 @@ Route::prefix("user")->name("user.")->group(function(){
     //withdraw crypto
     Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
         Route::get('/','index')->name('index');
+    });
+
+    //exchange crypto
+    Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->name('exchange.crypto.')->group(function(){
+        Route::get('/','index')->name('index');
+    });
+
+    //buy log
+    Route::controller(TransactionController::class)->prefix('transaction')->name('transaction.')->group(function(){
+        Route::get('buy-log','buyLog')->name('buy.log');
+        Route::get('sell-log','sellLog')->name('sell.log');
+        Route::get('withdraw-log','withdrawLog')->name('withdraw.log');
+        Route::get('exchange-log','exchangeLog')->name('exchange.log');
     });
 
     //support ticket

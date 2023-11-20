@@ -10,7 +10,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("user.dashboard"),
         ]
-    ], 'active' => __($page_title)])
+    ], 'active' => __("Buy Crypto")])
 @endsection
 
 @section('content')
