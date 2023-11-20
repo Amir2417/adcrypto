@@ -26,7 +26,7 @@ class ForgotPasswordController extends Controller
      */
     public function showForgotForm()
     {
-        $page_title = setPageTitle("Forgot Password");
+        $page_title = "- Forgot Password";
         return view('user.auth.forgot-password.forgot',compact('page_title'));
     }
 
@@ -69,7 +69,7 @@ class ForgotPasswordController extends Controller
 
 
     public function showVerifyForm($token) {
-        $page_title = setPageTitle("Verify User");
+        $page_title = "- Verify User";
         $password_reset = UserPasswordReset::where("token",$token)->first();
         if(!$password_reset) return redirect()->route('user.password.forgot')->with(['error' => ['Password Reset Token Expired']]);
         $resend_time = 0;
@@ -91,8 +91,10 @@ class ForgotPasswordController extends Controller
         $request->merge(['token' => $token]);
         $validated = Validator::make($request->all(),[
             'token'         => "required|string|exists:user_password_resets,token",
-            'code'          => "required|numeric|exists:user_password_resets,code",
+            'code.*'        => "required|integer",
         ])->validate();
+
+        $validated['code'] = implode("",$request->code);
 
         $basic_settings = BasicSettingsProvider::get();
         $otp_exp_seconds = $basic_settings->otp_exp_seconds ?? 0;
@@ -153,7 +155,7 @@ class ForgotPasswordController extends Controller
 
 
     public function showResetForm($token) {
-        $page_title = setPageTitle("Reset Password");
+        $page_title = "- Reset Password";
         return view('user.auth.forgot-password.reset',compact('page_title','token'));
     }
 

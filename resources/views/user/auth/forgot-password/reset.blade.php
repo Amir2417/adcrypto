@@ -5,51 +5,49 @@
 @endpush
 
 @section('content')
-    <section class="account-section bg_img" data-background="{{ asset('public/frontend/images/element/account.png') }}">
-        <div class="right float-end">
-            <div class="account-header text-center">
-                <a class="site-logo" href="{{ setRoute('index') }}"><img src="{{ asset('public/frontend/images/logo/logo.png') }}" alt="logo"></a>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Start Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div class="account-section">
+    <div class="account-inner">
+        <div class="account-area change-form">
+            <div class="account-thumb">
+                <img src="{{ asset("public/frontend/images/element/account.png") }}" alt="element">
             </div>
-            <div class="account-middle">
-                <div class="account-form-area">
-                    <h3 class="title">{{ __("Password Reset") }}</h3>
-                    <p>{{ __("Reset your password") }}</p>
-                    <form action="{{ setRoute('user.password.reset',$token) }}" class="account-form" method="POST">
-                        @csrf
-                        <div class="row ml-b-20">
-                            <div class="col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'name'          => "password",
-                                    'type'          => 'password',
-                                    'placeholder'   => "Enter New Password",
-                                    'required'      => true,
-                                ])
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'name'          => "password_confirmation",
-                                    'type'          => 'password',
-                                    'placeholder'   => "Enter Confirm Password",
-                                    'required'      => true,
-                                ])
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                <div class="forgot-item">
-                                    <label><a href="{{ setRoute('user.login') }}" class="text--base">{{ __("Login") }}</a></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 form-group text-center">
-                                <button type="submit" class="btn--base w-100">{{ __("Reset") }}</button>
+            <div class="account-form-area">
+                <div class="account-logo">
+                    <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
+                </div>
+                <h4 class="title">{{ __("Password Reset") }}</h4>
+                <p>{{ __("Reset Your Password") }}</p>
+                <form action="{{ setRoute('user.password.reset',$token) }}" method="POST" class="account-form">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-12 form-group show_hide_password">
+                            <input type="password" class="form-control form--control" name="password" placeholder="Enter New Password..." required>
+                            <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="col-lg-12 form-group show_hide_password">
+                            <input type="password" class="form-control form--control" name="password_confirmation" placeholder="Enter Confirm Password..." required>
+                            <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="col-lg-12 form-group text-center">
+                            <button type="submit" class="btn--base w-100">{{ __("Reset") }}</button>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <div class="account-item">
+                                <label>{{ __("Back To") }} <a href="{{ setRoute('index') }}">{{ __("Login") }}</a></label>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="account-footer text-center">
-                <p>{{ __("Copyright") }} © {{ date("Y",time()) }} {{ __("All Rights Reserved.") }}</a></p>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    End Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 @endsection
 
 @push('script')

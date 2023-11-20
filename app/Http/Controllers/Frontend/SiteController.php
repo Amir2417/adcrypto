@@ -80,7 +80,7 @@ class SiteController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function journalDetails($slug){
-        $page_title             = "| Blog Details";
+        $page_title             = "- Journal Details";
         $blog                   = Blog::where('slug',$slug)->first();
         if(!$blog) abort(404);
         $category               = BlogCategory::withCount('blog')->where('status',true)->get();
@@ -99,7 +99,7 @@ class SiteController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function journalCategory($slug){
-        $page_title         = "| Blog Category";
+        $page_title         = "- Journal Category";
         $blog_category      = BlogCategory::where('slug',$slug)->first();
         
         if(!$blog_category) abort(404);

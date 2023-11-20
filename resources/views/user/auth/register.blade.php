@@ -39,7 +39,10 @@ Start Account
                         <div class="col-lg-12 form-group">
                             <div class="custom-check-group">
                                 <input type="checkbox" name="agree" id="level-1">
-                                <label for="level-1">{{ __("I have agreed with") }} <a href="#0">{{ __("Terms Of Use & Privacy Policy") }}</a></label>
+                                @php
+                                    $data = App\Models\Admin\UsefulLink::where('type',global_const()::USEFUL_LINK_PRIVACY_POLICY)->first();
+                                @endphp
+                                <label for="level-1">{{ __("I have agreed with") }} <a class="text--base" href="{{ setRoute('link',$data->slug) }}">{{ __("Terms Of Use & Privacy Policy") }}</a></label>
                             </div>
                         </div>
                         <div class="col-lg-12 form-group text-center">

@@ -3409,6 +3409,7 @@ option {
 .statistics-wrapper .odo-area .title {
   display: inline-block;
   font-size: 35px;
+  margin-top: -13px;
   margin-bottom: 0;
 }
 @media only screen and (max-width: 575px) {
@@ -3417,7 +3418,7 @@ option {
   }
 }
 .statistics-wrapper p {
-  font-size: 18px;
+  font-size: 16px;
   font-family: "Jost", sans-serif;
 }
 
@@ -3948,6 +3949,43 @@ option {
 }
 .show_hide_password .show-pass.two {
   top: 47px;
+}
+.otp-form {
+  margin: -10px;
+  margin-bottom: 20px;
+  margin-top: -10px;
+}
+
+.otp {
+  width: 52px;
+  height: 50px;
+  text-align: center;
+  padding: 0;
+  margin: 10px;
+  border-radius: 3px;
+  background-color: transparent;
+}
+@media only screen and (max-width: 520px) {
+  .otp {
+    width: 45px;
+    height: 45px;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .otp {
+    width: 40px;
+    height: 40px;
+  }
+}
+.otp:focus {
+  border: 2px solid #0194FC;
+}
+.otp.required {
+  border: 3px solid #ea5455;
+}
+
+#time {
+  color: #ea5455;
 }
 
 /*-------------------------------------------------
@@ -5001,8 +5039,8 @@ option {
   -ms-touch-action: auto;
   touch-action: auto;
   overflow-y: auto;
-  max-height: 670px;
-  min-height: 670px;
+  max-height: 55vh;
+  min-height: 55vh;
   padding: 30px 15px;
 }
 .chat-container .media > * {
@@ -5090,7 +5128,7 @@ option {
   border-radius: 0 0 0 10px;
 }
 .chat-form .publisher .chatbox-message-part {
-  width: calc(100% - 100px);
+  width: calc(100% - 60px);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -5106,7 +5144,8 @@ option {
   border: none;
   outline: none !important;
   background-color: #142B57;
-  border-radius: 99px;
+  border-radius: 5px;
+  min-height: 40px;
 }
 .chat-form .publisher .publisher-input::-webkit-input-placeholder {
   color: rgba(196, 198, 199, 0.3);

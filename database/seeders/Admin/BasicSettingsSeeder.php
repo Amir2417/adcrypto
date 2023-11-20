@@ -22,7 +22,7 @@ class BasicSettingsSeeder extends Seeder
             'secondary_color'   => "#0194FC",
             'otp_exp_seconds'   => "3600",
             'timezone'          => "Asia/Dhaka",
-            'user_registration' => 0,
+            'user_registration' => 1,
             'agree_policy'      => 1,
             'broadcast_config'  => [
                 "method" => "pusher", 
@@ -46,7 +46,7 @@ class BasicSettingsSeeder extends Seeder
                 "instance_id" => "fd7360fa-4df7-43b9-b1b5-5a40002250a1", 
                 "primary_key" => "6EEDE8A79C61800340A87C89887AD14533A712E3AA087203423BF01569B13845"
             ],
-            'email_verification'    => false,
+            'email_verification'    => true,
             'site_logo_dark'        => 'seeder/logo-dark.webp',
             'site_logo'             => 'seeder/logo-white.webp',
             'site_fav_dark'         => 'seeder/fav-icon.webp',

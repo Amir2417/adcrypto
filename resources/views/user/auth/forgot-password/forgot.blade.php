@@ -6,42 +6,44 @@
 @endpush
 
 @section('content')
-    <section class="account-section bg_img" data-background="{{ asset('public/frontend/images/element/account.png') }}">
-        <div class="right float-end">
-            <div class="account-header text-center">
-                <a class="site-logo" href="{{ setRoute('index') }}"><img src="{{ asset('public/frontend/images/logo/logo.png') }}" alt="logo"></a>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Start Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+<div class="account-section">
+    <div class="account-inner">
+        <div class="account-area change-form">
+            <div class="account-thumb">
+                <img src="{{ asset('public/frontend/images/element/account.png') }}" alt="element">
             </div>
-            <div class="account-middle">
-                <div class="account-form-area">
-                    <h3 class="title">{{ __("Password Forgot") }}</h3>
-                    <p>{{ __("Enter your account email or username to verify") }}</p>
-                    <form action="{{ setRoute('user.password.forgot.send.code') }}" class="account-form" method="POST">
-                        @csrf
-                        <div class="row ml-b-20">
-                            <div class="col-lg-12 form-group">
-                                @include('admin.components.form.input',[
-                                    'name'          => "credentials",
-                                    'placeholder'   => "Username OR Email Address",
-                                    'required'      => true,
-                                ])
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                <div class="forgot-item">
-                                    <label><a href="{{ setRoute('user.login') }}" class="text--base">{{ __("Login") }}</a></label>
-                                </div>
-                            </div>
-                            <div class="col-lg-12 form-group text-center">
-                                <button type="submit" class="btn--base w-100">{{ __("Send Code") }}</button>
+            <div class="account-form-area">
+                <div class="account-logo">
+                    <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
+                </div>
+                <h4 class="title">{{ __("Reset Your Forgotten Password?") }}</h4>
+                <p>{{ __("Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.") }}</p>
+                <form action="{{ setRoute('user.password.forgot.send.code') }}" class="account-form" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <input type="email" class="form-control form--control" name="credentials" placeholder="{{ __("Enter Email") }}..." required>
+                        </div>
+                        <div class="col-lg-12 form-group text-center">
+                            <button type="submit" class="btn--base w-100">{{ __("Send OTP") }}</button>
+                        </div>
+                        <div class="col-lg-12 text-center">
+                            <div class="account-item">
+                                <label>{{ __("Back To") }} <a href="{{ setRoute('user.login') }}">{{ __("Login") }}</a></label>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="account-footer text-center">
-                <p>{{ __("Copyright") }} © {{ date("Y",time()) }} {{ __("All Rights Reserved.") }}</a></p>
+                    </div>
+                </form>
             </div>
         </div>
-    </section>
+    </div>
+</div>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    End Account
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 @endsection
 
 @push('script')
