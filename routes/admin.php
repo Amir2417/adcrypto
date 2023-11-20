@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AppSettingsController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BroadcastingController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
@@ -24,6 +25,7 @@ use App\Http\Controllers\Admin\SetupEmailController;
 use App\Http\Controllers\Admin\SetupKycController;
 use App\Http\Controllers\Admin\SetupPagesController;
 use App\Http\Controllers\Admin\SetupSectionsController;
+use App\Http\Controllers\Admin\SubscribeController;
 use App\Http\Controllers\Admin\SupportTicketController;
 use App\Http\Controllers\Admin\UsefulLinkController;
 use App\Http\Controllers\Admin\UserCareController;
@@ -42,6 +44,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('dashboard', 'index')->name('dashboard');
         Route::post('logout', 'logout')->name('logout');
         Route::post('notifications/clear','notificationsClear')->name('notifications.clear');
+    });
+
+    //subscribe
+    Route::controller(SubscribeController::class)->prefix('subscriber')->name('subscriber.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('send-mail', 'sendMail')->name('send.mail');
+    });
+
+    //contact request
+    Route::controller(ContactMessageController::class)->prefix('contact')->name('contact.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('reply-message', 'reply')->name('messages.reply');
     });
 
     // Admin Profile
