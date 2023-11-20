@@ -6,6 +6,7 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SellCryptoController;
 use App\Http\Controllers\User\SupportTicketController;
+use App\Http\Controllers\User\WithdrawCryptoController;
 
 Route::prefix("user")->name("user.")->group(function(){
     Route::controller(DashboardController::class)->group(function(){
@@ -27,6 +28,11 @@ Route::prefix("user")->name("user.")->group(function(){
 
     //sell crypto
     Route::controller(SellCryptoController::class)->prefix('sell-crypto')->name('sell.crypto.')->group(function(){
+        Route::get('/','index')->name('index');
+    });
+
+    //withdraw crypto
+    Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
         Route::get('/','index')->name('index');
     });
 

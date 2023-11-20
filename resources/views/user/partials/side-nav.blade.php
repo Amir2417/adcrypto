@@ -31,9 +31,9 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="withdraw-crypto.html">
+                        <a href="{{ setRoute('user.withdraw.crypto.index') }}">
                             <i class="menu-icon las la-fill-drip"></i>
-                            <span class="menu-title">Withdraw Crypto</span>
+                            <span class="menu-title">{{ __("Withdraw Crypto") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
