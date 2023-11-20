@@ -10,6 +10,8 @@
 
 @include('frontend.sections.security')
 
+@include('frontend.sections.how-its-work')
+
 @include('frontend.sections.download-app')
 
 @include('frontend.sections.statistics')

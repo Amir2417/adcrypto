@@ -5,6 +5,7 @@ namespace App\Constants;
 class SiteSectionConst{
     const BANNER_SECTION            = "Banner Section";
     const SECURITY_SECTION          = "Security Section";
+    const HOW_ITS_WORK_SECTION      = "How Its Work Section";
     const DOWNLOAD_APP_SECTION      = "Download App";
     const STATISTIC_SECTION         = "Statistic Section";
     const CALL_TO_ACTION_SECTION    = "Call To Action Section";
