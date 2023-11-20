@@ -3302,11 +3302,7 @@ option {
 .security-icon {
   font-size: 35px;
   margin-bottom: 20px;
-}
-.security-icon svg {
-  width: 60px;
-  height: 60px;
-  fill: var(--secondary-color);;
+  color: var(--secondary-color);
 }
 
 .security-content .title {
@@ -3354,13 +3350,10 @@ option {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: var(--secondary-color);;
+  background-color: var(--secondary-color);
+  color: #ffffff;
+  font-size: 22px;
   border-radius: 50%;
-}
-.how-it-works-icon svg {
-  width: 30px;
-  height: 30px;
-  fill: #ffffff;
 }
 
 .how-it-works-content {
