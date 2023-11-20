@@ -38,22 +38,23 @@
                                 @endphp
                                 <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                             </div>
-                            <form class="contact-form">
+                            <form class="contact-form" action="{{ setRoute('contact.request') }}" method="POST">
+                                @csrf
                                 <div class="row justify-content-center mb-10-none">
                                     <div class="col-xl-6 col-lg-6 col-md-12 form-group">
-                                        <label>Name<span>*</span></label>
-                                        <input type="text" name="text" class="form--control" placeholder="Enter Name...">
+                                        <label>{{ __("Name") }}<span>*</span></label>
+                                        <input type="text" name="name" class="form--control" placeholder="{{ __("Enter Name") }}...">
                                     </div>
                                     <div class="col-xl-6 col-lg-6 col-md-12 form-group">
-                                        <label>Email<span>*</span></label>
-                                        <input type="email" name="email" class="form--control" placeholder="Enter Email...">
+                                        <label>{{ __("Email") }}<span>*</span></label>
+                                        <input type="email" name="email" class="form--control" placeholder="{{ __("Enter Email") }}...">
                                     </div>
                                     <div class="col-xl-12 col-lg-12 form-group">
-                                        <label>Message<span>*</span></label>
-                                        <textarea class="form--control" placeholder="Write Here..."></textarea>
+                                        <label>{{ __("Message") }}<span>*</span></label>
+                                        <textarea class="form--control" name="message" placeholder="{{ __("Write Here") }}..."></textarea>
                                     </div>
                                     <div class="col-lg-12 form-group">
-                                        <button type="submit" class="btn--base mt-10"><span>Send Message</span></button>
+                                        <button type="submit" class="btn--base mt-10"><span>{{ __("Send Message") }}</span></button>
                                     </div>
                                 </div>
                             </form>

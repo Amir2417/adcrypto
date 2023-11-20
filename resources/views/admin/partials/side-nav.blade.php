@@ -43,7 +43,17 @@
                             'title'     => "Fees & Charges",
                             'route'     => "admin.trx.settings.index",
                             'icon'      => "menu-icon las la-wallet",
-                        ]
+                        ],
+                        [
+                            'title'     => __("Subscribers"),
+                            'route'     => "admin.subscriber.index",
+                            'icon'      => "menu-icon las la-bell",
+                        ],
+                        [
+                            'title'     => __("Contact Messages"),
+                            'route'     => "admin.contact.index",
+                            'icon'      => "menu-icon las la-sms",
+                        ],
                     ]
                 ])
 

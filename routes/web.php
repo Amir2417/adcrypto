@@ -25,4 +25,5 @@ Route::controller(SiteController::class)->group(function(){
     Route::get('contact','contact')->name('contact');
     Route::post("subscribe",'subscribe')->name("subscribe");
     Route::get('link/{slug}','link')->name('link');
+    Route::post("contact-request",'contactRequest')->name("contact.request");
 });

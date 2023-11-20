@@ -4,14 +4,15 @@ namespace App\Http\Controllers\Frontend;
 
 use Exception;
 use App\Models\Subscribe;
+use App\Models\Admin\Blog;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\ContactRequest;
 use App\Models\Admin\UsefulLink;
+use App\Models\Admin\BlogCategory;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Blog;
-use App\Models\Admin\BlogCategory;
 use Illuminate\Support\Facades\Validator;
 
 class SiteController extends Controller
@@ -154,5 +155,31 @@ class SiteController extends Controller
             'link',
             'page_title'
         ));
+    }
+    /**
+     * Method for contact request
+     * @param string
+     * @param \Illuminate\Http\Request $request
+     */
+    public function contactRequest(Request $request) {
+
+        $validator        = Validator::make($request->all(),[
+            'name'        => "required|string|max:255|unique:contact_requests",
+            'email'       => "required|string|email|max:255|unique:contact_requests",
+            'message'     => "required|string|max:5000",
+        ]);
+        if($validator->fails()) return back()->withErrors($validator)->withInput();
+        $validated = $validator->validate();
+        try{
+            ContactRequest::create([
+                'name'            => $validated['name'],
+                'email'           => $validated['email'],
+                'message'         => $validated['message'],
+                'created_at'      => now(),
+            ]);
+        }catch(Exception $e) {
+            return back()->with(['error' => ['Failed to Contact Request. Try again']]);
+        }
+        return back()->with(['success' => ['Contact Request successfully send!']]);
     }
 }
