@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\User;
 
+use Exception;
+use Carbon\Carbon;
+use App\Models\UserKycData;
+use Illuminate\Http\Request;
 use App\Constants\GlobalConst;
-use App\Http\Controllers\Controller;
 use App\Models\Admin\SetupKyc;
 use App\Models\UserAuthorization;
-use App\Models\UserKycData;
-use App\Providers\Admin\BasicSettingsProvider;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Traits\ControlDynamicInputFields;
+use Illuminate\Support\Facades\Validator;
+use App\Providers\Admin\BasicSettingsProvider;
+use Illuminate\Validation\ValidationException;
+use App\Notifications\User\Auth\SendAuthorizationCode;
 
 class AuthorizationController extends Controller
 {
@@ -24,8 +27,14 @@ class AuthorizationController extends Controller
      */
     public function showMailFrom($token)
     {
-        $page_title = setPageTitle("Mail Authorization");
-        return view('user.auth.authorize.verify-mail',compact("page_title","token"));
+        $page_title = "- Mail Authorization";
+        $user_authorize = UserAuthorization::where("token",$token)->first();
+        $resend_time = 0;
+        if(Carbon::now() <= $user_authorize->created_at->addMinutes(GlobalConst::USER_PASS_RESEND_TIME_MINUTE)) {
+            $resend_time = Carbon::now()->diffInSeconds($user_authorize->created_at->addMinutes(GlobalConst::USER_PASS_RESEND_TIME_MINUTE));
+        }
+        $email = $user_authorize->user->email;
+        return view('user.auth.authorize.verify-mail',compact("page_title","token","resend_time","email"));
     }
 
     /**
@@ -38,13 +47,19 @@ class AuthorizationController extends Controller
         $request->merge(['token' => $token]);
         $request->validate([
             'token'     => "required|string|exists:user_authorizations,token",
-            'code'      => "required|integer|exists:user_authorizations,code",
+            'code.*'      => "required|integer",
         ]);
+
+        $code = implode("",$request->code);
+
         $otp_exp_sec = BasicSettingsProvider::get()->otp_exp_seconds ?? GlobalConst::DEFAULT_TOKEN_EXP_SEC;
-        $auth_column = UserAuthorization::where("token",$request->token)->where("code",$request->code)->first();
+        $auth_column = UserAuthorization::where("token",$request->token)->where("code",$code)->first();
+
+        if(!$auth_column) return back()->with(['error' => ['invalid Token!']]);
+
         if($auth_column->created_at->addSeconds($otp_exp_sec) < now()) {
             $this->authLogout($request);
-            return redirect()->route('user.login')->with(['error' => ['Session expired. Please try again']]);
+            return redirect()->route('index')->with(['error' => ['Session expired. Please try again']]);
         }
 
         try{
@@ -54,10 +69,34 @@ class AuthorizationController extends Controller
             $auth_column->delete();
         }catch(Exception $e) {
             $this->authLogout($request);
-            return redirect()->route('user.login')->with(['error' => ['Something went wrong! Please try again']]);
+            return redirect()->route('index')->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return redirect()->intended(route("user.dashboard"))->with(['success' => ['Account successfully verified']]);
+        return redirect()->intended(route("user.profile.index"))->with(['success' => ['Account successfully verified']]);
+    }
+    public function mailResend($token) {
+        $user_authorize = UserAuthorization::where("token",$token)->first();
+        if(!$user_authorize) return back()->with(['error' => ['Request token is invalid']]);
+        if(Carbon::now() <= $user_authorize->created_at->addMinutes(GlobalConst::USER_PASS_RESEND_TIME_MINUTE)) {
+            throw ValidationException::withMessages([
+                'code'      => 'You can resend verification code after '.Carbon::now()->diffInSeconds($user_authorize->created_at->addMinutes(GlobalConst::USER_PASS_RESEND_TIME_MINUTE)). ' seconds',
+            ]);
+        }
+        $resend_code = generate_random_code();
+        try{
+            $user_authorize->update([
+                'code'          => $resend_code,
+                'created_at'    => now(),
+            ]);
+            $data = $user_authorize->toArray();
+            $user_authorize->user->notify(new SendAuthorizationCode((object) $data));
+        }catch(Exception $e) {
+            throw ValidationException::withMessages([
+                'code'      => "Something went wrong! Please try again.",
+            ]);
+        }
+        
+        return redirect()->route('user.authorize.mail',$token)->with(['success' => ['Mail Resend Success!']]);
     }
 
     public function authLogout(Request $request) {

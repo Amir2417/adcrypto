@@ -22,7 +22,7 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $page_title = "User Profile";
+        $page_title = "- User Profile";
         $kyc_data = SetupKyc::userKyc()->first();
         return view('user.sections.profile.index',compact("page_title","kyc_data"));
     }

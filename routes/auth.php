@@ -52,6 +52,7 @@ Route::name('user.')->group(function(){
     Route::controller(AuthorizationController::class)->prefix("authorize")->name('authorize.')->middleware("auth")->group(function(){
         Route::get('mail/{token}','showMailFrom')->name('mail');
         Route::post('mail/verify/{token}','mailVerify')->name('mail.verify');
+        Route::get('mail/resend/{token}','mailResend')->name('mail.resend');
         Route::get('kyc','showKycFrom')->name('kyc');
         Route::post('kyc/submit','kycSubmit')->name('kyc.submit');
     });
