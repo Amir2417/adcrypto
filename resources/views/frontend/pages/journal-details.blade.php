@@ -43,7 +43,7 @@
                         </div>
                     </div>
                     <div class="widget-box mb-30">
-                        <h4 class="widget-title">Recent Posts</h4>
+                        <h4 class="widget-title">{{ __("Recent Posts") }}</h4>
                         <div class="popular-widget-box">
                             @foreach ($recent_posts as $item)
                                 <div class="single-popular-item d-flex flex-wrap align-items-center">
@@ -70,7 +70,7 @@
                         <div class="tag-widget-box">
                             <ul class="tag-list">
                                 @foreach ($tags as $item)
-                                    <li><a href="#0">{{ $item }}</a></li>
+                                    <li><a href="javascript:void(0)">{{ $item }}</a></li>
                                 @endforeach
                             </ul>
                         </div>

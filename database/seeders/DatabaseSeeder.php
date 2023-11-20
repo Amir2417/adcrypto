@@ -2,8 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\UserProfile;
 use Database\Seeders\Admin\AdminHasRoleSeeder;
 use Illuminate\Database\Seeder;
 use Database\Seeders\Admin\AdminSeeder;
@@ -14,6 +12,7 @@ use Database\Seeders\Admin\ExtensionSeeder;
 use Database\Seeders\Admin\AppSettingsSeeder;
 use Database\Seeders\Admin\SiteSectionsSeeder;
 use Database\Seeders\Admin\BasicSettingsSeeder;
+use Database\Seeders\Admin\BlogSeeder;
 use Database\Seeders\Admin\LanguageSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\RoleSeeder;
@@ -31,8 +30,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(50)->create();
-        // UserProfile::factory(40)->create();
+       
 
         $this->call([
             AdminSeeder::class,
@@ -50,7 +48,8 @@ class DatabaseSeeder extends Seeder
             SetupPageSeeder::class,
             PaymentGatewaySeeder::class,
             LanguageSeeder::class,
-            UsefulLinkSeeder::class
+            UsefulLinkSeeder::class,
+            BlogSeeder::class,
         ]);
     }
 }
