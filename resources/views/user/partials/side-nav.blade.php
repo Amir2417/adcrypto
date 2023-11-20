@@ -25,9 +25,9 @@
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="sell-crypto.html">
+                        <a href="{{ setRoute('user.sell.crypto.index') }}">
                             <i class="menu-icon las la-receipt"></i>
-                            <span class="menu-title">Sell Crypto</span>
+                            <span class="menu-title">{{ __("Sell Crypto") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">

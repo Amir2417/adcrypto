@@ -4,6 +4,7 @@ use App\Http\Controllers\User\BuyCryptoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\SellCryptoController;
 use App\Http\Controllers\User\SupportTicketController;
 
 Route::prefix("user")->name("user.")->group(function(){
@@ -24,6 +25,12 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('/','index')->name('index');
     });
 
+    //sell crypto
+    Route::controller(SellCryptoController::class)->prefix('sell-crypto')->name('sell.crypto.')->group(function(){
+        Route::get('/','index')->name('index');
+    });
+
+    //support ticket
     Route::controller(SupportTicketController::class)->prefix("prefix")->name("support.ticket.")->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('create', 'create')->name('create');
