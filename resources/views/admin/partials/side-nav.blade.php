@@ -261,14 +261,10 @@
                             setRoute('admin.setup.sections.section','faq'),
                             setRoute('admin.setup.sections.section','service'),
                             setRoute('admin.setup.sections.section','blog'),
+                            setRoute('admin.setup.sections.section','contact'),
 
 
-                            setRoute('admin.setup.sections.section','solutions'),
-                            setRoute('admin.setup.sections.section','monitoring'),
-                            setRoute('admin.setup.sections.section','best-item'),
-                            setRoute('admin.setup.sections.section','latest-item'),
-                            setRoute('admin.setup.sections.section','glance'),
-                            setRoute('admin.setup.sections.section','intro'),
+                            
                         ];
                     @endphp
 
@@ -327,33 +323,10 @@
                                     <i class="menu-icon las la-ellipsis-h"></i>
                                     <span class="menu-title">{{ __("Blog Section") }}</span>
                                 </a>
-
-
-
-                                <a href="{{ setRoute('admin.setup.sections.section','solutions') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','solutions')) active @endif">
+                                <a href="{{ setRoute('admin.setup.sections.section','contact') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','contact')) active @endif">
                                     <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Solutions Section</span>
-                                </a>
-                                <a href="{{ setRoute('admin.setup.sections.section','monitoring') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','monitoring')) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Monitoring Section</span>
-                                </a>
-                                <a href="{{ setRoute('admin.setup.sections.section','best-item') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','best-item')) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Best Item</span>
-                                </a>
-                                <a href="{{ setRoute('admin.setup.sections.section','latest-item') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','latest-item')) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Latest Item</span>
-                                </a>
-                                <a href="{{ setRoute('admin.setup.sections.section','glance') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','glance')) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Glance Section</span>
-                                </a>
-                                <a href="{{ setRoute('admin.setup.sections.section','intro') }}" class="nav-link @if ($current_url == setRoute('admin.setup.sections.section','intro')) active @endif">
-                                    <i class="menu-icon las la-ellipsis-h"></i>
-                                    <span class="menu-title">Intro Section</span>
-                                </a>
+                                    <span class="menu-title">{{ __("Contact Section") }}</span>
+                                </a> 
                             </li>
                         </ul>
                     </li>

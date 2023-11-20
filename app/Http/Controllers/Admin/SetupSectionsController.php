@@ -98,6 +98,10 @@ class SetupSectionsController extends Controller
             'blog'        => [
                 'view'       => "blogView",
                 'update'     => "blogUpdate",
+            ],
+            'contact'      => [
+                'view'          => "contactView",
+                'update'        => "contactUpdate",
             ], 
         ];
 
@@ -255,7 +259,7 @@ class SetupSectionsController extends Controller
         ));
     }
     /**
-     * Mehtod for update faq section information
+     * Mehtod for update security section information
      * @param string $slug
      * @param \Illuminate\Http\Request  $request
     */
@@ -287,7 +291,7 @@ class SetupSectionsController extends Controller
 
     }
     /**
-     * Mehtod for store faq item information
+     * Mehtod for store security item information
      * @param string $slug
      * @param \Illuminate\Http\Request $request
     */
@@ -331,7 +335,7 @@ class SetupSectionsController extends Controller
         return back()->with(['success'   => ['Section item added successfully!']]);
     }
     /**
-     * Mehtod for update faq item information
+     * Mehtod for update security item information
      * @param string $slug
      * @param \Illuminate\Http\Request $request
     */
@@ -374,7 +378,7 @@ class SetupSectionsController extends Controller
         return back()->with(['success'   => ['Information updated successfully!']]);    
     }
     /**
-     * Mehtod for delete faq item information
+     * Mehtod for delete security item information
      * @param string $slug
      * @return view
      */
@@ -401,7 +405,7 @@ class SetupSectionsController extends Controller
         return back()->with(['success' => ['Section item deleted successfully!']]);
     }
     /**
-     * Mehtod for update faq item status 
+     * Mehtod for update security item status 
      * @param string $slug
      * @return view
      */
@@ -841,7 +845,7 @@ class SetupSectionsController extends Controller
         ));
     }
     /**
-     * Method for update download app section
+     * Method for update statistics section
      * @param string
      * @param \Illuminate\\Http\Request $request
      */
@@ -886,7 +890,7 @@ class SetupSectionsController extends Controller
 
     }
     /**
-     * Method for store banner item
+     * Method for store statistics item
      * @param string $slug
      * @param \Illuminate\Http\Request  $request
      */
@@ -932,7 +936,7 @@ class SetupSectionsController extends Controller
         return back()->with(['success' => ['Section item added successfully!']]);
     }
     /**
-     * Method for update banner item section page
+     * Method for update statistics item section page
      * @param string $slug
      * @return view
      */
@@ -980,7 +984,7 @@ class SetupSectionsController extends Controller
        return back()->with(['success' => ['Section item updated successfully!']]);
     }
     /**
-     * Method for update banner status section page
+     * Method for update statistics status section page
      * @param string $slug
      * @return view
      */
@@ -1016,7 +1020,7 @@ class SetupSectionsController extends Controller
         
     }
     /**
-     * Method for delete banner item section information
+     * Method for delete statistics item section information
      * @param string $slug
      * @param \Illuminate\Http\Request  $request
      */
@@ -1043,7 +1047,7 @@ class SetupSectionsController extends Controller
         return back()->with(['success'   => ['Section item deleted successfully!']]);
     }
     /**
-     * Mehtod for show banner section page
+     * Mehtod for show call to action section page
      * @param string $slug
      * @return view
      */
@@ -1062,7 +1066,7 @@ class SetupSectionsController extends Controller
     }
 
     /**
-     * Mehtod for update banner section information
+     * Mehtod for update call to action section information
      * @param string $slug
      * @param \Illuminate\Http\Request  $request
      */
@@ -1225,7 +1229,7 @@ class SetupSectionsController extends Controller
 
     }
     /**
-     * Method for show download app section
+     * Method for show about section
      * @param string $slug
      * @param \Illuminate\Http\Request $request
      */
@@ -1243,7 +1247,7 @@ class SetupSectionsController extends Controller
         ));
     }
     /**
-     * Method for update download app section
+     * Method for update about section
      * @param string
      * @param \Illuminate\\Http\Request $request
      */
@@ -1755,7 +1759,68 @@ class SetupSectionsController extends Controller
         return back()->with(['success' => ['Section Updated Successfully!']]);
      
     }
+    /**
+     * Method for show contact section
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function contactView($slug){
+        $page_title     = "Contact Section";
+        $section_slug   = Str::slug(SiteSectionConst::CONTACT_SECTION);
+        $data           = SiteSections::getData($section_slug)->first();
+        $languages      = $this->languages;
+
+        return view('admin.sections.setup-sections.contact-section',compact(
+            'page_title',
+            'data',
+            'languages',
+            'slug'
+        ));
+    }
+    /**
+     * Method for update contact section
+     * @param string
+     * @param \Illuminate\\Http\Request $request
+     */
     
+    public function contactUpdate(Request $request,$slug){
+        $basic_field_name = [
+            'title'       => 'required|string|max:100',
+            'heading'     => 'required|string',
+        ];
+
+        $slug             = Str::slug(SiteSectionConst::CONTACT_SECTION);
+        $section          = SiteSections::where("key",$slug)->first();
+
+        if($section      != null){
+            $data         = json_decode(json_encode($section->value),true);
+        }else{
+            $data         = [];
+        }
+        $validator  = Validator::make($request->all(),[
+            'image'            => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+        ]);
+        if($validator->fails()) return back()->withErrors($validator->errors())->withInput();
+
+        $validated = $validator->validate();
+       
+        $data['image']    = $section->value->image ?? "";
+
+        if($request->hasFile("image")){
+            $data['image']= $this->imageValidate($request,"image",$section->value->image ?? null);
+        }
+
+        $data['language']     = $this->contentValidate($request,$basic_field_name);
+        $update_data['key']   = $slug;
+        $update_data['value'] = $data;
+        try{
+            SiteSections::updateOrCreate(['key' => $slug],$update_data);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with( ['success' => ['Section Updated Successfully!']]);
+
+    }
 
     /**
      * Method for get languages form record with little modification for using only this class
