@@ -37,7 +37,7 @@
                         <div class="category-widget-box">
                             <ul class="category-list">
                                 @foreach ($category as $item)
-                                    <li><a href="#0">{{ $item->name->language->$app_local->name ?? "" }} <span>{{ $item->blog_count }}</span></a></li>
+                                    <li><a href="{{ setRoute('blog.category',$item->slug) }}">{{ $item->name->language->$app_local->name ?? "" }} <span>{{ $item->blog_count }}</span></a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="widget-box">
-                        <h4 class="widget-title">Tags</h4>
+                        <h4 class="widget-title">{{ __("Tags") }}</h4>
                             @php
                                 $tags    = $blog->data->language->$app_local->tags ?? [];
                             @endphp

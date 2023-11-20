@@ -51,12 +51,25 @@ class SiteController extends Controller
         $slug           = Str::slug(SiteSectionConst::BLOG_SECTION);
         $web_journal    = SiteSections::getData($slug)->first();
         $category       = BlogCategory::where('status',true)->get();
-        $blogs          = Blog::where('status',true)->get();
+        $blogs          = Blog::where('status',true)->latest()->take(6)->get();
 
         return view('frontend.pages.journal',compact(
             'page_title',
             'web_journal',
             'category',
+            'blogs'
+        ));
+    }
+    /**
+     * Method for show all the journals
+     * @return view
+     */
+    public function journals(){
+        $page_title     = "- All Journals";
+        $blogs          = Blog::where('status',true)->lastest()->paginate(10);
+
+        return view("frontend.pages.all-journals",compact(
+            'page_title',
             'blogs'
         ));
     }
@@ -77,6 +90,25 @@ class SiteController extends Controller
             'blog',
             'category',
             'recent_posts',
+        ));
+    }
+    /**
+     * Method for get the blogs using category
+     * @param string $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function blogCategory($slug){
+        $page_title         = "| Blog Category";
+        $blog_category      = BlogCategory::where('slug',$slug)->first();
+        
+        if(!$blog_category) abort(404);
+        $blogs              = Blog::where('category_id',$blog_category->id)->latest()->paginate(6);
+        
+
+        return view('frontend.pages.journal-category',compact(
+            'page_title',
+            'blog_category',
+            'blogs',
         ));
     }
     /**
