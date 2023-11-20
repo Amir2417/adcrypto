@@ -223,7 +223,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::controller(BlogCategoryController::class)->prefix('category')->name('category.')->group(function (){
             Route::get('index','index')->name('index');
             Route::post('store','store')->name('store');
-            Route::post('update','update')->name('update');
+            Route::put('update','update')->name('update');
             Route::delete('delete','delete')->name('delete');
             Route::put('status/update','statusUpdate')->name('status.update');
         });

@@ -10,6 +10,7 @@ use App\Models\Admin\Language;
 use App\Constants\LanguageConst;
 use App\Models\Admin\BlogCategory;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 
 class BlogCategoryController extends Controller
@@ -90,6 +91,33 @@ class BlogCategoryController extends Controller
 
         $success = ['success' => ['Category status updated successfully!']];
         return Response::success($success, null, 200);
+    }
+    /**
+     * Method for update the blog Category
+     */
+    public function update(Request $request){
+        $request->validate([
+            'target'         =>'required|string',
+        ]);
+        $basic_field_name = [
+            'name'  => "required|string|max:255",
+        ];
+
+        $category   = BlogCategory::where('id',$request->target)->first();
+        if(!$category) return back()->with(['error' => ['Blog Category Not Found!']]);
+        $data['language']   = $this->contentValidate($request,$basic_field_name);
+        
+        
+        try{
+            $update_value = [
+                'name'          => $data
+            ];
+            $category->update($update_value);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+        return back()->with(['success' => ['Blog Category Updated Successfully.']]);
+        
     }
     /**
      * Method for delete the category
