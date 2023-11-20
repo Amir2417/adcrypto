@@ -98,7 +98,7 @@ class SiteController extends Controller
      * @param string $slug
      * @param \Illuminate\Http\Request $request
      */
-    public function blogCategory($slug){
+    public function journalCategory($slug){
         $page_title         = "| Blog Category";
         $blog_category      = BlogCategory::where('slug',$slug)->first();
         

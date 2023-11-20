@@ -21,7 +21,7 @@ Route::controller(SiteController::class)->group(function(){
     Route::get('journal','journal')->name('journal');
     Route::get('all-journals','journals')->name('journals');
     Route::get('journal-detais/{slug}','journalDetails')->name('journal.details');
-    Route::get('blog-category/{slug}','blogCategory')->name('blog.category');
+    Route::get('journal-category/{slug}','journalCategory')->name('journal.category');
     Route::get('contact','contact')->name('contact');
     Route::post("subscribe",'subscribe')->name("subscribe");
     Route::get('link/{slug}','link')->name('link');

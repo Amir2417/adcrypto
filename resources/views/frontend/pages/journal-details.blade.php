@@ -37,7 +37,7 @@
                         <div class="category-widget-box">
                             <ul class="category-list">
                                 @foreach ($category as $item)
-                                    <li><a href="{{ setRoute('blog.category',$item->slug) }}">{{ $item->name->language->$app_local->name ?? "" }} <span>{{ $item->blog_count }}</span></a></li>
+                                    <li><a href="{{ setRoute('journal.category',$item->slug) }}">{{ $item->name->language->$app_local->name ?? "" }} <span>{{ $item->blog_count }}</span></a></li>
                                 @endforeach
                             </ul>
                         </div>
