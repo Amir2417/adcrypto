@@ -15,13 +15,13 @@
                     <li class="sidebar-menu-item">
                         <a href="{{ setRoute('user.dashboard') }}">
                             <i class="menu-icon las la-palette"></i>
-                            <span class="menu-title">Dashboard</span>
+                            <span class="menu-title">{{ __("Dashboard") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="buy-crypto.html">
+                        <a href="{{ setRoute('user.buy.crypto.index') }}">
                             <i class="menu-icon las la-sign"></i>
-                            <span class="menu-title">Buy Crypto</span>
+                            <span class="menu-title">{{ __("Buy Crypto") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">

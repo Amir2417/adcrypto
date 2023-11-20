@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\User\BuyCryptoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ProfileController;
@@ -16,6 +17,11 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('/','index')->name('index');
         Route::put('password/update','passwordUpdate')->name('password.update')->middleware(['app.mode']);;
         Route::put('update','update')->name('update')->middleware(['app.mode']);;
+    });
+
+    //buy crypto
+    Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+        Route::get('/','index')->name('index');
     });
 
     Route::controller(SupportTicketController::class)->prefix("prefix")->name("support.ticket.")->group(function () {
