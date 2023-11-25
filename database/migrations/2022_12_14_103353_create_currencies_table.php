@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name',100)->index();
             $table->string('code',20)->index();
             $table->string('symbol',20);
-            $table->enum('type',['CRYPTO','FIAT'])->default('FIAT');
+            $table->string('type')->default('CRYPTO');
             $table->string('flag',255)->unique()->nullable();
             $table->decimal('rate',28,8)->default(1);
             $table->boolean('sender')->default(false);

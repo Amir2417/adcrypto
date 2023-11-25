@@ -21,7 +21,7 @@ class CurrencySeeder extends Seeder
             'name'      => "United States dollar",
             'code'      => "USD",
             'symbol'    => "$",
-            'type'      => "FIAT",
+            'type'      => "CRYPTO",
             'sender'    => true,
             'receiver'  => true,
             'default'   => true,
@@ -29,6 +29,6 @@ class CurrencySeeder extends Seeder
         ];
 
         Currency::firstOrCreate($data);
-        Currency::factory()->times(50)->create();
+        
     }
 }

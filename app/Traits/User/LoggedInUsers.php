@@ -13,7 +13,9 @@ trait LoggedInUsers {
     protected function refreshUserWallets($user) {
         $user_wallets = $user->wallets->pluck("currency_id")->toArray();
         $currencies = Currency::active()->roleHasOne()->pluck("id")->toArray();
+        
         $new_currencies = array_diff($currencies,$user_wallets);
+        
         $new_wallets = [];
         foreach($new_currencies as $item) {
             $new_wallets[] = [
@@ -24,7 +26,7 @@ trait LoggedInUsers {
                 'created_at'    => now(),
             ];
         }
-
+        
         try{
             UserWallet::insert($new_wallets);
         }catch(Exception $e) {

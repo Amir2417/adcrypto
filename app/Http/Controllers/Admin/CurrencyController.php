@@ -38,7 +38,6 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'type'      => 'required|string',
             'country'   => 'required|string',
             'name'      => 'required|string',
             'code'      => 'required|string|unique:currencies',
@@ -94,7 +93,7 @@ class CurrencyController extends Controller
             }
         }
 
-        $validated['type']          = strtoupper($validated['type']);
+        
         $validated['default']       = $default[$validated['option']];
         $validated['created_at']    = now();
         $validated['admin_id']      = Auth::user()->id;
@@ -177,7 +176,7 @@ class CurrencyController extends Controller
         $request->merge(['old_flag' => $currency->flag]);
 
         $validator = Validator::make($request->all(),[
-            'currency_type'      => 'required|string',
+            
             'currency_country'   => 'required|string',
             'currency_name'      => 'required|string',
             'currency_code'      => ['required','string',Rule::unique('currencies','code')->ignore($currency->id)],

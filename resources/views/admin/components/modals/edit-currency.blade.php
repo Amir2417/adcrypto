@@ -26,14 +26,6 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
-                            @include('admin.components.form.switcher',[
-                                'label'         => 'Type*',
-                                'name'          => 'currency_type',
-                                'value'         => old('currency_type'),
-                                'options'       => ['FIAT' => 'FIAT','CRYPTO' => 'CRYPTO'],
-                            ])
-                        </div>
-                        <div class="col-xl-12 col-lg-12 form-group">
                             <label>{{ __("Country*") }}</label>
                             <select name="currency_country" class="form--control select2-auto-tokenize country-select" data-old="{{ old('currency_country') }}">
                                 <option selected disabled>Select Country</option>

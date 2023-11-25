@@ -19,14 +19,6 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
-                            @include('admin.components.form.switcher',[
-                                'label'         => 'Type*',
-                                'name'          => 'type',
-                                'value'         => old('type','FIAT'),
-                                'options'       => ['FIAT' => 'FIAT','CRYPTO' => 'CRYPTO'],
-                            ])
-                        </div>
-                        <div class="col-xl-12 col-lg-12 form-group">
                             <label>{{ __("Country*") }}</label>
                             <select name="country" class="form--control select2-auto-tokenize country-select" data-old="{{ old('country') }}">
                                 <option selected disabled>Select Country</option>
