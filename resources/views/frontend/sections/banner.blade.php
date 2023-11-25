@@ -16,10 +16,12 @@
                     <div class="banner-content">
                         <span class="title-badge"></span>
                         @php
-                            $heading    = explode(' ',@$banner->value->language->$app_local->heading);
+                            $heading        = explode('[',@$banner->value->language->$app_local->heading ?? '' );
+                            $middle_text    = explode(']',@$heading[1] ?? '');
+                            
                         @endphp
                         <h5 class="sub-title">{{ @$banner->value->language->$app_local->title ?? '' }}</h5>
-                        <h1 class="title">{{ $heading[0] . ' ' . $heading[1] }} <span>{{ $heading[2] }}</span>{{ implode(' ', array_slice($heading, 3)) }}</h1>
+                        <h1 class="title">{{ isset($heading[0]) ? $heading[0] : ''  }} <span>{{ isset($middle_text[0]) ? $middle_text[0] : '' }}</span>{{ isset($middle_text[1]) ? $middle_text[1] : '' }}</h1>
                         <p>{{ @$banner->value->language->$app_local->sub_heading ?? '' }}</p>
                         <div class="banner-btn">
                             <a href="{{ setRoute('user.register') }}" class="btn--base">{{ @$banner->value->language->$app_local->button_name ?? '' }}</a>

@@ -14,7 +14,7 @@
                     <span class="title-badge">$</span>
                     <h5 class="section-sub-title">{{ @$security->value->language->$app_local->title ?? '' }}</h5>
                     @php
-                        $heading    = explode('|',$security->value->language->$app_local->heading);
+                        $heading    = explode('|',@$security->value->language->$app_local->heading);
                     @endphp
                     <h2 class="section-title">{{ isset($heading[0]) ? $heading[0] : '' }} <span>{{ isset($heading[1]) ? $heading[1] : '' }}</span></h2>
                 </div>

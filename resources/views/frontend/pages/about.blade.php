@@ -67,11 +67,11 @@
         @php
             $items      = @$faq->value->items;
             $itemData   = (array) $items;
-
-            $data = array_chunk($itemData, ceil(count($itemData) / 2));
-
-            $part1 = $data[0];
-            $part2 = $data[1];
+            if ($itemData != []) {
+                $data = array_chunk($itemData, ceil(count($itemData) / 2));
+                $part1 = $data[0];
+                $part2 = $data[1];
+            }
         @endphp
         <div class="row justify-content-center mb-30-none">
             <div class="col-xl-6 col-lg-6 mb-30">

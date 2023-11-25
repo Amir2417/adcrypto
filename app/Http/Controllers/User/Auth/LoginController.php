@@ -121,7 +121,7 @@ class LoginController extends Controller
     {
         $user->two_factor_verified = 0;
         $user->save();
-
+        $this->refreshUserWallets($user);
         $this->createLoginLog($user);
         return redirect()->intended(route('user.dashboard'));
     }
