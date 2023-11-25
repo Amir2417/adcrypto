@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\ExchangeCryptoController;
 use App\Http\Controllers\User\ProfileController;
+use App\Http\Controllers\User\SecurityController;
 use App\Http\Controllers\User\SellCryptoController;
 use App\Http\Controllers\User\SupportTicketController;
 use App\Http\Controllers\User\TransactionController;
@@ -49,6 +50,12 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('sell-log','sellLog')->name('sell.log');
         Route::get('withdraw-log','withdrawLog')->name('withdraw.log');
         Route::get('exchange-log','exchangeLog')->name('exchange.log');
+    });
+
+    //security
+    Route::controller(SecurityController::class)->prefix('security')->name('security.')->group(function(){
+        Route::get('google/2fa','google2FA')->name('google.2fa')->middleware('app.mode');
+        Route::post('google/2fa/status/update','google2FAStatusUpdate')->name('google.2fa.status.update')->middleware('app.mode');
     });
 
     //support ticket

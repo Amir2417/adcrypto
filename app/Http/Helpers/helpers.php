@@ -1517,3 +1517,41 @@ function numeric_unit_converter($number) {
     }
     return (object) $data;
 }
+
+// Googele 2FA
+function generate_google_2fa_auth_qr() {
+    $google2FA = new \PragmaRX\Google2FA\Google2FA();
+    $secret_key = $google2FA->generateSecretKey();
+    $user = auth()->user();
+    if($user->two_factor_secret) {
+        $site_url = App::make('url')->to('/');
+        $generate_text = $google2FA->getQRCodeUrl($site_url,$user->username,$user->two_factor_secret);
+    }else {
+        $site_url = App::make('url')->to('/');
+        $generate_text = $google2FA->getQRCodeUrl($site_url,$user->username,$secret_key);
+        $user->update([
+            'two_factor_secret' => $secret_key,
+        ]);
+    }
+    $qr_image = 'https://chart.googleapis.com/chart?cht=qr&chs=350x350&chl='.$generate_text;
+    return $qr_image;
+}
+function google_two_factor_verification_user_template($user) {
+    return redirect()->route('user.authorize.google.2fa')->with(['error' => ['Please verify two factor authentication']]);
+}
+function google_2fa_verify($secret_key,$code) {
+    $google2FA = new \PragmaRX\Google2FA\Google2FA();
+    if($google2FA->verifyKey($secret_key, $code,0) == false) {
+        if(request()->expectsJson()) return false;
+        throw ValidationException::withMessages([
+            'code'       => "Invalid authentication code",
+        ]);
+        return false;
+    }
+    return true;
+}
+
+function generateQr($val)
+{
+    return "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=$val&choe=UTF-8&chf=bg,s,FFFFFFFF";
+}

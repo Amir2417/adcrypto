@@ -69,9 +69,9 @@
                         </ul>
                     </li>
                     <li class="sidebar-menu-item">
-                        <a href="2fa.html">
+                        <a href="{{ setRoute('user.security.google.2fa') }}">
                             <i class="menu-icon las la-qrcode"></i>
-                            <span class="menu-title">2FA Security</span>
+                            <span class="menu-title">{{ __("2FA Security") }}</span>
                         </a>
                     </li>
                     <li class="sidebar-menu-item">

@@ -33,6 +33,8 @@ return new class extends Migration
             $table->integer('ver_code')->nullable();
             $table->timestamp('ver_code_send_at')->nullable();
             $table->boolean('two_factor_verified')->default(false);
+            $table->boolean('two_factor_status')->default(false);
+            $table->string('two_factor_secret')->nullable();
             $table->string('device_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
