@@ -1,3 +1,8 @@
+@php
+    $app_local      = get_default_language_code();
+    $slug           = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::REGISTER_SECTION);
+    $register       = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
 @extends('layouts.master')
 
 @push('css')
@@ -12,14 +17,14 @@ Start Account
     <div class="account-inner">
         <div class="account-area change-form">
             <div class="account-thumb">
-                <img src="{{ asset('public/frontend') }}/images/element/account.png" alt="element">
+                <img src="{{ get_image($register->value->image , 'site-section') }}" alt="element">
             </div>
             <div class="account-form-area">
                 <div class="account-logo">
                     <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
                 </div>
-                <h4 class="title">{{ __("Register for an Account Today") }}</h4>
-                <p>{{ __("Become a part of our community by registering for an account today. Enjoy a range of benefits and features tailored to meet your needs. Our registration page makes it easy to create your account, providing a seamless and user-friendly experience.") }}</p>
+                <h4 class="title">{{ @$register->value->language->$app_local->title ?? '' }}</h4>
+                <p>{{ @$register->value->language->$app_local->heading ?? '' }}</p>
                 <form action="{{ setRoute('user.register.submit') }}" class="account-form" method="POST" autocomplete="on">
                     @csrf
                     <div class="row">

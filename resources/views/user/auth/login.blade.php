@@ -1,4 +1,8 @@
-
+@php
+    $app_local      = get_default_language_code();
+    $slug           = Illuminate\Support\Str::slug(App\Constants\SiteSectionConst::LOGIN_SECTION);
+    $login          = App\Models\Admin\SiteSections::getData($slug)->first();
+@endphp
 @extends('layouts.master')
 
 @push('css')
@@ -13,14 +17,14 @@
     <div class="account-inner">
         <div class="account-area change-form">
             <div class="account-thumb">
-                <img src="{{ asset('public/frontend') }}/images/element/account.png" alt="element">
+                <img src="{{ get_image($login->value->image , 'site-section') }}" alt="element">
             </div>
             <div class="account-form-area">
                 <div class="account-logo">
                     <a class="site-logo site-title" href="{{ setRoute('index') }}"><img src="{{ get_logo($basic_settings) }}" alt="site-logo"></a>
                 </div>
-                <h4 class="title">{{ __("Log in and Stay Connected") }}</h4>
-                <p>{{ __("Our secure login process ensures the confidentiality of your information. Log in today and stay connected to your finances, anytime and anywhere.") }}</p>
+                <h4 class="title">{{ @$login->value->language->$app_local->title ?? '' }}</h4>
+                <p>{{ @$login->value->language->$app_local->heading ?? '' }}</p>
                 <form action="{{ setRoute('user.login.submit') }}" class="account-form" method="POST">
                     @csrf
                     <div class="row">
