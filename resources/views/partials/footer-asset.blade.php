@@ -15,6 +15,8 @@
 <script src="{{ asset('public/frontend/js/jquery.nice-select.js') }}"></script>
 <!--  Popup -->
 <script src="{{ asset('public/backend/library/popup/jquery.magnific-popup.js') }}"></script>
+{{-- apexchart --}}
+<script src="{{ asset('public/frontend/js/apexcharts.js') }}"></script>
 
 <script>
     var fileHolderAfterLoad = {};

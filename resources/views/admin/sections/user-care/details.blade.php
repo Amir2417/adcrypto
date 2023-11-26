@@ -164,7 +164,7 @@
                             'placeholder'   => "Write Here...",
                         ])
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
                         @include('admin.components.form.switcher', [
                             'label'         => 'User Status',
                             'value'         => old('status',$user->status),
@@ -173,7 +173,7 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
                         @include('admin.components.form.switcher', [
                             'label'         => 'Email Verification',
                             'value'         => old('email_verified',$user->email_verified),
@@ -182,7 +182,7 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
                         @include('admin.components.form.switcher', [
                             'label'     => '2FA Verification',
                             'value'     => old('two_factor_verified',$user->two_factor_verified),
@@ -191,17 +191,6 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-
-                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
-                        @include('admin.components.form.switcher', [
-                            'label'     => 'KYC Verification',
-                            'value'     => old('kyc_verified',$user->kyc_verified),
-                            'name'      => "kyc_verified",
-                            'options'   => ['Verified' => 1, 'Unverified' => 0],
-                            'permission'    => "admin.users.details.update",
-                        ])
-                    </div>
-                    
                     <div class="col-xl-12 col-lg-12 form-group mt-4">
                         @include('admin.components.button.form-btn',[
                             'text'          => "Update",

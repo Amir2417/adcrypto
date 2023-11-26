@@ -9,6 +9,7 @@ use App\Http\Controllers\User\SecurityController;
 use App\Http\Controllers\User\SellCryptoController;
 use App\Http\Controllers\User\SupportTicketController;
 use App\Http\Controllers\User\TransactionController;
+use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\WithdrawCryptoController;
 
 Route::prefix("user")->name("user.")->group(function(){
@@ -22,6 +23,11 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('/','index')->name('index');
         Route::put('password/update','passwordUpdate')->name('password.update')->middleware(['app.mode']);;
         Route::put('update','update')->name('update')->middleware(['app.mode']);;
+    });
+
+    // wallet 
+    Route::controller(WalletController::class)->prefix('wallet')->name('wallet.')->group(function(){
+        Route::get('/','index')->name('index');
     });
 
     //buy crypto

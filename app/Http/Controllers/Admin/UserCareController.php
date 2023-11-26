@@ -205,7 +205,6 @@ class UserCareController extends Controller
             'zip_code'              => "nullable|numeric|max_digits:8",
             'email_verified'        => 'required|boolean',
             'two_factor_verified'   => 'required|boolean',
-            'kyc_verified'          => 'required|boolean',
             'status'                => 'required|boolean',
         ]);
         $validated = $validator->validate();

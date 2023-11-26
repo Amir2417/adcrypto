@@ -17,7 +17,7 @@
             <h4 class="title">My Wallets</h4>
             <div class="dashboard-btn-wrapper">
                 <div class="dashboard-btn">
-                    <a href="all-currency.html" class="btn--base">View More</a>
+                    <a href="{{ setRoute('user.wallet.index') }}" class="btn--base">{{ __("View More") }}</a>
                 </div>
             </div>
         </div>
@@ -30,7 +30,7 @@
                             <h4 class="title">1000.00 <span class="text--danger">BTC</span></h4>
                         </div>
                         <div class="dashboard-icon">
-                            <img src="assets/images/flag/btc.jpg" alt="flag">
+                            <img src="{{ asset('public/frontend') }}/images/flag/btc.jpg" alt="flag">
                         </div>
                     </a>
                 </div>
@@ -52,7 +52,7 @@
                             <h4 class="title">270.00 <span class="text--danger">USDT</span></h4>
                         </div>
                         <div class="dashboard-icon">
-                            <img src="assets/images/flag/usdt.webp" alt="flag">
+                            <img src="{{ asset('public/frontend') }}/images/flag/usdt.webp" alt="flag">
                         </div>
                     </a>
                 </div>
@@ -63,7 +63,7 @@
                             <h4 class="title">100.00 <span class="text--danger">DOGE</span></h4>
                         </div>
                         <div class="dashboard-icon">
-                            <img src="assets/images/flag/doge.webp" alt="flag">
+                            <img src="{{ asset('public/frontend') }}/images/flag/doge.webp" alt="flag">
                         </div>
                     </a>
                 </div>
@@ -72,7 +72,7 @@
     </div>
     <div class="chart-area mt-20">
         <div class="row mb-20-none">
-            <div class="col-xxl-6 col-xl-76col-lg-6 mb-20">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
                 <div class="chart-wrapper">
                     <div class="dashboard-header-wrapper">
                         <h5 class="title">Buy Crypto Chart</h5>
@@ -574,3 +574,153 @@
 </div>
 
 @endsection
+@push('script')
+<script>
+    var options = {
+        series: [{
+            name: 'Transactions',
+            color: "#0194FC",
+            data: [33, 41, 50, 101, 60, 46, 42, 33, 24, 18, 25, 12]
+        }],
+        chart: {
+            height: 350,
+            toolbar: {
+              show: false
+            },
+            type: 'bar',
+        },
+        plotOptions: {
+            bar: {
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'top', // top, center, bottom
+                },
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+                return val + "$";
+            },
+            offsetY: -20,
+            style: {
+                fontSize: '12px',
+                colors: ["#ffffff"]
+            }
+        },
+
+        xaxis: {
+            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            position: 'top',
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false
+            },
+            crosshairs: {
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        colorFrom: '#8781c6',
+                        colorTo: '#8781c6',
+                        stops: [0, 100],
+                        opacityFrom: 0.4,
+                        opacityTo: 0.5,
+                    }
+                }
+            },
+            tooltip: {
+                enabled: true,
+            }
+        },
+        yaxis: {
+            axisBorder: {
+                show: false
+            },
+            axisTicks: {
+                show: false,
+            },
+            labels: {
+                show: false,
+                formatter: function (val) {
+                    return val + "$";
+                }
+            }
+
+        },
+        title: {
+            text: 'Transactions Overview',
+            floating: true,
+            offsetY: 330,
+            align: 'center',
+            style: {
+                color: '#fff'
+            }
+        }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart1"), options);
+    chart.render();
+
+    var options = {
+        series: [{
+        name: 'Buy Crypto',
+        color: "#00ABB3",
+        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        }, {
+        name: 'Sell Crypto',
+        color: "#0194FC",
+        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        }, {
+        name: 'Withdraw Crypto',
+        color: "#cdbb71",
+        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+        }],
+        chart: {
+        type: 'bar',
+        toolbar: {
+            show: false
+        },
+        height: 350
+        },
+        plotOptions: {
+        bar: {
+            horizontal: false,
+            columnWidth: '55%',
+            borderRadius: 5,
+            endingShape: 'rounded'
+        },
+        },
+        dataLabels: {
+        enabled: false
+        },
+        stroke: {
+        show: true,
+        width: 2,
+        colors: ['transparent']
+        },
+        xaxis: {
+        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        },
+        yaxis: {
+        title: {
+            text: '$ (thousands)'
+        }
+        },
+        fill: {
+        opacity: 1
+        },
+        tooltip: {
+        y: {
+            formatter: function (val) {
+            return "$ " + val + " thousands"
+            }
+        }
+        }
+        };
+
+    var chart = new ApexCharts(document.querySelector("#chart2"), options);
+    chart.render();
+</script>
+@endpush
