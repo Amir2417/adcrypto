@@ -30,10 +30,16 @@
                     'icon'      => "menu-icon las la-rocket",
                 ])
                 
-                {{-- Section Default --}}
+                
+
                 @include('admin.components.side-nav.link-group',[
                     'group_title'       => "Default",
                     'group_links'       => [
+                        [
+                            'title'     => "Setup Coin",
+                            'route'     => "admin.coin.index",
+                            'icon'      => "menu-icon las la-coins",
+                        ],
                         [
                             'title'     => "Setup Currency",
                             'route'     => "admin.currency.index",
@@ -44,7 +50,6 @@
                             'route'     => "admin.trx.settings.index",
                             'icon'      => "menu-icon las la-wallet",
                         ],
-                        
                     ]
                 ])
 

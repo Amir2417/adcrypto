@@ -593,7 +593,7 @@
             bar: {
                 borderRadius: 10,
                 dataLabels: {
-                    position: 'top', // top, center, bottom
+                    position: 'top', 
                 },
             }
         },

@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AppSettingsController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BroadcastingController;
+use App\Http\Controllers\Admin\CoinController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
@@ -66,6 +67,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('update', 'update')->name('update');
     });
  
+    // coin section
+    Route::controller(CoinController::class)->prefix('coin')->name('coin.')->group(function(){
+        Route::get('/','index')->name('index');
+        Route::post('store','store')->name('store');
+        Route::put('update','update')->name('update');
+        Route::delete('delete','delete')->name('delete');
+        Route::put('status/update','statusUpdate')->name('status.update');
+    });
+
     // Setup Currency Section
     Route::controller(CurrencyController::class)->prefix('currency')->name('currency.')->group(function () {
         Route::get('index', 'index')->name('index');
