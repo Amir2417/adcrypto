@@ -41,7 +41,7 @@
                                     <div class="custom-select">
                                         <div class="custom-select-inner">
                                             <input type="hidden">
-                                            <img src="assets/images/flag/usdt.webp" alt="flag" class="custom-flag">
+                                            <img src="{{ asset('public/frontend') }}/images/flag/usdt.webp" alt="flag" class="custom-flag">
                                             <span class="custom-currency">USDT</span>
                                         </div>
                                     </div>
@@ -55,17 +55,17 @@
                                         <div class="custom-select-list-wrapper">
                                             <ul class="custom-select-list">
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/usdt.webp" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/usdt.webp" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Tether</span>
                                                     <span class="custom-currency">USDT</span>
                                                 </li>
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/eth.webp" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/eth.webp" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Ethereum</span>
                                                     <span class="custom-currency">ETH</span>
                                                 </li>
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/btc.jpg" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/btc.jpg" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Bitcoin</span>
                                                     <span class="custom-currency">BTC</span>
                                                 </li>

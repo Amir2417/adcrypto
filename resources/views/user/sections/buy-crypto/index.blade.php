@@ -41,7 +41,7 @@
                                     <div class="custom-select">
                                         <div class="custom-select-inner">
                                             <input type="hidden">
-                                            <img src="assets/images/flag/usdt.webp" alt="flag" class="custom-flag">
+                                            <img src="{{ asset('public/frontend') }}/images/flag/usdt.webp" alt="flag" class="custom-flag">
                                             <span class="custom-currency">USDT</span>
                                         </div>
                                     </div>
@@ -55,17 +55,17 @@
                                         <div class="custom-select-list-wrapper">
                                             <ul class="custom-select-list">
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/usdt.webp" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/usdt.webp" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Tether</span>
                                                     <span class="custom-currency">USDT</span>
                                                 </li>
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/eth.webp" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/eth.webp" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Ethereum</span>
                                                     <span class="custom-currency">ETH</span>
                                                 </li>
                                                 <li class="custom-option">
-                                                    <img src="assets/images/flag/btc.jpg" alt="flag" class="custom-flag">
+                                                    <img src="{{ asset('public/frontend') }}/images/flag/btc.jpg" alt="flag" class="custom-flag">
                                                     <span class="custom-country">Bitcoin</span>
                                                     <span class="custom-currency">BTC</span>
                                                 </li>
@@ -120,7 +120,6 @@
                                 <label>Amount<span>*</span></label>
                                 <div class="input-group max">
                                     <input type="text" class="form--control" placeholder="Enter Amount...">
-                                    <div class="input-group-text two">Max</div>
                                     <div class="input-group-text">USDT</div>
                                 </div>
                                 <code class="d-block mt-2">Min Amount : 0.00001 USDT</code>
@@ -137,7 +136,7 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <button type="submit" class="btn--base w-100"><span class="w-100">Continue</span></button>
+                            <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Continue") }}</span></button>
                         </div>
                     </form>
                 </div>

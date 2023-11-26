@@ -35,13 +35,6 @@
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
-                        <label>{{ __("Site Secondary Color") }}*</label>
-                        <div class="picker">
-                            <input type="color" value="{{ old('secondary_color',$basic_settings->secondary_color) }}" class="color color-picker">
-                            <input type="text" autocomplete="off" spellcheck="false" class="color-input" value="{{ old('secondary_color',$basic_settings->secondary_color) }}" name="secondary_color">
-                        </div>
-                    </div>
-                    <div class="col-xl-5 col-lg-5 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Site Name*",
                             'type'          => "text",
@@ -51,7 +44,7 @@
                             'value'         => old('site_name',$basic_settings->site_name),
                         ])
                     </div>
-                    <div class="col-xl-2 col-lg-2 form-group">
+                    <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Web Version*",
                             'type'          => "text",
@@ -61,7 +54,7 @@
                             'value'         => old('web_version',$basic_settings->web_version),
                         ])
                     </div>
-                    <div class="col-xl-5 col-lg-5 form-group">
+                    <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
                             'label'         => "Site Title*",
                             'type'          => "text",

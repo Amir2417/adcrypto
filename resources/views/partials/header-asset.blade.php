@@ -24,14 +24,10 @@
 
 @php
     $base_color = $basic_settings->base_color;
-    $secondary_color = $basic_settings->secondary_color;
 @endphp
 <style>
     :root {
         --primary-color: {{ $base_color }};
-    }
-    :root {
-        --secondary-color: {{ $secondary_color }};
     }
 </style>
 

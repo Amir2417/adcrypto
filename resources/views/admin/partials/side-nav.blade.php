@@ -44,16 +44,7 @@
                             'route'     => "admin.trx.settings.index",
                             'icon'      => "menu-icon las la-wallet",
                         ],
-                        [
-                            'title'     => __("Subscribers"),
-                            'route'     => "admin.subscriber.index",
-                            'icon'      => "menu-icon las la-bell",
-                        ],
-                        [
-                            'title'     => __("Contact Messages"),
-                            'route'     => "admin.contact.index",
-                            'icon'      => "menu-icon las la-sms",
-                        ],
+                        
                     ]
                 ])
 
@@ -236,10 +227,6 @@
                                         'title'     => "Email Method",
                                         'route'     => "admin.setup.email.config",
                                     ],
-                                    // [
-                                    //     'title'     => "Default Template",
-                                    //     'route'     => "admin.setup.email.template.default",
-                                    // ]
                                 ],
                             ]
                         ],
@@ -257,7 +244,6 @@
                     <li class="sidebar-menu-header">Setup Web Content</li>
                     @php
                         $current_url = URL::current();
-
                         $setup_section_childs  = [
                             setRoute('admin.setup.sections.section','banner'),
                             setRoute('admin.setup.sections.section','security'),
@@ -366,6 +352,19 @@
                     'title'     => __("Useful Links"),
                     'icon'      => "menu-icon las la-link",
                 ])
+
+                @include('admin.components.side-nav.link',[
+                    'title'     => __("Subscribers"),
+                    'route'     => "admin.subscriber.index",
+                    'icon'      => "menu-icon las la-bell",
+                ])
+
+                @include('admin.components.side-nav.link',[
+                    'title'     => __("Contact Messages"),
+                    'route'     => "admin.contact.index",
+                    'icon'      => "menu-icon las la-sms",
+                ])
+
                 @if (admin_permission_by_name("admin.payment.gateway.view"))
                     <li class="sidebar-menu-header">Payment Methods</li>
                     @php
