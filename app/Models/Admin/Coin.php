@@ -23,6 +23,6 @@ class Coin extends Model
     ];
 
     public function network(){
-        return $this->hasOne(Network::class,'coin_id');
+        return $this->hasMany(Network::class,'coin_id');
     }
 }

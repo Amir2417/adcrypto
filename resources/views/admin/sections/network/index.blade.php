@@ -44,7 +44,7 @@
             <table class="custom-table">
                 <thead>
                     <tr>
-                        <th>{{ __("Cat Name") }}</th>
+                        <th>{{ __("Coin Name") }}</th>
                         <th>{{ __("Net Name") }}</th>
                         <th>{{ __("Status") }}</th>
                         <th></th>

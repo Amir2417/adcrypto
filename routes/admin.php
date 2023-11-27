@@ -94,6 +94,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('update', 'update')->name('update');
         Route::delete('delete','delete')->name('delete');
         Route::post('search','search')->name("search");
+        Route::get('get/network','getNetworks')->name('get.network');
     });
 
     // Fees & Charges Section

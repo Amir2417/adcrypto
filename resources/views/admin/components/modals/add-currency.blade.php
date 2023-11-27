@@ -45,12 +45,25 @@
                                 'value'         => old('symbol')
                             ])
                         </div>
-                        <div class="col-xl-12 col-lg-12 form-group">
+                        {{-- <div class="col-xl-12 col-lg-12 form-group">
                             <label>{{ __("Rate*") }}</label>
                             <div class="input-group">
                                 <span class="input-group-text append">1 {{ get_default_currency_code() }} = </span>
                                 <input type="text" class="form--control number-input" value="{{ old('rate',0.00) }}" name="rate">
                                 <span class="input-group-text selcted-currency">{{ old('code') }}</span>
+                            </div>
+                        </div> --}}
+                        <div class="col-xl-12 col-lg-12 form-group">
+                            <div class="custom-inner-card">
+                                <div class="card-inner-header">
+                                    <h6 class="title">{{ __("Network") }}</h6>
+                                    <button type="button" class="btn--base add-schedule-btn"><i class="fas fa-plus"></i> {{ __("Add Network") }}</button>
+                                </div>
+                                <div class="card-inner-body">
+                                    <div class="results">
+                                        @include('admin.components.currency.network',compact('networks'))    
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
@@ -84,6 +97,18 @@
         <script>
             $(document).ready(function(){
                 openModalWhenError("currency_add","#currency-add");
+            });
+            $(document).ready(function(){
+
+            var getNetworkURL = "{{ setRoute('admin.currency.get.network') }}";
+            $('.add-schedule-btn').click(function(){
+                $.get(getNetworkURL,function(data){
+                    $('.results').prepend(data);
+                    $('.results').find('.row').first().find("select").select2();
+                    var selectedCurrency    = localStorage.getItem("currencyCode");
+                    $('.selcted-currency').text(selectedCurrency);
+                });
+            });
             });
         </script>
     @endpush

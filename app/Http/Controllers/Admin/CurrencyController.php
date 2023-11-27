@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Helpers\Response;
+use App\Models\Admin\Network;
 
 class CurrencyController extends Controller
 {
@@ -23,12 +24,24 @@ class CurrencyController extends Controller
     {
         $page_title = "Setup Currency";
         $currencies = Currency::orderByDesc('default')->paginate(10);
+        $networks   = Network::where('status',true)->orderByDesc('id')->get();
+
         return view('admin.sections.currency.index',compact(
             'page_title',
             'currencies',
+            'networks'
         ));
     }
+/**
+     * Method for show all days 
+     * @param string $slug
+     * @param \Illuminate\Http\Request  $request
+     */
+    public function getNetworks(){
 
+        $networks   = Network::where('status',true)->orderByDesc('id')->get();
+        return view('admin.components.currency.network',compact('networks'));
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -37,6 +50,7 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         $validator = Validator::make($request->all(),[
             'country'   => 'required|string',
             'name'      => 'required|string',
@@ -45,7 +59,8 @@ class CurrencyController extends Controller
             'role'      => 'required|string',
             'option'    => 'required|string',
             'flag'      => 'nullable|image|mimes: jpg,png,jpeg,svg,webp',
-            'rate'      => 'required',
+            'rate'      => 'nullable',
+            
         ]);
         if($validator->fails()) {
             return back()->withErrors($validator)->withInput()->with('modal','currency_add');

@@ -28,6 +28,7 @@ return new class extends Migration
             $table->boolean('default')->default(false);
             $table->boolean('status')->default(true);
             $table->timestamps();
+            
             $table->foreign('admin_id')->references('id')->on('admins')->onDelete('cascade')->onUpdate('cascade');
         });
     }

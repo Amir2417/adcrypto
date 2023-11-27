@@ -73,19 +73,19 @@
                 var currencyName = $(".country-select :selected").attr("data-currency-name");
                 var currencyCode = $(".country-select :selected").attr("data-currency-code");
                 var currencySymbol = $(".country-select :selected").attr("data-currency-symbol");
-                
+                localStorage.setItem('currencyCode',currencyCode)
                 var currencyType = selectedValue.parents("form").find("input[name=type],input[name=currency_type]").val();
                 var readOnly = true;
                 if(currencyType == "CRYPTO") {
                     keyPressCurrencyView($(this));
                     readOnly = false;
-                    console.log(readOnly);
                 }
                 
                 selectedValue.parents("form").find("input[name=name],input[name=currency_name]").val(currencyName).prop("readonly",readOnly);
                 selectedValue.parents("form").find("input[name=code],input[name=currency_code]").val(currencyCode).prop("readonly",readOnly);
                 selectedValue.parents("form").find("input[name=symbol],input[name=currency_symbol]").val(currencySymbol).prop("readonly",readOnly);
                 selectedValue.parents("form").find(".selcted-currency, .selcted-currency-edit").text(currencyCode);
+
             });
 
         });
