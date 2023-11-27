@@ -39,21 +39,5 @@
     </div>
 @endif
 @push('script')
-    <script>
-        getAllCountries("{{ setRoute('global.countries') }}",$(".country-select"));
-            $(document).ready(function(){
-
-                $(".country-select").select2();
-
-                $("select[name=country]").change(function(){
-                    var phoneCode = $("select[name=country] :selected").attr("data-mobile-code");
-                    placePhoneCode(phoneCode);
-                });
-
-                setTimeout(() => {
-                    var phoneCodeOnload = $("select[name=country] :selected").attr("data-mobile-code");
-                    placePhoneCode(phoneCodeOnload);
-                }, 400);
-            });
-    </script>
+ 
 @endpush

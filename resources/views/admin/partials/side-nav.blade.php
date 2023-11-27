@@ -41,6 +41,11 @@
                             'icon'      => "menu-icon las la-coins",
                         ],
                         [
+                            'title'     => "Setup Network",
+                            'route'     => "admin.network.index",
+                            'icon'      => "menu-icon las la-coins",
+                        ],
+                        [
                             'title'     => "Setup Currency",
                             'route'     => "admin.currency.index",
                             'icon'      => "menu-icon las la-coins",

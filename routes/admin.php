@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MoneyOutController;
+use App\Http\Controllers\Admin\NetworkController;
 use App\Http\Controllers\Admin\PaymentGatewayCurrencyController;
 use App\Http\Controllers\Admin\PaymentGatewaysController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -74,6 +75,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('update','update')->name('update');
         Route::delete('delete','delete')->name('delete');
         Route::put('status/update','statusUpdate')->name('status.update');
+    });
+
+    // network section
+    Route::controller(NetworkController::class)->prefix('network')->name('network.')->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('store', 'store')->name('store');
+        Route::put('update', 'update')->name('update');
+        Route::delete('delete', 'delete')->name('delete');
+        Route::put('status/update', 'statusUpdate')->name('status.update');
     });
 
     // Setup Currency Section
