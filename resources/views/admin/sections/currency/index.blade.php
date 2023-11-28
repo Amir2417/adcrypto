@@ -87,6 +87,7 @@
                 selectedValue.parents("form").find(".selcted-currency, .selcted-currency-edit").text(currencyCode);
 
             });
+            
 
         });
 

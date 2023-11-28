@@ -44,13 +44,17 @@ class Currency extends Model
         return false;
     }
 
+    public function networks(){
+        return $this->hasMany(CurrencyHasNetwork::class,'currency_id');
+    }
+
     public function getSenderCurrencyAttribute() {
         if($this->sender == true) {
             return true;
         }
         return false;
     }
-
+    
     public function getReceiverCurrencyAttribute() {
         if($this->receiver == true) {
             return true;
@@ -67,7 +71,10 @@ class Currency extends Model
         }else if($this->receiver == true && $this->sender == false) {
             $role = "receiver";
         }
+        $networks       = CurrencyHasNetwork::with(['network'])->where('currency_id',$this->id)->get();
+        $all_networks   = Network::orderByDesc('id')->get();
         $data = [
+            'id'        => $this->id,
             'name'      => $this->name,
             'code'      => $this->code,
             'flag'      => $this->flag,
@@ -76,6 +83,8 @@ class Currency extends Model
             'symbol'    => $this->symbol,
             'type'      => $this->type,
             'rate'      => get_amount($this->rate),
+            'networks'  => $networks,
+            'all_networks' => $all_networks,
             'country'   => $this->country,
         ];
 
@@ -120,5 +129,7 @@ class Currency extends Model
             $q->where('sender',true);
         })->orWhere('receiver',true);
     }
+
+    
     
 }

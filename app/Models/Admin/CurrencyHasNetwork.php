@@ -19,4 +19,11 @@ class CurrencyHasNetwork extends Model
         'created_at'    => 'date:Y-m-d',
         'updated_at'    => 'date:Y-m-d',
     ];
+
+    public function currency(){
+        return $this->belongsTo(Currency::class,'currency_id');
+    }
+    public function network(){
+        return $this->belongsTo(Network::class,'network_id');
+    }
 }

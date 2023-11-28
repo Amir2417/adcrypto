@@ -53,11 +53,16 @@
                             ])
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
-                            <label>{{ __("Rate*") }}</label>
-                            <div class="input-group">
-                                <span class="input-group-text append">1 {{ get_default_currency_code($default_currency) }} = </span>
-                                <input type="text" class="form--control number-input" value="{{ old('currency_rate') }}" name="currency_rate">
-                                <span class="input-group-text selcted-currency-edit">{{ old('currency_code') }}</span>
+                            <div class="custom-inner-card">
+                                <div class="card-inner-header">
+                                    <h6 class="title">{{ __("Network") }}</h6>
+                                    <button type="button" class="btn--base add-network-btn"><i class="fas fa-plus"></i> {{ __("Add Network") }}</button>
+                                </div>
+                                <div class="card-inner-body">
+                                    <div class="results">
+                                         
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
@@ -95,11 +100,9 @@
                 $(document).on("click",".edit-modal-button",function(){
                     var oldData = JSON.parse($(this).parents("tr").attr("data-item"));
                     var editModal = $("#currency-edit");
-
+                    
                     var readOnly = true;
-                    if(oldData.type == "CRYPTO") {
-                        readOnly = false;
-                    }
+                    
 
                     editModal.find(".invalid-feedback").remove();
                     editModal.find(".form--control").removeClass("is-invalid");
@@ -108,13 +111,45 @@
                     editModal.find("input[name=currency_code]").val(oldData.code).prop("readonly",readOnly);
                     editModal.find("input[name=currency_name]").val(oldData.name).prop("readonly",readOnly);
                     editModal.find("input[name=currency_symbol]").val(oldData.symbol).prop("readonly",readOnly);
-                    editModal.find("input[name=currency_rate]").val(oldData.rate.replace(",",""));
                     editModal.find("input[name=currency_type]").val(oldData.type);
                     editModal.find("input[name=currency_flag]").attr("data-preview-name",oldData.flag);
                     editModal.find("input[name=currency_option]").val(oldData.option);
                     editModal.find(".selcted-currency-edit").text(oldData.code);
                     editModal.find("select[name=currency_country]").attr("data-old",oldData.country);
-
+                    var itemData    = '';
+                    var options     = '';
+                    $.each(oldData.networks,function(index,item){
+                        $.each(oldData.all_networks,function(key,value){
+                            options  += `<option value="${value.id}" ${(value.id == item.network_id) ? 'selected' : ''}  >${value.name}</option>`;
+                        })
+                        itemData    += `
+                                <div class="row align-items-end">
+                                    <div class="col-xl-6 col-lg-6 form-group">
+                                        <label>{{ __("Network") }}<span>*</span></label>
+                                        
+                                        <select class="form--control select2-basic network-select" name="network[]">
+                                            ${options}
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="col-xl-5 col-lg-5 form-group">
+                                        <label>{{ __("Fees*") }}</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form--control number-input" name="fees[]" value=${item.fees}>
+                                            <span class="input-group-text selcted-currency">${oldData.code}</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-1 col-lg-1 form-group">
+                                        <button type="button" class="custom-btn btn--base btn--danger row-cross-btn w-100"><i class="las la-times"></i></button>
+                                    </div>
+                                </div>
+                            `;
+                        options = '';
+                    })
+                    editModal.find(".results").html(itemData);
+                    editModal.find(".results select").select2();
+                    var selectedCurrency = localStorage.getItem("currencyCode");
+                    $('.selcted-currency').text(selectedCurrency);
                     selectFormRadio("#currency-edit input[name=currency_role]",oldData.role);
                     reloadAllCountries("select[name=currency_country]");
                     fileHolderPreviewReInit("#currency-edit input[name=currency_flag]");

@@ -12,6 +12,7 @@
     </thead>
     <tbody>
         @forelse ($currencies ?? [] as $item)
+            
             <tr data-item="{{ $item->editData }}">
                 <td>
                     <ul class="user-list">

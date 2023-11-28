@@ -90,11 +90,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(CurrencyController::class)->prefix('currency')->name('currency.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::post('store', 'store')->name('store');
+        
         Route::put('status/update', 'statusUpdate')->name('status.update');
         Route::put('update', 'update')->name('update');
         Route::delete('delete','delete')->name('delete');
         Route::post('search','search')->name("search");
-        Route::get('get/network','getNetworks')->name('get.network');
     });
 
     // Fees & Charges Section

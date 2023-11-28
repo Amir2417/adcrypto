@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Http\Helpers\Response;
+use App\Models\Admin\CurrencyHasNetwork;
 use App\Models\Admin\Network;
 
 class CurrencyController extends Controller
@@ -32,16 +33,7 @@ class CurrencyController extends Controller
             'networks'
         ));
     }
-/**
-     * Method for show all days 
-     * @param string $slug
-     * @param \Illuminate\Http\Request  $request
-     */
-    public function getNetworks(){
-
-        $networks   = Network::where('status',true)->orderByDesc('id')->get();
-        return view('admin.components.currency.network',compact('networks'));
-    }
+    
     /**
      * Store a newly created resource in storage.
      *
@@ -50,16 +42,20 @@ class CurrencyController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-        $validator = Validator::make($request->all(),[
-            'country'   => 'required|string',
-            'name'      => 'required|string',
-            'code'      => 'required|string|unique:currencies',
-            'symbol'    => 'required|string',
-            'role'      => 'required|string',
-            'option'    => 'required|string',
-            'flag'      => 'nullable|image|mimes: jpg,png,jpeg,svg,webp',
-            'rate'      => 'nullable',
+       
+        $validator          = Validator::make($request->all(),[
+            'country'       => 'required|string',
+            'name'          => 'required|string',
+            'code'          => 'required|string|unique:currencies',
+            'symbol'        => 'required|string',
+            'role'          => 'required|string',
+            'option'        => 'required|string',
+            'flag'          => 'nullable|image|mimes: jpg,png,jpeg,svg,webp',
+            'rate'          => 'nullable',
+            'network'       => 'required|array',
+            'network.*'     => 'required|string',
+            'fees'          => 'required|array',
+            'fees.*'        => 'required|string',
             
         ]);
         if($validator->fails()) {
@@ -112,12 +108,31 @@ class CurrencyController extends Controller
         $validated['default']       = $default[$validated['option']];
         $validated['created_at']    = now();
         $validated['admin_id']      = Auth::user()->id;
-
-        $validated = Arr::except($validated,['role','flag','option']);
+        $network                    = $validated['network'];
+        $fees                       = $validated['fees'];
+        
+        $validated = Arr::except($validated,['role','flag','option','network','fees']);
         // insert_data
         try{
             $currency = Currency::create($validated);
+            if(count($network) > 0){
+                $networks = [];
+                foreach($network as $key => $network_id){
+                    
+                    $networks[] = [
+                        'currency_id'   => $currency->id,
+                        'network_id'    => $network_id,
+                        'fees'          => $fees[$key],
+                        'created_at'    => now(),
+                    ];
+                }
+                
+                $collection = collect($networks);
+                $uniqueNetwork = $collection->unique('network_id')->values()->all();
+                CurrencyHasNetwork::insert($uniqueNetwork);
+            }
         }catch(Exception $e) {
+            
             return back()->withErrors($validator)->withInput()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 
@@ -139,7 +154,7 @@ class CurrencyController extends Controller
         return back()->with(['success' => ['Currency Saved Successfully!']]);
     }
 
-
+    
     /**
      * Update Currency Status
      */
@@ -196,14 +211,19 @@ class CurrencyController extends Controller
             'currency_name'      => 'required|string',
             'currency_code'      => ['required','string',Rule::unique('currencies','code')->ignore($currency->id)],
             'currency_symbol'    => 'required|string',
-            'currency_rate'      => 'required|numeric',
+            
             'currency_option'    => 'required|string',
             'currency_target'    => 'nullable|string',
             'currency_role'      => 'required|string',
+            'network'       => 'required|array',
+            'network.*'     => 'required|string',
+            'fees'          => 'required|array',
+            'fees.*'        => 'required|string',
         ]);
         if($validator->fails()) {
             return back()->withErrors($validator)->withInput()->with('modal','currency_edit');
         }
+        
         $validated = $validator->validate();
 
         $roles = [
@@ -247,7 +267,10 @@ class CurrencyController extends Controller
             }
         }
         $validated['currency_default']   = $default[$validated['currency_option']];
-        $validated = Arr::except($validated,['currency_role','currency_flag','currency_option']);
+        $network                    = $validated['network'];
+        $fees                       = $validated['fees'];
+        
+        $validated = Arr::except($validated,['currency_role','currency_flag','currency_option','network','fees']);
 
         if($request->hasFile('currency_flag')) {
             try{
@@ -260,7 +283,26 @@ class CurrencyController extends Controller
         }
         $validated = replace_array_key($validated,"currency_");
         try{
+            $currency_network_id    = $currency->networks->pluck('id');
+            CurrencyHasNetwork::whereIn('id',$currency_network_id)->delete();
+            
             $currency->update($validated);
+            if(count($network) > 0){
+                $networks = [];
+                foreach($network as $key => $network_id){
+                    
+                    $networks[] = [
+                        'currency_id'   => $currency->id,
+                        'network_id'    => $network_id,
+                        'fees'          => $fees[$key],
+                        'created_at'    => now(),
+                    ];
+                }
+                
+                $collection = collect($networks);
+                $uniqueNetwork = $collection->unique('network_id')->values()->all();
+                CurrencyHasNetwork::insert($uniqueNetwork);
+            }
         }catch(Exception $e) {
             return back()->withErrors($validator)->withInput()->with(['error' => ['Something went wrong! Please try again.']]);
         }
@@ -274,6 +316,8 @@ class CurrencyController extends Controller
         ]);
         $validated = $validator->validate();
         $currency = Currency::where("code",$validated['target'])->first();
+        $networks   = CurrencyHasNetwork::where('currency_id',$currency->id)->get();
+        
 
         if($currency->isDefault()) {
             return back()->with(['warning' => ['Can\'t deletable default currency.']]);
@@ -281,8 +325,12 @@ class CurrencyController extends Controller
 
         try{
             $currency->delete();
+            foreach ($networks as $network) {
+                $network->delete();
+            }
             delete_file(get_files_path('currency-flag').'/'.$currency->flag);
         }catch(Exception $e) {
+            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 

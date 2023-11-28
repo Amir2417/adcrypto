@@ -188,10 +188,9 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Created at</th>
+                            <th>{{ __("Title") }}</th>
+                            <th>{{ __("Description") }}</th>
+                            <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -215,7 +214,6 @@
                                         'permission'    => "admin.setup.sections.blog.status.update",
                                     ])
                                 </td>
-                                <td> {{ $item->created_at ?? "" }} </td>
                                 <td>
                                     @include('admin.components.link.edit-default',[
                                         'href'          => setRoute('admin.setup.sections.blog.edit',$item->slug),

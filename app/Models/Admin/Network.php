@@ -29,4 +29,8 @@ class Network extends Model
         return $this->belongsTo(Coin::class);
     }
 
+    public function currency(){
+        return $this->belongsTo(Currency::class,'currency_id');
+    }
+
 }
