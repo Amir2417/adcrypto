@@ -13,6 +13,7 @@ use Database\Seeders\Admin\AppSettingsSeeder;
 use Database\Seeders\Admin\SiteSectionsSeeder;
 use Database\Seeders\Admin\BasicSettingsSeeder;
 use Database\Seeders\Admin\BlogSeeder;
+use Database\Seeders\Admin\CoinSeeder;
 use Database\Seeders\Admin\LanguageSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\RoleSeeder;
@@ -50,6 +51,7 @@ class DatabaseSeeder extends Seeder
             LanguageSeeder::class,
             UsefulLinkSeeder::class,
             BlogSeeder::class,
+            CoinSeeder::class
         ]);
     }
 }

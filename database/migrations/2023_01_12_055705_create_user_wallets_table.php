@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('currency_id');
-            $table->decimal('balance', 28, 8);
+            $table->text('public_address');
+            $table->decimal('balance', 28, 16);
             $table->boolean('status')->default(true);
             $table->timestamps();
             
