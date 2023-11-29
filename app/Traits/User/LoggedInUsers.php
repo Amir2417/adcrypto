@@ -14,17 +14,20 @@ trait LoggedInUsers {
         $user_wallets = $user->wallets->pluck("currency_id")->toArray();
         $currencies = Currency::active()->roleHasOne()->pluck("id")->toArray();
         
+       
         $new_currencies = array_diff($currencies,$user_wallets);
         
         
         $new_wallets = [];
         foreach($new_currencies as $item) {
+            $public_address = generate_unique_string("user_wallets","public_address",42);
             $new_wallets[] = [
-                'user_id'       => $user->id,
-                'currency_id'   => $item,
-                'balance'       => 0,
-                'status'        => true,
-                'created_at'    => now(),
+                'user_id'           => $user->id,
+                'currency_id'       => $item,
+                'public_address'    => $public_address,
+                'balance'           => 0,
+                'status'            => true,
+                'created_at'        => now(),
             ];
         }
         
