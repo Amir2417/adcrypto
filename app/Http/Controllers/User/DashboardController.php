@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Admin\CurrencyHasNetwork;
+use App\Models\Admin\Network;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
@@ -14,9 +15,15 @@ class DashboardController extends Controller
     {
         $page_title = "- Dashboard";
         $wallets    = UserWallet::auth()->with(['currency'])->get();
-        // $currency_network_id = $wallets->pluck('currency_id'));
-        // CurrencyHasNetwork::whereIn('id',$currency_network_id)
-        return view('user.dashboard',compact("page_title"));
+        $currency_network_id = $wallets->pluck('currency_id');
+        
+        $networks   = CurrencyHasNetwork::whereIn('currency_id',$currency_network_id)->pluck('network_id');
+        $network_names  = Network::whereIn('id',$networks)->pluck('name');
+        
+        return view('user.dashboard',compact(
+            "page_title",
+            "wallets"
+        ));
     }
 
     public function logout(Request $request) {

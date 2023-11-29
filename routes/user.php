@@ -28,6 +28,7 @@ Route::prefix("user")->name("user.")->group(function(){
     // wallet 
     Route::controller(WalletController::class)->prefix('wallet')->name('wallet.')->group(function(){
         Route::get('/','index')->name('index');
+        Route::get('wallet-details/{public_address}','walletDetails')->name('details');
     });
 
     //buy crypto
