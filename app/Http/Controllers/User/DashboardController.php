@@ -1,9 +1,11 @@
 <?php
 namespace App\Http\Controllers\User;
 use Exception;
+use App\Models\UserWallet;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Admin\CurrencyHasNetwork;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
@@ -11,6 +13,9 @@ class DashboardController extends Controller
     public function index()
     {
         $page_title = "- Dashboard";
+        $wallets    = UserWallet::auth()->with(['currency'])->get();
+        // $currency_network_id = $wallets->pluck('currency_id'));
+        // CurrencyHasNetwork::whereIn('id',$currency_network_id)
         return view('user.dashboard',compact("page_title"));
     }
 

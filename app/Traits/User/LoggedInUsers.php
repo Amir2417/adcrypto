@@ -16,6 +16,7 @@ trait LoggedInUsers {
         
         $new_currencies = array_diff($currencies,$user_wallets);
         
+        
         $new_wallets = [];
         foreach($new_currencies as $item) {
             $new_wallets[] = [

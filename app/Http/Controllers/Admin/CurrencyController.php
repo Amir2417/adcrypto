@@ -51,7 +51,7 @@ class CurrencyController extends Controller
             'role'          => 'required|string',
             'option'        => 'required|string',
             'flag'          => 'nullable|image|mimes: jpg,png,jpeg,svg,webp',
-            'rate'          => 'nullable',
+            'rate'          => 'required',
             'network'       => 'required|array',
             'network.*'     => 'required|string',
             'fees'          => 'required|array',
@@ -211,7 +211,7 @@ class CurrencyController extends Controller
             'currency_name'      => 'required|string',
             'currency_code'      => ['required','string',Rule::unique('currencies','code')->ignore($currency->id)],
             'currency_symbol'    => 'required|string',
-            
+            'currency_rate'      => 'required|numeric',
             'currency_option'    => 'required|string',
             'currency_target'    => 'nullable|string',
             'currency_role'      => 'required|string',
@@ -330,7 +330,7 @@ class CurrencyController extends Controller
             }
             delete_file(get_files_path('currency-flag').'/'.$currency->flag);
         }catch(Exception $e) {
-            dd($e->getMessage());
+            
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 

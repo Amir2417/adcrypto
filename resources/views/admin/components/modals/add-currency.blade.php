@@ -46,6 +46,14 @@
                             ])
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
+                            <label>{{ __("Rate*") }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text append">1 {{ get_default_currency_code() }} = </span>
+                                <input type="number" class="form--control" value="{{ old('rate',0.00) }}" name="rate">
+                                <span class="input-group-text selcted-currency">{{ old('code') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 form-group">
                             <div class="custom-inner-card">
                                 <div class="card-inner-header">
                                     <h6 class="title">{{ __("Network") }}</h6>
@@ -100,12 +108,11 @@
                 $('.add-network-btn').click(function(){
                     var networkAddBlock     = $('.network-add-block');
                     var cloneNetwork        = networkAddBlock.clone();
-                    var selectedCurrency = localStorage.getItem("currencyCode");
-                    $('.selcted-currency').text(selectedCurrency);
+
                     cloneNetwork.removeClass('d-none network-add-block').prependTo('.results');
                     cloneNetwork.find('select').select2();
-
-
+                    var selectedCurrency = localStorage.getItem("currencyCode");
+                    $('.selcted-currency').text(selectedCurrency);
                 });
                 
 

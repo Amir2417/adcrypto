@@ -53,6 +53,14 @@
                             ])
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
+                            <label>{{ __("Rate*") }}</label>
+                            <div class="input-group">
+                                <span class="input-group-text append">1 {{ get_default_currency_code($default_currency) }} = </span>
+                                <input type="number" class="form--control" value="{{ old('currency_rate') }}" name="currency_rate" step="any">
+                                <span class="input-group-text selcted-currency-edit">{{ old('currency_code') }}</span>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12 form-group">
                             <div class="custom-inner-card">
                                 <div class="card-inner-header">
                                     <h6 class="title">{{ __("Network") }}</h6>
@@ -111,6 +119,7 @@
                     editModal.find("input[name=currency_code]").val(oldData.code).prop("readonly",readOnly);
                     editModal.find("input[name=currency_name]").val(oldData.name).prop("readonly",readOnly);
                     editModal.find("input[name=currency_symbol]").val(oldData.symbol).prop("readonly",readOnly);
+                    editModal.find("input[name=currency_rate]").val(oldData.rate.replace(",",""));
                     editModal.find("input[name=currency_type]").val(oldData.type);
                     editModal.find("input[name=currency_flag]").attr("data-preview-name",oldData.flag);
                     editModal.find("input[name=currency_option]").val(oldData.option);
