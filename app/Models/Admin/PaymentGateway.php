@@ -55,10 +55,10 @@ class PaymentGateway extends Model
         return $this->hasMany(PaymentGatewayCurrency::class, 'payment_gateway_id')->orderBy("id", "DESC");
     }
 
-    public function scopeAddMoney($query)
+    public function scopePaymentMethod($query)
     {
         return $query->where(function ($q) {
-            $q->where('slug', PaymentGatewayConst::add_money_slug());
+            $q->where('slug', PaymentGatewayConst::payment_method_slug());
         });
     }
 
