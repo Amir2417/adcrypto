@@ -16,10 +16,11 @@ class WalletController extends Controller
      */
     public function index(){
         $page_title     = "- All Wallet";
+        $wallets        = UserWallet::auth()->with(['currency'])->orderByDesc('id')->get();
         
-
         return view('user.sections.wallet.index',compact(
-            'page_title'
+            'page_title',
+            'wallets'
         ));
     }
     /**
@@ -27,7 +28,7 @@ class WalletController extends Controller
      * @param $public_address
      */
     public function walletDetails($public_address){
-        $wallet     = UserWallet::with(['currency'])->where('public_address',$public_address)->first();
+        $wallet     = UserWallet::auth()->with(['currency'])->where('public_address',$public_address)->first();
         if(!$wallet) return back()->with(['error' => ['Wallet not found!']]);
         $qr_code        = generateQr($wallet->public_address);
         
