@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('currencies', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('admin_id');
-            $table->string('country',100)->index();
             $table->string('name',100)->index();
             $table->string('code',20)->index();
             $table->string('symbol',20);

@@ -27,8 +27,8 @@
                     <div class="col-xxl-3 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-20">
                         <a href="{{ setRoute('user.wallet.details',$item->public_address) }}" class="dashbord-item">
                             <div class="dashboard-content">
-                                <span class="sub-title">{{ @$item->currency->code ?? '' }}</span>
-                                <h4 class="title">{{ floatval(@$item->balance) ?? '' }} <span class="text--danger">{{ @$item->currency->code ?? '' }}</span></h4>
+                                <span class="sub-title">{{ @$item->currency->name }}</span>
+                                <h4 class="title">{{ get_amount(@$item->balance,null,"double") }} <span class="text--danger">{{ @$item->currency->code }}</span></h4>
                             </div>
                             <div class="dashboard-icon">
                                 <img src="{{ get_image(@$item->currency->flag , 'currency-flag') }}" alt="flag">

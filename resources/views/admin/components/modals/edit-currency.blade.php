@@ -25,12 +25,6 @@
                                 ])
                             </div>
                         </div>
-                        <div class="col-xl-12 col-lg-12 form-group">
-                            <label>{{ __("Country*") }}</label>
-                            <select name="currency_country" class="form--control select2-auto-tokenize country-select" data-old="{{ old('currency_country') }}">
-                                <option selected disabled>Select Country</option>
-                            </select>
-                        </div>
                         <div class="col-xl-6 col-lg-6 form-group">
                             @include('admin.components.form.input',[
                                 'label'         => 'Name*',
@@ -42,6 +36,7 @@
                             @include('admin.components.form.input',[
                                 'label'         => 'Code*',
                                 'name'          => 'currency_code',
+                                'class'         => 'currency-code',
                                 'value'         => old('currency_code'),
                             ])
                         </div>
@@ -57,7 +52,7 @@
                             <div class="input-group">
                                 <span class="input-group-text append">1 {{ get_default_currency_code($default_currency) }} = </span>
                                 <input type="number" class="form--control" value="{{ old('currency_rate') }}" name="currency_rate" step="any">
-                                <span class="input-group-text selcted-currency-edit">{{ old('currency_code') }}</span>
+                                <span class="input-group-text selected-currency"></span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
@@ -105,6 +100,14 @@
             $(document).ready(function(){
                 reloadAllCountries("select[name=currency_country]");
                 openModalWhenError("currency_edit","#currency-edit");
+
+                // currency code change 
+                $('.currency-code').keyup(function(){
+                    var selectedCurrency = $(this).val();
+                    localStorage.setItem('selectedCurrency',selectedCurrency)
+                    $('.selected-currency').text(selectedCurrency);
+                });
+
                 $(document).on("click",".edit-modal-button",function(){
                     var oldData = JSON.parse($(this).parents("tr").attr("data-item"));
                     var editModal = $("#currency-edit");
@@ -116,9 +119,10 @@
                     editModal.find(".form--control").removeClass("is-invalid");
 
                     editModal.find("form").first().find("input[name=target]").val(oldData.code);
-                    editModal.find("input[name=currency_code]").val(oldData.code).prop("readonly",readOnly);
-                    editModal.find("input[name=currency_name]").val(oldData.name).prop("readonly",readOnly);
-                    editModal.find("input[name=currency_symbol]").val(oldData.symbol).prop("readonly",readOnly);
+                    editModal.find("input[name=currency_code]").val(oldData.code);
+                    editModal.find(".selected-currency").text(oldData.code);
+                    editModal.find("input[name=currency_name]").val(oldData.name);
+                    editModal.find("input[name=currency_symbol]").val(oldData.symbol);
                     editModal.find("input[name=currency_rate]").val(oldData.rate.replace(",",""));
                     editModal.find("input[name=currency_type]").val(oldData.type);
                     editModal.find("input[name=currency_flag]").attr("data-preview-name",oldData.flag);
@@ -145,7 +149,7 @@
                                         <label>{{ __("Fees*") }}</label>
                                         <div class="input-group">
                                             <input type="text" class="form--control number-input" name="fees[]" value=${item.fees}>
-                                            <span class="input-group-text selcted-currency">${oldData.code}</span>
+                                            <span class="input-group-text selected-currency">${oldData.code}</span>
                                         </div>
                                     </div>
                                     <div class="col-xl-1 col-lg-1 form-group">

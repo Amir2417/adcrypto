@@ -44,7 +44,6 @@ class CurrencyController extends Controller
     {
        
         $validator          = Validator::make($request->all(),[
-            'country'       => 'required|string',
             'name'          => 'required|string',
             'code'          => 'required|string|unique:currencies',
             'symbol'        => 'required|string',
@@ -207,7 +206,6 @@ class CurrencyController extends Controller
 
         $validator = Validator::make($request->all(),[
             
-            'currency_country'   => 'required|string',
             'currency_name'      => 'required|string',
             'currency_code'      => ['required','string',Rule::unique('currencies','code')->ignore($currency->id)],
             'currency_symbol'    => 'required|string',
@@ -215,10 +213,10 @@ class CurrencyController extends Controller
             'currency_option'    => 'required|string',
             'currency_target'    => 'nullable|string',
             'currency_role'      => 'required|string',
-            'network'       => 'required|array',
-            'network.*'     => 'required|string',
-            'fees'          => 'required|array',
-            'fees.*'        => 'required|string',
+            'network'            => 'required|array',
+            'network.*'          => 'required|string',
+            'fees'               => 'required|array',
+            'fees.*'             => 'required|string',
         ]);
         if($validator->fails()) {
             return back()->withErrors($validator)->withInput()->with('modal','currency_edit');

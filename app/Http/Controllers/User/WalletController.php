@@ -32,7 +32,7 @@ class WalletController extends Controller
         $qr_code        = generateQr($wallet->public_address);
         
         $get_total_networks     = CurrencyHasNetwork::where('currency_id',$wallet->currency_id)->pluck('network_id');
-        $network_names  = Network::whereIn('id',$get_total_networks)->pluck('name');
+        $network_names          = Network::whereIn('id',$get_total_networks)->pluck('name');
         
         return view('user.sections.wallet.details',compact(
                 'wallet',

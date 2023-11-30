@@ -18,12 +18,6 @@
                                 ])
                             </div>
                         </div>
-                        <div class="col-xl-12 col-lg-12 form-group">
-                            <label>{{ __("Country*") }}</label>
-                            <select name="country" class="form--control select2-auto-tokenize country-select" data-old="{{ old('country') }}">
-                                <option selected disabled>Select Country</option>
-                            </select>
-                        </div>
                         <div class="col-xl-6 col-lg-6 form-group">
                             @include('admin.components.form.input',[
                                 'label'         => 'Name*',
@@ -35,6 +29,7 @@
                             @include('admin.components.form.input',[
                                 'label'         => 'Code*',
                                 'name'          => 'code',
+                                'class'         => 'currency-code',
                                 'value'         => old('code')
                             ])
                         </div>
@@ -50,7 +45,7 @@
                             <div class="input-group">
                                 <span class="input-group-text append">1 {{ get_default_currency_code() }} = </span>
                                 <input type="number" class="form--control" value="{{ old('rate',0.00) }}" name="rate">
-                                <span class="input-group-text selcted-currency">{{ old('code') }}</span>
+                                <span class="input-group-text selected-currency"></span>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
@@ -102,8 +97,14 @@
         <script>
             $(document).ready(function(){
                 openModalWhenError("currency_add","#currency-add");
-            });
-            $(document).ready(function(){
+
+                // currency code change 
+                $('.currency-code').keyup(function(){
+                    var selectedCurrency = $(this).val();
+                    localStorage.setItem('selectedCurrency',selectedCurrency)
+                    $('.selected-currency').text(selectedCurrency);
+                });
+
 
                 $('.add-network-btn').click(function(){
                     var networkAddBlock     = $('.network-add-block');
@@ -111,12 +112,13 @@
 
                     cloneNetwork.removeClass('d-none network-add-block').prependTo('.results');
                     cloneNetwork.find('select').select2();
-                    var selectedCurrency = localStorage.getItem("currencyCode");
+                    var selectedCurrency = localStorage.getItem("selectedCurrency");
                     $('.selcted-currency').text(selectedCurrency);
                 });
-                
 
+                
             });
+            
         </script>
     @endpush
 @endif

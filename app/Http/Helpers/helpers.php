@@ -437,14 +437,6 @@ function files_asset_path($slug)
     return asset('public/' . $files_path);
 }
 
-function get_amount($amount, $currency = null, $precision = null)
-{
-    if (!is_numeric($amount)) return "Not Number";
-    $amount = ($precision) ? number_format($amount, $precision, ".", ",") : number_format($amount, 2, ".", ",");
-    if (!$currency) return $amount;
-    $amount = $amount . " " . $currency;
-    return $amount;
-}
 
 function get_logo($basic_settings, $type = null)
 {
@@ -1554,4 +1546,17 @@ function google_2fa_verify($secret_key,$code) {
 function generateQr($val)
 {
     return "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=$val&choe=UTF-8&chf=bg,s,FFFFFFFF";
+}
+
+function get_amount($amount, $currency = null, $precision = null)
+{
+    if (!is_numeric($amount)) return "Not Number";
+    if($precision == "double") {
+        $amount = (double) $amount;
+    }else {
+        $amount = ($precision) ? number_format($amount, $precision, ".", "") : number_format($amount, 2, ".", "");
+    }
+    if (!$currency) return $amount;
+    $amount = $amount . " " . $currency;
+    return $amount;
 }

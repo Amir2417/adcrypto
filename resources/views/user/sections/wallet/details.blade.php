@@ -20,7 +20,7 @@
         <div class="col-xl-6 col-lg-8">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
-                    <h5 class="title">{{ @$wallet->currency->code ?? ''}}</h5>
+                    <h5 class="title">{{ @$wallet->currency->name }} ({{ @$wallet->currency->code }})</h5>
                 </div>
                 <div class="card-body">
                     <div class="dashboard-widget-card">
@@ -31,8 +31,8 @@
                                         <img src="{{ get_image($wallet->currency->flag , 'currency-flag') }}" alt="flag">
                                     </div>
                                     <div class="dashboard-content">
-                                        <span class="sub-title">{{ @$wallet->currency->code ?? '' }}</span>
-                                        <h4 class="title">{{ floatval(@$wallet->balance) ?? '' }} <span class="text--base">{{ @$wallet->currency->code ?? '' }}</span></h4>
+                                        <span class="sub-title">{{ @$wallet->currency->name }}</span>
+                                        <h4 class="title">{{ get_amount(@$wallet->balance,null,"double") }} <span class="text--base">{{ @$wallet->currency->code }}</span></h4>
                                     </div>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group paste-form text-center mb-0">
                                 <label id="public-address">{{ @$wallet->public_address ?? '' }}</label>
-                                {{-- <input type="hidden"   value="{{ @$wallet->public_address ?? '' }}"> --}}
+                                
                                 <div class="paste-text" id="copy-address"><i class="las la-copy"></i></div>
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">

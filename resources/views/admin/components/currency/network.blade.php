@@ -17,7 +17,7 @@
         <label>{{ __("Fees*") }}</label>
         <div class="input-group">
             <input type="text" class="form--control number-input" name="fees[]">
-            <span class="input-group-text selcted-currency">{{ old('code') }}</span>
+            <span class="input-group-text selected-currency">{{ old('code') }}</span>
         </div>
     </div>
     <div class="col-xl-1 col-lg-1 form-group">
@@ -28,7 +28,11 @@
 
 @push('script')
    <script>
-        var selectedCurrency = localStorage.getItem("currencyCode");
-        $('.selcted-currency').text(selectedCurrency);
+        // currency code change 
+        $('.currency-code').keyup(function(){
+            var selectedCurrency = $(this).val();
+            localStorage.setItem('selectedCurrency',selectedCurrency)
+            $('.selected-currency').text(selectedCurrency);
+        });
    </script>
 @endpush

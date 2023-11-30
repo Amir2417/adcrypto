@@ -15,7 +15,6 @@ class Currency extends Model
     protected $casts    = [
         'id'            => 'integer',
         'admin_id'      => 'integer',
-        'country'       => 'string',
         'name'          => 'string',
         'code'          => 'string',
         'symbol'        => 'string',

@@ -15,10 +15,7 @@ class DashboardController extends Controller
     {
         $page_title = "- Dashboard";
         $wallets    = UserWallet::auth()->with(['currency'])->get();
-        $currency_network_id = $wallets->pluck('currency_id');
         
-        $networks   = CurrencyHasNetwork::whereIn('currency_id',$currency_network_id)->pluck('network_id');
-        $network_names  = Network::whereIn('id',$networks)->pluck('name');
         
         return view('user.dashboard',compact(
             "page_title",

@@ -63,59 +63,17 @@
 @push('script')
     <script>
 
-        getAllCountries("{{ setRoute('global.countries') }}"); // get all country and place it country select input
+        
         $(document).ready(function() {
-            reloadAllCountries("select[name=country]");
+            
 
-            // Country Field On Change
-            $(document).on("change",".country-select",function() {
-                var selectedValue = $(this);
-                var currencyName = $(".country-select :selected").attr("data-currency-name");
-                var currencyCode = $(".country-select :selected").attr("data-currency-code");
-                var currencySymbol = $(".country-select :selected").attr("data-currency-symbol");
-                localStorage.setItem('currencyCode',currencyCode)
-                var currencyType = selectedValue.parents("form").find("input[name=type],input[name=currency_type]").val();
-                var readOnly = true;
-                if(currencyType == "CRYPTO") {
-                    keyPressCurrencyView($(this));
-                    readOnly = false;
-                }
-                
-                selectedValue.parents("form").find("input[name=name],input[name=currency_name]").val(currencyName).prop("readonly",readOnly);
-                selectedValue.parents("form").find("input[name=code],input[name=currency_code]").val(currencyCode).prop("readonly",readOnly);
-                selectedValue.parents("form").find("input[name=symbol],input[name=currency_symbol]").val(currencySymbol).prop("readonly",readOnly);
-                selectedValue.parents("form").find(".selcted-currency, .selcted-currency-edit").text(currencyCode);
-
-            });
             
 
         });
 
-        function keyPressCurrencyView(select) {
-            var selectedValue = $(select);
-            selectedValue.parents("form").find("input[name=code],input[name=currency_code]").keyup(function(){
-                selectedValue.parents("form").find(".selcted-currency").text($(this).val());
-            });
-        }
+        
 
-        $("input[name=type],input[name=currency_type]").siblings(".switch").click(function(){
-            setTimeout(() => {
-                var currencyType = $(this).siblings("input[name=type],input[name=currency_type]").val();
-                var readOnly = true;
-                if(currencyType == "CRYPTO") {
-                    readOnly = false;
-                }
-                readOnlyAddRemove($(this),readOnly);
-            }, 200);
-        });
-
-        function readOnlyAddRemove (select,readOnly) {
-            var selectedValue = $(select);
-            selectedValue.parents("form").find("input[name=name],input[name=currency_name]").prop("readonly",readOnly);
-            selectedValue.parents("form").find("input[name=code],input[name=currency_code]").prop("readonly",readOnly);
-            selectedValue.parents("form").find("input[name=symbol],input[name=currency_symbol]").prop("readonly",readOnly);
-            // selectedValue.parents("form").find(".selcted-currency").text(currencyCode);
-        }
+        
 
         $(".delete-modal-button").click(function(){
             var oldData = JSON.parse($(this).parents("tr").attr("data-item"));
