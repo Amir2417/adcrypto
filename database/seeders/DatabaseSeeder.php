@@ -38,7 +38,6 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             RoleSeeder::class,
             TransactionSettingSeeder::class,
-            CurrencySeeder::class,
             BasicSettingsSeeder::class,
             SetupSeoSeeder::class,
             AppSettingsSeeder::class,
@@ -53,7 +52,8 @@ class DatabaseSeeder extends Seeder
             UsefulLinkSeeder::class,
             BlogSeeder::class,
             CoinSeeder::class,
-            NetworkSeeder::class
+            NetworkSeeder::class,
+            CurrencySeeder::class,
         ]);
     }
 }
