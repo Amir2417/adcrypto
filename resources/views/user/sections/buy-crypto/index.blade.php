@@ -93,7 +93,7 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Payment Method") }}<span>*</span></label>
-                                <select class="form--control nice-select" name="payment_method">
+                                <select class="select2-basic" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
                                         <option 
                                                 value="{{ $item->id  }}"
