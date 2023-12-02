@@ -52,4 +52,11 @@ class BuyCryptoController extends Controller
 
         return Response::success(['Data fetch successfully'],['currency' => $currency],200);
     }
+
+    /**
+     * Method for store the buy crypto information
+     */
+    public function store(Request $request){
+        dd($request->all());
+    }
 }

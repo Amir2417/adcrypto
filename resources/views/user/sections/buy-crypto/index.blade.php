@@ -22,14 +22,15 @@
                     <h5 class="title">{{ __("Buy Crypto") }}</h5>
                 </div>
                 <div class="card-body">
-                    <form action="buy-crypto-preview.html" class="card-form">
+                    <form action="{{ setRoute('user.buy.crypto.store') }}" class="card-form" method="POST">
+                        @csrf
                         <div class="row justify-content-center">
                             <div class="col-xxl-5 col-xl-7 col-lg-8 form-group">
                                 <div class="toggle-container">
                                     <div class="switch-toggles active" data-deactive="deactive">
-                                        <input type="hidden" name="wallet_type" value="1">
-                                        <span class="switch" data-value="1">Inside Wallet</span>
-                                        <span class="switch" data-value="0">Outside Wallet</span>
+                                        <input type="hidden" name="wallet_type" >
+                                        <span class="switch" data-value="{{ global_const()::INSIDE_WALLET }}">Inside Wallet</span>
+                                        <span class="switch" data-value="{{ global_const()::OUTSIDE_WALLET }}">Outside Wallet</span>
                                     </div>
                                 </div>
                             </div>
@@ -145,17 +146,17 @@
     $(document).on('click','#custom-option',function(){
         var selectedCurrency = JSON.parse(currencySelectActiveItem("input[name=sender_currency]"))
         var currency         = selectedCurrency.id;
+        var currencyCode     = selectedCurrency.code;
         if(currency == '' || currency == null){
             return false;
         }
 
         //pass the currency as parameter to get network
-        getNetwork(currency);
+        getNetwork(currency,currencyCode);
         $('.sender_currency').val(currency);
         $('.currency-code').text(selectedCurrency.code);
         $('.currency-rate').val(selectedCurrency.rate);
 
-        var currencyCode           = selectedCurrency.code;
         var currencyRate           = selectedCurrency.rate;
 
         var paymentMethodCode      = $('.payment-method-code').val();
@@ -177,15 +178,16 @@
     }
 
     //get network function
-    function getNetwork(currency){
+    function getNetwork(currency,currencyCode){
         var getNetworkURL   = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
         $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){
                 
                 var networkOption = '';
                 if(response.data.currency.networks.length > 0){
                     $.each(response.data.currency.networks,function(index,item){
+                        
                         networkOption += `<option value="${item.network_id}">
-                            ${item.network.name}</option>
+                            ${item.network.name}(Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
                         `;
                     });
                     $('select[name=network]').html(networkOption);
@@ -224,13 +226,13 @@
     $(document).ready(function(){
         var data                = JSON.parse($('.first-currency').attr("data-item"));
         var currency            = data.id;
-        
+        var currencyCode        = data.code;
         if(currency == '' || currency == null){
             return false;
         }
 
         //pass the currency as parameter to get network
-        getNetwork(currency);
+        getNetwork(currency,currencyCode);
         $('.sender_currency').val(currency);
         $('.currency-code').text(data.code);
         $('.currency-rate').val(data.rate);
@@ -238,8 +240,8 @@
         var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
         var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
         var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
-        var currencyRate        = $('.currency-rate').val();
-        var currencyCode        = $('.currency-code').text();
+        var currencyRate        = data.rate;
+        
         
         calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });

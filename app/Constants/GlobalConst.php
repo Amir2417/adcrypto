@@ -19,6 +19,9 @@ class GlobalConst {
     const USER      = "USER";
     const ADMIN = "ADMIN";
 
+    const INSIDE_WALLET     = "Inside Wallet";
+    const OUTSIDE_WALLET     = "Outside Wallet";
+
     const UNKNOWN       = "UNKNOWN";
 
     const USEFUL_LINK_PRIVACY_POLICY = "PRIVACY_POLICY";

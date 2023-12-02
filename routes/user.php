@@ -36,6 +36,7 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
+        Route::post('store','store')->name('store');
     });
 
     //sell crypto
