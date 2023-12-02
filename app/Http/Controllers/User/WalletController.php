@@ -28,6 +28,7 @@ class WalletController extends Controller
      * @param $public_address
      */
     public function walletDetails($public_address){
+        $page_title     = "- Wallet Details";
         $wallet     = UserWallet::auth()->with(['currency'])->where('public_address',$public_address)->first();
         if(!$wallet) return back()->with(['error' => ['Wallet not found!']]);
         $qr_code        = generateQr($wallet->public_address);
@@ -36,6 +37,7 @@ class WalletController extends Controller
         $network_names          = Network::whereIn('id',$get_total_networks)->pluck('name');
         
         return view('user.sections.wallet.details',compact(
+                'page_title',
                 'wallet',
                 'qr_code',
                 'network_names'

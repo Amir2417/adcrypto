@@ -2,13 +2,14 @@
 
 namespace App\Models\Admin;
 
+use App\Traits\PaymentGateway\Tatum;
 use App\Constants\PaymentGatewayConst;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class PaymentGateway extends Model
 {
-    use HasFactory;
+    use HasFactory,Tatum;
 
     protected $guarded = ['id'];
 
@@ -89,4 +90,13 @@ class PaymentGateway extends Model
         return false;
     }
     
+    public function isCrypto() {
+        if($this->crypto == true) return true;
+        return false;
+    }
+
+    public function cryptoAssets() 
+    {
+        return $this->hasMany(CryptoAsset::class,'payment_gateway_id');
+    }
 }

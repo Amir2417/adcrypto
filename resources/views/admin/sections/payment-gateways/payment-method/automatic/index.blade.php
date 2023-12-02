@@ -23,14 +23,14 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Payment Method")])
+    ], 'active' => __("Add Money")])
 @endsection
 
 @section('content')
     <div class="table-area">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">{{ __("Automatic Payment Methods") }}</h5>
+                <h5 class="title">{{ __("Automatic Add Money") }}</h5>
                 @env('local')
                     <div class="table-btn-area">
                         @include('admin.components.link.add-default',[
@@ -64,7 +64,7 @@
                                 </td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ count($item->supported_currencies ?? []) }}</td>
-                                <td>{{ count(@$item->currencies) }}</td>
+                                <td>{{ count($item->currencies) }}</td>
                                 <td>
                                     @include('admin.components.form.switcher',[
                                         'name'          => 'status',
@@ -97,12 +97,13 @@
             <div id="p-gateway-automatic-add" class="mfp-hide large">
                 <div class="modal-data">
                     <div class="modal-header">
-                        <h5 class="modal-title">{{ __("Add Automatic Gateway (Payment Method)") }}</h5>
+                        <h5 class="modal-title">{{ __("Add Automatic Gateway (Add Money)") }}</h5>
                     </div>
                     <div class="modal-form-data">
                         <form class="modal-form" method="POST" action="{{ setRoute('admin.payment.gateway.store',['payment-method','automatic']) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-10-none">
+
                                 <div class="col-xl-12 col-lg-12 form-group">
                                     <label for="gatewayImage">{{ __("Gateway Image") }}</label>
                                     <div class="col-12 col-sm-3 m-auto">
@@ -112,6 +113,16 @@
                                             'name'          => "image",
                                         ])
                                     </div>
+                                </div>
+
+                                <div class="col-xl-12 col-lg-12 form-group">
+                                    
+                                    @include('admin.components.form.switcher',[
+                                        'label'         => 'Currency Type*',
+                                        'name'          => 'currency_type',
+                                        'value'         => old('currency_type','FIAT'),
+                                        'options'       => ['FIAT' => 'FIAT','CRYPTO' => 'CRYPTO'],
+                                    ])
                                 </div>
 
                                 <div class="col-xl-12 col-lg-12 form-group">

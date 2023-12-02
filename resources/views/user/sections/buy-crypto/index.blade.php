@@ -27,7 +27,7 @@
                             <div class="col-xxl-5 col-xl-7 col-lg-8 form-group">
                                 <div class="toggle-container">
                                     <div class="switch-toggles active" data-deactive="deactive">
-                                        <input type="hidden" value="1">
+                                        <input type="hidden" name="wallet_type" value="1">
                                         <span class="switch" data-value="1">Inside Wallet</span>
                                         <span class="switch" data-value="0">Outside Wallet</span>
                                     </div>
@@ -41,6 +41,10 @@
                                     <div class="custom-select">
                                         <div class="custom-select-inner first-currency" data-item='{{ json_encode(@$first_currency) }}'>
                                             <input type="hidden" name="sender_currency" class="sender_currency">
+                                            <input type="hidden" class="currency-rate">
+                                            <input type="hidden" class="payment-method-rate">
+                                            <input type="hidden" class="payment-method-code">
+                                            <input type="hidden" class="payment-method-min-amount">
                                             <img src="{{ get_image(@$first_currency->flag , 'currency-flag') }}" alt="flag" class="custom-flag">
                                             <span class="custom-currency">{{ @$first_currency->code }}</span>
                                         </div>
@@ -80,33 +84,31 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>Amount<span>*</span></label>
+                                <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control" placeholder="Enter Amount...">
-                                    <div class="input-group-text">USDT</div>
+                                    <input type="text" class="form--control" name="amount" placeholder="Enter Amount...">
+                                    <div class="input-group-text currency-code"></div>
                                 </div>
-                                <code class="d-block mt-2">Min Amount : 0.00001 USDT</code>
+                                <code class="d-block mt-2 min-amount"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Payment Method") }}<span>*</span></label>
-                                <select class="form--control nice-select">
-                                    <option selected disabled>{{ __("Select Method") }}</option>
+                                <select class="form--control nice-select" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
-                                        
-                                    <option 
-                                            value="{{ $item->id  }}"
-                                            data-currency="{{ $item->currency_code }}"
-                                            data-min_amount="{{ $item->min_limit }}"
-                                            data-max_amount="{{ $item->max_limit }}"
-                                            data-percent_charge="{{ $item->percent_charge }}"
-                                            data-fixed_charge="{{ $item->fixed_charge }}"
-                                            data-rate="{{ $item->rate }}"
-                                    >{{ $item->name ?? '' }} @if ($item->gateway->isManual())
-                                        (Manual)
-                                    @endif</option>
+                                        <option 
+                                                value="{{ $item->id  }}"
+                                                data-currency="{{ $item->currency_code }}"
+                                                data-min_amount="{{ $item->min_limit }}"
+                                                data-max_amount="{{ $item->max_limit }}"
+                                                data-percent_charge="{{ $item->percent_charge }}"
+                                                data-fixed_charge="{{ $item->fixed_charge }}"
+                                                data-rate="{{ $item->rate }}"
+                                        >{{ $item->name ?? '' }} @if ($item->gateway->isManual())
+                                            (Manual)
+                                        @endif</option>
                                     @endforeach
                                 </select>
-                                <code class="d-block mt-2">Rate : 1 USD = 0.00001 USDT</code>
+                                <code class="d-block mt-2 exchange-rate"></code>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
@@ -140,18 +142,43 @@
 
 <script>
 
-    var getNetworkURL   = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
     $(document).on('click','#custom-option',function(){
         var selectedCurrency = JSON.parse(currencySelectActiveItem("input[name=sender_currency]"))
         var currency         = selectedCurrency.id;
         if(currency == '' || currency == null){
             return false;
         }
-        getNetwork(getNetworkURL,currency);
-        
+
+        //pass the currency as parameter to get network
+        getNetwork(currency);
+        $('.sender_currency').val(currency);
+        $('.currency-code').text(selectedCurrency.code);
+        $('.currency-rate').val(selectedCurrency.rate);
+
+        var currencyCode           = selectedCurrency.code;
+        var currencyRate           = selectedCurrency.rate;
+
+        var paymentMethodCode      = $('.payment-method-code').val();
+        var paymentMethodRate      = $('.payment-method-rate').val();
+        var paymentMinAmount       = $('.payment-method-min-amount').val();
+
+        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+
     });
 
-    function getNetwork(getNetworkURL,currency){
+    function currencySelectActiveItem(input){
+        var customSelect        = $(input).parents(".custom-select-area");
+        var selectedItem        = customSelect.find(".custom-option.active");
+        
+        if(selectedItem.length > 0) {
+            return selectedItem.attr("data-item");
+        }
+        return false;
+    }
+
+    //get network function
+    function getNetwork(currency){
+        var getNetworkURL   = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
         $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){
                 
                 var networkOption = '';
@@ -167,27 +194,56 @@
         })
     }
 
-    function currencySelectActiveItem(input){
-        var customSelect        = $(input).parents(".custom-select-area");
-        var selectedItem        = customSelect.find(".custom-option.active");
+    // Payment Method
+    $('select[name=payment_method]').on('change',function(){
+        var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
+        var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
+        var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
+        var currencyRate        = $('.currency-rate').val();
+        var currencyCode        = $('.currency-code').text();
         
-        if(selectedItem.length > 0) {
-            return selectedItem.attr("data-item");
-        }
-        return false;
+        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+    });
+
+    function calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode){
+        var minAmount           = parseFloat(currencyRate) / parseFloat(paymentMethodRate);
+        var totalMinAmount      = parseFloat(paymentMinAmount) * parseFloat(minAmount);
+        
+        $('.min-amount').text('Min Amount :' + totalMinAmount.toFixed(10) + " " + currencyCode);
+
+        var exchangeRate        = parseFloat(paymentMethodRate) / parseFloat(currencyRate);
+        $('.exchange-rate').text("Rate :" + " " + "1" + " " + currencyCode + " " + "=" + " " + exchangeRate.toFixed(10) + " " + paymentMethodCode);
+        $('.payment-method-code').val(paymentMethodCode);
+        $('.payment-method-rate').val(paymentMethodRate);
+        $('.payment-method-min-amount').val(paymentMinAmount);
+        $('.currency-rate').val(currencyRate);
+        $('.currency-code').text(currencyCode);
     }
 
     //ready function 
     $(document).ready(function(){
-        var getNetworkURL       = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
-        var selectedCurrency    = $('.first-currency');
-        var data                = JSON.parse(selectedCurrency.attr("data-item"));
+        var data                = JSON.parse($('.first-currency').attr("data-item"));
         var currency            = data.id;
+        
         if(currency == '' || currency == null){
             return false;
         }
-        getNetwork(getNetworkURL,currency);
+
+        //pass the currency as parameter to get network
+        getNetwork(currency);
+        $('.sender_currency').val(currency);
+        $('.currency-code').text(data.code);
+        $('.currency-rate').val(data.rate);
+
+        var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
+        var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
+        var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
+        var currencyRate        = $('.currency-rate').val();
+        var currencyCode        = $('.currency-code').text();
         
+        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });
+
+
 </script>
 @endpush

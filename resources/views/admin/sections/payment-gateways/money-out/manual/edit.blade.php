@@ -127,7 +127,7 @@
                                             'label'         => "Percent*",
                                             'name'          => "percent_charge",
                                             'value'         => old("percent_charge",$payment_gateway->currencies->first()->percent_charge),
-                                            'currency'      => $payment_gateway->currencies->first()->currency_code,    
+                                            'currency'      => "%",    
                                         ])
                                     </div>
                                 </div>

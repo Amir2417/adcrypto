@@ -22,7 +22,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Payment Method")])
+    ], 'active' => __("Add Money")])
 @endsection
 
 @section('content')
@@ -129,10 +129,11 @@
                                     <div class="col-xl-6 col-lg-6">
                                         <div class="form-group">
                                             @include('admin.components.form.input-amount',[
-                                                'label'         => "Percent*",
-                                                'name'          => "percent_charge",
-                                                'value'         => old("percent_charge",$payment_gateway->currencies->first()->percent_charge),
-                                                'currency'      => $payment_gateway->currencies->first()->currency_code,     
+                                                'label'             => "Percent*",
+                                                'name'              => "percent_charge",
+                                                'value'             => old("percent_charge",$payment_gateway->currencies->first()->percent_charge),
+                                                'currency'          => "%",
+                                                'currency_class'    => false,
                                             ])
                                         </div>
                                     </div>

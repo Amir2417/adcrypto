@@ -16,6 +16,9 @@ class GlobalConst {
     const DEFAULT       = 0;
     const UNVERIFIED    = 0;
 
+    const USER      = "USER";
+    const ADMIN = "ADMIN";
+
     const UNKNOWN       = "UNKNOWN";
 
     const USEFUL_LINK_PRIVACY_POLICY = "PRIVACY_POLICY";

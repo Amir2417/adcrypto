@@ -14,7 +14,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Payment Method")])
+    ], 'active' => __("Add Money")])
 @endsection
 
 @section('content')
@@ -35,10 +35,10 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>{{ __("Gateway") }}</th>
-                            <th>{{ __("Currency Code") }}</th>
-                            <th>{{ __("Currency Symbol") }}</th>
-                            <th>{{ __("Status") }}</th>
+                            <th>Gateway</th>
+                            <th>Currency Code</th>
+                            <th>Currency Symbol</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                     </thead>

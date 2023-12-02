@@ -22,14 +22,14 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Payment Method")])
+    ], 'active' => __("Add Money")])
 @endsection
 
 @section('content')
     <form action="{{ setRoute('admin.payment.gateway.store',['payment-method','manual']) }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @include('admin.components.payment-gateway.manual.gateway-header',['title' => "Manual Payment Method"])
+        @include('admin.components.payment-gateway.manual.gateway-header',['title' => "Manual Add Money"])
 
         <div class="custom-card mt-15">
             <div class="card-body">

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\BroadcastingController;
 use App\Http\Controllers\Admin\CoinController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
+use App\Http\Controllers\Admin\CryptoAssetController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MoneyOutController;
@@ -357,6 +358,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Artisan::all('config:clear');
         return redirect()->back()->with(['success' => ['Cache Clear Successfully!']]);
     })->name('cache.clear');
+
+    Route::controller(CryptoAssetController::class)->prefix('crypto/assets')->name('crypto.assets.')->group(function() {
+        Route::get('gateway/{alias}','gatewayAssets')->name('gateway.index');
+        Route::get('gateway/{alias}/generate/wallet','generateWallet')->name('generate.wallet');
+
+        Route::get('wallet/balance/update/{crypto_asset_id}/{wallet_id}','walletBalanceUpdate')->name('wallet.balance.update');
+        Route::post('wallet/store','walletStore')->name("wallet.store");
+        Route::delete('wallet/delete','walletDelete')->name('wallet.delete');
+        Route::put('wallet/status/update','walletStatusUpdate')->name('wallet.status.update');
+        Route::get('wallet/transactions/{crypto_asset_id}/{wallet_id}','walletTransactions')->name('wallet.transactions');
+        Route::post('wallet/transactions/search/{crypto_asset_id}/{wallet_id}','walletTransactionSearch')->name('wallet.transaction.search');
+    });
 });
 
 Route::get('pusher/beams-auth', function (Request $request) {
