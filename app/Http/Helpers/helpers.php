@@ -1560,3 +1560,4 @@ function get_amount($amount, $currency = null, $precision = null)
     $amount = $amount . " " . $currency;
     return $amount;
 }
+

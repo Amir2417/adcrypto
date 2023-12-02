@@ -99,7 +99,7 @@ $('.switch-toggles .switch').on('click', function () {
 });
 
 // custom Select
-$('.custom-select').on('click', function (e) {
+$(document).on('click','.custom-select', function (e) {
   e.preventDefault();
   $(".custom-select-wrapper").removeClass("active");
   if($(this).siblings(".custom-select-wrapper").hasClass('active')) {
@@ -116,18 +116,19 @@ $('.body-overlay').on('click', function (e) {
   $('.body-overlay').removeClass('active');
 });
 
-$('.custom-option').on('click', function(){
+$(document).on('click','.custom-option', function(){
   $(this).parent().find(".custom-option").removeClass("active");
   $(this).addClass('active');
   var flag = $(this).find("img").attr("src");
   var currencyCode = $(this).find(".custom-currency").text();
+  var currencyCountry = $(this).find(".custom-country").text();
   $(this).parents(".custom-select-wrapper").siblings(".custom-select").find(".custom-select-inner").find(".custom-currency").text(currencyCode);
   $(this).parents(".custom-select-wrapper").siblings(".custom-select").find(".custom-select-inner").find("img").attr("src",flag);
   $(this).parents(".custom-select-wrapper").removeClass("active");
   $('.body-overlay').removeClass('active');
 });
 
-$('.custom-option').on('click', function(){
+$(document).on('click','.custom-option', function(){
   $(this).parent().find(".custom-option").removeClass("active");
   $(this).addClass('active');
   var method = $(this).find(".title").text();

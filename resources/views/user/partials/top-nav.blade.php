@@ -23,45 +23,23 @@
                 </button>
                 <div class="notification-wrapper">
                     <div class="notification-header">
-                        <h5 class="title">Notification</h5>
+                        <h5 class="title">{{ __("Notification") }}</h5>
                     </div>
                     <ul class="notification-list">
-                        <li>
-                            <div class="thumb">
-                                <img src="assets/images/user/user-1.png" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h6 class="title">Buy Crypto</h6>
-                                    <span class="time">Thu 3.30PM</span>
+                        @foreach (get_user_notifications() ?? [] as $item)
+                            <li>
+                                <div class="thumb">
+                                    <img src="{{ auth()->user()->userImage }}" alt="user">
                                 </div>
-                                <span class="sub-title">Hi, How are you? What about our next meeting</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb">
-                                <img src="assets/images/user/user-2.png" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h6 class="title">Sell Crypto</h6>
-                                    <span class="time">Thu 3.30PM</span>
+                                <div class="content">
+                                    <div class="title-area">
+                                        <h6 class="title">{{ __("Buy Crypto") }}</h6>
+                                        <span class="time">Thu 3.30PM</span>
+                                    </div>
+                                    <span class="sub-title">Hi, How are you? What about our next meeting</span>
                                 </div>
-                                <span class="sub-title">Hi, How are you? What about our next meeting</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="thumb">
-                                <img src="assets/images/user/user-3.png" alt="user">
-                            </div>
-                            <div class="content">
-                                <div class="title-area">
-                                    <h6 class="title">Withdraw Crypto</h6>
-                                    <span class="time">Thu 3.30PM</span>
-                                </div>
-                                <span class="sub-title">Hi, How are you? What about our next meeting</span>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

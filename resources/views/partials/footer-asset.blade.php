@@ -17,7 +17,8 @@
 <script src="{{ asset('public/backend/library/popup/jquery.magnific-popup.js') }}"></script>
 {{-- apexchart --}}
 <script src="{{ asset('public/frontend/js/apexcharts.js') }}"></script>
-
+<!-- select2 -->
+<script src="{{ asset('public/backend/js/select2.js') }}"></script>
 <script>
     var fileHolderAfterLoad = {};
 </script>

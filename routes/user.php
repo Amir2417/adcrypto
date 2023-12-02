@@ -29,11 +29,13 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(WalletController::class)->prefix('wallet')->name('wallet.')->group(function(){
         Route::get('/','index')->name('index');
         Route::get('wallet-details/{public_address}','walletDetails')->name('details');
+        
     });
 
     //buy crypto
     Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
         Route::get('/','index')->name('index');
+        Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
     });
 
     //sell crypto

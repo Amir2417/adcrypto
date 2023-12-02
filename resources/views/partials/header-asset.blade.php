@@ -17,6 +17,8 @@
 <link rel="stylesheet" href="{{ asset('public/frontend/css/nice-select.css') }}">
  <!-- Popup  -->
  <link rel="stylesheet" href="{{ asset('public/backend/library/popup/magnific-popup.css') }}">
+  <!-- select2 css -->
+  <link rel="stylesheet" href="{{ asset('public/frontend/css/select2.css') }}">
 <!-- main style css link -->
 <link rel="stylesheet" href="{{ asset('public/frontend/css/style.css') }}">
 <!-- file holder css -->
