@@ -78,10 +78,10 @@
                                 </select>
                             </div>
                             <div class="col-xl-12 form-group" style="display: none;" data-switcher="deactive">
-                                <label>Crypto Address<span>*</span></label>
+                                <label>{{ __("Crypto Address") }}<span>*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form--control" placeholder="Enter or Paste Address...">
-                                    <div class="input-group-text"><i class="las la-paste"></i></div>
+                                    <input type="text" class="form--control" id="cryptoAddress" placeholder="Enter or Paste Address...">
+                                    <div class="input-group-text" id="paste-address" onclick="pasteClipboard()"><i class="las la-paste"></i></div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
@@ -141,8 +141,27 @@
     });
 </script>
 
-<script>
 
+<script>
+    function pasteClipboard() {
+        // Use the Clipboard API to get the text from the clipboard
+        console.log("test");
+        navigator.clipboard.readText()
+        .then(function(textFromClipboard) {
+          // Set the value of the input field
+          $("#myInput").val(textFromClipboard);
+        })
+        .catch(function(err) {
+          console.error('Failed to read clipboard contents: ', err);
+        });
+    }
+
+    // Attach the click event handler to the button
+    $("#pasteButton").click(pasteClipboard);
+
+</script>
+
+<script>
     $(document).on('click','#custom-option',function(){
         var selectedCurrency = JSON.parse(currencySelectActiveItem("input[name=sender_currency]"))
         var currency         = selectedCurrency.id;
@@ -187,7 +206,7 @@
                     $.each(response.data.currency.networks,function(index,item){
                         
                         networkOption += `<option value="${item.network_id}">
-                            ${item.network.name}(Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
+                            ${item.network.name} (Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
                         `;
                     });
                     $('select[name=network]').html(networkOption);
