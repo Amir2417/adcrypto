@@ -121,7 +121,7 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span>TLiHJYVyWt9Ff3aYywuxkD95BAmycmeBug</span>
+                                    <span>{{ $item->details->data->wallet->address ?? '' }}</span>
                                 </div>
                             </div>
                         @endif

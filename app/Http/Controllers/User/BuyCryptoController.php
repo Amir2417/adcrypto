@@ -102,7 +102,6 @@ class BuyCryptoController extends Controller
             $min_max_rate   = $user_wallet->currency->rate / $payment_gateway_currency->rate;
             $min_amount     = $payment_gateway_currency->min_limit * $min_max_rate;
             $max_amount     = $payment_gateway_currency->max_limit * $min_max_rate;
-            
             if($amount < $min_amount || $amount > $max_amount){
                 return back()->with(['error' => ['Please follow the transaction limit.']]);
             }
@@ -123,6 +122,93 @@ class BuyCryptoController extends Controller
                         'name'          => $user_wallet->currency->name,
                         'code'          => $user_wallet->currency->code,
                         'rate'          => $user_wallet->currency->rate,
+                        'balance'       => $user_wallet->balance,
+                    ],
+                    'network'           => [
+                        'name'          => $network->name,
+                        'arrival_time'  => $network->arrival_time,
+                        'fees'          => $network_info->fees,
+                    ],
+                    'payment_method'    => [
+                        'id'            => $payment_gateway_currency->id,
+                        'name'          => $payment_gateway_currency->name,
+                        'code'          => $payment_gateway_currency->currency_code,
+                        'alias'         => $payment_gateway_currency->alias,
+                        'rate'          => $payment_gateway_currency->rate,
+                    ],
+                    'amount'            => floatval($amount),
+                    'exchange_rate'     => $rate,
+                    'min_max_rate'      => $min_max_rate,
+                    'fixed_charge'      => $fixed_charge,
+                    'percent_charge'    => $percent_charge,
+                    'total_charge'      => $total_charge,
+                    'payable_amount'    => $payable_amount,
+                    'will_get'          => floatval($amount),
+                ],
+            ];
+            try{
+                $temporary_data = TemporaryData::create($data);
+            }catch(Exception $e){
+                return back()->with(['error' => ['Something went wrong! Please try again.']]);
+            }
+            return redirect()->route('user.buy.crypto.preview',$temporary_data->identifier);
+        }else{
+            $validator  = Validator::make($request->all(),[
+                'sender_currency'   => 'required',
+                'network'           => 'required',
+                'wallet_address'    => 'required',
+                'amount'            => 'required',
+                'payment_method'    => 'required'
+            ]);
+            if($validator->fails()){
+                return back()->withErrors($validator)->withInput($request->all());
+            }
+            $validated          = $validator->validate();
+            $wallet_currency    = $validated['sender_currency'];
+            $amount             = $validated['amount'];
+
+            $user_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($wallet_currency) {
+                $q->where("id",$wallet_currency)->active();
+            })->active()->first();
+
+            if(!$user_wallet){
+                return back()->with(['error' => ['Wallet not found!']]);
+            }
+
+            $network        = Network::where('id',$validated['network'])->first();
+            $network_info   = CurrencyHasNetwork::where('currency_id',$user_wallet->currency->id)->where('network_id',$network->id)->first();
+            
+            $payment_gateway_currency   = PaymentGatewayCurrency::with(['gateway'])->where('id',$validated['payment_method'])->first();
+
+            if(!$payment_gateway_currency){
+                return back()->with(['error' => ['Payment Method not found!']]);
+            }
+            $rate           = $payment_gateway_currency->rate / $user_wallet->currency->rate;
+            
+            $min_max_rate   = $user_wallet->currency->rate / $payment_gateway_currency->rate;
+            $min_amount     = $payment_gateway_currency->min_limit * $min_max_rate;
+            $max_amount     = $payment_gateway_currency->max_limit * $min_max_rate;
+            if($amount < $min_amount || $amount > $max_amount){
+                return back()->with(['error' => ['Please follow the transaction limit.']]);
+            }
+            $fixed_charge   = ($payment_gateway_currency->fixed_charge) * $min_max_rate;
+            $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
+            $total_charge   = $fixed_charge + $percent_charge;
+            $payable_amount = ($amount * $rate) + $total_charge;
+            
+            $validated['identifier']    = Str::uuid();
+            $data                       = [
+                'type'                  => PaymentGatewayConst::BUY_CRYPTO,
+                'identifier'            => $validated['identifier'],
+                'data'                  => [
+                    'wallet'            => [
+                        'type'          => $request->wallet_type,
+                        'wallet_id'     => $user_wallet->id,
+                        'currency_id'   => $user_wallet->currency->id,
+                        'name'          => $user_wallet->currency->name,
+                        'code'          => $user_wallet->currency->code,
+                        'rate'          => $user_wallet->currency->rate,
+                        'address'       => $validated['wallet_address'],
                         'balance'       => $user_wallet->balance,
                     ],
                     'network'           => [

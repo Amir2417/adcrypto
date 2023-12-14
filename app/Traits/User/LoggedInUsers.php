@@ -21,6 +21,7 @@ trait LoggedInUsers {
         $new_wallets = [];
         foreach($new_currencies as $item) {
             $public_address = generate_unique_string("user_wallets","public_address",42);
+           
             $new_wallets[] = [
                 'user_id'           => $user->id,
                 'currency_id'       => $item,

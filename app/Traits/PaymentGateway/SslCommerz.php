@@ -23,7 +23,6 @@ trait SslCommerz {
 
         if(!$output) $output = $this->output;
         $request_credentials = $this->getSslCommerzRequestCredentials($output);
-
         $payment_link = $this->createSslCommerzPaymentLink($output, $request_credentials);
 
         return $payment_link;

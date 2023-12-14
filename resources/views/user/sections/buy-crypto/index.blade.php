@@ -80,14 +80,14 @@
                             <div class="col-xl-12 form-group" style="display: none;" data-switcher="deactive">
                                 <label>{{ __("Crypto Address") }}<span>*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form--control" id="cryptoAddress" placeholder="Enter or Paste Address...">
+                                    <input type="text" class="form--control" name="wallet_address" id="cryptoAddress" placeholder="Enter or Paste Address...">
                                     <div class="input-group-text" id="paste-address" onclick="pasteClipboard()"><i class="las la-paste"></i></div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control" name="amount" placeholder="Enter Amount...">
+                                    <input type="text" class="form--control number-input" name="amount" placeholder="Enter Amount...">
                                     <div class="input-group-text currency-code"></div>
                                 </div>
                                 <code class="d-block mt-2 min-amount"></code>

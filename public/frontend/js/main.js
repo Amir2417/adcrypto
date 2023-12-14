@@ -442,3 +442,20 @@ $('textarea').keydown(function (e) {
     e.preventDefault();
   }
 });
+
+$(document).on("keyup",".number-input",function(){
+  var pattern = /^[0-9]*\.?[0-9]*$/;
+  var value = $(this).val();
+  var test = pattern.test(value);
+  if(test == false) {
+    var rightValue = value;
+    if(value.length > 0) {
+      for (let index = 0; index < value.length; index++){
+        if(!$.isNumeric(rightValue)) {
+          rightValue = rightValue.slice(0, -1);
+        }
+      }
+    }
+    $(this).val(rightValue);
+  }
+});

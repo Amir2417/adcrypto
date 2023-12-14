@@ -1197,7 +1197,7 @@ function generate_random_string_number($length = 12)
     return $randomString;
 }
 
-function generate_unique_string($table,$column,$prefix = '',$length = 10) {
+function generate_unique_string($table,$column,$prefix = '',$length = 42) {
     do{
        $generate_rand_string = generate_random_string_number($length);
        $generate_string = $prefix.''.$generate_rand_string;
