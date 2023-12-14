@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Constants\PaymentGatewayConst;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class TransactionController extends Controller
@@ -13,9 +15,11 @@ class TransactionController extends Controller
      */
     public function buyLog(){
         $page_title  = "- Buy Logs";
-
+        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->get();
+        
         return view('user.sections.transaction-logs.buy-log',compact(
             'page_title',
+            'transactions'
         ));
     }
     /**

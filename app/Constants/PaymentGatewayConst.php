@@ -1,5 +1,6 @@
 <?php
 namespace App\Constants;
+use App\Models\UserWallet;
 use Illuminate\Support\Str;
 
 class PaymentGatewayConst {
@@ -11,14 +12,21 @@ class PaymentGatewayConst {
     const MONEYOUT  = "Money Out";
     const ACTIVE    =  true;
 
-    const ENV_SANDBOX       = "SANDBOX";
-    const ENV_PRODUCTION    = "PRODUCTION";
-    const CRYPTO                    = "CRYPTO";
-    const CRYPTO_NATIVE             = "CRYPTO_NATIVE";
+    const ENV_SANDBOX           = "SANDBOX";
+    const ENV_PRODUCTION        = "PRODUCTION";
+    const CRYPTO                = "CRYPTO";
+    const CRYPTO_NATIVE         = "CRYPTO_NATIVE";
 
-    const NOT_USED  = "NOT-USED";
-    const USED      = "USED";
-    const SENT      = "SENT";
+    const BUY_CRYPTO        = "Buy Crypto";
+    const SELL_CRYPTO       = "Sell Crypto";
+    const WITHDRAW_CRYPTO   = "Withdraw Crypto";
+    const EXCHANGE_CRYPTO   = "Exchange Crypto";
+
+    const NOT_USED      = "NOT-USED";
+    const USED          = "USED";
+    const SENT          = "SENT";
+
+    const APP           = "APP";
 
     const STATUSSUCCESS             = 1;
     const STATUSPENDING             = 2;
@@ -37,6 +45,10 @@ class PaymentGatewayConst {
     const FLUTTERWAVE               = 'flutterwave';
     const SSLCOMMERZ                = 'sslcommerz';
     const RAZORPAY                  = 'razorpay';
+
+    const PROJECT_CURRENCY_MULTIPLE = "PROJECT_CURRENCY_MULTIPLE";
+    const PROJECT_CURRENCY_SINGLE   = "PROJECT_CURRENCY_SINGLE";
+    const CALLBACK_HANDLE_INTERNAL  = "CALLBACK_HANDLE_INTERNAL";
     
     public static function payment_method_slug() {
         return Str::slug(self::PAYMENTMETHOD);
@@ -81,6 +93,34 @@ class PaymentGatewayConst {
             'isFlutterwave' => self::FLUTTERWAVE,
             'isSslCommerz'  => self::SSLCOMMERZ,
             'isRazorpay'    => self::RAZORPAY,
+        ];
+    }
+
+    public static function registerWallet() {
+        return [
+            'web'       => UserWallet::class,
+            'api'       => UserWallet::class,
+        ];
+    }
+
+    public static function apiAuthenticateGuard() {
+        return [
+            'api'   => 'web',
+        ];
+    }
+
+    public static function registerRedirection() {
+        return [
+            'web'       => [
+                'return_url'    => 'user.buy.crypto.payment.success',
+                'cancel_url'    => 'user.buy.crypto.payment.cancel',
+                'callback_url'  => 'user.buy.crypto.payment.callback',
+            ],
+            'api'       => [
+                'return_url'    => 'api.user.buy.crypto.payment.success',
+                'cancel_url'    => 'api.user.buy.crypto.payment.cancel',
+                'callback_url'  => 'user.buy.crypto.payment.callback',
+            ],
         ];
     }
 }

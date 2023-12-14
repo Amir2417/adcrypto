@@ -99,4 +99,11 @@ class PaymentGateway extends Model
     {
         return $this->hasMany(CryptoAsset::class,'payment_gateway_id');
     }
+
+    public function isAutomatic() {
+        if($this->type == PaymentGatewayConst::AUTOMATIC) {
+            return true;
+        }
+        return false;
+    }
 }

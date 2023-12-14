@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Constants\PaymentGatewayConst;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -15,7 +16,15 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->string('type')->comment('Money in/deposit/add, withdrawal');
+            $table->enum("type",[
+                PaymentGatewayConst::BUY_CRYPTO,
+                PaymentGatewayConst::SELL_CRYPTO,
+                PaymentGatewayConst::WITHDRAW_CRYPTO,
+                PaymentGatewayConst::EXCHANGE_CRYPTO,
+            ]);
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->unsignedBigInteger('user_wallet_id')->nullable();
+            $table->unsignedBigInteger('payment_gateway_id')->nullable();
             $table->string('trx_id')->comment('Transaction ID');
             $table->decimal('amount', 28, 8)->nullable();
             $table->decimal('percent_charge', 28, 8)->nullable();
@@ -24,18 +33,19 @@ return new class extends Migration
             $table->decimal('total_payable', 28, 8)->nullable();
             $table->decimal('available_balance', 28, 8);
             $table->string('currency_code');
-            $table->string('charge_status', 20)->nullable()->comment('Charge added == +, minus == -');
             $table->string('remark')->nullable();
-            $table->string('details')->nullable();
-            $table->tinyInteger('status')->nullable();
-
-            $table->unsignedBigInteger('user_wallet_id')->nullable();
-            $table->foreign("user_wallet_id")->references("id")->on("user_wallets")->onDelete("cascade")->onUpdate("cascade");
-            $table->unsignedBigInteger('payment_gateway_id')->nullable();
-            $table->foreign("payment_gateway_id")->references("id")->on("payment_gateways")->onDelete("cascade")->onUpdate("cascade");
-            $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->text('details')->nullable();
+            $table->text('reject_reason')->nullable();
+            $table->text('callback_ref')->nullable();
+            $table->tinyInteger('status')->default(0)->comment("1: Review Payment, 2: Pending, 3: Confirm Payment, 4: On Hold, 5: Settled, 6: Completed, 7: Canceled, 8: Failed, 9: Refunded, 10: Delayed");
             $table->timestamps();
+
+            
+            $table->foreign("user_id")->references("id")->on("users")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("user_wallet_id")->references("id")->on("user_wallets")->onDelete("cascade")->onUpdate("cascade");
+            $table->foreign("payment_gateway_id")->references("id")->on("payment_gateways")->onDelete("cascade")->onUpdate("cascade");
+            
+            
         });
     }
 

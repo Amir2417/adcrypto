@@ -1202,10 +1202,11 @@ function generate_random_string_number($length = 12)
     return $randomString;
 }
 
-function generate_unique_string($table,$column,$length = 10) {
+function generate_unique_string($table,$column,$prefix = '',$length = 10) {
     do{
        $generate_rand_string = generate_random_string_number($length);
-       $unique = DB::table($table)->where($column,$generate_rand_string)->exists();
+       $generate_string = $prefix.''.$generate_rand_string;
+       $unique = DB::table($table)->where($column,$generate_string)->exists();
        $loop = false;
        if($unique) {
         $loop = true;

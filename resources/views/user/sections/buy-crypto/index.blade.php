@@ -29,8 +29,8 @@
                                 <div class="toggle-container">
                                     <div class="switch-toggles active" data-deactive="deactive">
                                         <input type="hidden" name="wallet_type" >
-                                        <span class="switch" data-value="{{ global_const()::INSIDE_WALLET }}">Inside Wallet</span>
-                                        <span class="switch" data-value="{{ global_const()::OUTSIDE_WALLET }}">Outside Wallet</span>
+                                        <span class="switch" data-value="{{ global_const()::INSIDE_WALLET }}">{{ __("Inside Wallet") }}</span>
+                                        <span class="switch" data-value="{{ global_const()::OUTSIDE_WALLET }}">{{ __("Outside Wallet") }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,19 +144,19 @@
 
 <script>
     function pasteClipboard() {
-        // Use the Clipboard API to get the text from the clipboard
-        console.log("test");
+        
+
         navigator.clipboard.readText()
         .then(function(textFromClipboard) {
-          // Set the value of the input field
+          console.log(textFromClipboard);
           $("#myInput").val(textFromClipboard);
         })
         .catch(function(err) {
-          console.error('Failed to read clipboard contents: ', err);
+            console.log('Failed to read clipboard contents: ');
+            console.error('Failed to read clipboard contents: ', err);
         });
     }
 
-    // Attach the click event handler to the button
     $("#pasteButton").click(pasteClipboard);
 
 </script>

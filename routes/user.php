@@ -16,13 +16,13 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('dashboard','index')->name('dashboard');
         Route::post('logout','logout')->name('logout');
-        Route::delete('delete/account','deleteAccount')->name('delete.account')->middleware(['app.mode']);;
+        Route::delete('delete/account','deleteAccount')->name('delete.account')->middleware(['app.mode']);
     });
 
     Route::controller(ProfileController::class)->prefix("profile")->name("profile.")->group(function(){
         Route::get('/','index')->name('index');
-        Route::put('password/update','passwordUpdate')->name('password.update')->middleware(['app.mode']);;
-        Route::put('update','update')->name('update')->middleware(['app.mode']);;
+        Route::put('password/update','passwordUpdate')->name('password.update')->middleware(['app.mode']);
+        Route::put('update','update')->name('update')->middleware(['app.mode']);
     });
 
     // wallet 
@@ -37,6 +37,13 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('/','index')->name('index');
         Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
         Route::post('store','store')->name('store');
+        Route::get('preview/{identifier}','preview')->name('preview');
+        Route::post('submit','submit')->name('submit');
+
+        //paypal
+        Route::match('get','success/response/{gateway}','success')->name('payment.success');
+        Route::match('post',"cancel/response/{gateway}",'cancel')->name('payment.cancel');
+        Route::post("callback/response/{gateway}",'callback')->name('payment.callback')->withoutMiddleware(['web','auth','verification.guard','user.google.two.factor']);
     });
 
     //sell crypto
