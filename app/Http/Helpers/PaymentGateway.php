@@ -465,6 +465,7 @@ class PaymentGateway {
                 'success'   => "Successfully Added."
             ],
         ]);
+        
         $this->insertDevice($output,$inserted_id);
         $this->removeTempData($output);
 

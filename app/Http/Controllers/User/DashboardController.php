@@ -17,7 +17,7 @@ class DashboardController extends Controller
     {
         $page_title = "- Dashboard";
         $wallets    = UserWallet::auth()->with(['currency'])->get();
-        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
+        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->latest()->take(3)->get();
         
         return view('user.dashboard',compact(
             "page_title",
