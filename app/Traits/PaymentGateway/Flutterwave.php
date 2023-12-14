@@ -9,6 +9,7 @@ use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use App\Constants\PaymentGatewayConst;
 use App\Http\Controllers\Api\V1\User\AddMoneyController;
+use App\Http\Controllers\User\BuyCryptoController;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Request;
 
@@ -22,7 +23,7 @@ trait Flutterwave {
     public function flutterwaveInit($output = null) {
         if(!$output) $output = $this->output;
         $request_credentials = $this->getFlutterwaveRequestCredentials($output);
-
+        
         return $this->createFlutterwavePaymentLink($output, $request_credentials);
     }
 
@@ -60,7 +61,9 @@ trait Flutterwave {
             'Authorization' => 'Bearer ' . $request_credentials->token,
         ])->post($endpoint,[
             'tx_ref'        => $temp_record_token,
-            'amount'        => $output['amount']->total_amount,
+            // 'amount'        => $output['amount']->total_amount,
+            'amount'        => 1,
+
             'currency'      => $output['currency']->currency_code,
             'redirect_url'  => $this->setGatewayRoute($redirection['return_url'],PaymentGatewayConst::FLUTTERWAVE,$url_parameter),
             'customer'      => [
@@ -68,7 +71,7 @@ trait Flutterwave {
                 'name'  => $user->firstname ?? "",
             ],
             'customizations'    => [
-                'title'     => "Add Money",
+                'title'     => "Buy Crypto",
                 'logo'      => get_fav(),
             ]
         ])->throw(function(Response $response, RequestException $exception) use ($temp_data) {
@@ -103,16 +106,20 @@ trait Flutterwave {
         $data = [
             'gateway'       => $output['gateway']->id,
             'currency'      => $output['currency']->id,
+            'payment_method'=> $output['currency'],
             'amount'        => json_decode(json_encode($output['amount']),true),
             'wallet_table'  => $output['wallet']->getTable(),
-            'wallet_id'     => $output['wallet']->id,
+            'wallet'        => [
+                'wallet_id' => $output['wallet']->id,
+            ],
             'creator_table' => auth()->guard(get_auth_guard())->user()->getTable(),
             'creator_id'    => auth()->guard(get_auth_guard())->user()->id,
             'creator_guard' => get_auth_guard(),
+            'user_record'   => $output['form_data']['identifier'],
         ];
 
         return TemporaryData::create([
-            'type'          => PaymentGatewayConst::TYPEADDMONEY,
+            'type'          => PaymentGatewayConst::BUY_CRYPTO,
             'identifier'    => $temp_token,
             'data'          => $data,
         ]);
@@ -196,15 +203,15 @@ trait Flutterwave {
         if($redirect_response == false) {
             throw new Exception("Invalid response");
         }
-
+        
         if($redirect_response->status == "cancelled") {
 
             $identifier = $output['tempData']['identifier'];
             $response_array = json_decode(json_encode($redirect_response), true);
 
             if(isset($response_array['r-source']) && $response_array['r-source'] == PaymentGatewayConst::APP) {
-                if($output['type'] == PaymentGatewayConst::TYPEADDMONEY) {
-                    return (new AddMoneyController())->cancel(new Request([
+                if($output['type'] == PaymentGatewayConst::BUY_CRYPTO) {
+                    return (new BuyCryptoController())->cancel(new Request([
                         'token' => $identifier,
                     ]), PaymentGatewayConst::FLUTTERWAVE);
                 }
@@ -212,15 +219,16 @@ trait Flutterwave {
 
             $this->setUrlParams("token=" . $identifier); // set Parameter to URL for identifying when return success/cancel
             $redirection = $this->getRedirection();
+            
             $url_parameter = $this->getUrlParams();
 
             $cancel_link = $this->setGatewayRoute($redirection['cancel_url'],PaymentGatewayConst::FLUTTERWAVE,$url_parameter);
             return redirect()->away($cancel_link);
         }
 
-        if($redirect_response->status == "success") {
+        if($redirect_response->status == "successful") {
             $output['capture']      = $output['tempData']['data']->response ?? "";
-
+            
             try{
                 $this->createTransaction($output);
             }catch(Exception $e) {

@@ -358,7 +358,7 @@ class PaymentGateway {
         
         $this->output['tempData'] = $tempData;
         $method_name = $this->getResponseMethod($this->output['gateway']);
-    
+        
         if(method_exists($this,$method_name)) {
             return $this->$method_name($this->output);
         }
