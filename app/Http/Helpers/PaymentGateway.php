@@ -27,6 +27,7 @@ use App\Traits\PaymentGateway\Flutterwave;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Validation\ValidationException;
 use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
+use App\Models\UserNotification;
 use App\Models\UserWallet;
 
 class PaymentGateway {
@@ -452,6 +453,18 @@ class PaymentGateway {
         
         $inserted_id = $this->$record_handler($output,$status);
         // $this->insertCharges($output,$inserted_id);
+        $data = TemporaryData::where('identifier',$output['form_data']['identifier'])->first();
+        UserNotification::create([
+            'user_id'       => auth()->user()->id,
+            'message'       => [
+                'title'     => "Buy Crypto",
+                'payment'   => $data->data->payment_method->name,
+                'wallet'    => $data->data->wallet->name,
+                'code'    => $data->data->wallet->code,
+                'amount'    => $data->data->amount,
+                'success'   => "Successfully Added."
+            ],
+        ]);
         $this->insertDevice($output,$inserted_id);
         $this->removeTempData($output);
 
@@ -462,6 +475,7 @@ class PaymentGateway {
                 auth()->guard($api_user_login_guard)->logout();
             }
         }
+        
     }
 
     // public function insertRecordAgent($output) {

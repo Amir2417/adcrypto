@@ -145,7 +145,7 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span class="text--danger">{{ $data->data->total_charge ?? '' }} {{ $data->data->payment_method->code ?? '' }}</span>
+                                    <span class="text--danger">{{ get_amount($data->data->total_charge) ?? '' }} {{ $data->data->payment_method->code ?? '' }}</span>
                                 </div>
                             </div>
                             <div class="preview-list-item">
@@ -160,7 +160,7 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span class="last">{{ $data->data->payable_amount ?? '' }} {{ $data->data->payment_method->code ?? '' }}</span>
+                                    <span class="last">{{ get_amount($data->data->payable_amount) ?? '' }} {{ $data->data->payment_method->code ?? '' }}</span>
                                 </div>
                             </div>
                             <button type="submit" class="btn--base mt-20 w-100"><span class="w-100">{{ __("Confirm") }}</span></button>

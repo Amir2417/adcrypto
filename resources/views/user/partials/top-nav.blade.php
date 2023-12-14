@@ -11,12 +11,17 @@
             </div>
         </div>
         <div class="right">
-            <form class="header-search-wrapper">
-                <div class="position-relative">
-                    <input class="form-control" type="text" placeholder="Ex: Buy Crypto, Sell Crypto" aria-label="Search">
-                    <span class="las la-search"></span>
-                </div>
-            </form>
+            @php
+                $current_url   = URL::current();
+            @endphp
+            @if ($current_url == setRoute('user.transaction.buy.log') || $current_url == setRoute('user.transaction.sell.log') || $current_url == setRoute('user.transaction.withdraw.log') || $current_url == setRoute('user.transaction.exchange.log'))
+                <form class="header-search-wrapper">
+                    <div class="position-relative">
+                        <input class="form-control" type="text" placeholder="Ex: Buy Crypto, Sell Crypto" aria-label="Search">
+                        <span class="las la-search"></span>
+                    </div>
+                </form>
+            @endif
             <div class="header-notification-wrapper">
                 <button class="notification-icon">
                     <i class="las la-bell"></i>
@@ -33,10 +38,14 @@
                                 </div>
                                 <div class="content">
                                     <div class="title-area">
-                                        <h6 class="title">{{ __("Buy Crypto") }}</h6>
-                                        <span class="time">Thu 3.30PM</span>
+                                        <h6 class="title">{{ $item->message->title ?? '' }}</h6>
                                     </div>
-                                    <span class="sub-title">Hi, How are you? What about our next meeting</span>
+                                    <span class="sub-title">
+                                        {{ __("Payment Method:") }} {{ $item->message->payment }}, 
+                                        {{ __("Amount:") }} {{ $item->message->amount }} {{ $item->message->code }},
+                                        {{ __("Wallet:") }} {{ $item->message->wallet }} 
+                                        {{ $item->message->success }}
+                                    </span>
                                 </div>
                             </li>
                         @endforeach

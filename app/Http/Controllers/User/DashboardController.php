@@ -2,11 +2,13 @@
 namespace App\Http\Controllers\User;
 use Exception;
 use App\Models\UserWallet;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Models\Admin\Network;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\CurrencyHasNetwork;
-use App\Models\Admin\Network;
 use Illuminate\Support\Facades\Validator;
 
 class DashboardController extends Controller
@@ -15,11 +17,12 @@ class DashboardController extends Controller
     {
         $page_title = "- Dashboard";
         $wallets    = UserWallet::auth()->with(['currency'])->get();
-        
+        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
         
         return view('user.dashboard',compact(
             "page_title",
-            "wallets"
+            "wallets",
+            'transactions'
         ));
     }
 
