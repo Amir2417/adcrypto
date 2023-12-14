@@ -15,14 +15,15 @@ trait Stripe {
  
     public function stripeInit($output = null) {
         if(!$output) $output = $this->output;
+        
         return $this->createStripeCheckout($output);
     }
 
     public function createStripeCheckout($output) {
-
         $request_credentials = $this->getStripeRequestCredentials($output);
+       
         $stripe_client = new StripeClient($request_credentials->token);
-
+       
         $temp_record_token = generate_unique_string('temporary_datas','identifier',60);
         $this->setUrlParams("token=" . $temp_record_token); // set Parameter to URL for identifying when return success/cancel
 
@@ -30,7 +31,7 @@ trait Stripe {
         $url_parameter = $this->getUrlParams();
 
         $user = auth()->guard(get_auth_guard())->user();
-
+        
         try{
             $checkout = $stripe_client->checkout->sessions->create([
                 'mode'              => 'payment',
@@ -41,21 +42,22 @@ trait Stripe {
                     [
                         'price_data'    => [
                             'product_data'      => [
-                                'name'          => "Add Money",
-                                'description'   => "Add Money To Wallet (" . $output['wallet']->currency->code . "). Payment Currency " . $output['currency']->currency_code,
+                                'name'          => "Buy Crypto",
+                                'description'   => "Buy Crypto To Wallet (" . $output['wallet']->currency->code . "). Payment Currency " . $output['currency']->currency_code,
                                 'images'        => [
                                     [
                                         get_logo()
                                     ]
                                 ]
                             ],
-                            'unit_amount_decimal'   => get_amount(($output['amount']->total_amount * 100),null,2), // as per stripe policy,
+                            'unit_amount_decimal'   => 1*100, // as per stripe policy,
                             'currency'              => $output['currency']->currency_code,
                         ],
                         'quantity'                  => 1,
                     ]
                 ],
             ]);
+            // 'unit_amount_decimal'   => get_amount(($output['amount']->total_amount * 100),null,2), // as per stripe policy,
 
             $response_array = json_decode(json_encode($checkout->getLastResponse()->json), true);
 
@@ -79,21 +81,25 @@ trait Stripe {
 
     public function stripeJunkInsert($response, $temp_identifier) {
         $output = $this->output;
-
+        
         $data = [
             'gateway'       => $output['gateway']->id,
             'currency'      => $output['currency']->id,
+            'payment_method'=> $output['currency'],
             'amount'        => json_decode(json_encode($output['amount']),true),
             'response'      => $response,
             'wallet_table'  => $output['wallet']->getTable(),
-            'wallet_id'     => $output['wallet']->id,
+            'wallet'        => [
+                'wallet_id' => $output['wallet']->id,
+            ],
             'creator_table' => auth()->guard(get_auth_guard())->user()->getTable(),
             'creator_id'    => auth()->guard(get_auth_guard())->user()->id,
             'creator_guard' => get_auth_guard(),
+            'user_record'   => $output['form_data']['identifier'],
         ];
 
         return TemporaryData::create([
-            'type'          => PaymentGatewayConst::TYPEADDMONEY,
+            'type'          => PaymentGatewayConst::BUY_CRYPTO,
             'identifier'    => $temp_identifier,
             'data'          => $data,
         ]);
@@ -103,14 +109,15 @@ trait Stripe {
     {
         $gateway = $output['gateway'] ?? null;
         if(!$gateway) throw new Exception("Payment gateway not available");
+        
 
         $test_publishable_key_sample = ['test publishable','test publishable key','test public key','sandbox public key', 'test public','public key test','public test', 'stripe test public key','stripe test sandbox key'];
         $test_secret_key_sample = ['test secret','test secret key','test private','test private key','test live key','test production key','test production','test live','stripe test secret key','stripe test production key'];
-
+        
         $live_publishable_key_sample    = ['live publishable','live publishable key','live public key','live public key', 'live public','public key live','public live', 'stripe live public key','stripe live sandbox key'];
         $live_secret_key_sample         = ['live secret','live secret key','live private','live private key','live live key','live production key','live production','live live','stripe live secret key','stripe live production key'];
-
         $test_publishable_key    = PaymentGateway::getValueFromGatewayCredentials($gateway,$test_publishable_key_sample);
+        
         $test_secret_key         = PaymentGateway::getValueFromGatewayCredentials($gateway,$test_secret_key_sample);
 
         $live_publishable_key    = PaymentGateway::getValueFromGatewayCredentials($gateway,$live_publishable_key_sample);
@@ -144,6 +151,7 @@ trait Stripe {
 
     public function getStripeRequestCredentials($output = null) 
     {
+        
         if(!$this->stripe_gateway_credentials) $this->getStripeCredentials($output);
         $credentials = $this->stripe_gateway_credentials;
         if(!$output) $output = $this->output;

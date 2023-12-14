@@ -15,7 +15,7 @@ class TransactionController extends Controller
      */
     public function buyLog(){
         $page_title  = "- Buy Logs";
-        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->get();
+        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
         
         return view('user.sections.transaction-logs.buy-log',compact(
             'page_title',

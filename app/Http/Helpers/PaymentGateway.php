@@ -97,7 +97,6 @@ class PaymentGateway {
             $this->output['distribute']         = "handleManualPayment";
             $this->output['gateway_type']       = PaymentGatewayConst::MANUAL;
         }
-        // $this->output['request_data']   = $validated;
         // limit validation
         $this->limitValidation($this->output);
 
@@ -359,7 +358,7 @@ class PaymentGateway {
         
         $this->output['tempData'] = $tempData;
         $method_name = $this->getResponseMethod($this->output['gateway']);
-        
+    
         if(method_exists($this,$method_name)) {
             return $this->$method_name($this->output);
         }
