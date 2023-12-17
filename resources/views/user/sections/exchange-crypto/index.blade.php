@@ -148,8 +148,8 @@
             var receiverCurrency    = selectedVariable().receiverCurrency;
             var receiverRate        = selectedVariable().receiverRate;
             var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
-            var totalMinLimit       = minLimit * exchangeRate;
-            var totalMaxLimit       = maxLimit * exchangeRate;
+            var totalMinLimit       = minLimit * senderRate;
+            var totalMaxLimit       = maxLimit * senderRate;
 
             $(".exchange-rate").html("1" + " " + senderCurrency + " " + "=" + " " + parseFloat(exchangeRate).toFixed(6) + " " + receiverCurrency);
             $(".available-balance").html("Available Balance " + parseFloat(walletBalance).toFixed(2) + " " + senderCurrency);

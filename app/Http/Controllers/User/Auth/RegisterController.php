@@ -79,7 +79,7 @@ class RegisterController extends Controller
                 'unknown'       => "Username already exists!",
             ]);
         }
-
+       
         event(new Registered($user = $this->create($validated)));
         $this->guard()->login($user);
 
@@ -132,7 +132,13 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        $this->createUserWallets($user);
-        return redirect()->intended(route('user.dashboard'));
+        try{
+            
+            $this->createUserWallets($user);
+            return redirect()->intended(route('user.dashboard'));
+        }catch(Exception $e) {
+            dd($e->getMessage());
+            return redirect()->route("user.login")->with(['error' => [$e->getMessage()]]);
+        }
     }
 }

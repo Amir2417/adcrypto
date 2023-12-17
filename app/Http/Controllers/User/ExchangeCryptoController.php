@@ -151,7 +151,7 @@ class ExchangeCryptoController extends Controller
     public function confirm($identifier){
         $record          = TemporaryData::where('identifier',$identifier)->first();
         if(!$record) return back()->with(['error'  => ['Data not found!']]);
-        $trx_id = generateTrxString("transactions","trx_id","EC",10);
+        $trx_id = generateTrxString("transactions","trx_id","EC",8);
         
         $send_wallet  = $record->data->sender_wallet->id;
         
