@@ -87,6 +87,10 @@ class ExchangeCryptoController extends Controller
         $percent_charge = ($send_amount / 100) * $transaction_fees->percent_charge;
         
         $total_charge   = $fixed_charge + $percent_charge;
+
+        if($send_amount + $total_charge > $send_wallet->balance){
+            return back()->with(['error' => ['Insufficient Balance!']]);
+        }
         $payable        = $send_amount + $total_charge;
     
         $data               = [
@@ -175,7 +179,7 @@ class ExchangeCryptoController extends Controller
             'details'           => [
                 'data' => $record->data
             ],
-            'status'            => global_const()::STATUS_REVIEW_PAYMENT,
+            'status'            => global_const()::STATUS_CONFIRM_PAYMENT,
             'created_at'        => now(),
         ];
 
