@@ -41,10 +41,10 @@
                                         <h6 class="title">{{ $item->message->title ?? '' }}</h6>
                                     </div>
                                     <span class="sub-title">
-                                        {{ __("Payment Method:") }} {{ $item->message->payment }}, 
-                                        {{ __("Amount:") }} {{ $item->message->amount }} {{ $item->message->code }},
-                                        {{ __("Wallet:") }} {{ $item->message->wallet }} 
-                                        {{ $item->message->success }}
+                                        {{ $item->message->payment ?? auth()->user()->full_name }}, 
+                                        {{ __("Amount:") }} {{ $item->message->amount ?? ''}} {{ $item->message->code ?? ''}},
+                                        {{ __("Wallet:") }} {{ $item->message->wallet ?? ''}} 
+                                        {{ $item->message->success ?? ''}}
                                     </span>
                                 </div>
                             </li>

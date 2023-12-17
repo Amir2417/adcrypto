@@ -4,14 +4,15 @@ namespace App\Http\Controllers\User;
 
 use Exception;
 use App\Models\UserWallet;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
 use App\Models\Admin\Currency;
+use App\Models\UserNotification;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
-use App\Models\Transaction;
 use Illuminate\Support\Facades\Validator;
 
 class ExchangeCryptoController extends Controller
@@ -183,6 +184,7 @@ class ExchangeCryptoController extends Controller
             
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
             $this->updateReceiverWalletBalance($record->identifier);
+            $this->userNotification($record);
             $record->delete();
 
         }catch(Exception $e){
@@ -212,6 +214,19 @@ class ExchangeCryptoController extends Controller
 
         $receiver_wallet->update([
             'balance'   => $balance,
+        ]);
+    }
+
+    function userNotification($record){
+        UserNotification::create([
+            'user_id'       => auth()->user()->id,
+            'message'       => [
+                'title'     => "Exchange Crypto",
+                'wallet'    => $record->data->sender_wallet->name,
+                'code'      => $record->data->sender_wallet->code,
+                'amount'    => $record->data->sending_amount,
+                'success'   => "Successfully Request Send."
+            ],
         ]);
     }
 

@@ -122,7 +122,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--warning">1 {{ $item->details->data->sender_wallet->code ?? '' }} = {{ $item->details->data->exchange_rate ?? '' }} {{ $item->details->data->receiver_wallet->code ?? '' }}</span>
+                                <span class="text--warning">1 {{ $item->details->data->sender_wallet->code ?? '' }} = {{ get_amount($item->details->data->exchange_rate) ?? '' }} {{ $item->details->data->receiver_wallet->code ?? '' }}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
