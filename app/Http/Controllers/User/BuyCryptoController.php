@@ -265,7 +265,7 @@ class BuyCryptoController extends Controller
         try{
             $instance = PaymentGatewayHelper::init($request->all())->gateway()->render();
         }catch(Exception $e){
-            dd($e->getMessage());
+            
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return $instance;

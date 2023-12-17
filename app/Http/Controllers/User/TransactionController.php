@@ -49,10 +49,12 @@ class TransactionController extends Controller
      * @return view
      */
     public function exchangeLog(){
-        $page_title  = "- Exchange Logs";
+        $page_title     = "- Exchange Logs";
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->get();
 
         return view('user.sections.transaction-logs.exchange-log',compact(
             'page_title',
+            'transactions',
         ));
     }
 }

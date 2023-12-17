@@ -18,7 +18,7 @@
 <div class="body-wrapper">
     <div class="dashboard-list-area mt-20">
         <div class="dashboard-header-wrapper">
-            <h4 class="title">Exchange Log</h4>
+            <h4 class="title">{{ __("Exchange Log") }}</h4>
         </div>
         <div class="dashboard-list-wrapper">
             <div class="dashboard-list-item-wrapper">

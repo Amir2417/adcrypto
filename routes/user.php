@@ -59,6 +59,9 @@ Route::prefix("user")->name("user.")->group(function(){
     //exchange crypto
     Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->name('exchange.crypto.')->group(function(){
         Route::get('/','index')->name('index');
+        Route::post('store','store')->name('store');
+        Route::get('preview/{identifier}','preview')->name('preview');
+        Route::post('confirm/{identifier}','confirm')->name('confirm');
     });
 
     //buy log
