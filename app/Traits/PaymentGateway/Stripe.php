@@ -50,14 +50,14 @@ trait Stripe {
                                     ]
                                 ]
                             ],
-                            'unit_amount_decimal'   => 1*100, // as per stripe policy,
+                            'unit_amount_decimal'   => get_amount(($output['amount']->total_amount * 100),null,2), // as per stripe policy,
                             'currency'              => $output['currency']->currency_code,
                         ],
                         'quantity'                  => 1,
                     ]
                 ],
             ]);
-            // 'unit_amount_decimal'   => get_amount(($output['amount']->total_amount * 100),null,2), // as per stripe policy,
+            
 
             $response_array = json_decode(json_encode($checkout->getLastResponse()->json), true);
 

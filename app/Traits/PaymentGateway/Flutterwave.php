@@ -61,8 +61,7 @@ trait Flutterwave {
             'Authorization' => 'Bearer ' . $request_credentials->token,
         ])->post($endpoint,[
             'tx_ref'        => $temp_record_token,
-            // 'amount'        => $output['amount']->total_amount,
-            'amount'        => 1,
+            'amount'        => $output['amount']->total_amount,
 
             'currency'      => $output['currency']->currency_code,
             'redirect_url'  => $this->setGatewayRoute($redirection['return_url'],PaymentGatewayConst::FLUTTERWAVE,$url_parameter),
