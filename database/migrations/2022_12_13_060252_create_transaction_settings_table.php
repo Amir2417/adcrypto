@@ -22,8 +22,6 @@ return new class extends Migration
             $table->decimal('percent_charge',8,2,true)->default(0);
             $table->decimal('min_limit',8,2,true)->default(0);
             $table->decimal('max_limit',8,2,true)->default(0);
-            $table->decimal('monthly_limit',8,2,true)->default(0);
-            $table->decimal('daily_limit',8,2,true)->default(0);
             $table->boolean('status')->default(1);
             $table->timestamps();
 

@@ -16,10 +16,10 @@
 @section('content')
 <div class="body-wrapper">
     <div class="row justify-content-center mt-30">
-        <div class="col-xxl-6 col-xl-8 col-lg-8">
+        <div class="col-xxl-12 col-xl-12 col-lg-12">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
-                    <h5 class="title">Exchange Crypto</h5>
+                    <h5 class="title">{{ __("Exchange Crypto") }}</h5>
                 </div>
                 <div class="card-body">
                     <form action="exchange-crypto-preview.html" class="card-form">
@@ -30,27 +30,36 @@
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>Exchange From<span>*</span></label>
+                                <label>{{ __("Exchange From") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control" placeholder="Enter Amount...">
-                                    <div class="input-group-text two">Max</div>
-                                    <select class="form--control nice-select">
-                                        <option value="1">ETH</option>
-                                        <option value="2">BTC</option>
-                                        <option value="3">USDT</option>
+                                    <input type="text" class="form--control" name="send_amount" placeholder="Enter Amount...">
+                                    <div class="input-group-text two max-amount">{{ __("Max") }}</div>
+                                    <select class="form--control nice-select" name="sender_wallet">
+                                        @foreach ($currencies as $item)
+                                            <option 
+                                            value="{{ $item->currency->id }}"
+                                                data-balance="{{ $item->balance }}"
+                                                data-rate="{{ $item->currency->rate }}"
+                                                data-code="{{ $item->currency->code }}"
+                                                >{{ $item->currency->code }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
-                                <code class="d-block mt-10">Available Balance 70 USDT</code>
+                                <code class="d-block mt-10 available-balance">Available Balance 70 USDT</code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>Exchange To<span>*</span></label>
+                                <label>{{ __("Exchange To") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control" placeholder="Enter Amount...">
-                                    <div class="input-group-text two">Max</div>
-                                    <select class="form--control nice-select">
-                                        <option value="1">BTC</option>
-                                        <option value="2">USDT</option>
-                                        <option value="3">ETH</option>
+                                    <input type="text" class="form--control" name="receive-money" placeholder="Enter Amount...">
+                                    <select class="form--control nice-select" name="receiver_currency">
+                                        @foreach ($currencies as $item)
+                                            <option 
+                                            value="{{ $item->currency->id }}"
+                                            data-code="{{ $item->currency->code }}"
+                                            data-rate="{{ $item->currency->rate }}"
+                                            data-balance="{{ $item->balance }}"
+                                            >{{ $item->currency->code }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -71,3 +80,34 @@
     </div>
 </div>
 @endsection
+
+@push('script')
+    <script>
+        $("select[name=sender_wallet]").change(function(){
+            getExchangeRate();
+        });
+        $(document).on('click','.max-amount',function(){
+            var walletMaxBalance = selectedVariable().senderWalletBalance;
+            console.log("wallet max balance",walletMaxBalance);
+        });
+        function selectedVariable(){
+            var senderCurrency   = $("select[name=sender_wallet] :selected").data('code');
+            var senderRate      = $("select[name=sender_wallet] :selected").data('rate');
+            var senderWalletBalance   = $("select[name=sender_wallet] :selected").data('balance');
+            var receiverCurrency        = $("select[name=receiver_currency] :selected").data("code");
+            var receiverRate            = $("select[name=receiver_currency] :selected").data("rate");
+            var receiverBalance            = $("select[name=receiver_currency] :selected").data("balance");
+
+
+            
+            return {
+                senderCurrency:senderCurrency,
+                senderRate:senderRate,
+                senderWalletBalance:senderWalletBalance,
+                receiverCurrency:receiverCurrency,
+                receiverRate:receiverRate,
+                receiverBalance:receiverBalance
+            };
+        }
+    </script>
+@endpush

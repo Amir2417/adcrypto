@@ -37,8 +37,6 @@ class TrxSettingsController extends Controller
             $request->slug.'_percent_charge'    => 'required|numeric',
             $request->slug.'_min_limit'         => 'required|numeric',
             $request->slug.'_max_limit'         => 'required|numeric',
-            $request->slug.'_daily_limit'       => 'required|numeric',
-            $request->slug.'_monthly_limit'     => 'required|numeric',
         ]);
         $validated = $validator->validate();
 
