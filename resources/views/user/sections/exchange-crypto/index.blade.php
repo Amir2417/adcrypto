@@ -16,7 +16,7 @@
 @section('content')
 <div class="body-wrapper">
     <div class="row justify-content-center mt-30">
-        <div class="col-xxl-12 col-xl-12 col-lg-12">
+        <div class="col-xxl-8 col-xl-8 col-lg-8">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
                     <h5 class="title">{{ __("Exchange Crypto") }}</h5>
@@ -33,7 +33,7 @@
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Exchange From") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control send-amount" name="send_amount" placeholder="Enter Amount...">
+                                    <input type="text" class="form--control send-amount number-input" name="send_amount" placeholder="Enter Amount...">
                                     <div class="input-group-text two max-amount">{{ __("Max") }}</div>
                                     <select class="form--control nice-select" name="sender_wallet">
                                         @foreach ($currencies as $item)
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <button type="submit" class="btn--base w-100 "><span class="w-100 exchange-button">{{ __("Exchange Crypto") }}</span></button>
+                            <button type="submit" class="btn--base w-100 exchange-button"><span class="w-100">{{ __("Exchange Crypto") }}</span></button>
                         </div>
                     </form>
                 </div>
@@ -104,16 +104,29 @@
         });
         $(document).on('click','.max-amount',function(){
             var walletMaxBalance = selectedVariable().senderWalletBalance;
-            var sendAmount       = $(".send-amount").val(parseFloat(walletMaxBalance).toFixed(2));
+
+            var senderCurrency      = selectedVariable().senderCurrency;
+            var senderRate          = selectedVariable().senderRate;
+            var receiverRate        = selectedVariable().receiverRate;
+            var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
+            var percentCharge       = '{{ $transaction_fees->percent_charge }}';
+            var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
+            var fixedChargeCalc     = parseFloat(fixedCharge) * exchangeRate;
+            var percentChargeCalc   = (walletMaxBalance / 100) * percentCharge;
+            var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
+            
+            var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
+            var sendAmount       = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
             var amount           = $("input[name=send_amount]").val();
+
             amountCalculation(amount);
             chargeCalculation(amount);
         });
         $(".send-amount").keyup(function(){
             var amount = $(this).val();
             var walletBalance       = selectedVariable().senderWalletBalance;
-            if(amount > walletBalance){
-                $(".exchange-button").disabled = true;
+            if(parseFloat(amount) > parseFloat(walletBalance)){
+                $(".exchange-button").props('disable',true);
             }
             amountCalculation(amount);
             chargeCalculation(amount);

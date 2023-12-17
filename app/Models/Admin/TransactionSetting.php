@@ -22,8 +22,8 @@ class TransactionSetting extends Model
         'max_limit'      => 'decimal:16',
         'status'         => 'integer',
         'feature_text'   => 'string',
-        'created_at'          => 'date:Y-m-d',
-        'updated_at'          => 'date:Y-m-d',
+        'created_at'     => 'date:Y-m-d',
+        'updated_at'     => 'date:Y-m-d',
     ];
 
     protected $with = ['admin'];

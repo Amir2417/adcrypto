@@ -23,7 +23,7 @@ class ExchangeCryptoController extends Controller
      */
     public function index(){
         $page_title         = "- Exchange Crypto";
-        $currencies         = UserWallet::with(['currency'])->get();
+        $currencies         = UserWallet::auth()->with(['currency'])->get();
         $transaction_fees   = TransactionSetting::where('slug','exchange')->first();
         
         return view('user.sections.exchange-crypto.index',compact(
@@ -58,6 +58,7 @@ class ExchangeCryptoController extends Controller
         if(!$send_wallet){
             return back()->with(['error' => ['Sender Wallet not found!']]);
         }
+        
         if($send_amount > $send_wallet->balance){
             return back()->with(['error' => ['Insufficient Balance!']]);
         }
@@ -155,7 +156,6 @@ class ExchangeCryptoController extends Controller
         
         $send_wallet  = $record->data->sender_wallet->id;
         
-
         $sender_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($send_wallet) {
             $q->where("id",$send_wallet)->active();
         })->active()->first();
