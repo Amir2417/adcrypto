@@ -139,6 +139,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('login-as-member/{username?}','loginAsMember')->name('login.as.member');
         Route::post('kyc/approve/{username}','kycApprove')->name('kyc.approve');
         Route::post('kyc/reject/{username}','kycReject')->name('kyc.reject');
+        Route::post('wallet/balance/update/{username}','walletBalanceUpdate')->name('wallet.balance.update');
         Route::post('search','search')->name('search');
     });
 

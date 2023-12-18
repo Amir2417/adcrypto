@@ -21,6 +21,7 @@ return new class extends Migration
                 PaymentGatewayConst::SELL_CRYPTO,
                 PaymentGatewayConst::WITHDRAW_CRYPTO,
                 PaymentGatewayConst::EXCHANGE_CRYPTO,
+                PaymentGatewayConst::TYPEADDSUBTRACTBALANCE,
             ]);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('user_wallet_id')->nullable();
@@ -32,7 +33,7 @@ return new class extends Migration
             $table->decimal('total_charge', 28, 8)->nullable();
             $table->decimal('total_payable', 28, 8)->nullable();
             $table->decimal('available_balance', 28, 8);
-            $table->string('currency_code');
+            $table->string('currency_code')->nullable();
             $table->string('remark')->nullable();
             $table->text('details')->nullable();
             $table->text('reject_reason')->nullable();

@@ -21,6 +21,7 @@ class PaymentGatewayConst {
     const SELL_CRYPTO       = "Sell Crypto";
     const WITHDRAW_CRYPTO   = "Withdraw Crypto";
     const EXCHANGE_CRYPTO   = "Exchange Crypto";
+    const TYPEADDSUBTRACTBALANCE    = "ADD-SUBTRACT-BALANCE";
 
     const NOT_USED      = "NOT-USED";
     const USED          = "USED";

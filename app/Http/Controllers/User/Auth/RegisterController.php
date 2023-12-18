@@ -137,7 +137,7 @@ class RegisterController extends Controller
             $this->createUserWallets($user);
             return redirect()->intended(route('user.dashboard'));
         }catch(Exception $e) {
-            dd($e->getMessage());
+            
             return redirect()->route("user.login")->with(['error' => [$e->getMessage()]]);
         }
     }

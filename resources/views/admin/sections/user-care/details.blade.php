@@ -30,6 +30,15 @@
                     <div class="col-xl-4 col-lg-4 form-group">
                         <div class="user-action-btn-area">
                             <div class="user-action-btn">
+                                @include('admin.components.button.custom',[
+                                    'type'          => "button",
+                                    'class'         => "wallet-balance-update-btn bg--danger one",
+                                    'text'          => "Add/Subtract Balance",
+                                    'icon'          => "las la-wallet me-1",
+                                    'permission'    => "admin.users.wallet.balance.update",
+                                ])
+                            </div>
+                            <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
                                     'href'          => setRoute('admin.users.login.logs',$user->username),
                                     'class'         => "bg--danger two",
@@ -205,6 +214,60 @@
 
     {{-- Send Email Modal --}}
     @include('admin.components.modals.send-mail-user',compact("user"))
+
+    @if (admin_permission_by_name("admin.users.wallet.balance.update"))
+        <div id="wallet-balance-update-modal" class="mfp-hide large">
+            <div class="modal-data">
+                <div class="modal-header px-0">
+                    <h5 class="modal-title">{{ __("Add/Subtract Balance") }}</h5>
+                </div>
+                <div class="modal-form-data">
+                    <form class="modal-form" method="POST" action="{{ setRoute('admin.users.wallet.balance.update',$user->username) }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="row mb-10-none">
+                            <div class="col-xl-12 col-lg-12 form-group">
+                                <label for="balance">{{ __("Type") }}<span>*</span></label>
+                                <select name="type" id="balance" class="form--control nice-select">
+                                    <option disabled selected>Select Type</option>
+                                    <option value="add">Balance Add</option>
+                                    <option value="subtract">Balance Subtract</option>
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 form-group">
+                                <label for="wallet">{{ __("User Wallet") }}<span>*</span></label>
+                                <select name="wallet" id="wallet" class="form--control select2-auto-tokenize">
+                                    <option disabled selected>Select User Wallet</option>
+                                    @foreach ($user->wallets()->get() ?? [] as $item)
+                                        <option value="{{ $item->id }}">{{ $item->currency->code }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-xl-12 col-lg-12 form-group">
+                                @include('admin.components.form.input',[
+                                    'label'         => 'Amount',
+                                    'label_after'   => "<span>*</span>",
+                                    'name'          => 'amount',
+                                    'value'         => old("amount"),
+                                    'class'         => "number-input",
+                                ])
+                            </div>
+                            <div class="col-xl-12 col-lg-12 form-group">
+                                @include('admin.components.form.input',[
+                                    'label'         => "Remark",
+                                    'name'          => "remark",
+                                    'value'         => old("remark"),
+                                ])
+                            </div>
+                            <div class="col-xl-12 col-lg-12 form-group d-flex align-items-center justify-content-between mt-4">
+                                <button type="button" class="btn btn--danger modal-close">{{ __("Close") }}</button>
+                                <button type="submit" class="btn btn--base">{{ __("Action") }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @push('script')
@@ -232,6 +295,10 @@
                 var action  = "{{ setRoute('admin.users.login.as.member',$user->username) }}";
                 var target  = "{{ $user->username }}";
                 postFormAndSubmit(action,target);
+            });
+
+            $(".wallet-balance-update-btn").click(function(){
+                openModalBySelector("#wallet-balance-update-modal");
             });
         })
     </script>
