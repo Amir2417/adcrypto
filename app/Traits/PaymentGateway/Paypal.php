@@ -35,7 +35,8 @@ trait Paypal
                 0 => [
                     "amount" => [
                         "currency_code" => $output['amount']->sender_cur_code ?? '',
-                        "value" => $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0,
+                        "value" => 1,
+                        // "value" => $output['amount']->total_amount ? number_format($output['amount']->total_amount,2,'.','') : 0,
                     ]
                 ]
             ]

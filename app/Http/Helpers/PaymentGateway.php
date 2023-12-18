@@ -2,13 +2,16 @@
 namespace App\Http\Helpers;
 
 use Exception;
+use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use App\Models\TemporaryData;
 use App\Constants\GlobalConst;
 use App\Models\Admin\Currency;
+use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Traits\PaymentGateway\Gpay;
 use App\Traits\PaymentGateway\QRPay;
 use App\Traits\PaymentGateway\Tatum;
@@ -25,10 +28,10 @@ use App\Traits\PaymentGateway\SslCommerz;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\PaymentGateway\Flutterwave;
 use App\Models\Admin\PaymentGatewayCurrency;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\User\BuyCryptoMailNotification;
 use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
-use App\Models\UserNotification;
-use App\Models\UserWallet;
 
 class PaymentGateway {
 
@@ -449,8 +452,9 @@ class PaymentGateway {
 
     // Update Code (Need to check)
     public function createTransaction($output, $status = PaymentGatewayConst::STATUSSUCCESS) {
+        $basic_setting = BasicSettings::first();
         $record_handler = $output['record_handler'];
-        
+        $user = auth()->user();
         $inserted_id = $this->$record_handler($output,$status);
         // $this->insertCharges($output,$inserted_id);
         $data = TemporaryData::where('identifier',$output['form_data']['identifier'])->first();
@@ -466,6 +470,10 @@ class PaymentGateway {
             ],
         ]);
         
+        if( $basic_setting->email_notification == true){
+            Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output));
+        }
+
         $this->insertDevice($output,$inserted_id);
         $this->removeTempData($output);
 
@@ -479,34 +487,7 @@ class PaymentGateway {
         
     }
 
-    // public function insertRecordAgent($output) {
-    //     $trx_id = generate_unique_string("transactions","trx_id",16);
-    //     DB::beginTransaction();
-    //     try{
-    //         $id = DB::table("transactions")->insertGetId([
-    //             'agent_id'                      => auth()->user()->id,
-    //             'agent_wallet_id'               => $output['wallet']->id,
-    //             'payment_gateway_currency_id'   => $output['currency']->id,
-    //             'type'                          => $output['type'],
-    //             'trx_id'                        => $trx_id,
-    //             'request_amount'                => $output['amount']->requested_amount,
-    //             'payable'                       => $output['amount']->total_amount,
-    //             'available_balance'             => $output['wallet']->balance + $output['amount']->total_amount,
-    //             'remark'                        => ucwords(remove_special_char($output['type']," ")) . " With " . $output['gateway']->name,
-    //             'details'                       => json_encode(['gateway_response' => $output['capture']]),
-    //             'status'                        => true,
-    //             'attribute'                     => PaymentGatewayConst::RECEIVED,
-    //             'created_at'                    => now(),
-    //         ]);
-
-    //         $this->updateWalletBalance($output);
-    //         DB::commit();
-    //     }catch(Exception $e) {
-    //         DB::rollBack();
-    //         throw new Exception($e->getMessage());
-    //     }
-    //     return $id;
-    // }
+    
 
     public function insertRecordWeb($output, $status) {
         

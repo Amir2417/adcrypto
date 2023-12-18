@@ -5912,4 +5912,10 @@ textPath {
   }
 }
 
+@media only screen and (max-width: 1500px) {
+  .user-action-btn-area .user-action-btn{
+    margin-bottom: 10px;
+  }
+}
+
 /* ERROR PAGE CODE END */

@@ -32,7 +32,7 @@
                             <div class="user-action-btn">
                                 @include('admin.components.button.custom',[
                                     'type'          => "button",
-                                    'class'         => "wallet-balance-update-btn bg--danger one",
+                                    'class'         => "wallet-balance-update-btn bg--danger two",
                                     'text'          => "Add/Subtract Balance",
                                     'icon'          => "las la-wallet me-1",
                                     'permission'    => "admin.users.wallet.balance.update",
@@ -41,7 +41,7 @@
                             <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
                                     'href'          => setRoute('admin.users.login.logs',$user->username),
-                                    'class'         => "bg--danger two",
+                                    'class'         => "bg--warning four",
                                     'icon'          => "las la-sign-in-alt me-1",
                                     'text'          => "Login Logs",
                                     'permission'    => "admin.users.login.logs",
@@ -50,7 +50,7 @@
                             <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
                                     'href'          => "#email-send",
-                                    'class'         => "bg--warning three modal-btn",
+                                    'class'         => "bg--success three modal-btn",
                                     'icon'          => "las la-mail-bulk me-1",
                                     'text'          => "Send Email",
                                     'permission'    => "admin.users.send.mail",
@@ -58,7 +58,7 @@
                             </div>
                             <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
-                                    'class'         => "bg--success four login-as-member",
+                                    'class'         => "bg--info two login-as-member",
                                     'icon'          => "las la-user-check me-1",
                                     'text'          => "Login as Member",
                                     'permission'    => "admin.users.login.as.member",
@@ -67,7 +67,7 @@
                             <div class="user-action-btn">
                                 @include('admin.components.link.custom',[
                                     'href'          => setRoute('admin.users.mail.logs',$user->username),
-                                    'class'         => "bg--base five",
+                                    'class'         => "bg--base one",
                                     'icon'          => "las la-history me-1",
                                     'text'          => "Email Logs",
                                     'permission'    => "admin.users.mail.logs",
