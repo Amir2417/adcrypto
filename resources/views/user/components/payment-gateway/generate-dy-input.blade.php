@@ -8,7 +8,7 @@
                         <span class="text-danger">*</span>
                     @endif    
                 </label>
-                <input type="{{ $item->type }}" name="{{ $item->name }}" class="form-control" value="{{ old($item->name) }}" placeholder="Type Here">
+                <input type="{{ $item->type }}" name="{{ $item->name }}" class="form--control" value="{{ old($item->name) }}" placeholder="Type Here">
             </div>
 
         @elseif ($item->type == "textarea")

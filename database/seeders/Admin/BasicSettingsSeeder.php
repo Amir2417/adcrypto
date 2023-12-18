@@ -47,6 +47,7 @@ class BasicSettingsSeeder extends Seeder
                 "primary_key" => "6EEDE8A79C61800340A87C89887AD14533A712E3AA087203423BF01569B13845"
             ],
             'email_verification'    => true,
+            'email_notification'    => true,
             'site_logo_dark'        => 'seeder/logo-dark.webp',
             'site_logo'             => 'seeder/logo-white.webp',
             'site_fav_dark'         => 'seeder/fav-icon.webp',

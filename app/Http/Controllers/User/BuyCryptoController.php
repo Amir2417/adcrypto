@@ -12,6 +12,7 @@ use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\PaymentGateway;
 use Illuminate\Http\RedirectResponse;
@@ -20,7 +21,9 @@ use App\Models\Admin\CurrencyHasNetwork;
 use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\PaymentGatewayCurrency;
+use Illuminate\Support\Facades\Notification;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
+use App\Notifications\User\BuyCryptoManualMailNotification;
 
 class BuyCryptoController extends Controller
 {
@@ -364,12 +367,13 @@ class BuyCryptoController extends Controller
         if(!$gateway->input_fields || !is_array($gateway->input_fields)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['This payment gateway is under constructions. Please try with another payment gateway']]);
         $amount = $tempData->data->amount;
 
-        $page_title = "Payment Instructions";
+        $page_title = "- Payment Instructions";
         return view('user.sections.buy-crypto.manual.instruction',compact("gateway","page_title","token","amount"));
     }
 
     public function manualSubmit(Request $request,$token) {
-        
+        $basic_setting = BasicSettings::first();
+        $user          = auth()->user();
         $request->merge(['identifier' => $token]);
         $tempDataValidate = Validator::make($request->all(),[
             'identifier'        => "required|string|exists:temporary_datas",
@@ -393,6 +397,7 @@ class BuyCryptoController extends Controller
         
         $data   = TemporaryData::where('identifier',$tempData->data->form_data)->first();
         
+        $trx_id = generateTrxString("transactions","trx_id","BC",8);
 
         // Make Transaction
         DB::beginTransaction();
@@ -402,7 +407,7 @@ class BuyCryptoController extends Controller
                 'user_id'                       => $wallet->user->id,
                 'user_wallet_id'                => $wallet->id,
                 'payment_gateway_id'            => $gateway_currency->id,
-                'trx_id'                        => generateTrxString("transactions","trx_id","BC",8),
+                'trx_id'                        => $trx_id,
                 'amount'                        => $amount->requested_amount,
                 'percent_charge'                => $amount->percent_charge,
                 'fixed_charge'                  => $amount->fixed_charge,
@@ -417,6 +422,9 @@ class BuyCryptoController extends Controller
                 'created_at'                    => now(),
             ]);
 
+            if( $basic_setting->email_notification == true){
+                Notification::route("mail",$user->email)->notify(new BuyCryptoManualMailNotification($user,$data,$trx_id));
+            }
             DB::table("temporary_datas")->where("identifier",$token)->delete();
             DB::commit();
         }catch(Exception $e) {
