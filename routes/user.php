@@ -40,6 +40,10 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('preview/{identifier}','preview')->name('preview');
         Route::post('submit','submit')->name('submit');
 
+        //manual
+        Route::get('manual/{token}','showManualForm')->name('manual.form');
+        Route::post('manual/submit/{token}','manualSubmit')->name('manual.submit');
+
         //paypal
         Route::match('get','success/response/{gateway}','success')->name('payment.success');
         Route::match('post',"cancel/response/{gateway}",'cancel')->name('payment.cancel');

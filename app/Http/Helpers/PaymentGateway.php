@@ -91,7 +91,7 @@ class PaymentGateway {
         $this->output['sender_currency']    = $wallet_currency->currency;
         $this->output['amount']             = $this->amount();
         $this->output['form_data']          = $this->request_data;
-        
+       
         if($gateway_currency->gateway->isAutomatic()) {
             
             $this->output['distribute']         = $this->gatewayDistribute($gateway_currency->gateway);
@@ -469,9 +469,10 @@ class PaymentGateway {
                 'success'   => "Successfully Added."
             ],
         ]);
+        $trx_id     = Transaction::where('id',$inserted_id)->first();
         
         if( $basic_setting->email_notification == true){
-            Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output));
+            Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output,$trx_id->trx_id));
         }
 
         $this->insertDevice($output,$inserted_id);
@@ -498,7 +499,7 @@ class PaymentGateway {
             $user = auth()->guard('web')->user();
         }
 
-        $trx_id = generateTrxString("transactions","trx_id","BC",10);
+        $trx_id = generateTrxString("transactions","trx_id","BC",8);
        
         DB::beginTransaction();
         try{

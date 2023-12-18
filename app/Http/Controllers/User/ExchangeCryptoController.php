@@ -8,12 +8,14 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
-use App\Models\Admin\Currency;
 use App\Models\UserNotification;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
+use App\Notifications\User\ExchangeCryptoMailNotification;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
 
 class ExchangeCryptoController extends Controller
 {
@@ -150,7 +152,9 @@ class ExchangeCryptoController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function confirm($identifier){
-        $record          = TemporaryData::where('identifier',$identifier)->first();
+        $basic_setting      = BasicSettings::first();
+        $user               = auth()->user();
+        $record             = TemporaryData::where('identifier',$identifier)->first();
         if(!$record) return back()->with(['error'  => ['Data not found!']]);
         $trx_id = generateTrxString("transactions","trx_id","EC",8);
         
@@ -189,6 +193,9 @@ class ExchangeCryptoController extends Controller
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
             $this->updateReceiverWalletBalance($record->identifier);
             $this->userNotification($record);
+            if( $basic_setting->email_notification == true){
+                Notification::route("mail",$user->email)->notify(new ExchangeCryptoMailNotification($user,$record,$trx_id));
+            }
             $record->delete();
 
         }catch(Exception $e){

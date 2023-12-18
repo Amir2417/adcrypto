@@ -7,7 +7,7 @@ use App\Models\UserWallet;
 use Exception;
 
 trait ControlDynamicInputFields {
-
+    protected $file_store_location = "kyc-files";
     public function generateValidationRules($kyc_fields) {
         $validation_rules = [];
         foreach($kyc_fields ?? [] as $item) {

@@ -11,17 +11,20 @@ use App\Models\Admin\Network;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\PaymentGateway;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\CurrencyHasNetwork;
+use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class BuyCryptoController extends Controller
 {
+    use ControlDynamicInputFields;
     /**
      * Method for view buy crypto page
      * @return view
@@ -264,6 +267,10 @@ class BuyCryptoController extends Controller
         
         try{
             $instance = PaymentGatewayHelper::init($request->all())->gateway()->render();
+            if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
+                $manual_handler = $instance['distribute'];
+                return $this->$manual_handler($instance);
+            }
         }catch(Exception $e){
             
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
@@ -308,7 +315,7 @@ class BuyCryptoController extends Controller
                 $temp_data->delete();
             }
         }
-        return redirect()->route('user.add.money.index');
+        return redirect()->route('user.buy.crypto.index');
     }
 
     public function callback(Request $request,$gateway) {
@@ -317,11 +324,106 @@ class BuyCryptoController extends Controller
         $callback_data = $request->all();
 
         try{
-            PaymentGatewayHelper::init([])->type(PaymentGatewayConst::TYPEADDMONEY)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_SINGLE)->handleCallback($callback_token,$callback_data,$gateway);
+            PaymentGatewayHelper::init([])->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_SINGLE)->handleCallback($callback_token,$callback_data,$gateway);
         }catch(Exception $e) {
             // handle Error
             logger($e);
         }
+    }
+
+    public function handleManualPayment($payment_info) {
+
+        
+        // Insert temp data
+        $data = [
+            'type'          => PaymentGatewayConst::BUY_CRYPTO,
+            'identifier'    => generate_unique_string("temporary_datas","identifier",16),
+            'data'          => [
+                'gateway_currency_id'    => $payment_info['currency']->id,
+                'amount'                 => $payment_info['amount'],
+                'wallet_id'              => $payment_info['wallet']->id,
+                'form_data'              => $payment_info['form_data']['identifier'],
+            ],
+        ];
+
+        try{
+            TemporaryData::create($data);
+        }catch(Exception $e) {
+            return redirect()->route('user.buy.crypto.index')->with(['error' => ['Failed to save data. Please try again']]);
+        }
+        return redirect()->route('user.buy.crypto.manual.form',$data['identifier']);
+    }
+
+    public function showManualForm($token) {
+        
+        $tempData = TemporaryData::search($token)->first();
+        if(!$tempData || $tempData->data == null || !isset($tempData->data->gateway_currency_id)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Invalid request']]);
+        $gateway_currency = PaymentGatewayCurrency::find($tempData->data->gateway_currency_id);
+        if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Selected gateway is invalid']]);
+        $gateway = $gateway_currency->gateway;
+        if(!$gateway->input_fields || !is_array($gateway->input_fields)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['This payment gateway is under constructions. Please try with another payment gateway']]);
+        $amount = $tempData->data->amount;
+
+        $page_title = "Payment Instructions";
+        return view('user.sections.buy-crypto.manual.instruction',compact("gateway","page_title","token","amount"));
+    }
+
+    public function manualSubmit(Request $request,$token) {
+        
+        $request->merge(['identifier' => $token]);
+        $tempDataValidate = Validator::make($request->all(),[
+            'identifier'        => "required|string|exists:temporary_datas",
+        ])->validate();
+
+        $tempData = TemporaryData::search($tempDataValidate['identifier'])->first();
+        if(!$tempData || $tempData->data == null || !isset($tempData->data->gateway_currency_id)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Invalid request']]);
+        $gateway_currency = PaymentGatewayCurrency::find($tempData->data->gateway_currency_id);
+        if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Selected gateway is invalid']]);
+        $gateway = $gateway_currency->gateway;
+        $amount = $tempData->data->amount ?? null;
+        if(!$amount) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Transaction Failed. Failed to save information. Please try again']]);
+        $wallet = UserWallet::find($tempData->data->wallet_id ?? null);
+        if(!$wallet) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Your wallet is invalid!']]);
+
+        $this->file_store_location  = "transaction";
+        $dy_validation_rules        = $this->generateValidationRules($gateway->input_fields);
+
+        $validated  = Validator::make($request->all(),$dy_validation_rules)->validate();
+        $get_values = $this->placeValueWithFields($gateway->input_fields,$validated);
+        
+        $data   = TemporaryData::where('identifier',$tempData->data->form_data)->first();
+        
+
+        // Make Transaction
+        DB::beginTransaction();
+        try{
+            $id = DB::table("transactions")->insertGetId([
+                'type'                          => PaymentGatewayConst::BUY_CRYPTO,
+                'user_id'                       => $wallet->user->id,
+                'user_wallet_id'                => $wallet->id,
+                'payment_gateway_id'            => $gateway_currency->id,
+                'trx_id'                        => generateTrxString("transactions","trx_id","BC",8),
+                'amount'                        => $amount->requested_amount,
+                'percent_charge'                => $amount->percent_charge,
+                'fixed_charge'                  => $amount->fixed_charge,
+                'total_charge'                  => $amount->total_charge,
+                'total_payable'                 => $amount->total_amount,
+                'available_balance'             => $wallet->balance,
+                'currency_code'                 => $gateway_currency->currency_code,
+                'remark'                        => ucwords(remove_special_char(PaymentGatewayConst::BUY_CRYPTO," ")) . " With " . $gateway_currency->name,
+                'details'                       => json_encode(['input_values' => $get_values,'data' => $data->data]),
+                'status'                        => global_const()::STATUS_PENDING,
+                'callback_ref'                  => $output['callback_ref'] ?? null,
+                'created_at'                    => now(),
+            ]);
+
+            DB::table("temporary_datas")->where("identifier",$token)->delete();
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            return redirect()->route('user.buy.crypto.manual.form',$token)->with(['error' => ['Something went wrong! Please try again']]);
+        }
+        return redirect()->route('user.buy.crypto.index')->with(['success' => ['Transaction Success. Please wait for admin confirmation']]);
     }
 
 }

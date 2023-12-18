@@ -22,4 +22,8 @@ class TemporaryData extends Model
         'created_at'     => 'date:Y-m-d',
         'updated_at'     => 'date:Y-m-d',
     ];
+
+    public function scopeSearch($query,$token) {
+        return $query->where('identifier',$token);
+    }
 }
