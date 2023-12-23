@@ -19,8 +19,8 @@
                 <div class="add-money-text pb-20">
                     <h4>{{ __("Pay With This Address") }} ({{ $transaction->currency->currency_code }})</h4>
                 </div>
-                @if ($transaction->status == payment_gateway_const()::STATUSWAITING)
-                    <form class="row g-4 submit-form" method="POST" action="{{ setRoute('user.send.remittance.payment.crypto.confirm',$transaction->trx_id) }}">
+                @if ($transaction->status == global_const()::STATUS_PENDING)
+                    <form class="row g-4 submit-form" method="POST" action="{{ setRoute('user.buy.crypto.payment.crypto.confirm',$transaction->trx_id) }}">
                         @csrf
                         <div class="form-group">
                             <div class="input-group">

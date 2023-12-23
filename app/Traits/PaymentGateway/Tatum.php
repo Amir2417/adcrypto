@@ -91,7 +91,8 @@ trait Tatum {
                         'receiver_address'  => $crypto_active_wallet->address,
                         'receiver_qr_image' => $qr_image,
                         'requirements'      => $this->tatumUserTransactionRequirements(PaymentGatewayConst::BUY_CRYPTO),
-                    ]
+                    ],
+                    'data' => $data->data
                 ]),
                 'status'                        => global_const()::STATUS_PENDING,
                 'created_at'                    => now(),
