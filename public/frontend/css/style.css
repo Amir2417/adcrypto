@@ -59,6 +59,10 @@ button, input[type=submit], input[type=reset], input[type=button] {
   cursor: pointer;
 }
 
+input[type=file]{
+  line-height: 25px;
+}
+
 input, textarea {
   padding: 12px 25px;
   width: 100%;
@@ -5438,6 +5442,8 @@ option {
           transform-origin: top left;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
+  max-height: 400px;
+  overflow-y: auto;
 }
 @media only screen and (max-width: 991px) {
   .notification-wrapper {

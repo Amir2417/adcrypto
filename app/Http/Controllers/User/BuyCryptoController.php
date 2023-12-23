@@ -269,14 +269,13 @@ class BuyCryptoController extends Controller
     public function submit(Request $request){
         
         try{
-            $instance = PaymentGatewayHelper::init($request->all())->gateway()->render();
+            $instance = PaymentGatewayHelper::init($request->all())->type(PaymentGatewayConst::BUY_CRYPTO)->gateway()->render();
             if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
                 $manual_handler = $instance['distribute'];
                 return $this->$manual_handler($instance);
             }
         }catch(Exception $e){
-            
-            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+            return back()->with(['error' => [$e->getMessage()]]);
         }
         return $instance;
     }
@@ -432,6 +431,86 @@ class BuyCryptoController extends Controller
             return redirect()->route('user.buy.crypto.manual.form',$token)->with(['error' => ['Something went wrong! Please try again']]);
         }
         return redirect()->route('user.buy.crypto.index')->with(['success' => ['Transaction Success. Please wait for admin confirmation']]);
+    }
+
+    public function cryptoPaymentAddress(Request $request, $trx_id) {
+
+        $page_title = "Crypto Payment Address";
+        $transaction = Transaction::where('trx_id', $trx_id)->firstOrFail();
+
+        if($transaction->gateway_currency->gateway->isCrypto() && $transaction->details?->payment_info?->receiver_address ?? false) {
+            return view('user.sections.add-money.payment.crypto.address', compact(
+                'transaction',
+                'page_title',
+            ));
+        }
+
+        return abort(404);
+    }
+
+    public function cryptoPaymentConfirm(Request $request, $trx_id) 
+    {
+        $transaction = Transaction::where('trx_id',$trx_id)->where('status', PaymentGatewayConst::STATUSWAITING)->firstOrFail();
+
+        $dy_input_fields = $transaction->details->payment_info->requirements ?? [];
+        $validation_rules = $this->generateValidationRules($dy_input_fields);
+
+        $validated = [];
+        if(count($validation_rules) > 0) {
+            $validated = Validator::make($request->all(), $validation_rules)->validate();
+        }
+
+        if(!isset($validated['txn_hash'])) return back()->with(['error' => ['Transaction hash is required for verify']]);
+
+        $receiver_address = $transaction->details->payment_info->receiver_address ?? "";
+
+        // check hash is valid or not
+        $crypto_transaction = CryptoTransaction::where('txn_hash', $validated['txn_hash'])
+                                                ->where('receiver_address', $receiver_address)
+                                                ->where('asset',$transaction->gateway_currency->currency_code)
+                                                ->where(function($query) {
+                                                    return $query->where('transaction_type',"Native")
+                                                                ->orWhere('transaction_type', "native");
+                                                })
+                                                ->where('status',PaymentGatewayConst::NOT_USED)
+                                                ->first();
+                                                
+        if(!$crypto_transaction) return back()->with(['error' => ['Transaction hash is not valid! Please input a valid hash']]);
+
+        if($crypto_transaction->amount >= $transaction->total_payable == false) {
+            if(!$crypto_transaction) return back()->with(['error' => ['Insufficient amount added. Please contact with system administrator']]);
+        }
+
+        DB::beginTransaction();
+        try{
+
+            // Update user wallet balance
+            DB::table($transaction->creator_wallet->getTable())
+                ->where('id',$transaction->creator_wallet->id)
+                ->increment('balance',$transaction->receive_amount);
+
+            // update crypto transaction as used
+            DB::table($crypto_transaction->getTable())->where('id', $crypto_transaction->id)->update([
+                'status'        => PaymentGatewayConst::USED,
+            ]);
+
+            // update transaction status
+            $transaction_details = json_decode(json_encode($transaction->details), true);
+            $transaction_details['payment_info']['txn_hash'] = $validated['txn_hash'];
+
+            DB::table($transaction->getTable())->where('id', $transaction->id)->update([
+                'details'       => json_encode($transaction_details),
+                'status'        => PaymentGatewayConst::STATUSSUCCESS,
+            ]);
+
+            DB::commit();
+
+        }catch(Exception $e) {
+            DB::rollback();
+            return back()->with(['error' => ['Something went wrong! Please try again']]);
+        }
+
+        return back()->with(['success' => ['Payment Confirmation Success!']]);
     }
 
 }

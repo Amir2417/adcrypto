@@ -44,6 +44,11 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('manual/{token}','showManualForm')->name('manual.form');
         Route::post('manual/submit/{token}','manualSubmit')->name('manual.submit');
 
+        Route::prefix('payment')->name('payment.')->group(function() {
+            Route::get('crypto/address/{trx_id}','cryptoPaymentAddress')->name('crypto.address');
+            Route::post('crypto/confirm/{trx_id}','cryptoPaymentConfirm')->name('crypto.confirm');
+        });
+
         //paypal
         Route::match('get','success/response/{gateway}','success')->name('payment.success');
         Route::match('post',"cancel/response/{gateway}",'cancel')->name('payment.cancel');

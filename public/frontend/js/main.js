@@ -229,9 +229,22 @@ $(document).on('click', '.chat-cross-btn', function () {
   $('.support-profile-wrapper').removeClass('active');
 });
 
-//sidebar Menu
-$(document).on('click', '.notification-icon', function () {
-  $('.notification-wrapper').toggleClass('active');
+
+//Notification
+$('.notification-icon').on('click', function (e) {
+  e.preventDefault();
+  if($('.notification-wrapper').hasClass('active')) {
+    $('.notification-wrapper').removeClass('active');
+    $('.body-overlay').removeClass('active');
+  }else {
+    $('.notification-wrapper').addClass('active');
+    $('.body-overlay').addClass('active');
+  }
+});
+$('#body-overlay').on('click', function (e) {
+  e.preventDefault();
+  $('.notification-wrapper').removeClass('active');
+  $('.body-overlay').removeClass('active');
 });
 
 //Profile Upload

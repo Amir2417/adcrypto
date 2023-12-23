@@ -23,7 +23,7 @@ trait Tatum {
 
     public function tatumInit($output = null) {
         if(!$output) $output = $this->output;
-
+       
         // Need to show request currency wallet information
         $currency = $output['currency'];
         $gateway = $output['gateway'];
@@ -31,7 +31,7 @@ trait Tatum {
         $crypto_asset = $gateway->cryptoAssets->where('coin', $currency->currency_code)->first();
         $crypto_active_wallet = collect($crypto_asset->credentials->credentials ?? [])->where('status', true)->first();
         if(!$crypto_asset || !$crypto_active_wallet) throw new Exception("Gateway is not available right now! Please contact with system administration");
-
+        
         if($output['type'] == PaymentGatewayConst::PAYMENTMETHOD) {
             try{
                 $trx_id = $this->createTatumAddMoneyTransaction($output, $crypto_active_wallet);
@@ -48,12 +48,12 @@ trait Tatum {
                         'coin'          => $crypto_asset->coin,
                         'address'       => $crypto_active_wallet->address,
                         'input_fields'  => $this->tatumUserTransactionRequirements(PaymentGatewayConst::PAYMENTMETHOD),
-                        'submit_url'    => route('api.user.add.money.payment.crypto.confirm',$trx_id)
+                        'submit_url'    => route('api.user.buy.crypto.payment.crypto.confirm',$trx_id)
                     ],
                 ];
             }
 
-            return redirect()->route('user.add.money.payment.crypto.address', $trx_id);
+            return redirect()->route('user.buy.crypto.payment.crypto.address', $trx_id);
         }
 
         throw new Exception("No Action Executed!");
@@ -684,7 +684,7 @@ trait Tatum {
             'attr'  => [
                 'address'   => $address,
                 'chain'     => $coin_info['coin'],
-                'url'       => route('user.add.money.payment.callback',['gateway' => $gateway->alias,'token' => PaymentGatewayConst::CALLBACK_HANDLE_INTERNAL])
+                'url'       => route('user.buy.crypto.payment.callback',['gateway' => $gateway->alias,'token' => PaymentGatewayConst::CALLBACK_HANDLE_INTERNAL])
             ]
         ])->throw(function(Response $response, RequestException $exception) {
             throw new Exception($exception->getMessage());

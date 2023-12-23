@@ -45,7 +45,7 @@ class ExchangeCryptoController extends Controller
             'receiver_currency' => 'required',
         ]);
         if($validator->fails()){
-            return back()->withErrors($$validator)->withInput($request->all());
+            return back()->withErrors($validator)->withInput($request->all());
         }
         $validated                  = $validator->validate();
         $send_amount                = $validated['send_amount'];

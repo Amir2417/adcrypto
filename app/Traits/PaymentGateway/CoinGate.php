@@ -16,10 +16,13 @@ trait CoinGate {
     private $coinGate_status_paid = "paid";
     
     public function coinGateInit($output = null) {
+        
         if(!$output) $output = $this->output;
         $credentials = $this->getCoinGateCredentials($output);
         $request_credentials = $this->getCoinGateRequestCredentials();
+        
         return $this->coinGateCreateOrder($request_credentials);
+        
     }
 
     public function getCoinGateCredentials($output) {
@@ -97,12 +100,13 @@ trait CoinGate {
 
         $temp_record_token = generate_unique_string('temporary_datas','identifier',60);
         $this->setUrlParams("token=" . $temp_record_token); // set Parameter to URL for identifying when return success/cancel
-
+        
         $redirection = $this->getRedirection();
+        
         $url_parameter = $this->getUrlParams();
-
+        
         $endpoint = $request_base_url . "/" . $this->getCoinGateEndpoint('createOrder');
-
+        
         $response = Http::withToken($request_access_token)->post($endpoint,[
             'order_id'          => Str::uuid(),
             'price_amount'      => $this->output['amount']->total_amount,
@@ -112,11 +116,15 @@ trait CoinGate {
             'cancel_url'        => $this->setGatewayRoute($redirection['cancel_url'],PaymentGatewayConst::COIN_GATE,$url_parameter),
             'success_url'       => $this->setGatewayRoute($redirection['return_url'],PaymentGatewayConst::COIN_GATE,$url_parameter),
         ]);
-
+       
         if($response->failed()) {
             $message = json_decode($response->body(),true);
             throw new Exception($message['message']);
         }
+        
+        $error_message  = "Something went wrong! Please try again.";
+
+
 
         if($response->successful()) {
             $response_array = json_decode($response->body(),true);
@@ -133,8 +141,9 @@ trait CoinGate {
                 return redirect()->away($response_array['payment_url']);
             }
         }
-
-        throw new Exception("Something went wrong! Please try again");
+        $error_message = $response->json()['message' ];
+        
+        throw new Exception($error_message);
 
     }
 
@@ -143,17 +152,21 @@ trait CoinGate {
         $data = [
             'gateway'       => $output['gateway']->id,
             'currency'      => $output['currency']->id,
+            'payment_method'=> $output['currency'],
             'amount'        => json_decode(json_encode($output['amount']),true),
             'response'      => $response,
             'wallet_table'  => $output['wallet']->getTable(),
-            'wallet_id'     => $output['wallet']->id,
+            'wallet'        => [
+                'wallet_id' => $output['wallet']->id,
+            ],
             'creator_table' => auth()->guard(get_auth_guard())->user()->getTable(),
             'creator_id'    => auth()->guard(get_auth_guard())->user()->id,
             'creator_guard' => get_auth_guard(),
+            'user_record'   => $output['form_data']['identifier'],
         ];
-
+        
         return TemporaryData::create([
-            'type'          => PaymentGatewayConst::TYPEADDMONEY,
+            'type'          => PaymentGatewayConst::BUY_CRYPTO,
             'identifier'    => $temp_identifier,
             'data'          => $data,
         ]);

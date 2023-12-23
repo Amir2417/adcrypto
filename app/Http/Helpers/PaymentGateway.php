@@ -464,7 +464,7 @@ class PaymentGateway {
                 'title'     => "Buy Crypto",
                 'payment'   => $data->data->payment_method->name,
                 'wallet'    => $data->data->wallet->name,
-                'code'    => $data->data->wallet->code,
+                'code'      => $data->data->wallet->code,
                 'amount'    => $data->data->amount,
                 'success'   => "Successfully Added."
             ],

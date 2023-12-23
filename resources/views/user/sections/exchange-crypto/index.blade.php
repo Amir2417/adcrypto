@@ -125,9 +125,7 @@
         $(".send-amount").keyup(function(){
             var amount = $(this).val();
             var walletBalance       = selectedVariable().senderWalletBalance;
-            if(parseFloat(amount) > parseFloat(walletBalance)){
-                $(".exchange-button").props('disable',true);
-            }
+            
             amountCalculation(amount);
             chargeCalculation(amount);
         });
@@ -175,7 +173,7 @@
                 var receiveAmount = $(".receive-money").val(); 
                 return receiveAmount;     
             }
-            
+            console.log(amount);
             var senderRate          = selectedVariable().senderRate;
             var receiverRate        = selectedVariable().receiverRate;
             var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);

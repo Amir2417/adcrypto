@@ -21,7 +21,7 @@ trait Stripe {
 
     public function createStripeCheckout($output) {
         $request_credentials = $this->getStripeRequestCredentials($output);
-       
+        
         $stripe_client = new StripeClient($request_credentials->token);
        
         $temp_record_token = generate_unique_string('temporary_datas','identifier',60);
@@ -164,6 +164,7 @@ trait Stripe {
         }
 
         $this->request_credentials = (object) $request_credentials;
+        
         return (object) $request_credentials;
     }
 
