@@ -439,7 +439,7 @@ class BuyCryptoController extends Controller
         $transaction = Transaction::where('trx_id', $trx_id)->firstOrFail();
 
         if($transaction->currency->gateway->isCrypto() && $transaction->details?->payment_info?->receiver_address ?? false) {
-            return view('user.sections.buy-crypto.payment.crypto.address', compact(
+            return view('user.sections.buy-crypto.crypto.address', compact(
                 'transaction',
                 'page_title',
             ));
