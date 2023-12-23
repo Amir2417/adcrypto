@@ -2,17 +2,18 @@
 
 namespace App\Traits\PaymentGateway;
 
-use App\Constants\GlobalConst;
 use Exception;
 use Illuminate\Support\Str;
-use App\Constants\PaymentGatewayConst;
-use App\Http\Helpers\PaymentGateway;
-use App\Http\Helpers\Response as HelpersResponse;
+use App\Models\TemporaryData;
+use App\Constants\GlobalConst;
 use App\Models\Admin\CryptoAsset;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\DB;
+use App\Http\Helpers\PaymentGateway;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
+use App\Constants\PaymentGatewayConst;
+use Illuminate\Http\Client\RequestException;
+use App\Http\Helpers\Response as HelpersResponse;
 
 trait Tatum {
 
@@ -32,7 +33,7 @@ trait Tatum {
         $crypto_active_wallet = collect($crypto_asset->credentials->credentials ?? [])->where('status', true)->first();
         if(!$crypto_asset || !$crypto_active_wallet) throw new Exception("Gateway is not available right now! Please contact with system administration");
         
-        if($output['type'] == PaymentGatewayConst::PAYMENTMETHOD) {
+        if($output['type'] == PaymentGatewayConst::BUY_CRYPTO) {
             try{
                 $trx_id = $this->createTatumAddMoneyTransaction($output, $crypto_active_wallet);
             }catch(Exception $e) {
@@ -47,7 +48,7 @@ trait Tatum {
                     'address_info'      => [
                         'coin'          => $crypto_asset->coin,
                         'address'       => $crypto_active_wallet->address,
-                        'input_fields'  => $this->tatumUserTransactionRequirements(PaymentGatewayConst::PAYMENTMETHOD),
+                        'input_fields'  => $this->tatumUserTransactionRequirements(PaymentGatewayConst::BUY_CRYPTO),
                         'submit_url'    => route('api.user.buy.crypto.payment.crypto.confirm',$trx_id)
                     ],
                 ];
@@ -60,44 +61,39 @@ trait Tatum {
     }
 
     public function createTatumAddMoneyTransaction($output, $crypto_active_wallet) {
-
+        $data  = TemporaryData::where('identifier',$output['form_data']['identifier'])->first();
+        $trx_id = generateTrxString("transactions","trx_id","BC",8);
         $user = auth()->guard(get_auth_guard())->user();
-
+        
         DB::beginTransaction();
         try{
             $trx_id = generate_unique_string("transactions","trx_id",16);
             $qr_image = 'https://chart.googleapis.com/chart?cht=qr&chs=350x350&chl='.$crypto_active_wallet->address;
 
             DB::table('transactions')->insert([
-                'type'      => PaymentGatewayConst::PAYMENTMETHOD,
-                'trx_id'    => $trx_id,
-                'user_type' => GlobalConst::USER,
-                'user_id'   => $user->id,
-                'wallet_id' => $output['wallet']->id,
-                'payment_gateway_currency_id'   => $output['currency']->id,
-                'request_amount'                => $output['amount']->requested_amount,
-                'request_currency'              => $output['wallet']->currency->code,
-                'exchange_rate'                 => $output['amount']->exchange_rate,
+                'type'                          => $output['type'],
+                'user_id'                       => $user->id,
+                'user_wallet_id'                => $output['wallet']->id,
+                'payment_gateway_id'            => $output['currency']->id,
+                'trx_id'                        => $trx_id,
+                'amount'                        => $output['amount']->requested_amount,
                 'percent_charge'                => $output['amount']->percent_charge,
                 'fixed_charge'                  => $output['amount']->fixed_charge,
                 'total_charge'                  => $output['amount']->total_charge,
                 'total_payable'                 => $output['amount']->total_amount,
-                'receive_amount'                => $output['amount']->will_get,
-                'receiver_type'                 => GlobalConst::USER,
-                'receiver_id'                   => $user->id,
-                'available_balance'             => $output['wallet']->balance + $output['amount']->will_get,
-                'payment_currency'              => $output['currency']->currency_code,
-                'remark'                        => "ADD MONEY With " . $output['gateway']->name,
+                'available_balance'             => $output['wallet']->balance + $output['amount']->requested_amount,
+                'currency_code'                 => $output['currency']->currency_code,
+                'remark'                        => "Buy Crypto With " . $output['gateway']->name,
                 'details'                       => json_encode([
                     'payment_info'    => [
                         'payment_type'      => PaymentGatewayConst::CRYPTO,
                         'currency'          => $output['currency']->currency_code,
                         'receiver_address'  => $crypto_active_wallet->address,
                         'receiver_qr_image' => $qr_image,
-                        'requirements'      => $this->tatumUserTransactionRequirements(PaymentGatewayConst::PAYMENTMETHOD),
+                        'requirements'      => $this->tatumUserTransactionRequirements(PaymentGatewayConst::BUY_CRYPTO),
                     ]
                 ]),
-                'status'                        => PaymentGatewayConst::STATUSWAITING,
+                'status'                        => global_const()::STATUS_PENDING,
                 'created_at'                    => now(),
             ]);
 
@@ -112,7 +108,7 @@ trait Tatum {
 
     public function tatumUserTransactionRequirements($trx_type = null) {
         $requirements = [
-            PaymentGatewayConst::PAYMENTMETHOD => [
+            PaymentGatewayConst::BUY_CRYPTO => [
                 [
                     'type'          => 'text',
                     'label'         =>  "Txn Hash",

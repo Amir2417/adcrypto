@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use App\Models\Admin\PaymentGateway;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Admin\PaymentGatewayCurrency;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Transaction extends Model
 {
@@ -48,5 +49,9 @@ class Transaction extends Model
     public function payment_gateway()
     {
         return $this->belongsTo(PaymentGateway::class);
+    }
+    public function currency()
+    {
+        return $this->belongsTo(PaymentGatewayCurrency::class,'payment_gateway_id');
     }
 }
