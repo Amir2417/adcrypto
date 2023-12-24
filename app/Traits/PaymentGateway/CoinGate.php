@@ -183,7 +183,7 @@ trait CoinGate {
 
             // need to insert new transaction in database
             try{
-                $this->createTransaction($output, PaymentGatewayConst::STATUSPENDING);
+                $this->createTransaction($output, global_const()::STATUS_PENDING);
             }catch(Exception $e) {
                 throw new Exception($e->getMessage());
             }

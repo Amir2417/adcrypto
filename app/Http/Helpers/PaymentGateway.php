@@ -451,7 +451,7 @@ class PaymentGateway {
     }
 
     // Update Code (Need to check)
-    public function createTransaction($output, $status = PaymentGatewayConst::STATUSSUCCESS) {
+    public function createTransaction($output, $status) {
         $basic_setting = BasicSettings::first();
         $record_handler = $output['record_handler'];
         $user = auth()->user();
@@ -517,13 +517,13 @@ class PaymentGateway {
                 'available_balance'             => $output['wallet']->balance + $output['amount']->requested_amount,
                 'currency_code'                 => $output['currency']->currency_code,
                 'remark'                        => ucwords(remove_special_char($output['type']," ")) . " With " . $output['gateway']->name,
-                'details'                       => json_encode(['gateway_response' => $output['capture'],'data' => $data->data]),
+                'details'                       => json_encode(['gateway_response' => $output['capture'],'data' => $data->data,'user_record' => $output['form_data']['identifier']]),
                 'status'                        => $status,
                 'callback_ref'                  => $output['callback_ref'] ?? null,
                 'created_at'                    => now(),
             ]);
 
-            if($status === PaymentGatewayConst::STATUSSUCCESS) {
+            if($status === global_const()::STATUS_PENDING) {
                 $this->updateWalletBalance($output);
             }
 
@@ -680,7 +680,7 @@ class PaymentGateway {
     }
 
     public function handleCallback($reference,$callback_data,$gateway_name) {
-
+        
         if($reference == PaymentGatewayConst::CALLBACK_HANDLE_INTERNAL) {
             $gateway = PaymentGatewayModel::gateway($gateway_name)->first();
             $callback_response_receive_method = $this->getCallbackResponseMethod($gateway);
@@ -692,13 +692,14 @@ class PaymentGateway {
         $this->output['capture']            = $callback_data;
 
         if($transaction) {
-            $gateway_currency = $transaction->gateway_currency;
+            $gateway_currency = $transaction->payment_gateway_id;
+            logger("Gateway" , [$gateway_currency]);
             $gateway = $gateway_currency->gateway;
 
             $requested_amount = $transaction->request_amount;
             $validator_data = [
                 $this->currency_input_name  => $gateway_currency->alias,
-                $this->amount_input         => $requested_amount
+               
             ];
 
             $user_wallet = $transaction->creator_wallet;
@@ -719,12 +720,13 @@ class PaymentGateway {
 
                     $requested_amount = $tempData['data']->amount->requested_amount ?? 0;
                     $validator_data = [
-                        $this->currency_input_name  => $gateway_currency->alias,
-                        $this->amount_input         => $requested_amount
+                        $this->currency_input_name  => $tempData->data->user_record,
+                        
                     ];
 
                     $get_wallet_model = PaymentGatewayConst::registerWallet()[$tempData->data->creator_guard];
-                    $user_wallet = $get_wallet_model::find($tempData->data->wallet_id);
+                   
+                    $user_wallet = $get_wallet_model::find($tempData->data->wallet->wallet_id);
                     $this->predefined_user_wallet = $user_wallet;
                     $this->predefined_guard = $user_wallet->user->modelGuardName(); // need to update
                     $this->predefined_user = $user_wallet->user;

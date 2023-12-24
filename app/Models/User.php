@@ -59,49 +59,59 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    //email unverified
     public function scopeEmailUnverified($query)
     {
         return $query->where('email_verified', false);
     }
 
+    //email verified
     public function scopeEmailVerified($query) {
         return $query->where("email_verified",true);
     }
 
+    //kyc verified
     public function scopeKycVerified($query) {
         return $query->where("kyc_verified",GlobalConst::VERIFIED);
     }
 
+    //kyc unverified
     public function scopeKycUnverified($query)
     {
         return $query->whereNot('kyc_verified',GlobalConst::VERIFIED);
     }
 
+    //active
     public function scopeActive($query)
     {
         return $query->where('status', true);
     }
 
+    //banned
     public function scopeBanned($query)
     {
         return $query->where('status', false);
     }
 
+    //kyc
     public function kyc()
     {
         return $this->hasOne(UserKycData::class);
     }
 
+    //getuser full name
     public function getFullnameAttribute()
     {
         return $this->firstname . ' ' . $this->lastname;
     }
 
+    //user wallet
     public function wallets()
     {
         return $this->hasMany(UserWallet::class);
     }
     
+    //image attribute
     public function getUserImageAttribute() {
         $image = $this->image;
 
@@ -114,14 +124,17 @@ class User extends Authenticatable
         }
     }
 
+    //password reset
     public function passwordResets() {
         return $this->hasMany(UserPasswordReset::class,"user_id");
     }
 
+    //get social
     public function scopeGetSocial($query,$credentials) {
         return $query->where("email",$credentials);
     }
 
+    //get string status attribute
     public function getStringStatusAttribute() {
         $status = $this->status;
         $data = [
@@ -142,6 +155,7 @@ class User extends Authenticatable
         return (object) $data;
     }
 
+    //get kyc string status attribute
     public function getKycStringStatusAttribute() {
         $status = $this->kyc_verified;
         $data = [
@@ -172,10 +186,12 @@ class User extends Authenticatable
         return (object) $data;
     }
 
+    //login logs
     public function loginLogs(){
         return $this->hasMany(UserLoginLog::class);
     }
 
+    //get last login info
     public function getLastLoginAttribute() {
         if($this->loginLogs()->count() > 0) {
             return $this->loginLogs()->get()->last()->created_at->format("H:i A, d M Y");
@@ -184,9 +200,16 @@ class User extends Authenticatable
         return "N/A";
     }
 
+    //user search
     public function scopeSearch($query,$data) {
         return $query->where(function($q) use ($data) {
             $q->where("username","like","%".$data."%");
         })->orWhere("email","like","%".$data."%")->orWhere("full_mobile","like","%".$data."%");
     }
+
+    //model guard name
+    public function modelGuardName() {
+        return "web";
+    }
+
 }

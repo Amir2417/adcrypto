@@ -501,7 +501,7 @@ class BuyCryptoController extends Controller
 
             DB::table($transaction->getTable())->where('id', $transaction->id)->update([
                 'details'       => json_encode($transaction_details),
-                'status'        => PaymentGatewayConst::STATUSSUCCESS,
+                'status'        => global_const()::STATUS_CONFIRM_PAYMENT,
             ]);
 
             DB::commit();
