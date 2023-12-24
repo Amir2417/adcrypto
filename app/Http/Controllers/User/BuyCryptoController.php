@@ -468,7 +468,7 @@ class BuyCryptoController extends Controller
         // check hash is valid or not
         $crypto_transaction = CryptoTransaction::where('txn_hash', $validated['txn_hash'])
                                                 ->where('receiver_address', $receiver_address)
-                                                ->where('asset',$transaction->gateway_currency->currency_code)
+                                                ->where('asset',$transaction->currency->currency_code)
                                                 ->where(function($query) {
                                                     return $query->where('transaction_type',"Native")
                                                                 ->orWhere('transaction_type', "native");
@@ -486,9 +486,9 @@ class BuyCryptoController extends Controller
         try{
 
             // Update user wallet balance
-            DB::table($transaction->creator_wallet->getTable())
-                ->where('id',$transaction->creator_wallet->id)
-                ->increment('balance',$transaction->receive_amount);
+            DB::table($transaction->user_wallets->getTable())
+                ->where('id',$transaction->user_wallets->id)
+                ->increment('balance',$transaction->details->data->will_get);
 
             // update crypto transaction as used
             DB::table($crypto_transaction->getTable())->where('id', $crypto_transaction->id)->update([
