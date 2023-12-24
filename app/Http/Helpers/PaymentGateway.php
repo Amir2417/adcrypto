@@ -456,6 +456,7 @@ class PaymentGateway {
 
     // Update Code (Need to check)
     public function createTransaction($output, $status) {
+        
         $basic_setting = BasicSettings::first();
         $record_handler = $output['record_handler'];
         if($this->predefined_user) {
@@ -479,8 +480,8 @@ class PaymentGateway {
         ]);
         $trx_id     = Transaction::where('id',$inserted_id)->first();
         
-        if( $basic_setting->email_notification == true){
-            Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output,$trx_id->trx_id));
+        if($basic_setting->email_notification == true){
+           Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output,$trx_id->trx_id));
         }
 
         $this->insertDevice($output,$inserted_id);
@@ -696,12 +697,12 @@ class PaymentGateway {
         }
 
         $transaction = Transaction::where('callback_ref',$reference)->first();
+        logger("transaction",[$transaction]);
         $this->output['callback_ref']       = $reference;
         $this->output['capture']            = $callback_data;
 
         if($transaction) {
-            $gateway_currency_id = $transaction->payment_gateway_id;
-            $gateway_currency = PaymentGatewayCurrency::find($gateway_currency_id);
+            $gateway_currency = $transaction->currency;
             $gateway = $gateway_currency->gateway;
 
             $requested_amount = $transaction->request_amount;
@@ -753,6 +754,7 @@ class PaymentGateway {
             $this->gateway();
 
             $callback_response_receive_method = $this->getCallbackResponseMethod($gateway);
+            
             return $this->$callback_response_receive_method($reference, $callback_data, $this->output);
         }
 
