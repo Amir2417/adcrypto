@@ -50,7 +50,7 @@
                                 <td>{{ $key + $contact_requests->firstItem() }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->email }}</td>
-                                <td>{{ Str::words($item->message ?? '','5','...')  }}</td>
+                                <td class="text-wrap">{{ $item->message }}</td>
                                 <td>
                                     @if ($item->reply == true)
                                         <span class="badge badge--success">{{ __("Replyed") }}</span>

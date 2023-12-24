@@ -69,20 +69,20 @@
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("Request Amount") }}</h4>
-                                <h4 class="enter-amount">{{ get_amount($transaction->request_amount, $transaction->remittance_data->sender_currency) }}</h4>
+                                <h4 class="enter-amount">{{ get_amount($transaction->amount, $transaction->details->data->wallet->code) }}</h4>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("Exchange Rate_WEB") }}</h4>
                                 <h4 class="exchange-rate">
-                                    1 {{ $transaction->remittance_data->sender_currency }} = 
-                                    {{ get_amount($transaction->exchange_rate, $transaction->remittance_data->currency->code,8) }}
+                                    1 {{ $transaction->details->data->wallet->code }} = 
+                                    {{ get_amount($transaction->details->data->exchange_rate, $transaction->details->data->payment_method->code,8) }}
                                 </h4>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("Fees_WEB") }}</h4>
-                                <h4 class="fees">{{ get_amount($transaction->fees, $transaction->remittance_data->sender_currency,4) }}</h4>
+                                <h4 class="fees">{{ get_amount($transaction->fees, $transaction->details->data->wallet->code,4) }}</h4>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
