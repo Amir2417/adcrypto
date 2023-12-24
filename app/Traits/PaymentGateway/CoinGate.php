@@ -213,7 +213,7 @@ trait CoinGate {
 
         $callback_status = $callback_data['status'] ?? "";
 
-        if(isset($output['transaction']) && $output['transaction'] != null && $output['transaction']->status != global_const()::STATUS_PENDING) { // if transaction already created & status is not success
+        if(isset($output['transaction']) && $output['transaction'] != null && $output['transaction']->status != global_const()::STATUS_CONFIRM_PAYMENT) { // if transaction already created & status is not success
 
             // Just update transaction status and update user wallet if needed
             if($callback_status == $this->coinGate_status_paid) {
