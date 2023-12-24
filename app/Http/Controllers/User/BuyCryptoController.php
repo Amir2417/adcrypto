@@ -289,7 +289,7 @@ class BuyCryptoController extends Controller
            
 
             if(Transaction::where('callback_ref', $token)->exists()) {
-                if(!$temp_data) return redirect()->route('user.buy.crypto.index')->with(['success' => ['Transaction request sended successfully!']]);;
+                if(!$temp_data) return redirect()->route('user.buy.crypto.index')->with(['success' => ['Successfully added money']]);;
             }else {
                 if(!$temp_data) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Transaction failed. Record didn\'t saved properly. Please try again.']]);
             }
@@ -436,7 +436,7 @@ class BuyCryptoController extends Controller
 
     public function cryptoPaymentAddress(Request $request, $trx_id) {
 
-        $page_title = "Crypto Payment Address";
+        $page_title = "- Crypto Payment Address";
         $transaction = Transaction::where('trx_id', $trx_id)->firstOrFail();
 
         if($transaction->currency->gateway->isCrypto() && $transaction->details?->payment_info?->receiver_address ?? false) {

@@ -103,7 +103,7 @@
             amountCalculation(amount);
         });
         $(document).on('click','.max-amount',function(){
-            var walletMaxBalance = selectedVariable().senderWalletBalance;
+            var walletMaxBalance    = selectedVariable().senderWalletBalance;
 
             var senderCurrency      = selectedVariable().senderCurrency;
             var senderRate          = selectedVariable().senderRate;
