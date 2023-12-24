@@ -17,13 +17,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\PaymentGateway;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
+use App\Models\Admin\CryptoTransaction;
 use App\Models\Admin\CurrencyHasNetwork;
 use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
-use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 use App\Notifications\User\BuyCryptoManualMailNotification;
+use App\Http\Helpers\PaymentGateway as PaymentGatewayHelper;
 
 class BuyCryptoController extends Controller
 {
@@ -450,7 +451,7 @@ class BuyCryptoController extends Controller
 
     public function cryptoPaymentConfirm(Request $request, $trx_id) 
     {
-        $transaction = Transaction::where('trx_id',$trx_id)->where('status', PaymentGatewayConst::STATUSWAITING)->firstOrFail();
+        $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::STATUS_PENDING)->firstOrFail();
 
         $dy_input_fields = $transaction->details->payment_info->requirements ?? [];
         $validation_rules = $this->generateValidationRules($dy_input_fields);
