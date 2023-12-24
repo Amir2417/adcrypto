@@ -327,7 +327,7 @@ class BuyCryptoController extends Controller
         $callback_data = $request->all();
 
         try{
-            PaymentGatewayHelper::init([])->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_MULTIPLE)->handleCallback($callback_token,$callback_data,$gateway);
+            PaymentGatewayHelper::init([])->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_SINGLE)->handleCallback($callback_token,$callback_data,$gateway);
         }catch(Exception $e) {
             // handle Error
             logger($e);
