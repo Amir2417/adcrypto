@@ -82,17 +82,17 @@
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("Fees_WEB") }}</h4>
-                                <h4 class="fees">{{ get_amount($transaction->fees, $transaction->details->data->wallet->code,4) }}</h4>
+                                <h4 class="fees">{{ get_amount($transaction->total_charge, $transaction->details->data->wallet->code,4) }}</h4>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("Total Payable_WEB") }}</h4>
-                                <h4 class="payable">{{ get_amount($transaction->payable,  $transaction->remittance_data->currency->code,8) }}</h4>
+                                <h4 class="payable">{{ get_amount($transaction->total_payable,  $transaction->details->data->payment_method->code,8) }}</h4>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
                                 <h4>{{ __("You Will Get_WEB") }}</h4>
-                                <h4 class="will-get">{{ get_amount($transaction->will_get_amount, $transaction->remittance_data->receiver_currency,4) }}</h4>
+                                <h4 class="will-get">{{ get_amount($transaction->details->data->will_get, $transaction->details->data->wallet->code,4) }}</h4>
                             </div>
                         </div>
                     </div>
