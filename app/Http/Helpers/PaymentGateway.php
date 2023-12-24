@@ -728,7 +728,10 @@ class PaymentGateway {
                    
                     $user_wallet = $get_wallet_model::find($tempData->data->wallet->wallet_id);
                     $this->predefined_user_wallet = $user_wallet;
+                    
                     $this->predefined_guard = $user_wallet->user->modelGuardName(); // need to update
+                    
+                    logger("USER" , [$user_wallet->user]);
                     $this->predefined_user = $user_wallet->user;
 
                     $this->output['tempData'] = $tempData;
