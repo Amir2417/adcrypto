@@ -697,7 +697,7 @@ class PaymentGateway {
         }
 
         $transaction = Transaction::where('callback_ref',$reference)->first();
-        logger("transaction",[$transaction]);
+
         $this->output['callback_ref']       = $reference;
         $this->output['capture']            = $callback_data;
 
