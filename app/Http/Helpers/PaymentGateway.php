@@ -207,10 +207,14 @@ class PaymentGateway {
     public function chargeCalculate($currency,$receiver_currency = null) {
         $temporary_data     = TemporaryData::where('identifier',$this->request_data['identifier'])->first();
         
+        if($this->predefined_user_wallet) {
+            $user_wallet = $this->predefined_user_wallet;
+        }else{
+            $user_wallet    =  UserWallet::auth()->whereHas("currency",function($q) use ($temporary_data) {
+                $q->where("id",$temporary_data->data->wallet->wallet_id)->active();
+            })->active()->first();
+        } 
         
-        $user_wallet    =  UserWallet::auth()->whereHas("currency",function($q) use ($temporary_data) {
-            $q->where("id",$temporary_data->data->wallet->wallet_id)->active();
-        })->active()->first();
         
         $amount = $temporary_data->data->amount;
         
@@ -454,12 +458,16 @@ class PaymentGateway {
     public function createTransaction($output, $status) {
         $basic_setting = BasicSettings::first();
         $record_handler = $output['record_handler'];
-        $user = auth()->user();
+        if($this->predefined_user) {
+            $user = $this->predefined_user;
+        }else {
+            $user = auth()->guard(get_auth_guard())->user();
+        }
         $inserted_id = $this->$record_handler($output,$status);
         // $this->insertCharges($output,$inserted_id);
         $data = TemporaryData::where('identifier',$output['form_data']['identifier'])->first();
         UserNotification::create([
-            'user_id'       => auth()->user()->id,
+            'user_id'       => $user->id,
             'message'       => [
                 'title'     => "Buy Crypto",
                 'payment'   => $data->data->payment_method->name,
@@ -692,20 +700,19 @@ class PaymentGateway {
         $this->output['capture']            = $callback_data;
 
         if($transaction) {
-            $gateway_currency = $transaction->payment_gateway_id;
-            logger("Gateway" , [$gateway_currency]);
+            $gateway_currency_id = $transaction->payment_gateway_id;
+            $gateway_currency = PaymentGatewayCurrency::find($gateway_currency_id);
             $gateway = $gateway_currency->gateway;
 
             $requested_amount = $transaction->request_amount;
             $validator_data = [
-                $this->currency_input_name  => $gateway_currency->alias,
-               
+                $this->currency_input_name  => $transaction->details->user_record,
             ];
 
-            $user_wallet = $transaction->creator_wallet;
+            $user_wallet = $transaction->user_wallets;
             $this->predefined_user_wallet = $user_wallet;
-            $this->predefined_guard = $transaction->creator->modelGuardName();
-            $this->predefined_user = $transaction->creator;
+            $this->predefined_guard = $transaction->user->modelGuardName();
+            $this->predefined_user = $transaction->user;
 
             $this->output['transaction']    = $transaction;
 
@@ -731,7 +738,7 @@ class PaymentGateway {
                     
                     $this->predefined_guard = $user_wallet->user->modelGuardName(); // need to update
                     
-                    logger("USER" , [$user_wallet->user]);
+                    
                     $this->predefined_user = $user_wallet->user;
 
                     $this->output['tempData'] = $tempData;
