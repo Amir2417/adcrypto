@@ -20,7 +20,7 @@
             <h4 class="title">{{ __("Buy Log") }}</h4>
         </div>
         <div class="dashboard-list-wrapper">
-            @foreach ($transactions as $item)
+            @foreach ($transactions ?? [] as $item)
                 <div class="dashboard-list-item-wrapper">
                     <div class="dashboard-list-item sent">
                         <div class="dashboard-list-left">

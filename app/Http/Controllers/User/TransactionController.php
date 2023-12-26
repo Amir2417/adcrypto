@@ -38,10 +38,12 @@ class TransactionController extends Controller
      * @return view
      */
     public function withdrawLog(){
-        $page_title  = "- Withdraw Logs";
+        $page_title     = "- Withdraw Logs";
+        $transactions   = Transaction::where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->orderBy('id','desc')->get();
 
         return view('user.sections.transaction-logs.withdraw-log',compact(
             'page_title',
+            'transactions'
         ));
     }
     /**
