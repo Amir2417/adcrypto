@@ -147,19 +147,49 @@
                                 'links'     => [
                                     [
                                         'title'     => "Pending Logs",
-                                        'route'     => "admin.money.out.pending",
+                                        'route'     => "admin.withdraw.crypto.pending",
+                                    ],
+                                    [
+                                        'title'     => "Confirm Logs",
+                                        'route'     => "admin.withdraw.crypto.confirm",
                                     ],
                                     [
                                         'title'     => "Completed Logs",
-                                        'route'     => "admin.money.out.complete",
+                                        'route'     => "admin.withdraw.crypto.complete",
                                     ],
                                     [
                                         'title'     => "Canceled Logs",
-                                        'route'     => "admin.money.out.canceled", 
+                                        'route'     => "admin.withdraw.crypto.canceled", 
                                     ],
                                     [
                                         'title'     => "All Logs",
-                                        'route'     => "admin.money.out.index", 
+                                        'route'     => "admin.withdraw.crypto.all", 
+                                    ]
+                                ],
+                            ],
+                            [
+                                'title'             => "Exchange Crypto Logs",
+                                'icon'              => "menu-icon las la-exchange-alt",
+                                'links'     => [
+                                    [
+                                        'title'     => "Pending Logs",
+                                        'route'     => "admin.exchange.crypto.pending",
+                                    ],
+                                    [
+                                        'title'     => "Confirm Logs",
+                                        'route'     => "admin.exchange.crypto.confirm",
+                                    ],
+                                    [
+                                        'title'     => "Completed Logs",
+                                        'route'     => "admin.exchange.crypto.complete",
+                                    ],
+                                    [
+                                        'title'     => "Canceled Logs",
+                                        'route'     => "admin.exchange.crypto.canceled", 
+                                    ],
+                                    [
+                                        'title'     => "All Logs",
+                                        'route'     => "admin.exchange.crypto.all", 
                                     ]
                                 ],
                             ],

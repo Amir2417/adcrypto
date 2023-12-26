@@ -34,6 +34,7 @@ use App\Http\Controllers\Admin\SupportTicketController;
 use App\Http\Controllers\Admin\UsefulLinkController;
 use App\Http\Controllers\Admin\UserCareController;
 use App\Http\Controllers\Admin\WebSettingsController;
+use App\Http\Controllers\Admin\WithdrawCryptoLogController;
 use Illuminate\Support\Facades\Artisan;
 use Pusher\PushNotifications\PushNotifications;
 use Illuminate\Http\Request;
@@ -107,6 +108,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Buy Crypto Logs
     Route::controller(BuyCryptoLogController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+        Route::get('index','index')->name('all');
+        Route::get('pending','pending')->name('pending');
+        Route::get('confirm','confirm')->name('confirm');
+        Route::get('complete','complete')->name('complete');
+        Route::get('canceled', 'canceled')->name('canceled');
+    });
+
+    //withdraw crypto logs
+    Route::controller(WithdrawCryptoLogController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
         Route::get('index','index')->name('all');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
