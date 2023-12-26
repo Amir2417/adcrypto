@@ -268,7 +268,7 @@ class BuyCryptoController extends Controller
      * @param Illuminate\Http\Request $request
      */
     public function submit(Request $request){
-        
+       
         try{
             $instance = PaymentGatewayHelper::init($request->all())->type(PaymentGatewayConst::BUY_CRYPTO)->gateway()->render();
             if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
@@ -286,7 +286,7 @@ class BuyCryptoController extends Controller
         try{
             $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
             $temp_data = TemporaryData::where("type",PaymentGatewayConst::BUY_CRYPTO)->where("identifier",$token)->first();
-           
+            
 
             if(Transaction::where('callback_ref', $token)->exists()) {
                 if(!$temp_data) return redirect()->route('user.buy.crypto.index')->with(['success' => ['Successfully added money']]);;

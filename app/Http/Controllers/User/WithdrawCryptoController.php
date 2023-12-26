@@ -95,7 +95,7 @@ class WithdrawCryptoController extends Controller
         $percent_charge_calc    = ($amount / 100) * $percent_charge;
         $total_charge           = $fixed_charge + $percent_charge_calc;
         $payable_amount         = $amount + $total_charge;
-
+        $will_get_amount        = $amount * $exchange_rate;
         if($payable_amount > $sender_wallet->balance){
             return back()->with(['error' => ['Insufficient Balance!']]);
         }
@@ -122,7 +122,7 @@ class WithdrawCryptoController extends Controller
                 'sender_ex_rate'    => $sender_rate,
                 'exchange_rate'     => $exchange_rate,
                 'payable_amount'    => $payable_amount,
-                'will_get'          => $amount,
+                'will_get'          => $will_get_amount,
             ],
         ];
         try{
@@ -187,7 +187,7 @@ class WithdrawCryptoController extends Controller
         try{
             Transaction::create($transaction_data);
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
-            $this->updateReceiverWalletBalance($receiver_wallet,$data->data->amount);
+            $this->updateReceiverWalletBalance($receiver_wallet,$data->data->will_get);
             $this->userNotification($data);
             if($basic_setting->email_notification == true){
                 Notification::route('mail',$user->email)->notify(new WithdrawCryptoMailNotification($user,$data,$trx_id));

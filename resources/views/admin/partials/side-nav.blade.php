@@ -59,7 +59,7 @@
                 ])
 
                 {{-- Section Transaction & Logs --}}
-                @include('admin.components.side-nav.link-group',[
+                {{-- @include('admin.components.side-nav.link-group',[
                     'group_title'       => "Transactions & Logs",
                     'group_links'       => [
                         'dropdown'      => [
@@ -87,6 +87,62 @@
                             ],
                             [
                                 'title'             => "Money Out Logs",
+                                'icon'              => "menu-icon las la-sign-out-alt",
+                                'links'     => [
+                                    [
+                                        'title'     => "Pending Logs",
+                                        'route'     => "admin.money.out.pending",
+                                    ],
+                                    [
+                                        'title'     => "Completed Logs",
+                                        'route'     => "admin.money.out.complete",
+                                    ],
+                                    [
+                                        'title'     => "Canceled Logs",
+                                        'route'     => "admin.money.out.canceled", 
+                                    ],
+                                    [
+                                        'title'     => "All Logs",
+                                        'route'     => "admin.money.out.index", 
+                                    ]
+                                ],
+                            ],
+                        ],
+
+                    ]
+                ]) --}}
+                @include('admin.components.side-nav.link-group',[
+                    'group_title'       => "Transactions & Logs",
+                    'group_links'       => [
+                        'dropdown'      => [
+                            [
+                                'title'     => "Buy Crypto Logs",
+                                'icon'      => "menu-icon las la-calculator",
+                                'links'     => [
+                                    [
+                                        'title'     => "Pending Logs",
+                                        'route'     => "admin.buy.crypto.pending",
+                                    ],
+                                    [
+                                        'title'     => "Confirm Logs",
+                                        'route'     => "admin.buy.crypto.confirm",
+                                    ],
+                                    [
+                                        'title'     => "Completed Logs",
+                                        'route'     => "admin.buy.crypto.complete",
+                                    ],
+                                    [
+                                        'title'     => "Canceled Logs",
+                                        'route'     => "admin.buy.crypto.canceled", 
+                                    ],
+                                    [
+                                        'title'     => "All Logs",
+                                        'route'     => "admin.buy.crypto.all", 
+                                    ]
+                                ],
+                            ],
+                            [
+                                'title'             => "Withdraw Crypto Logs",
                                 'icon'              => "menu-icon las la-sign-out-alt",
                                 'links'     => [
                                     [

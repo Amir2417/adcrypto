@@ -23,7 +23,6 @@ trait Paypal
        
         $url_parameter = $this->getUrlParams();
         
-        
 
         $response = $paypalProvider->createOrder([
             "intent" => "CAPTURE",
@@ -41,7 +40,6 @@ trait Paypal
                 ]
             ]
         ]);
-        
         
         if(isset($response['id']) && $response['id'] != "" && isset($response['status']) && $response['status'] == "CREATED" && isset($response['links']) && is_array($response['links'])) {
             foreach($response['links'] as $item) {
@@ -210,8 +208,9 @@ trait Paypal
     public function paypalPaymentCaptured($response,$output) {
         // payment successfully captured record saved to database
         $output['capture'] = $response;
+        $status            = global_const()::STATUS_PENDING;
         try{
-            $this->createTransaction($output);
+            $this->createTransaction($output,$status);
         }catch(Exception $e) {
             throw new Exception($e->getMessage());
         }

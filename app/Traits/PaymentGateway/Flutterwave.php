@@ -227,9 +227,9 @@ trait Flutterwave {
 
         if($redirect_response->status == "successful") {
             $output['capture']      = $output['tempData']['data']->response ?? "";
-            
+            $status            = global_const()::STATUS_PENDING;
             try{
-                $this->createTransaction($output);
+                $this->createTransaction($output,$status);
             }catch(Exception $e) {
                 throw new Exception($e->getMessage());
             }

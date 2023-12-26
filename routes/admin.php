@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\AppSettingsController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BroadcastingController;
+use App\Http\Controllers\Admin\BuyCryptoLogController;
 use App\Http\Controllers\Admin\CoinController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
@@ -102,6 +103,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(TrxSettingsController::class)->prefix('trx-settings')->name('trx.settings.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::put('charges/update', 'trxChargeUpdate')->name('charges.update');
+    });
+
+    //Buy Crypto Logs
+    Route::controller(BuyCryptoLogController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+        Route::get('index','index')->name('all');
+        Route::get('pending','pending')->name('pending');
+        Route::get('confirm','confirm')->name('confirm');
+        Route::get('complete','complete')->name('complete');
+        Route::get('canceled', 'canceled')->name('canceled');
     });
 
     // Add Money Logs
