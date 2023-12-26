@@ -8,13 +8,12 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class ExchangeCryptoMailNotification extends Notification
+class WithdrawCryptoMailNotification extends Notification
 {
     use Queueable;
     public $user;
     public $data;
     public $trx_id;
-
     /**
      * Create a new notification instance.
      *
@@ -54,11 +53,11 @@ class ExchangeCryptoMailNotification extends Notification
         $dateTime = $date->format('Y-m-d h:i:s A');
         return (new MailMessage)
             ->greeting("Hello ".$user->fullname." !")
-            ->subject("Exchange Crypto Via ". $data->data->sender_wallet->name)
-            ->line("Your exchange crypto request successful via ".$data->data->sender_wallet->name." , details of exchange crypto:")
-            ->line("Request Amount: " . $data->data->sending_amount.' '. $data->data->sender_wallet->code)
+            ->subject("Withdraw Crypto Via ". $data->data->sender_wallet->name)
+            ->line("Your withdraw crypto request successful via ".$data->data->sender_wallet->name." , details of withdraw crypto:")
+            ->line("Request Amount: " . $data->data->amount.' '. $data->data->sender_wallet->code)
             ->line("Fees & Charges: " . getAmount($data->data->total_charge).' '. $data->data->sender_wallet->code)
-            ->line("Will Get: " . getAmount($data->data->get_amount,2).' '. $data->data->sender_wallet->code)
+            ->line("Will Get: " . getAmount($data->data->will_get,2).' '. $data->data->sender_wallet->code)
             ->line("Total Payable Amount: " . getAmount($data->data->payable_amount,2).' '. $data->data->sender_wallet->code)
             ->line("Transaction Id: " .$trx_id)
             ->line("Status: Success")

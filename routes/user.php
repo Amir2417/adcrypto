@@ -64,6 +64,9 @@ Route::prefix("user")->name("user.")->group(function(){
     Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('check/wallet/address','checkWalletAddress')->name('check.address.exist');
+        Route::post('store','store')->name('store');
+        Route::get('preview/{identifier}','preview')->name('preview');
+        Route::post('confirm/{identifier}','confirm')->name('confirm');
     });
 
     //exchange crypto

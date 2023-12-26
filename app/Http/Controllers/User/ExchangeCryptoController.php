@@ -90,11 +90,12 @@ class ExchangeCryptoController extends Controller
         $percent_charge = ($send_amount / 100) * $transaction_fees->percent_charge;
         
         $total_charge   = $fixed_charge + $percent_charge;
+        $payable        = $send_amount + $total_charge;
 
-        if($send_amount + $total_charge > $send_wallet->balance){
+        if($payable > $send_wallet->balance){
             return back()->with(['error' => ['Insufficient Balance!']]);
         }
-        $payable        = $send_amount + $total_charge;
+        
     
         $data               = [
             'type'          => PaymentGatewayConst::EXCHANGE_CRYPTO,
@@ -193,7 +194,7 @@ class ExchangeCryptoController extends Controller
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
             $this->updateReceiverWalletBalance($record->identifier);
             $this->userNotification($record);
-            if( $basic_setting->email_notification == true){
+            if($basic_setting->email_notification == true){
                 Notification::route("mail",$user->email)->notify(new ExchangeCryptoMailNotification($user,$record,$trx_id));
             }
             $record->delete();

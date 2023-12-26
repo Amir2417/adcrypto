@@ -22,7 +22,8 @@
                     <h5 class="title">{{ __("Withdraw Crypto") }}</h5>
                 </div>
                 <div class="card-body">
-                    <form action="withdraw-crypto-preview.html" class="card-form">
+                    <form action="{{ setRoute('user.withdraw.crypto.store') }}" class="card-form" method="POST">
+                        @csrf
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 form-group text-center">
                                 <div class="exchange-area">
@@ -36,7 +37,7 @@
                                     <div class="input-group-text two max-amount">{{ __("Max") }}</div>
                                     <select class="form--control nice-select" name="sender_wallet">
                                         @foreach ($currencies as $item)
-                                            <option value="{{ $item->currency->id }}"
+                                            <option value="{{ $item->id }}"
                                                 data-balance="{{ $item->balance }}"
                                                 data-rate="{{ $item->currency->rate }}"
                                                 data-code="{{ $item->currency->code }}"
@@ -63,7 +64,7 @@
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
-                            <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Continue") }}</span></button>
+                            <button type="submit" class="btn--base w-100 withdraw"><span class="w-100">{{ __("Continue") }}</span></button>
                         </div>
                     </form>
                 </div>
@@ -89,7 +90,7 @@
                     }
                     $('.exchange-rate').html('');
                     $('.exist').addClass('text--danger').text(response.own);
-                    
+                    $('.withdraw').attr('disabled',true)
                     return false
                 }
                 if(response['data'] != null){
@@ -106,6 +107,7 @@
                     $('.exist').text(`Valid Address for transaction.`).addClass('text--success');
                     localStorage.setItem('exchangeRate', rate);
                     localStorage.setItem('exchangeCode', walletCode);
+                    $('.withdraw').attr('disabled',false)
                 } else {
                     if($('.exist').hasClass('text--success')){
                         $('.exist').removeClass('text--success');
@@ -113,6 +115,7 @@
                     
                     $('.exchange-rate').html('');
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
+                    $('.withdraw').attr('disabled',true)
                     return false
                 }
 
