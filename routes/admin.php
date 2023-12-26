@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\CoinController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\CookieController;
 use App\Http\Controllers\Admin\CryptoAssetController;
+use App\Http\Controllers\Admin\ExchangeCryptoLogController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MoneyOutController;
@@ -117,6 +118,15 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //withdraw crypto logs
     Route::controller(WithdrawCryptoLogController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
+        Route::get('index','index')->name('all');
+        Route::get('pending','pending')->name('pending');
+        Route::get('confirm','confirm')->name('confirm');
+        Route::get('complete','complete')->name('complete');
+        Route::get('canceled', 'canceled')->name('canceled');
+    });
+
+    //exchange crypto logs
+    Route::controller(ExchangeCryptoLogController::class)->prefix('exchange-crypto')->name('exchange.crypto.')->group(function(){
         Route::get('index','index')->name('all');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
