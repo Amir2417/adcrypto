@@ -16,7 +16,7 @@
 @section('content')
 <div class="body-wrapper">
     <div class="row justify-content-center mt-30">
-        <div class="col-xxl-6 col-xl-8 col-lg-8">
+        <div class="col-xxl-8 col-xl-8 col-lg-12">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
                     <h5 class="title">{{ __("Withdraw Crypto") }}</h5>
@@ -26,10 +26,10 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 form-group text-center">
                                 <div class="exchange-area">
-                                    <code class="d-block text-center"><span>Exchange Rate</span> 1 USD = 1.00000000 USDT</code>
+                                    <code class="d-block text-center exchange-rate"></code>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-lg-6 form-group">
+                            <div class="col-xl-4 col-lg-5 form-group">
                                 <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
                                     <input type="text" class="form--control amount number-input" name="amount" placeholder="Enter Amount...">
@@ -46,12 +46,14 @@
                                 </div>
                                 <code class="d-block mt-10 available-balance"></code>
                             </div>
-                            <div class="col-xl-6 col-lg-6 form-group">
+                            <div class="col-xl-8 col-lg-7 form-group">
                                 <label>{{ __("Wallet Address") }}<span>*</span></label>
                                 <div class="input-group">
                                     <input type="text" class="form--control checkAddress" name="wallet_address" placeholder="Enter or Paste Address...">
                                     <div class="input-group-text"><i class="las la-paste"></i></div>
+                                    
                                 </div>
+                                <label class="exist text-start"></label>
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <div class="note-area">
@@ -81,15 +83,47 @@
 
             }
             $.post(url,data,function(response) {
-                
+                if(response.own){
+                    if($('.exist').hasClass('text--success')){
+                        $('.exist').removeClass('text--success');
+                    }
+                    $('.exchange-rate').html('');
+                    $('.exist').addClass('text--danger').text(response.own);
+                    
+                    return false
+                }
+                if(response['data'] != null){
+                    if($('.exist').hasClass('text--danger')){
+                        $('.exist').removeClass('text--danger');
+                    }
+                    var walletRate     = response['data'].currency.rate;
+                    var walletCode     = response['data'].currency.code;
+                    var senderRate     = selectedValue().senderRate;
+                    var senderCode     = selectedValue().senderCurrency;
+                    var rate           = walletRate / senderRate;
+                    $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(senderRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
+
+                    $('.exist').text(`Valid Address for transaction.`).addClass('text--success');
+                    localStorage.setItem('exchangeRate', rate);
+                    localStorage.setItem('exchangeCode', walletCode);
+                } else {
+                    if($('.exist').hasClass('text--success')){
+                        $('.exist').removeClass('text--success');
+                    }
+                    
+                    $('.exchange-rate').html('');
+                    $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
+                    return false
+                }
 
             });
         });
         $(document).ready(function () {
-            getExchangePreview();
+            getPreview();
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();
+            getPreview();
             getExchangePreview();
             chargeCalculation(amount);
         });
@@ -115,7 +149,7 @@
         });
 
         // function for preview
-        function getExchangePreview(){
+        function getPreview(){
             var walletBalance       = selectedValue().senderBalance;
             var currency            = selectedValue().senderCurrency;
             var rate                = selectedValue().senderRate;
@@ -123,9 +157,22 @@
             var maxLimit            = '{{ $transaction_fees->max_limit }}';
             var totalMinLimit       = minLimit * rate;
             var totalMaxLimit       = maxLimit * rate;
+            
 
             $('.available-balance').text("Available Balance "+ " " + parseFloat(walletBalance).toFixed(2) + " " + currency);
             $('.limit').text("Limit "+ ":" + " " + parseFloat(totalMinLimit).toFixed(2) + " " + currency + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(2) + " " + currency);
+            
+        }
+
+        // get exchange preview
+        function getExchangePreview(){
+            var currency            = selectedValue().senderCurrency;
+            var rate                = selectedValue().senderRate;
+            var convertRate         = rate / rate;
+            let exchangeRate        = localStorage.getItem('exchangeRate');
+            let walletCode          = localStorage.getItem('exchangeCode');
+            var newRate             = exchangeRate / rate;
+            $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(convertRate) + " " + currency + " = " + parseFloat(newRate).toFixed(6) + " " + walletCode);
         }
 
         // function charge calculation

@@ -28,6 +28,17 @@ class UserSeeder extends Seeder
                 'sms_verified'      => true,
                 'created_at'        => now(),
             ],
+            [
+                'firstname'         => "App",
+                'lastname'          => "Devs",
+                'email'             => "user1@appdevs.net",
+                'username'          => "appdevs",
+                'status'            => true,
+                'password'          => Hash::make("appdevs"),
+                'email_verified'    => true,
+                'sms_verified'      => true,
+                'created_at'        => now(),
+            ],
         ];
 
         User::insert($data);
