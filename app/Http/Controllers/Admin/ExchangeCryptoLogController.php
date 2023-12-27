@@ -77,21 +77,21 @@ class ExchangeCryptoLogController extends Controller
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new ExchangeCryptoMailNotification($form_data));
             }
-            if(auth()->check()){
-                UserNotification::create([
-                    'user_id'  => $transaction->user_id,
-                    'message'       => [
-                        'title'     => "Exchange Crypto",
-                        'wallet'    => $transaction->details->data->sender_wallet->name,
-                        'code'      => $transaction->details->data->sender_wallet->code,
-                        'amount'    => $transaction->amount,
-                        'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
-                        'success'   => "Successfully Request Send."
-                    ],
-                ]);
-            }
-        }catch(Exception $e){
             
+            UserNotification::create([
+                'user_id'  => $transaction->user_id,
+                'message'       => [
+                    'title'     => "Exchange Crypto",
+                    'wallet'    => $transaction->details->data->sender_wallet->name,
+                    'code'      => $transaction->details->data->sender_wallet->code,
+                    'amount'    => $transaction->amount,
+                    'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
+                    'success'   => "Successfully Request Send."
+                ],
+            ]);
+           
+        }catch(Exception $e){
+            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return back()->with(['success' => ['Transaction Status updated successfully']]);
