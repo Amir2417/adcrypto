@@ -465,6 +465,7 @@ class PaymentGateway {
             $user = auth()->guard(get_auth_guard())->user();
         }
         $inserted_id = $this->$record_handler($output,$status);
+        $trx_id     = Transaction::where('id',$inserted_id)->first();
         // $this->insertCharges($output,$inserted_id);
         $data = TemporaryData::where('identifier',$output['form_data']['identifier'])->first();
         UserNotification::create([
@@ -475,10 +476,11 @@ class PaymentGateway {
                 'wallet'    => $data->data->wallet->name,
                 'code'      => $data->data->wallet->code,
                 'amount'    => $data->data->amount,
+                'status'    => $trx_id->status,
                 'success'   => "Successfully Added."
             ],
         ]);
-        $trx_id     = Transaction::where('id',$inserted_id)->first();
+        
         
         if($basic_setting->email_notification == true){
            Notification::route("mail",$user->email)->notify(new BuyCryptoMailNotification($user,$output,$trx_id->trx_id));
@@ -574,9 +576,7 @@ class PaymentGateway {
         $location = geoip()->getLocation($client_ip);
         $agent = new Agent();
 
-        // $mac = exec('getmac');
-        // $mac = explode(" ",$mac);
-        // $mac = array_shift($mac);
+
         $mac = "";
 
         DB::beginTransaction();

@@ -7,18 +7,20 @@ use App\Models\User;
 use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Models\UserNotification;
+use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
-use App\Models\Admin\BasicSettings;
 use App\Models\Admin\TransactionSetting;
-use App\Notifications\User\WithdrawCryptoMailNotification;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\User\WithdrawCryptoMailNotification;
 
 class WithdrawCryptoController extends Controller
 {
@@ -185,10 +187,11 @@ class WithdrawCryptoController extends Controller
         ];
 
         try{
-            Transaction::create($transaction_data);
+            $transaction = Transaction::create($transaction_data);
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
             $this->updateReceiverWalletBalance($receiver_wallet,$data->data->will_get);
             $this->userNotification($data);
+            $this->transactionDevice($transaction);
             if($basic_setting->email_notification == true){
                 Notification::route('mail',$user->email)->notify(new WithdrawCryptoMailNotification($user,$data,$trx_id));
             }
@@ -223,9 +226,38 @@ class WithdrawCryptoController extends Controller
                 'wallet'    => $data->data->sender_wallet->name,
                 'code'      => $data->data->sender_wallet->code,
                 'amount'    => $data->data->amount,
+                'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
                 'success'   => "Successfully Request Send."
             ],
         ]);
+    }
+
+    // transaction device
+    function transactionDevice($transaction){
+        $client_ip = request()->ip() ?? false;
+        $location = geoip()->getLocation($client_ip);
+        $agent = new Agent();
+        $mac = "";
+
+        DB::beginTransaction();
+        try{
+            DB::table("transaction_devices")->insert([
+                'transaction_id'=> $transaction->id,
+                'ip'            => $client_ip,
+                'mac'           => $mac,
+                'city'          => $location['city'] ?? "",
+                'country'       => $location['country'] ?? "",
+                'longitude'     => $location['lon'] ?? "",
+                'latitude'      => $location['lat'] ?? "",
+                'timezone'      => $location['timezone'] ?? "",
+                'browser'       => $agent->browser() ?? "",
+                'os'            => $agent->platform() ?? "",
+            ]);
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 
 

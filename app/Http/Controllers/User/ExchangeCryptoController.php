@@ -6,16 +6,18 @@ use Exception;
 use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
 use App\Models\UserNotification;
+use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
-use App\Notifications\User\ExchangeCryptoMailNotification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\User\ExchangeCryptoMailNotification;
 
 class ExchangeCryptoController extends Controller
 {
@@ -189,11 +191,12 @@ class ExchangeCryptoController extends Controller
         ];
 
         try{
-            Transaction::create($data);
+            $transaction = Transaction::create($data);
             
             $this->updateSenderWalletBalance($sender_wallet,$available_balance);
             $this->updateReceiverWalletBalance($record->identifier);
             $this->userNotification($record);
+            $this->transactionDevice($transaction);
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$user->email)->notify(new ExchangeCryptoMailNotification($user,$record,$trx_id));
             }
@@ -229,6 +232,7 @@ class ExchangeCryptoController extends Controller
         ]);
     }
 
+    //user notification
     function userNotification($record){
         UserNotification::create([
             'user_id'       => auth()->user()->id,
@@ -237,9 +241,40 @@ class ExchangeCryptoController extends Controller
                 'wallet'    => $record->data->sender_wallet->name,
                 'code'      => $record->data->sender_wallet->code,
                 'amount'    => $record->data->sending_amount,
+                'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
                 'success'   => "Successfully Request Send."
             ],
         ]);
+    }
+
+    // transaction device
+    function transactionDevice($transaction){
+        $client_ip = request()->ip() ?? false;
+        $location = geoip()->getLocation($client_ip);
+        $agent = new Agent();
+
+
+        $mac = "";
+
+        DB::beginTransaction();
+        try{
+            DB::table("transaction_devices")->insert([
+                'transaction_id'=> $transaction->id,
+                'ip'            => $client_ip,
+                'mac'           => $mac,
+                'city'          => $location['city'] ?? "",
+                'country'       => $location['country'] ?? "",
+                'longitude'     => $location['lon'] ?? "",
+                'latitude'      => $location['lat'] ?? "",
+                'timezone'      => $location['timezone'] ?? "",
+                'browser'       => $agent->browser() ?? "",
+                'os'            => $agent->platform() ?? "",
+            ]);
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 
 }

@@ -39,32 +39,20 @@
                                 <td><span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></td>
                                 <td>{{ get_amount($item->amount,$item->details->data->sender_wallet->code) }}</td>
                                 <td>
-                                    @if ($item->status == global_const()::STATUS_REVIEW_PAYMENT)
-                                    <span>{{ __("Review Payment") }}</span> 
-                                @elseif ($item->status == global_const()::STATUS_PENDING)
-                                    <span>{{ __("Pending") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
-                                    <span>{{ __("Confirm Payment") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_HOLD)
-                                    <span>{{ __("On Hold") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_SETTLED)
-                                    <span>{{ __("Settled") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_COMPLETE)
-                                    <span>{{ __("Completed") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_CANCEL)
-                                    <span>{{ __("Canceled") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_FAILED)
-                                    <span>{{ __("Failed") }}</span>
-                                @elseif ($item->status == global_const()::STATUS_REFUND)
-                                    <span>{{ __("Refunded") }}</span>
-                                @else
-                                    <span>{{ __("Delayed") }}</span>
-                                @endif
+                                    @if ($item->status == global_const()::STATUS_PENDING)
+                                        <span>{{ __("Pending") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
+                                        <span>{{ __("Confirm Payment") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_COMPLETE)
+                                        <span>{{ __("Completed") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_CANCEL)
+                                        <span>{{ __("Canceled") }}</span>
+                                    @else
+                                        <span>{{ __("Delayed") }}</span>
+                                    @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                    <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                    <a href="out-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
+                                    <a href="{{ setRoute('admin.exchange.crypto.details',$item->id) }}" class="btn btn--base btn--primary"><i class="las la-info-circle"></i></a>
                                 </td>
                             </tr>
                         @empty

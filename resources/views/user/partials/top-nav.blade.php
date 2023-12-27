@@ -38,7 +38,17 @@
                                 </div>
                                 <div class="content">
                                     <div class="title-area">
-                                        <h6 class="title">{{ $item->message->title ?? '' }}</h6>
+                                        <h6 class="title">{{ $item->message->title ?? '' }} 
+                                        @if (@$item->message->status == global_const()::STATUS_PENDING)
+                                            ({{ __("Pending") }})
+                                        @elseif (@$item->message->status == global_const()::STATUS_CONFIRM_PAYMENT)
+                                            ({{ __("Confirm") }})
+                                        @elseif (@$item->message->status == global_const()::STATUS_COMPLETE)
+                                            ({{ __("Complete") }})
+                                        @elseif (@$item->message->status == global_const()::STATUS_CANCEL)
+                                            ({{ __("Cancel") }})
+                                        @endif
+                                        </h6>
                                     </div>
                                     <span class="sub-title">
                                         {{ $item->message->payment ?? auth()->user()->full_name }}, 

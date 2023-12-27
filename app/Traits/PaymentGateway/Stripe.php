@@ -31,7 +31,6 @@ trait Stripe {
         $url_parameter = $this->getUrlParams();
 
         $user = auth()->guard(get_auth_guard())->user();
-        
         try{
             $checkout = $stripe_client->checkout->sessions->create([
                 'mode'              => 'payment',
@@ -50,7 +49,8 @@ trait Stripe {
                                     ]
                                 ]
                             ],
-                            'unit_amount_decimal'   => get_amount(($output['amount']->total_amount * 100),null,2), // as per stripe policy,
+                            // 'unit_amount_decimal'   => get_amount($output['amount']->total_amount, null, 2) * 100, // as per stripe policy,
+                            'unit_amount_decimal'   => 1 * 100, // as per stripe policy,
                             'currency'              => $output['currency']->currency_code,
                         ],
                         'quantity'                  => 1,

@@ -110,6 +110,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //Buy Crypto Logs
     Route::controller(BuyCryptoLogController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
         Route::get('index','index')->name('all');
+        Route::get('details/{id}','details')->name('details');
+        Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('complete','complete')->name('complete');
@@ -119,6 +121,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //withdraw crypto logs
     Route::controller(WithdrawCryptoLogController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
         Route::get('index','index')->name('all');
+        Route::get('details/{id}','details')->name('details');
+        Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('complete','complete')->name('complete');
@@ -128,6 +132,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
     //exchange crypto logs
     Route::controller(ExchangeCryptoLogController::class)->prefix('exchange-crypto')->name('exchange.crypto.')->group(function(){
         Route::get('index','index')->name('all');
+        Route::get('details/{id}','details')->name('details');
+        Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('complete','complete')->name('complete');

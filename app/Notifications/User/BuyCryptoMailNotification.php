@@ -62,7 +62,6 @@ class BuyCryptoMailNotification extends Notification
             ->line("Will Get: " . getAmount($identifier_data->data->will_get,2).' '. $identifier_data->data->wallet->code)
             ->line("Total Payable Amount: " . getAmount($identifier_data->data->payable_amount,2).' '. $identifier_data->data->wallet->code)
             ->line("Transaction Id: " .$trx_id)
-            ->line("Status: Success")
             ->line("Date And Time: " .$dateTime)
             ->line('Thank you for using our application!');
     }

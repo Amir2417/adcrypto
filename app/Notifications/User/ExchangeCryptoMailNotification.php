@@ -61,7 +61,6 @@ class ExchangeCryptoMailNotification extends Notification
             ->line("Will Get: " . getAmount($data->data->get_amount,2).' '. $data->data->sender_wallet->code)
             ->line("Total Payable Amount: " . getAmount($data->data->payable_amount,2).' '. $data->data->sender_wallet->code)
             ->line("Transaction Id: " .$trx_id)
-            ->line("Status: Success")
             ->line("Date And Time: " .$dateTime)
             ->line('Thank you for using our application!');
     }
