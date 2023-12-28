@@ -89,27 +89,17 @@
                                     <h4 class="title">{{ __("Buy") }} <span>{{ $item->details->data->wallet->name ?? '' }} ({{ $item->details->data->wallet->code ?? '' }})</span></h4>
                                     <span class="sub-title text--danger">{{ $item->type ?? '' }} 
                                         <span class="badge badge--warning ms-2">
-                                            @if ($item->status == global_const()::STATUS_REVIEW_PAYMENT)
-                                                <span>{{ __("Review Payment") }}</span> 
-                                            @elseif ($item->status == global_const()::STATUS_PENDING)
-                                                <span>{{ __("Pending") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
-                                                <span>{{ __("Confirm Payment") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_HOLD)
-                                                <span>{{ __("On Hold") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_SETTLED)
-                                                <span>{{ __("Settled") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_COMPLETE)
-                                                <span>{{ __("Completed") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_CANCEL)
-                                                <span>{{ __("Canceled") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_FAILED)
-                                                <span>{{ __("Failed") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_REFUND)
-                                                <span>{{ __("Refunded") }}</span>
-                                            @else
-                                                <span>{{ __("Delayed") }}</span>
-                                            @endif
+                                        @if ($item->status == global_const()::STATUS_PENDING)
+                                            <span>{{ __("Pending") }}</span>
+                                        @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
+                                            <span>{{ __("Confirm Payment") }}</span>
+                                        @elseif ($item->status == global_const()::STATUS_COMPLETE)
+                                            <span>{{ __("Completed") }}</span>
+                                        @elseif ($item->status == global_const()::STATUS_CANCEL)
+                                            <span>{{ __("Canceled") }}</span>
+                                        @else
+                                            <span>{{ __("Delayed") }}</span>
+                                        @endif
                                         </span>
                                     </span>
                                 </div>

@@ -22,7 +22,7 @@ class ExchangeCryptoLogController extends Controller
      */
     public function index(){
         $page_title     = "All Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->get();
         
         return view('admin.sections.crypto-logs.exchange-crypto.all',compact(
             'page_title',
@@ -64,7 +64,7 @@ class ExchangeCryptoLogController extends Controller
         }
 
         $validated = $validator->validate();
-        $transaction   = Transaction::with(['user','user_wallets','currency'])->where('trx_id',$trx_id)->first();
+        $transaction   = Transaction::with(['user','user_wallets'])->where('trx_id',$trx_id)->first();
         
         $form_data = [
             'data'        => $transaction,
@@ -85,13 +85,12 @@ class ExchangeCryptoLogController extends Controller
                     'wallet'    => $transaction->details->data->sender_wallet->name,
                     'code'      => $transaction->details->data->sender_wallet->code,
                     'amount'    => $transaction->amount,
-                    'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
+                    'status'    => $validated['status'],
                     'success'   => "Successfully Request Send."
                 ],
             ]);
            
         }catch(Exception $e){
-            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return back()->with(['success' => ['Transaction Status updated successfully']]);
@@ -101,7 +100,7 @@ class ExchangeCryptoLogController extends Controller
      */
     public function pending(){
         $page_title     = "Pending Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->where('status',global_const()::STATUS_PENDING)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_PENDING)->get();
 
         return view('admin.sections.crypto-logs.exchange-crypto.pending',compact(
             'page_title',
@@ -113,7 +112,7 @@ class ExchangeCryptoLogController extends Controller
      */
     public function confirm(){
         $page_title     = "Confirm Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->get();
 
         return view('admin.sections.crypto-logs.exchange-crypto.confirm',compact(
             'page_title',
@@ -125,7 +124,7 @@ class ExchangeCryptoLogController extends Controller
      */
     public function complete(){
         $page_title     = "Complete Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->where('status',global_const()::STATUS_COMPLETE)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_COMPLETE)->get();
 
         return view('admin.sections.crypto-logs.exchange-crypto.complete',compact(
             'page_title',
@@ -137,7 +136,7 @@ class ExchangeCryptoLogController extends Controller
      */
     public function canceled(){
         $page_title     = "Canceled Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->where('status',global_const()::STATUS_CANCEL)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_CANCEL)->get();
 
         return view('admin.sections.crypto-logs.exchange-crypto.cancel',compact(
             'page_title',

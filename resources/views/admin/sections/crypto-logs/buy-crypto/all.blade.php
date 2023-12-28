@@ -29,6 +29,7 @@
                         <tr>
                             <th>{{ __("S. Wallet") }}</th>
                             <th>{{ __("Amount") }}</th>
+                            <th>{{ __("P. Method") }}</th>
                             <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
@@ -37,7 +38,8 @@
                         @forelse ($transactions as $item)
                             <tr>
                                 <td><span>{{ $item->details->data->wallet->name ?? '' }}</span></td>
-                                <td>{{ get_amount($item->amount,$item->details->data->wallet->code) }}</td>
+                                <td>{{ get_amount($item->amount,$item->details->data->wallet->code,8) }}</td>
+                                <td>{{ $item->currency->name ?? '' }} @if($item->currency->gateway->isManual()) ({{ __("Manual") }}) @endif</td>
                                 <td>
                                    
                                     @if ($item->status == global_const()::STATUS_PENDING)

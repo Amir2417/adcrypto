@@ -54,7 +54,7 @@
                                         <div class="custom-select-search-box">
                                             <div class="custom-select-search-wrapper">
                                                 <button type="submit" class="search-btn"><i class="las la-search"></i></button>
-                                                <input type="text" class="form--control custom-select-search" placeholder="Search Here...">
+                                                <input type="text" class="form--control custom-select-search" placeholder="{{ __("Search Here") }}...">
                                             </div>
                                         </div>
                                         <div class="custom-select-list-wrapper">
@@ -73,21 +73,20 @@
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group network-field">
                                 <label>{{ __("Select Network") }}<span>*</span></label>
-                                <select class="select2-basic" name="network">
-                                    
+                                <select class="select2-basic" name="network">    
                                 </select>
                             </div>
                             <div class="col-xl-12 form-group" style="display: none;" data-switcher="deactive">
                                 <label>{{ __("Crypto Address") }}<span>*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form--control" name="wallet_address" id="cryptoAddress" placeholder="Enter or Paste Address...">
+                                    <input type="text" class="form--control" name="wallet_address" id="cryptoAddress" placeholder="{{ __("Enter or Paste Address") }}...">
                                     <div class="input-group-text" id="paste-address" onclick="pasteClipboard()"><i class="las la-paste"></i></div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control number-input" name="amount" placeholder="Enter Amount...">
+                                    <input type="text" class="form--control number-input" name="amount" placeholder="{{ __("Enter Amount") }}...">
                                     <div class="input-group-text currency-code"></div>
                                 </div>
                                 <code class="d-block mt-2 min-amount"></code>
@@ -97,13 +96,13 @@
                                 <select class="select2-basic" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
                                         <option 
-                                                value="{{ $item->id  }}"
-                                                data-currency="{{ $item->currency_code }}"
-                                                data-min_amount="{{ $item->min_limit }}"
-                                                data-max_amount="{{ $item->max_limit }}"
-                                                data-percent_charge="{{ $item->percent_charge }}"
-                                                data-fixed_charge="{{ $item->fixed_charge }}"
-                                                data-rate="{{ $item->rate }}"
+                                            value="{{ $item->id  }}"
+                                            data-currency="{{ $item->currency_code }}"
+                                            data-min_amount="{{ $item->min_limit }}"
+                                            data-max_amount="{{ $item->max_limit }}"
+                                            data-percent_charge="{{ $item->percent_charge }}"
+                                            data-fixed_charge="{{ $item->fixed_charge }}"
+                                            data-rate="{{ $item->rate }}"
                                         >{{ $item->name ?? '' }} @if ($item->gateway->isManual())
                                             (Manual)
                                         @endif</option>
@@ -199,19 +198,17 @@
     //get network function
     function getNetwork(currency,currencyCode){
         var getNetworkURL   = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
-        $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){
-                
-                var networkOption = '';
-                if(response.data.currency.networks.length > 0){
-                    $.each(response.data.currency.networks,function(index,item){
-                        
-                        networkOption += `<option value="${item.network_id}">
-                            ${item.network.name} (Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
-                        `;
-                    });
-                    $('select[name=network]').html(networkOption);
-                    $('select[name=network]').select2();
-                }
+        $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){    
+            var networkOption = '';
+            if(response.data.currency.networks.length > 0){
+                $.each(response.data.currency.networks,function(index,item){
+                    networkOption += `<option value="${item.network_id}">
+                        ${item.network.name} (Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
+                    `;
+                });
+                $('select[name=network]').html(networkOption);
+                $('select[name=network]').select2();
+            }
         })
     }
 

@@ -37,7 +37,7 @@
                         @forelse ($transactions as $item)
                             <tr>
                                 <td><span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></td>
-                                <td>{{ get_amount($item->amount,$item->details->data->sender_wallet->code) }}</td>
+                                <td>{{ get_amount($item->amount,$item->details->data->sender_wallet->code,8) }}</td>
                                 <td>
                                     @if ($item->status == global_const()::STATUS_PENDING)
                                         <span>{{ __("Pending") }}</span>
@@ -52,9 +52,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                    <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                    <a href="out-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
+                                    <a href="{{ setRoute('admin.withdraw.crypto.details',$item->id) }}" class="btn btn--base btn--primary"><i class="las la-info-circle"></i></a>
                                 </td>
                             </tr>
                         @empty

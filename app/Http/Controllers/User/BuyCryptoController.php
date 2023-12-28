@@ -49,7 +49,6 @@ class BuyCryptoController extends Controller
             'payment_gateway'
         ));
     }
-
     /**
      * Method for get networks
      * @param string $currency

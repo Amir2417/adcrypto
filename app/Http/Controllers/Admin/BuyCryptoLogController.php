@@ -22,7 +22,7 @@ class BuyCryptoLogController extends Controller
      */
     public function index(){
         $page_title     = "All Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
 
         return view('admin.sections.crypto-logs.buy-crypto.all',compact(
             'page_title',
@@ -37,7 +37,6 @@ class BuyCryptoLogController extends Controller
         $page_title     = "Buy Crypto Log Details";
         $transaction    = Transaction::with(['user','user_wallets','currency'])->where('id',$id)->first();
         $transaction_device = TransactionDevice::where('transaction_id',$id)->first();
-        
         if(!$transaction) return back()->with(['error' => ['Data not found']]);
 
         return view('admin.sections.crypto-logs.buy-crypto.details',compact(
@@ -74,25 +73,28 @@ class BuyCryptoLogController extends Controller
             $transaction->update([
                 'status' => $validated['status'],
             ]);
+            if($validated['status'] == global_const()::STATUS_CONFIRM_PAYMENT && $transaction->currency->gateway->isManual()){
+                $transaction->user_wallets->update([
+                    'balance'   => $transaction->user_wallets->balance + $transaction->amount,
+                ]);
+            }
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new BuyCryptoMailNotification($form_data));
             }
-            if(auth()->check()){
-                UserNotification::create([
-                    'user_id'  => $transaction->user_id,
-                    'message'       => [
-                        'title'     => "Buy Crypto",
-                        'payment'   => $transaction->details->data->payment_method->name,
-                        'wallet'    => $transaction->details->data->wallet->name,
-                        'code'      => $transaction->details->data->wallet->code,
-                        'amount'    => $transaction->details->data->amount,
-                        'status'    => $validated['status'],
-                        'success'   => "Successfully Added."
-                    ],
-                ]);
-            }
-        }catch(Exception $e){
             
+            UserNotification::create([
+                'user_id'  => $transaction->user_id,
+                'message'       => [
+                    'title'     => "Buy Crypto",
+                    'payment'   => $transaction->details->data->payment_method->name,
+                    'wallet'    => $transaction->details->data->wallet->name,
+                    'code'      => $transaction->details->data->wallet->code,
+                    'amount'    => $transaction->details->data->amount,
+                    'status'    => $validated['status'],
+                    'success'   => "Successfully Added."
+                ],
+            ]);
+        }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return back()->with(['success' => ['Transaction Status updated successfully']]);
@@ -102,7 +104,7 @@ class BuyCryptoLogController extends Controller
      */
     public function pending(){
         $page_title     = "Pending Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->where('status',global_const()::STATUS_PENDING)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_PENDING)->get();
 
         return view('admin.sections.crypto-logs.buy-crypto.pending',compact(
             'page_title',
@@ -114,7 +116,7 @@ class BuyCryptoLogController extends Controller
      */
     public function confirm(){
         $page_title     = "Confirm Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->get();
 
         return view('admin.sections.crypto-logs.buy-crypto.confirm',compact(
             'page_title',
@@ -126,7 +128,7 @@ class BuyCryptoLogController extends Controller
      */
     public function complete(){
         $page_title     = "Complete Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->where('status',global_const()::STATUS_COMPLETE)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_COMPLETE)->get();
 
         return view('admin.sections.crypto-logs.buy-crypto.complete',compact(
             'page_title',
@@ -138,7 +140,7 @@ class BuyCryptoLogController extends Controller
      */
     public function canceled(){
         $page_title     = "Canceled Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->where('status',global_const()::STATUS_CANCEL)->get();
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_CANCEL)->get();
 
         return view('admin.sections.crypto-logs.buy-crypto.cancel',compact(
             'page_title',

@@ -51,6 +51,7 @@ class WithdrawCryptoMailNotification extends Notification
         
         $date = Carbon::now();
         $dateTime = $date->format('Y-m-d h:i:s A');
+        
         return (new MailMessage)
             ->greeting("Hello ".$user->fullname." !")
             ->subject("Withdraw Crypto Via ". $data->data->sender_wallet->name)

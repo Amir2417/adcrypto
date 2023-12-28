@@ -58,6 +58,8 @@ Route::prefix("user")->name("user.")->group(function(){
     //sell crypto
     Route::controller(SellCryptoController::class)->prefix('sell-crypto')->name('sell.crypto.')->group(function(){
         Route::get('/','index')->name('index');
+        Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
+        Route::post('store','store')->name('store');
     });
 
     //withdraw crypto
