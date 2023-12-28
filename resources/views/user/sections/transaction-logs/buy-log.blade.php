@@ -172,7 +172,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--danger">{{ get_amount($item->total_charge) ?? '' }} {{ $item->details->data->wallet->code ?? '' }}</span>
+                                <span class="text--danger">{{ get_amount($item->total_charge,$item->details->data->wallet->code,4) ?? '' }}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -187,7 +187,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="last">{{ get_amount($item->total_payable) ?? '' }} {{ $item->details->data->wallet->code ?? '' }}</span>
+                                <span class="last">{{ get_amount($item->total_payable,$item->details->data->wallet->code,8) ?? '' }}</span>
                             </div>
                         </div>
                         @if ($item->currency->gateway->isTatum($item->currency->gateway) && $item->status == global_const()::STATUS_PENDING)
