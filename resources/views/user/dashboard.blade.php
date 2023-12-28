@@ -254,18 +254,15 @@
                                     @php
                                         $input_fields = $item->details->payment_info->requirements ?? [];
                                     @endphp
-
                                     @foreach ($input_fields as $input)
                                         <div class="">
                                             <h4 class="mb-0">{{ $input->label }}</h4>
                                             <input type="text" class="form-control" name="{{ $input->name }}" placeholder="{{ $input->placeholder ?? "" }}">
                                         </div>
                                     @endforeach
-
                                     <div class="text-end">
                                         <button type="submit" class="btn--base my-2">{{ __("Process") }}</button>
                                     </div>
-
                                 </form>
                             </div>
                         @endif
@@ -275,7 +272,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 @push('script')
 <script>
