@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="dashboard-list-right">
-                            <h4 class="main-money text--base mb-0">{{ get_amount($item->amount) ?? '' }} {{ $item->details->data->wallet->code ?? '' }}</h4>
+                            <h4 class="main-money text--base mb-0">{{ get_amount($item->amount,$item->details->data->wallet->code,8) ?? '' }}</h4>
                         </div>
                     </div>
                     <div class="preview-list-wrapper">
