@@ -115,6 +115,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
+        Route::get('rejected','rejected')->name('rejected');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 
@@ -126,6 +127,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
+        Route::get('rejected','rejected')->name('rejected');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 
@@ -137,6 +139,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
+        Route::get('rejected','rejected')->name('rejected');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 

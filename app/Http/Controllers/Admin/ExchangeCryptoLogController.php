@@ -170,13 +170,14 @@ class ExchangeCryptoLogController extends Controller
         ));
     }
     /**
-     * Method for complete exchange crypto logs
+     * Method for rejected exchange crypto logs
      */
-    public function complete(){
-        $page_title     = "Complete Exchange Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_COMPLETE)->get();
+    public function rejected(){
+        $page_title     = "Rejected Exchange Crypto Logs";
+        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)
+                            ->orderBy('id','desc')->where('status',global_const()::STATUS_REJECT)->get();
 
-        return view('admin.sections.crypto-logs.exchange-crypto.complete',compact(
+        return view('admin.sections.crypto-logs.exchange-crypto.reject',compact(
             'page_title',
             'transactions'
         ));

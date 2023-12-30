@@ -176,13 +176,13 @@ class BuyCryptoLogController extends Controller
         ));
     }
     /**
-     * Method for complete buy crypto logs
+     * Method for rejected buy crypto logs
      */
-    public function complete(){
-        $page_title     = "Complete Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_COMPLETE)->get();
+    public function rejected(){
+        $page_title     = "Rejected Buy Crypto Logs";
+        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_REJECT)->get();
 
-        return view('admin.sections.crypto-logs.buy-crypto.complete',compact(
+        return view('admin.sections.crypto-logs.buy-crypto.reject',compact(
             'page_title',
             'transactions'
         ));

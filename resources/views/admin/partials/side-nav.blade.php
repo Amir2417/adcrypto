@@ -128,6 +128,10 @@
                                         'route'     => "admin.buy.crypto.confirm",
                                     ],
                                     [
+                                        'title'     => "Rejected Logs",
+                                        'route'     => "admin.buy.crypto.rejected",
+                                    ],
+                                    [
                                         'title'     => "Canceled Logs",
                                         'route'     => "admin.buy.crypto.canceled", 
                                     ],
@@ -150,6 +154,10 @@
                                         'route'     => "admin.withdraw.crypto.confirm",
                                     ],
                                     [
+                                        'title'     => "Rejected Logs",
+                                        'route'     => "admin.withdraw.crypto.rejected",
+                                    ],
+                                    [
                                         'title'     => "Canceled Logs",
                                         'route'     => "admin.withdraw.crypto.canceled", 
                                     ],
@@ -170,6 +178,10 @@
                                     [
                                         'title'     => "Confirm Logs",
                                         'route'     => "admin.exchange.crypto.confirm",
+                                    ],
+                                    [
+                                        'title'     => "Rejected Logs",
+                                        'route'     => "admin.exchange.crypto.rejected",
                                     ],
                                     [
                                         'title'     => "Canceled Logs",

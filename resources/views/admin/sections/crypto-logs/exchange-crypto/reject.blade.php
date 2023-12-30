@@ -14,14 +14,14 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Complete Exchange Crypto Logs")])
+    ], 'active' => __("Rejected Exchange Crypto Logs")])
 @endsection
 
 @section('content')
     <div class="table-area">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">{{ ("Complete Exchange Crypto Logs") }}</h5>
+                <h5 class="title">{{ ("Rejected Exchange Crypto Logs") }}</h5>
             </div>
             <div class="table-responsive">
                 <table class="custom-table">
