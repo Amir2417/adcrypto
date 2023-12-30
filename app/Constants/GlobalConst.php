@@ -25,8 +25,8 @@ class GlobalConst {
  
     const STATUS_PENDING             = 1;
     const STATUS_CONFIRM_PAYMENT     = 2;
-    const STATUS_COMPLETE            = 3;
-    const STATUS_CANCEL              = 4;
+    const STATUS_CANCEL              = 3;
+    const STATUS_REJECT              = 4;
     
     const STATUS_ALL                 = "ALL";
 

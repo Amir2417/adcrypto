@@ -72,6 +72,24 @@
         <div class="transaction-area">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="title"><i class="fas fa-user text--base me-2"></i>{{ __("Payment Summary") }}</h4>
+                @if ($transaction->status  == global_const()::STATUS_PENDING)
+                    <div class="d-flex">
+                        @include('admin.components.link.status-update',[
+                            'text'          => "Confirm",
+                            'href'          => "#confirm",
+                            'class'         => "modal-btn",
+                        ])
+                        @include('admin.components.link.status-update',[
+                            'text'          => "Reject",
+                            'href'          => "#reject",
+                            'class'         => "modal-btn ms-1",
+                        ])
+                    </div>
+                @elseif($transaction->status  == global_const()::STATUS_CONFIRM_PAYMENT)
+                    <button class="btn--base">{{ __("Confirmed") }}</button>
+                @elseif($transaction->status  == global_const()::STATUS_REJECT)
+                    <button class="btn--base">{{ __("Rejected") }}</button>
+                @endif
             </div>
             <div class="content pt-0">
                 <div class="list-wrapper">
@@ -85,63 +103,71 @@
                                 <span>{{ __("Pending") }}</span>
                             @elseif ($transaction->status == global_const()::STATUS_CONFIRM_PAYMENT)
                                 <span>{{ __("Confirm Payment") }}</span>
-                            @elseif ($transaction->status == global_const()::STATUS_COMPLETE)
-                                <span>{{ __("Completed") }}</span>
                             @elseif ($transaction->status == global_const()::STATUS_CANCEL)
                                 <span>{{ __("Canceled") }}</span>
+                            @elseif ($transaction->status == global_const()::STATUS_REJECT)
+                                <span>{{ __("Rejected") }}</span>
                             @else
                                 <span>{{ __("Delayed") }}</span>
                             @endif
                         </li>
                         <li>{{ __("Remark") }} <span>{{ $transaction->remark ?? 'N/A' }}</span></li>
+                        @if ($transaction->reject_reason != null)
+                        <li>{{ __("Reject Reason") }} <span>{{ $transaction->reject_reason ?? 'N/A' }}</span></li>
+                        @endif
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <form action="{{ setRoute('admin.withdraw.crypto.status.update',$transaction->trx_id) }}" method="post">
-        @csrf
-        <div class="col-lg-12 mb-30">
-            <div class="transaction-area">
-                <h4 class="title"><i class="fas fa-user text--base me-2"></i>{{ __("Progress of Exchange Crypto Transactions") }}</h4>
-                <div class="content pt-0">
-                    <div class="radio-area d-flex justify-content-between mb-2">
-                        <div class="radio-wrapper">
-                            <div class="radio-item">
-                                <input type="radio" id="level-1" value="1" @if($transaction->status == global_const()::STATUS_PENDING) checked @endif name="status">
-                                <label for="level-1">{{ __("Pending") }}</label>
-                            </div>
-                        </div>
-                        <div class="radio-wrapper">
-                            <div class="radio-item">
-                                <input type="radio" id="level-2" value="2" @if($transaction->status == global_const()::STATUS_CONFIRM_PAYMENT) checked @endif name="status">
-                                <label for="level-2">{{ __("Confirm Payment") }}</label>
-                            </div>
-                        </div>
-                        
-                        <div class="radio-wrapper">
-                            <div class="radio-item">
-                                <input type="radio" id="level-3" value="3" @if($transaction->status == global_const()::STATUS_COMPLETE) checked @endif name="status">
-                                <label for="level-3">{{ __("Completed") }}</label>
-                            </div>
-                        </div>
-                        <div class="radio-wrapper">
-                            <div class="radio-item">
-                                <input type="radio" id="level-4" value="4" @if($transaction->status == global_const()::STATUS_CANCEL) checked @endif name="status">
-                                <label for="level-4">{{ __("Canceled") }}</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-12 col-lg-12 form-group">
-                        @include('admin.components.button.form-btn',[
-                            'class'         => "w-100 btn-loading",
-                            'text'          => "Update",
-                        ])
+</div>
+
+{{-- confirm modal --}}
+<div id="confirm" class="mfp-hide large">
+    <div class="modal-data">
+        <div class="modal-header px-0">
+            <h5 class="modal-title">{{ __("Transaction Number :") }} {{ $transaction->trx_id }}</h5>
+        </div>
+        <div class="modal-form-data">
+            <form class="modal-form" method="POST" action="{{ setRoute('admin.withdraw.crypto.status.update',$transaction->trx_id) }}">
+                @csrf
+                <div class="row mb-10-none">
+                    <h6>{{ __("Are you sure to CONFIRM this transaction?") }}</h6>
+                    <input type="hidden" name="status" value="{{ global_const()::STATUS_CONFIRM_PAYMENT }}">
+                    <div class="col-xl-12 col-lg-12 form-group d-flex align-items-center justify-content-between mt-4">
+                        <button type="button" class="btn btn--danger modal-close">{{ __("Cancel") }}</button>
+                        <button type="submit" class="btn btn--base">{{ __("Confirm") }}</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
-    </form>
-    
+    </div>
+</div>
+
+{{-- reject modal --}}
+<div id="reject" class="mfp-hide large">
+    <div class="modal-data">
+        <div class="modal-header px-0">
+            <h5 class="modal-title">{{ __("Transaction Number :") }} {{ $transaction->trx_id }}</h5>
+        </div>
+        <div class="modal-form-data">
+            <form class="modal-form" method="POST" action="{{ setRoute('admin.withdraw.crypto.reject',$transaction->trx_id) }}">
+                @csrf
+                <div class="row mb-10-none">
+                    <div class="col-xl-12 col-lg-12 form-group">
+                        @include('admin.components.form.textarea',[
+                            'label'         => 'Reject Reason',
+                            'name'          => 'reject_reason',
+                        ])
+                    </div>
+                    <input type="hidden" name="status" value="{{ global_const()::STATUS_REJECT }}">
+                    <div class="col-xl-12 col-lg-12 form-group d-flex align-items-center justify-content-between mt-4">
+                        <button type="button" class="btn btn--danger modal-close">{{ __("Cancel") }}</button>
+                        <button type="submit" class="btn btn--base">{{ __("Confirm") }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 @endsection

@@ -36,10 +36,10 @@
                                                 <span>{{ __("Pending") }}</span>
                                             @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
                                                 <span>{{ __("Confirm Payment") }}</span>
-                                            @elseif ($item->status == global_const()::STATUS_COMPLETE)
-                                                <span>{{ __("Completed") }}</span>
                                             @elseif ($item->status == global_const()::STATUS_CANCEL)
                                                 <span>{{ __("Canceled") }}</span>
+                                            @elseif ($item->status == global_const()::STATUS_REJECT)
+                                                <span>{{ __("Reject") }}</span>
                                             @else
                                                 <span>{{ __("Delayed") }}</span>
                                             @endif
@@ -211,6 +211,23 @@
 
                                 </form>
                             </div>
+                        @endif
+                        @if ($item->reject_reason != null)
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span class="last">{{ __("Reject Reason") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="last">{{ $item->reject_reason ?? '' }}</span>
+                            </div>
+                        </div>
                         @endif
                     </div>
                 </div>

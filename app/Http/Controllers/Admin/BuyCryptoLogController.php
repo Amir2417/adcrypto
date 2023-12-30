@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\BasicSettings;
 use App\Notifications\Admin\BuyCryptoMailNotification;
+use App\Notifications\Admin\CryptoRejectMailNotification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 
@@ -52,6 +53,7 @@ class BuyCryptoLogController extends Controller
      * @param Illuminate\Http\Request $request
      */
     public function statusUpdate(Request $request,$trx_id){
+        
         $basic_setting  = BasicSettings::first();
         $validator = Validator::make($request->all(),[
             'status'            => 'required|integer',
@@ -80,6 +82,56 @@ class BuyCryptoLogController extends Controller
             }
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new BuyCryptoMailNotification($form_data));
+            }
+            
+            UserNotification::create([
+                'user_id'  => $transaction->user_id,
+                'message'       => [
+                    'title'     => "Buy Crypto",
+                    'payment'   => $transaction->details->data->payment_method->name,
+                    'wallet'    => $transaction->details->data->wallet->name,
+                    'code'      => $transaction->details->data->wallet->code,
+                    'amount'    => $transaction->details->data->amount,
+                    'status'    => $validated['status'],
+                    'success'   => "Successfully Added."
+                ],
+            ]);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with(['success' => ['Transaction Status updated successfully']]);
+    }
+    /**
+     * Method for reject transaction
+     * @param $trx_id
+     * @param \Illuminate\Http\Request $request
+     */
+    public function reject(Request $request,$trx_id){
+        $basic_setting  = BasicSettings::first();
+        $validator = Validator::make($request->all(),[
+            'reject_reason'     => 'required',
+            'status'            => 'required|integer',
+        ]);
+
+        if($validator->fails()) {
+            $errors = ['error' => $validator->errors() ];
+            return Response::error($errors);
+        }
+
+        $validated = $validator->validate();
+        $transaction   = Transaction::with(['user','user_wallets','currency'])->where('trx_id',$trx_id)->first();
+        $form_data = [
+            'data'        => $transaction,
+            'status'      => "Reject",
+        ];
+        try{
+            $transaction->update([
+                'status'            => $validated['status'],
+                'reject_reason'     => $validated['reject_reason']
+            ]);
+            
+            if($basic_setting->email_notification == true){
+                Notification::route("mail",$transaction->user->email)->notify(new CryptoRejectMailNotification($form_data));
             }
             
             UserNotification::create([

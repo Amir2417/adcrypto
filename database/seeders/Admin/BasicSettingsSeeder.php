@@ -39,7 +39,7 @@ class BasicSettingsSeeder extends Seeder
                 "username" => "system@appdevs.net",
                 "password" => "QP2fsLk?80Ac",
                 "from" => "system@appdevs.net", 
-                "app_name" => "eSalon",
+                "app_name" => "AdCrypto",
             ],
             'push_notification_config'  => [
                 "method" => "pusher", 

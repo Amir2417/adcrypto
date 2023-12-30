@@ -50,7 +50,7 @@ class WithdrawCryptoMailNotification extends Notification
             ->line("Your withdraw crypto request successful via ".$data['data']->details->data->sender_wallet->name." , details of withdraw crypto:")
             ->line("Request Amount: " . getAmount($data['data']->amount).' '. $data['data']->details->data->sender_wallet->code)
             ->line("Fees & Charges: " . getAmount($data['data']->total_charge).' '. $data['data']->details->data->sender_wallet->code)
-            ->line("Total Payable Amount: " . getAmount($data['data']->payable_amount,2).' '. $data['data']->details->data->sender_wallet->code)
+            ->line("Total Payable Amount: " . getAmount($data['data']->total_payable,2).' '. $data['data']->details->data->sender_wallet->code)
             ->line("Transaction Id: " .$data['data']->trx_id)
             ->line("Date And Time: " .$dateTime)
             ->line('Thank you for using our application!');

@@ -112,9 +112,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('index','index')->name('all');
         Route::get('details/{id}','details')->name('details');
         Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
+        Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
-        Route::get('complete','complete')->name('complete');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 
@@ -123,9 +123,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('index','index')->name('all');
         Route::get('details/{id}','details')->name('details');
         Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
+        Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
-        Route::get('complete','complete')->name('complete');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 
@@ -134,9 +134,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('index','index')->name('all');
         Route::get('details/{id}','details')->name('details');
         Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
+        Route::post('reject/{trx_id}','reject')->name('reject');
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
-        Route::get('complete','complete')->name('complete');
         Route::get('canceled', 'canceled')->name('canceled');
     });
 

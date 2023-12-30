@@ -6,6 +6,7 @@ use Exception;
 use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\Admin\Network;
 use App\Models\TemporaryData;
@@ -424,6 +425,7 @@ class BuyCryptoController extends Controller
             if( $basic_setting->email_notification == true){
                 Notification::route("mail",$user->email)->notify(new BuyCryptoManualMailNotification($user,$data,$trx_id));
             }
+            $this->transactionDevice($id);
             DB::table("temporary_datas")->where("identifier",$token)->delete();
             DB::commit();
         }catch(Exception $e) {
@@ -431,6 +433,35 @@ class BuyCryptoController extends Controller
             return redirect()->route('user.buy.crypto.manual.form',$token)->with(['error' => ['Something went wrong! Please try again']]);
         }
         return redirect()->route('user.buy.crypto.index')->with(['success' => ['Transaction Success. Please wait for admin confirmation']]);
+    }
+    // transaction device
+    function transactionDevice($id){
+        $client_ip = request()->ip() ?? false;
+        $location = geoip()->getLocation($client_ip);
+        $agent = new Agent();
+
+
+        $mac = "";
+
+        DB::beginTransaction();
+        try{
+            DB::table("transaction_devices")->insert([
+                'transaction_id'=> $id,
+                'ip'            => $client_ip,
+                'mac'           => $mac,
+                'city'          => $location['city'] ?? "",
+                'country'       => $location['country'] ?? "",
+                'longitude'     => $location['lon'] ?? "",
+                'latitude'      => $location['lat'] ?? "",
+                'timezone'      => $location['timezone'] ?? "",
+                'browser'       => $agent->browser() ?? "",
+                'os'            => $agent->platform() ?? "",
+            ]);
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 
     public function cryptoPaymentAddress(Request $request, $trx_id) {

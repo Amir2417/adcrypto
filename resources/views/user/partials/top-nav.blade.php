@@ -43,10 +43,10 @@
                                             ({{ __("Pending") }})
                                         @elseif (@$item->message->status == global_const()::STATUS_CONFIRM_PAYMENT)
                                             ({{ __("Confirm") }})
-                                        @elseif (@$item->message->status == global_const()::STATUS_COMPLETE)
-                                            ({{ __("Complete") }})
                                         @elseif (@$item->message->status == global_const()::STATUS_CANCEL)
                                             ({{ __("Cancel") }})
+                                        @elseif (@$item->message->status == global_const()::STATUS_REJECT)
+                                            ({{ __("Rejected") }})
                                         @endif
                                         </h6>
                                     </div>

@@ -14,6 +14,7 @@ use App\Constants\PaymentGatewayConst;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\Admin\ExchangeCryptoMailNotification;
+use App\Notifications\Admin\ExchangeCryptoRejectMailNotification;
 
 class ExchangeCryptoLogController extends Controller
 {
@@ -90,6 +91,55 @@ class ExchangeCryptoLogController extends Controller
                 ],
             ]);
            
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with(['success' => ['Transaction Status updated successfully']]);
+    }
+    /**
+     * Method for reject transaction
+     * @param $trx_id
+     * @param \Illuminate\Http\Request $request
+     */
+    public function reject(Request $request,$trx_id){
+        $basic_setting  = BasicSettings::first();
+        $validator = Validator::make($request->all(),[
+            'reject_reason'     => 'required',
+            'status'            => 'required|integer',
+        ]);
+
+        if($validator->fails()) {
+            $errors = ['error' => $validator->errors() ];
+            return Response::error($errors);
+        }
+
+        $validated = $validator->validate();
+        $transaction   = Transaction::with(['user','user_wallets'])->where('trx_id',$trx_id)->first();
+        $form_data = [
+            'data'        => $transaction,
+            'status'      => "Reject",
+        ];
+        try{
+            $transaction->update([
+                'status'            => $validated['status'],
+                'reject_reason'     => $validated['reject_reason']
+            ]);
+            
+            if($basic_setting->email_notification == true){
+                Notification::route("mail",$transaction->user->email)->notify(new ExchangeCryptoRejectMailNotification($form_data));
+            }
+            
+            UserNotification::create([
+                'user_id'  => $transaction->user_id,
+                'message'       => [
+                    'title'     => "Withdraw Crypto",
+                    'wallet'    => $transaction->details->data->sender_wallet->name,
+                    'code'      => $transaction->details->data->sender_wallet->code,
+                    'amount'    => $transaction->amount,
+                    'status'    => $validated['status'],
+                    'success'   => "Successfully Request Send."
+                ],
+            ]);
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }

@@ -45,8 +45,8 @@
                                         <span>{{ __("Pending") }}</span>
                                     @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
                                         <span>{{ __("Confirm Payment") }}</span>
-                                    @elseif ($item->status == global_const()::STATUS_COMPLETE)
-                                        <span>{{ __("Completed") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_REJECT)
+                                        <span>{{ __("Rejected") }}</span>
                                     @elseif ($item->status == global_const()::STATUS_CANCEL)
                                         <span>{{ __("Canceled") }}</span>
                                     @else

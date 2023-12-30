@@ -208,7 +208,7 @@ trait Paypal
     public function paypalPaymentCaptured($response,$output) {
         // payment successfully captured record saved to database
         $output['capture'] = $response;
-        $status            = global_const()::STATUS_PENDING;
+        $status            = global_const()::STATUS_CONFIRM_PAYMENT;
         try{
             $this->createTransaction($output,$status);
         }catch(Exception $e) {

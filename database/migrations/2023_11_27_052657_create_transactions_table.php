@@ -38,7 +38,7 @@ return new class extends Migration
             $table->text('details')->nullable();
             $table->text('reject_reason')->nullable();
             $table->text('callback_ref')->nullable();
-            $table->tinyInteger('status')->default(0)->comment("1: Pending, 2: Confirm Payment, 3: Completed, 4: Canceled");
+            $table->tinyInteger('status')->default(0)->comment("1: Pending, 2: Confirm Payment, 3: Canceled, 4: Rejected");
             $table->timestamps();
 
             

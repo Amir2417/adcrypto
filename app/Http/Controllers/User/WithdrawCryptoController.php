@@ -182,7 +182,7 @@ class WithdrawCryptoController extends Controller
             'details'               => [
                 'data'              => $data->data
             ],
-            'status'                => global_const()::STATUS_CONFIRM_PAYMENT,
+            'status'                => global_const()::STATUS_PENDING,
             'created_at'            => now(),
         ];
 
@@ -226,7 +226,7 @@ class WithdrawCryptoController extends Controller
                 'wallet'    => $data->data->sender_wallet->name,
                 'code'      => $data->data->sender_wallet->code,
                 'amount'    => $data->data->amount,
-                'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
+                'status'    => global_const()::STATUS_PENDING,
                 'success'   => "Successfully Request Send."
             ],
         ]);
