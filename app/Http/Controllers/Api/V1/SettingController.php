@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1;
 
+use Exception;
 use App\Models\Admin\Area;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
@@ -18,6 +19,16 @@ use App\Models\Admin\ParlourListHasSchedule;
 
 class SettingController extends Controller
 {
+    public function languages(){
+        try{
+            $api_languages = get_api_languages();
+        }catch(Exception $e) {
+            return Response::error([$e->getMessage()],[],500);
+        }
+        return Response::success([__("Language data fetch successfully!")],[
+            'languages' => $api_languages,
+        ],200);
+    }
     /**
      * Method for get the basic settings data 
      */
