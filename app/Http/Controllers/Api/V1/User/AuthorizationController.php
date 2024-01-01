@@ -182,5 +182,39 @@ class AuthorizationController extends Controller
 
         return Response::error(['Failed to login. Please try again'],[],500);
     }
+    /**
+     * Google 2FA Verification
+     *
+     * @method GET
+     * @return \Illuminate\Http\Response
+     */
+
+     public function verify2FACode(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'otp' => 'required',
+        ]);
+
+        if($validator->fails()){
+            $error =  ['error'=>$validator->errors()->all()];
+            return Response::validation($error);
+        }
+
+        $code = $request->otp;
+        $user = auth()->guard(get_auth_guard())->user();
+        
+        if(!$user->two_factor_secret) {
+            return Response::error(['Your secret key not stored properly. Please contact with system administrator']);
+        }
+
+        if(google_2fa_verify($user->two_factor_secret,$code)) {
+            $user->update([
+                'two_factor_verified'   => true,
+            ]);
+            return Response::success(['Two factor verified successfully!'],[],200);
+        }
+
+        return Response::error(['Failed to login. Please try again']);
+    }
 
 }
