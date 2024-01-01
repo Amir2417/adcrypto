@@ -92,7 +92,7 @@
                                 <code class="d-block mt-2 min-amount"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>{{ __("Payment Method") }}<span>*</span></label>
+                                <label>{{ __("Receiving Method") }}<span>*</span></label>
                                 <select class="select2-basic" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
                                         <option 
@@ -203,7 +203,7 @@
             if(response.data.currency.networks.length > 0){
                 $.each(response.data.currency.networks,function(index,item){
                     networkOption += `<option value="${item.network_id}">
-                        ${item.network.name} (Arrival Time: ${item.network.arrival_time} min, Fees: ${parseFloat(item.fees).toFixed(2)} ${currencyCode})</option>
+                        ${item.network.name} (Arrival Time: ${item.network.arrival_time} min)</option>
                     `;
                 });
                 $('select[name=network]').html(networkOption);

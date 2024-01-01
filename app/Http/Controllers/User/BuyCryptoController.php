@@ -91,6 +91,7 @@ class BuyCryptoController extends Controller
             $user_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($wallet_currency) {
                 $q->where("id",$wallet_currency)->active();
             })->active()->first();
+            
 
             if(!$user_wallet){
                 return back()->with(['error' => ['Wallet not found!']]);

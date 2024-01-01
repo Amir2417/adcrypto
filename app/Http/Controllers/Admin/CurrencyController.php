@@ -53,8 +53,8 @@ class CurrencyController extends Controller
             'rate'          => 'required',
             'network'       => 'required|array',
             'network.*'     => 'required|string',
-            'fees'          => 'required|array',
-            'fees.*'        => 'required|string',
+            'fees'          => 'nullable|array',
+            'fees.*'        => 'nullable|string',
             
         ]);
         if($validator->fails()) {
@@ -108,9 +108,8 @@ class CurrencyController extends Controller
         $validated['created_at']    = now();
         $validated['admin_id']      = Auth::user()->id;
         $network                    = $validated['network'];
-        $fees                       = $validated['fees'];
         
-        $validated = Arr::except($validated,['role','flag','option','network','fees']);
+        $validated = Arr::except($validated,['role','flag','option','network']);
         // insert_data
         try{
             $currency = Currency::create($validated);
@@ -121,7 +120,6 @@ class CurrencyController extends Controller
                     $networks[] = [
                         'currency_id'   => $currency->id,
                         'network_id'    => $network_id,
-                        'fees'          => $fees[$key],
                         'created_at'    => now(),
                     ];
                 }
@@ -215,8 +213,8 @@ class CurrencyController extends Controller
             'currency_role'      => 'required|string',
             'network'            => 'required|array',
             'network.*'          => 'required|string',
-            'fees'               => 'required|array',
-            'fees.*'             => 'required|string',
+            'fees'               => 'nullable|array',
+            'fees.*'             => 'nullable|string',
         ]);
         if($validator->fails()) {
             return back()->withErrors($validator)->withInput()->with('modal','currency_edit');
@@ -266,9 +264,8 @@ class CurrencyController extends Controller
         }
         $validated['currency_default']   = $default[$validated['currency_option']];
         $network                    = $validated['network'];
-        $fees                       = $validated['fees'];
         
-        $validated = Arr::except($validated,['currency_role','currency_flag','currency_option','network','fees']);
+        $validated = Arr::except($validated,['currency_role','currency_flag','currency_option','network']);
 
         if($request->hasFile('currency_flag')) {
             try{
@@ -292,7 +289,6 @@ class CurrencyController extends Controller
                     $networks[] = [
                         'currency_id'   => $currency->id,
                         'network_id'    => $network_id,
-                        'fees'          => $fees[$key],
                         'created_at'    => now(),
                     ];
                 }

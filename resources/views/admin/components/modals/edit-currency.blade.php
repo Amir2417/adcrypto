@@ -137,20 +137,12 @@
                         })
                         itemData    += `
                                 <div class="row align-items-end">
-                                    <div class="col-xl-6 col-lg-6 form-group">
+                                    <div class="col-xl-11 col-lg-11 form-group">
                                         <label>{{ __("Network") }}<span>*</span></label>
                                         
                                         <select class="form--control select2-basic network-select" name="network[]">
                                             ${options}
                                         </select>
-                                    </div>
-                                    
-                                    <div class="col-xl-5 col-lg-5 form-group">
-                                        <label>{{ __("Fees*") }}</label>
-                                        <div class="input-group">
-                                            <input type="text" class="form--control number-input" name="fees[]" value=${item.fees}>
-                                            <span class="input-group-text selected-currency">${oldData.code}</span>
-                                        </div>
                                     </div>
                                     <div class="col-xl-1 col-lg-1 form-group">
                                         <button type="button" class="custom-btn btn--base btn--danger row-cross-btn w-100"><i class="las la-times"></i></button>
