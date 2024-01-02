@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\User\ProfileController;
 use App\Http\Controllers\Api\V1\User\MyBookingController;
 use App\Http\Controllers\Api\V1\User\AuthorizationController;
 use App\Http\Controllers\Api\V1\User\ParlourBookingController;
+use App\Http\Controllers\Api\V1\User\TransactionLogController;
 
 Route::prefix("user")->name("api.user.")->group(function(){
     
@@ -21,6 +22,11 @@ Route::prefix("user")->name("api.user.")->group(function(){
         Route::post('logout',[ProfileController::class,'logout']);
         Route::get('notification',[SettingController::class,'notification']);
 
+        //transaction logs 
+        Route::controller(TransactionLogController::class)->prefix('transaction')->group(function(){
+            Route::get('all','all');
+            Route::get('buy-log','buyLog');
+        });
         
     });
     

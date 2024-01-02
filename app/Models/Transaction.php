@@ -12,7 +12,7 @@ class Transaction extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    protected $appends = [];
+    protected $appends = ['confirm', 'dynamic_inputs', 'confirm_url'];
 
     protected $casts = [
         'id'                          => 'integer',
@@ -37,6 +37,29 @@ class Transaction extends Model
         'updated_at'                  => 'date:Y-m-d',
     ];
 
+
+
+    
+
+
+    public function getConfirmAttribute()
+    {
+        if($this->currency == null) return false;
+        if($this->currency->gateway->isTatum($this->gateway_currency->gateway) && $this->status == global_const()::STATUS_PENDING) return true;
+    }
+
+    public function getDynamicInputsAttribute()
+    {
+        if($this->confirm == false) return [];
+        $input_fields = $this->details->payment_info->requirements;
+        return $input_fields;
+    }
+
+    public function getConfirmUrlAttribute()
+    {
+        if($this->confirm == false) return false;
+        return setRoute('api.user.buy.crypto.payment.crypto.confirm', $this->trx_id);
+    }
     public function user()
     {
         return $this->belongsTo(User::class);
