@@ -55,62 +55,15 @@
                             'route'     => "admin.trx.settings.index",
                             'icon'      => "menu-icon las la-wallet",
                         ],
+                        [
+                            'title'     => "Outside Wallet Address",
+                            'route'     => "admin.outside.wallet.index",
+                            'icon'      => "menu-icon las la-wallet",
+                        ],
                     ]
                 ])
 
-                {{-- Section Transaction & Logs --}}
-                {{-- @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Transactions & Logs",
-                    'group_links'       => [
-                        'dropdown'      => [
-                            [
-                                'title'     => "Add Money Logs",
-                                'icon'      => "menu-icon las la-calculator",
-                                'links'     => [
-                                    [
-                                        'title'     => "Pending Logs",
-                                        'route'     => "admin.add.money.pending",
-                                    ],
-                                    [
-                                        'title'     => "Completed Logs",
-                                        'route'     => "admin.add.money.complete",
-                                    ],
-                                    [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.add.money.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
-                                        'route'     => "admin.add.money.index", 
-                                    ]
-                                ],
-                            ],
-                            [
-                                'title'             => "Money Out Logs",
-                                'icon'              => "menu-icon las la-sign-out-alt",
-                                'links'     => [
-                                    [
-                                        'title'     => "Pending Logs",
-                                        'route'     => "admin.money.out.pending",
-                                    ],
-                                    [
-                                        'title'     => "Completed Logs",
-                                        'route'     => "admin.money.out.complete",
-                                    ],
-                                    [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.money.out.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
-                                        'route'     => "admin.money.out.index", 
-                                    ]
-                                ],
-                            ],
-                        ],
-
-                    ]
-                ]) --}}
+                
                 @include('admin.components.side-nav.link-group',[
                     'group_title'       => "Transactions & Logs",
                     'group_links'       => [

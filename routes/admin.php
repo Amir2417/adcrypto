@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
 use App\Http\Controllers\Admin\MoneyOutController;
 use App\Http\Controllers\Admin\NetworkController;
+use App\Http\Controllers\Admin\OutsideWalletAddressController;
 use App\Http\Controllers\Admin\PaymentGatewayCurrencyController;
 use App\Http\Controllers\Admin\PaymentGatewaysController;
 use App\Http\Controllers\Admin\ProfileController;
@@ -105,6 +106,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(TrxSettingsController::class)->prefix('trx-settings')->name('trx.settings.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::put('charges/update', 'trxChargeUpdate')->name('charges.update');
+    });
+
+    //outside wallet address
+    Route::controller(OutsideWalletAddressController::class)->prefix('outside-wallet')->name('outside.wallet.')->group(function(){
+        Route::get('index','index')->name('index');
+        Route::get('create','create')->name('create');
+        Route::post('store','store')->name('store');
+        Route::post('get-networks','getNetworks')->name('get.networks');
     });
 
     //Buy Crypto Logs

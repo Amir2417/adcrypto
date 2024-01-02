@@ -24,8 +24,8 @@ Route::prefix("user")->name("api.user.")->group(function(){
 
         //transaction logs 
         Route::controller(TransactionLogController::class)->prefix('transaction')->group(function(){
-            Route::get('all','all');
             Route::get('buy-log','buyLog');
+            Route::get('withdraw-log','withdrawLog');
         });
         
     });

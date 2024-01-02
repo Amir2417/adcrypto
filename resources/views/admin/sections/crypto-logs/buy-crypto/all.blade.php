@@ -59,7 +59,7 @@
                                 </td>
                             </tr>
                         @empty
-                            @include('admin.components.alerts.empty',['colspan' => 4])
+                            @include('admin.components.alerts.empty',['colspan' => 5])
                         @endforelse
                         
                     </tbody>
