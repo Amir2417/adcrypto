@@ -114,6 +114,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('create','create')->name('create');
         Route::post('store','store')->name('store');
         Route::post('get-networks','getNetworks')->name('get.networks');
+        Route::put('status/update', 'statusUpdate')->name('status.update');
     });
 
     //Buy Crypto Logs

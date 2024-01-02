@@ -109,4 +109,37 @@ class OutsideWalletAddressController extends Controller
         }
         return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet created successfully.']]);
     }
+    /**
+     * Method for status update for Outside wallet
+     * @param string
+     * @param \Illuminate\Http\Request $request
+     */
+    public function statusUpdate(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'data_target'       => 'required|numeric|exists:outside_wallet_addresses,id',
+            'status'            => 'required|boolean',
+        ]);
+
+        if($validator->fails()) {
+            $errors = ['error' => $validator->errors() ];
+            return Response::error($errors);
+        }
+
+        $validated = $validator->validate();
+
+
+        $outside_wallet = OutsideWalletAddress::find($validated['data_target']);
+
+        try{
+            $outside_wallet->update([
+                'status'        => ($validated['status']) ? false : true,
+            ]);
+        }catch(Exception $e) {
+            $errors = ['error' => ['Something went wrong! Please try again.'] ];
+            return Response::error($errors,null,500);
+        }
+
+        $success = ['success' => ['Outside Wallet status updated successfully!']];
+        return Response::success($success);
+    }
 }
