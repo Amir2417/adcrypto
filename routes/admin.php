@@ -95,7 +95,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(CurrencyController::class)->prefix('currency')->name('currency.')->group(function () {
         Route::get('index', 'index')->name('index');
         Route::post('store', 'store')->name('store');
-        
         Route::put('status/update', 'statusUpdate')->name('status.update');
         Route::put('update', 'update')->name('update');
         Route::delete('delete','delete')->name('delete');
@@ -112,8 +111,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::controller(OutsideWalletAddressController::class)->prefix('outside-wallet')->name('outside.wallet.')->group(function(){
         Route::get('index','index')->name('index');
         Route::get('create','create')->name('create');
-        Route::post('store','store')->name('store');
         Route::post('get-networks','getNetworks')->name('get.networks');
+        Route::post('store','store')->name('store');
+        Route::get('edit/{public_address}','edit')->name('edit');
+        Route::delete('delete', 'delete')->name('delete');
         Route::put('status/update', 'statusUpdate')->name('status.update');
     });
 

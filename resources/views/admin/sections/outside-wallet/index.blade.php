@@ -56,7 +56,12 @@
                                     
                                 </td>
                                 <td>
-                                    
+                                    @include('admin.components.link.edit-default',[
+                                        'href'          => setRoute('admin.outside.wallet.edit',$item->public_address),
+                                        'class'         => "edit-modal-button",
+                                        'permission'    => "admin.outside.wallet.edit",
+                                    ])
+                                    <button class="btn btn--base btn--danger delete-modal-button" ><i class="las la-trash-alt"></i></button>
                                 </td>
                             </tr>
                         @empty
@@ -72,6 +77,16 @@
 
 @push('script')
     <script>
+        $(".delete-modal-button").click(function(){
+            var oldData     = JSON.parse($(this).parents("tr").attr("data-item"));
+            var actionRoute = "{{ setRoute('admin.outside.wallet.delete') }}";
+            var target      = oldData.id;
+            var message     = `Are you sure to <strong>delete</strong> this Outside Wallet?`;
+
+            openDeleteModal(actionRoute,target,message);
+
+        });
+
         $(document).ready(function(){
             // Switcher
             switcherAjax("{{ setRoute('admin.outside.wallet.status.update') }}");

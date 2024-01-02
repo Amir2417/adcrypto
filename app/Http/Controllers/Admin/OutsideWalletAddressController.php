@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Network;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\OutsideWalletAddress;
 use Illuminate\Validation\ValidationException;
@@ -108,6 +109,43 @@ class OutsideWalletAddressController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet created successfully.']]);
+    }
+    /**
+     * Method for edit outside wallet address
+     * @param $public_address
+     * @return view
+     */
+    public function edit($public_address){
+        $page_title         = "Outside Wallet Edit";
+        $currencies         = Currency::with(['networks'])->where('status',true)->orderBy('id')->get();
+        $networks           = Network::where('status',true)->orderBy('id')->get();
+        $data               = OutsideWalletAddress::with(['currency','network'])->where('public_address',$public_address)->first();
+        if(!$data) return back()->with(['error' => ['Sorry!Data not found!']]);
+        
+        return view('admin.sections.outside-wallet.edit',compact(
+            'page_title',
+            'currencies',
+            'networks',
+            'data'
+        ));
+    }
+    /**
+     * Method for delete coin
+     * @param string
+     * @param \Illuminate\Http\Request $request
+     */
+    public function delete(Request $request){
+        $request->validate([
+            'target'    => 'required|numeric|',
+        ]);
+        $outside_wallet = OutsideWalletAddress::find($request->target);
+    
+        try {
+            $outside_wallet->delete();
+        } catch (Exception $e) {
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return back()->with(['success' => ['Outside Wallet Deleted Successfully!']]);
     }
     /**
      * Method for status update for Outside wallet

@@ -14,7 +14,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Outside Wallet Payment Receiving Address")])
+    ], 'active' => __("Outside Wallet Payment Receiving Address Create")])
 @endsection
 
 @section('content')
