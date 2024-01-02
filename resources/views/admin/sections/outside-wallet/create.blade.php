@@ -43,6 +43,23 @@
                     </select>
                 </div>
                 <div class="col-xl-12 col-lg-12 form-group">
+                    @include('admin.components.form.input',[
+                        'label'     => "Public Address*",
+                        'name'      => "public_address",
+                        'value'     => old("public_address"),
+                    ])
+                </div>
+                <div class="col-xl-12 col-lg-12 form-group">
+                    @include('admin.components.form.input-text-rich',[
+                        'label'     => "Instruction*",
+                        'name'      => "desc",
+                        'value'     => old("desc"),
+                    ])
+                </div>
+                <div class="col-xl-12 col-lg-12 form-group">
+                    @include('admin.components.payment-gateway.manual.input-field-generator')
+                </div>
+                <div class="col-xl-12 col-lg-12 form-group">
                     @include('admin.components.button.form-btn',[
                         'class'         => "w-100 btn-loading",
                         'text'          => "Submit",

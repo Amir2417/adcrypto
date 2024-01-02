@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('currency_id');
             $table->unsignedBigInteger('network_id');
-            $table->string('public_address');
+            $table->string('public_address')->unique();
             $table->text('desc',500)->nullable();
             $table->text('input_fields',1000)->nullable();
             $table->boolean('status')->default(true);
