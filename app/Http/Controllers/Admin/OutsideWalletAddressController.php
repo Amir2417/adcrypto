@@ -20,7 +20,7 @@ class OutsideWalletAddressController extends Controller
      */
     public function index(){
         $page_title         = "Outside Wallet Payment Receiving Address";
-        $outside_wallets    = OutsideWalletAddress::orderBy('id','desc')->get();
+        $outside_wallets    = OutsideWalletAddress::with(['currency','network'])->orderBy('id','desc')->get();
 
         return view('admin.sections.outside-wallet.index',compact(
             'page_title',

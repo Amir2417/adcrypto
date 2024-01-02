@@ -41,12 +41,18 @@
                     </thead>
                     <tbody>
                         @forelse ($outside_wallets as $item)
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                            <tr data-item="{{ $item }}">
+                                <td>{{ $item->currency->name }}</td>
+                                <td>{{ $item->network->name }} ({{ $item->network->arrival_time }}) Min</td>
+                                <td>{{ $item->public_address ?? '' }}</td>
                                 <td>
-                                   
+                                    @include('admin.components.form.switcher',[
+                                        'name'        => 'status',
+                                        'value'       => $item->status,
+                                        'options'     => ['Enable' => 1, 'Disable' => 0],
+                                        'onload'      => true,
+                                        'data_target' => $item->id,
+                                    ])
                                     
                                 </td>
                                 <td>
@@ -65,5 +71,10 @@
 @endsection
 
 @push('script')
-    
+    <script>
+        $(document).ready(function(){
+            // Switcher
+            switcherAjax("{{ setRoute('admin.outside.wallet.status.update') }}");
+        })
+    </script>
 @endpush
