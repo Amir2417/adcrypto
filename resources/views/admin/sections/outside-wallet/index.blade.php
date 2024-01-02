@@ -43,7 +43,7 @@
                         @forelse ($outside_wallets as $item)
                             <tr data-item="{{ $item }}">
                                 <td>{{ $item->currency->name }}</td>
-                                <td>{{ $item->network->name }} ({{ $item->network->arrival_time }}) Min</td>
+                                <td>{{ $item->network->name }}</td>
                                 <td>{{ $item->public_address ?? '' }}</td>
                                 <td>
                                     @include('admin.components.form.switcher',[

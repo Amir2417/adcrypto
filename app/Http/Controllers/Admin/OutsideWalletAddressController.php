@@ -130,6 +130,51 @@ class OutsideWalletAddressController extends Controller
         ));
     }
     /**
+     * Method for update outside wallet 
+     * @param $public_address
+     * @param \Illuminate\Http\Request $request
+     */
+    public function update(Request $request,$public_address){
+        $data           = OutsideWalletAddress::where('public_address',$public_address)->first();
+        $validator                  = Validator::make($request->all(),[
+            'currency'              => 'required',
+            'network'               => 'required',
+            'public_address'        => 'required|string|max:250',
+            'desc'                  => 'required',
+            'label'                 => 'nullable|array',
+            'label.*'               => 'nullable|string|max:50',
+            'input_type'            => 'nullable|array',
+            'input_type.*'          => 'nullable|string|max:20',
+            'min_char'              => 'nullable|array',
+            'min_char.*'            => 'nullable|numeric',
+            'max_char'              => 'nullable|array',
+            'max_char.*'            => 'nullable|numeric',
+            'field_necessity'       => 'nullable|array',
+            'field_necessity.*'     => 'nullable|string|max:20',
+            'file_extensions'       => 'nullable|array',
+            'file_extensions.*'     => 'nullable|string|max:255',
+            'file_max_size'         => 'nullable|array',
+            'file_max_size.*'       => 'nullable|numeric',
+        ]);
+        if($validator->fails()) return back()->withErrors($validator)->withInput($request->all());
+        $validated                      = $validator->validate();
+
+        $validated['currency_id']       = $validated['currency'];
+        $validated['network_id']        = $validated['network'];
+        $validated['public_address']    = $validated['public_address'];
+        $validated['desc']              = $validated['desc'];
+        $validated['input_fields']      = decorate_input_fields($validated);
+        
+        $validated = Arr::except($validated,['label','input_type','min_char','max_char','field_necessity','file_extensions','file_max_size']);
+        
+        try{
+            $data->update($validated);
+        }catch(Exception $e){
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
+        }
+        return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet Updated successfully.']]);
+    }
+    /**
      * Method for delete coin
      * @param string
      * @param \Illuminate\Http\Request $request

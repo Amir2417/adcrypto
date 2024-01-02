@@ -16,6 +16,7 @@ use Database\Seeders\Admin\BlogSeeder;
 use Database\Seeders\Admin\CoinSeeder;
 use Database\Seeders\Admin\LanguageSeeder;
 use Database\Seeders\Admin\NetworkSeeder;
+use Database\Seeders\Admin\OutsideWalletAddressSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\RoleSeeder;
 use Database\Seeders\Admin\SetupPageSeeder;
@@ -53,6 +54,7 @@ class DatabaseSeeder extends Seeder
             CoinSeeder::class,
             NetworkSeeder::class,
             CurrencySeeder::class,
+            OutsideWalletAddressSeeder::class
         ]);
     }
 }

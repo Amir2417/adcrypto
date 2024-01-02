@@ -114,6 +114,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('get-networks','getNetworks')->name('get.networks');
         Route::post('store','store')->name('store');
         Route::get('edit/{public_address}','edit')->name('edit');
+        Route::post('update/{public_address}','update')->name('update');
         Route::delete('delete', 'delete')->name('delete');
         Route::put('status/update', 'statusUpdate')->name('status.update');
     });

@@ -23,7 +23,7 @@
         <h6 class="title">{{ __($page_title) }}</h6>
     </div>
     <div class="card-body">
-        <form class="card-form" action="{{ setRoute('admin.outside.wallet.store') }}" method="POST" enctype="multipart/form-data">
+        <form class="card-form" action="{{ setRoute('admin.outside.wallet.update',$data->public_address) }}" method="POST" enctype="multipart/form-data">
             @csrf
             
             <div class="row justify-content-center mb-10-none">

@@ -12,11 +12,13 @@ use App\Constants\GlobalConst;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Validated;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\TransactionSetting;
 use Illuminate\Support\Facades\Validator;
+use App\Models\Admin\OutsideWalletAddress;
 use App\Models\Admin\PaymentGatewayCurrency;
-use Illuminate\Auth\Events\Validated;
+use Illuminate\Validation\ValidationException;
 
 class SellCryptoController extends Controller
 {
@@ -28,14 +30,17 @@ class SellCryptoController extends Controller
         $page_title         = "- Sell Crypto";
         $currencies         = Currency::with(['networks'])->where('status',true)->orderBy('id')->get();
         $first_currency     = Currency::where('status',true)->first();
-        $transaction_fees   = TransactionSetting::where('slug','sell')->first();
+        $payment_gateway    = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
+            $gateway->where('slug', PaymentGatewayConst::money_out_slug());
+            $gateway->where('status', 1);
+        })->get();
         
         
         return view('user.sections.sell-crypto.index',compact(
             'page_title',
             'currencies',
             'first_currency',
-            'transaction_fees'
+            'payment_gateway'
         ));
     }
     /**
@@ -67,14 +72,25 @@ class SellCryptoController extends Controller
             'sender_currency'   => 'required',
             'network'           => 'required',
             'amount'            => 'required',
+            'payment_method'    => 'required',
         ]);
         if($validator->fails()) return back()->withErrors($validator)->withInput($request->all());
 
-        $validated      = $validator->validate();
-        $amount         = $validated['amount'];
-        $wallet_currency = $validated['sender_currency'];
-
-        $user_wallet     = UserWallet::auth()->whereHas("currency",function($q) use($wallet_currency) {
+        $validated          = $validator->validate();
+        $amount             = $validated['amount'];
+        $wallet_currency    = $validated['sender_currency'];
+        $wallet_type        = $validated['wallet_type'];
+        if($wallet_type == global_const()::OUTSIDE_WALLET) {
+        
+            if (!OutsideWalletAddress::where('currency_id', $validated['sender_currency'])
+                ->where('network_id', $validated['network'])
+                ->exists()) {
+                throw ValidationException::withMessages([
+                    'name'  => "Outside Wallet is not available for this coin and network.",
+                ]);
+            }
+        }  
+        $user_wallet        = UserWallet::auth()->whereHas("currency",function($q) use($wallet_currency) {
             $q->where("currency_id",$wallet_currency)->active();
         })->active()->first();
         
@@ -82,24 +98,27 @@ class SellCryptoController extends Controller
         if($amount > $user_wallet->balance){
             return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
-
+        
         $network            = Network::where('id',$validated['network'])->first();
         
-        $transaction_fees   = TransactionSetting::where('slug','sell')->first();
-        $sender_rate        = $user_wallet->currency->rate;
-        $min_limit          = $transaction_fees->min_limit * $sender_rate;
-        $max_limit          = $transaction_fees->max_limit * $sender_rate;
+        $payment_gateway_currency   = PaymentGatewayCurrency::with(['gateway'])->where('id',$validated['payment_method'])->first();
 
-        if($amount < $min_limit || $amount > $max_limit){
+        if(!$payment_gateway_currency){
+            return back()->with(['error' => ['Payment Method not found!']]);
+        }
+        $rate           = $payment_gateway_currency->rate / $user_wallet->currency->rate;
+        
+        $min_max_rate   = $user_wallet->currency->rate / $payment_gateway_currency->rate;
+        $min_amount     = $payment_gateway_currency->min_limit * $min_max_rate;
+        $max_amount     = $payment_gateway_currency->max_limit * $min_max_rate;
+        if($amount < $min_amount || $amount > $max_amount){
             return back()->with(['error' => ['Please follow the transaction limit.']]);
         }
-
-        //charge calculation
-        $fixed_charge       = $transaction_fees->fixed_charge * $sender_rate;
-        $percent_charge     = ($amount / 100) * $transaction_fees->percent_charge;
-        $total_charge       = $fixed_charge + $percent_charge;
-        $payable_amount     = $amount + $total_charge;
-        
+        $fixed_charge   = ($payment_gateway_currency->fixed_charge) * $min_max_rate;
+        $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
+        $total_charge   = $fixed_charge + $percent_charge;
+        $payable_amount = ($amount * $rate) + $total_charge;
+        $will_get       = $amount * $rate;
         if($payable_amount > $user_wallet->balance){
             return back()->with(['error' => ['Sorry! Insufficient Balance']]);
         }
@@ -121,14 +140,24 @@ class SellCryptoController extends Controller
                     'name'          => $network->name,
                     'arrival_time'  => $network->arrival_time,
                 ],
+                'payment_method'    => [
+                    'id'            => $payment_gateway_currency->id,
+                    'name'          => $payment_gateway_currency->name,
+                    'code'          => $payment_gateway_currency->currency_code,
+                    'alias'         => $payment_gateway_currency->alias,
+                    'rate'          => $payment_gateway_currency->rate,
+                ],
                 'amount'            => floatval($amount),
+                'exchange_rate'     => $rate,
+                'min_max_rate'      => $min_max_rate,
                 'fixed_charge'      => $fixed_charge,
                 'percent_charge'    => $percent_charge,
                 'total_charge'      => $total_charge,
                 'total_payable'     => $payable_amount,
-                'will_get'          => floatval($amount),
+                'will_get'          => floatval($will_get),
             ]
         ];
+       
         try{
             $temporary_data         = TemporaryData::create($data);
         }catch(Exception $e){
@@ -136,6 +165,8 @@ class SellCryptoController extends Controller
         }
         if($temporary_data->data->sender_wallet->type == global_const()::INSIDE_WALLET){
             return redirect()->route('user.sell.crypto.payment.info',$temporary_data->identifier);
+        }else{
+            dd("test");
         }
     }
     /**
@@ -146,11 +177,20 @@ class SellCryptoController extends Controller
     public function paymentInfo($identifier){
         $page_title = "- Payment Info";
         $data       = TemporaryData::where('identifier',$identifier)->first();
-        if(!$data) return back()->with(['error' => ['Data not found!']]);
+        if(!$data || $data->data == null || !isset($data->data->payment_method->id)) return redirect()->route('user.sell.crypto.index')->with(['error' => ['Invalid request']]);
+        $gateway_currency = PaymentGatewayCurrency::find($data->data->payment_method->id);
+        if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return redirect()->route('user.sell.crypto.index')->with(['error' => ['Selected gateway is invalid']]);
+        $gateway = $gateway_currency->gateway;
+        if(!$gateway->input_fields || !is_array($gateway->input_fields)) return redirect()->route('user.sell.crypto.index')->with(['error' => ['This payment gateway is under constructions. Please try with another payment gateway']]);
+        $amount = $data->data->amount;
+
+      
         
         return view('user.sections.sell-crypto.payment-info',compact(
             'page_title',
-            'data'
+            'data',
+            'gateway',
+            'amount'
         ));
     }
     /**

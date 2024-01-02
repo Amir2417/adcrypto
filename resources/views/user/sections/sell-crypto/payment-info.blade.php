@@ -27,18 +27,8 @@
                     <div class="card-body">
                         <div class="card-form">
                             <div class="row">
-                                <div class="col-xl-12 form-group">
-                                    <label>{{ __("Bank Name") }}<span>*</span></label>
-                                    <input type="text" name="bank_name" class="form--control" placeholder="{{ __("Enter Here") }}...">
-                                </div>
-                                <div class="col-xl-12 form-group">
-                                    <label>{{ __("Bank Account Number") }}<span>*</span></label>
-                                    <input type="text" name="account_number" class="form--control" placeholder="{{ __("Enter Here") }}...">
-                                </div>
-                                <div class="col-xl-12 form-group">
-                                    <label>{{ __("Branch") }}<span>*</span></label>
-                                    <input type="text" name="branch" class="form--control" placeholder="{{ __("Enter Here") }}...">
-                                </div>
+                                <h3>{!! $gateway->desc !!}</h3>
+                                @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($gateway->input_fields)])
                             </div>
                             <div class="col-xl-12 col-lg-12">
                                 <button type="submit" class="btn--base mt-10 w-100"><span class="w-100">{{ __("Continue") }}</span></button>
