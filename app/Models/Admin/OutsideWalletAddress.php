@@ -15,6 +15,7 @@ class OutsideWalletAddress extends Model
         'id'                => 'integer',
         'currency_id'       => 'integer',
         'network_id'        => 'integer',
+        'slug'              => 'string',
         'public_address'    => 'string',
         'desc'              => 'string',
         'input_fields'      => 'object',

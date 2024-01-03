@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Exception;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Admin\Network;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\Network;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\OutsideWalletAddress;
 use Illuminate\Validation\ValidationException;
@@ -97,6 +98,7 @@ class OutsideWalletAddressController extends Controller
 
         $validated['currency_id']       = $validated['currency'];
         $validated['network_id']        = $validated['network'];
+        $validated['slug']              = Str::slug($request->public_address);
         $validated['public_address']    = $validated['public_address'];
         $validated['desc']              = $validated['desc'];
         $validated['input_fields']      = decorate_input_fields($validated);

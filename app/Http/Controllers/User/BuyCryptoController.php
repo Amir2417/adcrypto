@@ -367,7 +367,7 @@ class BuyCryptoController extends Controller
         $gateway = $gateway_currency->gateway;
         if(!$gateway->input_fields || !is_array($gateway->input_fields)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['This payment gateway is under constructions. Please try with another payment gateway']]);
         $amount = $tempData->data->amount;
-
+        
         $page_title = "- Payment Instructions";
         return view('user.sections.buy-crypto.manual.instruction',compact("gateway","page_title","token","amount"));
     }
@@ -375,12 +375,14 @@ class BuyCryptoController extends Controller
     public function manualSubmit(Request $request,$token) {
         $basic_setting = BasicSettings::first();
         $user          = auth()->user();
+        
         $request->merge(['identifier' => $token]);
         $tempDataValidate = Validator::make($request->all(),[
             'identifier'        => "required|string|exists:temporary_datas",
         ])->validate();
-
+        
         $tempData = TemporaryData::search($tempDataValidate['identifier'])->first();
+        
         if(!$tempData || $tempData->data == null || !isset($tempData->data->gateway_currency_id)) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Invalid request']]);
         $gateway_currency = PaymentGatewayCurrency::find($tempData->data->gateway_currency_id);
         if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return redirect()->route('user.buy.crypto.index')->with(['error' => ['Selected gateway is invalid']]);
@@ -392,7 +394,8 @@ class BuyCryptoController extends Controller
 
         $this->file_store_location  = "transaction";
         $dy_validation_rules        = $this->generateValidationRules($gateway->input_fields);
-
+            
+        
         $validated  = Validator::make($request->all(),$dy_validation_rules)->validate();
         $get_values = $this->placeValueWithFields($gateway->input_fields,$validated);
         
@@ -544,5 +547,7 @@ class BuyCryptoController extends Controller
 
         return back()->with(['success' => ['Payment Confirmation Success!']]);
     }
+
+
 
 }

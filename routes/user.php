@@ -60,9 +60,12 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('/','index')->name('index');
         Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
         Route::post('store','store')->name('store');
+        Route::get('sell-payment/{identifier}','sellPayment')->name('sell.payment');
+        Route::post('sell-payment-store/{identifier}','sellPaymentStore')->name('sell.payment.store');
         Route::get('payment-info/{identifier}','paymentInfo')->name('payment.info');
         Route::post('payment-info-store/{identifier}','paymentInfoStore')->name('payment.info.store');
         Route::get('preview/{identifier}','preview')->name('preview');
+        Route::post('confirm/{identifier}','confirm')->name('confirm');
     });
 
     //withdraw crypto

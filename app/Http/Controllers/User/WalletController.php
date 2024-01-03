@@ -29,7 +29,7 @@ class WalletController extends Controller
      */
     public function walletDetails($public_address){
         $page_title     = "- Wallet Details";
-        $wallet     = UserWallet::auth()->with(['currency'])->where('public_address',$public_address)->first();
+        $wallet         = UserWallet::auth()->with(['currency'])->where('public_address',$public_address)->first();
         if(!$wallet) return back()->with(['error' => ['Wallet not found!']]);
         $qr_code        = generateQr($wallet->public_address);
         
