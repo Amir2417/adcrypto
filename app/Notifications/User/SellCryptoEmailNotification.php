@@ -3,18 +3,18 @@
 namespace App\Notifications\User;
 
 use Carbon\Carbon;
-use App\Models\TemporaryData;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class BuyCryptoMailNotification extends Notification
+class SellCryptoEmailNotification extends Notification
 {
     use Queueable;
     public $user;
     public $data;
     public $trx_id;
+
     /**
      * Create a new notification instance.
      *
@@ -49,18 +49,17 @@ class BuyCryptoMailNotification extends Notification
         $user                   = $this->user;
         $data                   = $this->data;
         $trx_id                 = $this->trx_id;
-        $identifier_data        = TemporaryData::where('identifier',$data['form_data']['identifier'])->first();
         
         $date = Carbon::now();
         $dateTime = $date->format('Y-m-d h:i:s A');
         return (new MailMessage)
             ->greeting("Hello ".$user->fullname." !")
-            ->subject("Buy Crypto Via ". $identifier_data->data->wallet->type)
-            ->line("Your buy crypto request successful via ".$identifier_data->data->wallet->name." , details of buy crypto:")
-            ->line("Request Amount: " . $identifier_data->data->amount.' '. $identifier_data->data->wallet->code)
-            ->line("Fees & Charges: " . getAmount($identifier_data->data->total_charge).' '. $identifier_data->data->wallet->code)
-            ->line("Will Get: " . getAmount($identifier_data->data->will_get,2).' '. $identifier_data->data->wallet->code)
-            ->line("Total Payable Amount: " . getAmount($identifier_data->data->payable_amount,2).' '. $identifier_data->data->wallet->code)
+            ->subject("Sell Crypto Via ". $data->data->sender_wallet->name)
+            ->line("Your sell crypto request successful via ".$data->data->sender_wallet->name." , details of sell crypto:")
+            ->line("Request Amount: " . $data->data->amount.' '. $data->data->sender_wallet->code)
+            ->line("Fees & Charges: " . getAmount($data->data->total_charge).' '. $data->data->sender_wallet->code)
+            ->line("Will Get: " . getAmount($data->data->will_get,2).' '. $data->data->payment_method->code)
+            ->line("Total Payable Amount: " . getAmount($data->data->total_payable,2).' '. $data->data->sender_wallet->code)
             ->line("Transaction Id: " .$trx_id)
             ->line("Date And Time: " .$dateTime)
             ->line('Thank you for using our application!');

@@ -113,7 +113,7 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span class="text--warning">1 {{ @$data->data->sender_wallet->code }}  = {{ get_amount(@$data->data->exchange_rate,@$data->data->payment_method->name) }}</span>
+                                    <span class="text--warning">1 {{ @$data->data->sender_wallet->code }}  = {{ get_amount(@$data->data->exchange_rate,@$data->data->payment_method->code) }}</span>
                                 </div>
                             </div>
                             <div class="preview-list-item">
@@ -143,7 +143,22 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span class="last">{{ get_amount(@$data->data->total_payable,@$data->data->payment_method->code) }}</span>
+                                    <span class="last">{{ get_amount(@$data->data->total_payable,@$data->data->sender_wallet->code) }}</span>
+                                </div>
+                            </div>
+                            <div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
+                                            <i class="las la-money-check-alt"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span class="last">{{ __("Will Get Amount") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-list-right">
+                                    <span class="last">{{ get_amount(@$data->data->will_get,@$data->data->payment_method->code) }}</span>
                                 </div>
                             </div>
                         </div>
