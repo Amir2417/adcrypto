@@ -11,9 +11,10 @@ use App\Models\TransactionDevice;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
-use App\Notifications\Admin\SellCryptoMailNotification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\Admin\SellCryptoMailNotification;
+use App\Notifications\Admin\SellCryptoRejectMailNotification;
 
 class SellCryptoLogController extends Controller
 {
@@ -68,7 +69,7 @@ class SellCryptoLogController extends Controller
         
         $form_data = [
             'data'        => $transaction,
-            'status'      => $validated['status'],
+            'status'      => "Confirm",
         ];
         try{
             $transaction->update([
@@ -126,7 +127,7 @@ class SellCryptoLogController extends Controller
             ]);
             
             if($basic_setting->email_notification == true){
-                Notification::route("mail",$transaction->user->email)->notify(new CryptoRejectMailNotification($form_data));
+                Notification::route("mail",$transaction->user->email)->notify(new SellCryptoRejectMailNotification($form_data));
             }
             
             UserNotification::create([
@@ -134,9 +135,9 @@ class SellCryptoLogController extends Controller
                 'message'       => [
                     'title'     => "Sell Crypto",
                     'payment'   => $transaction->details->data->payment_method->name,
-                    'wallet'    => $transaction->details->data->wallet->name,
-                    'code'      => $transaction->details->data->wallet->code,
-                    'amount'    => $transaction->details->data->amount,
+                    'wallet'    => $transaction->details->data->sender_wallet->name,
+                    'code'      => $transaction->details->data->sender_wallet->code,
+                    'amount'    => $transaction->amount,
                     'status'    => $validated['status'],
                     'success'   => "Successfully Added."
                 ],
@@ -144,7 +145,7 @@ class SellCryptoLogController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with(['success' => ['Transaction Status updated successfully']]);
+        return back()->with(['success' => ['Transaction Rejected successfully']]);
     }
     /**
      * Method for pending sell crypto logs

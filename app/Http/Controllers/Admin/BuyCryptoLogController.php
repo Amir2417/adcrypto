@@ -149,7 +149,7 @@ class BuyCryptoLogController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with(['success' => ['Transaction Status updated successfully']]);
+        return back()->with(['success' => ['Transaction Rejected successfully']]);
     }
     /**
      * Method for pending buy crypto logs

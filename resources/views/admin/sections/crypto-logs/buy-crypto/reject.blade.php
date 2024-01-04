@@ -14,7 +14,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Rejectrd Buy Crypto Logs")])
+    ], 'active' => __("Rejected Buy Crypto Logs")])
 @endsection
 
 @section('content')
@@ -58,7 +58,7 @@
                                 </td>
                             </tr>
                         @empty
-                            @include('admin.components.alerts.empty',['colspan' => 4])
+                            @include('admin.components.alerts.empty',['colspan' => 5])
                         @endforelse
                         
                     </tbody>
