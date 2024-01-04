@@ -1,7 +1,12 @@
 @extends('user.layouts.master')
 
 @push('css')
-    
+    <style>
+        .image-resize{
+            width: 20px;
+            height: 25px;
+        }
+    </style>
 @endpush
 
 @section('breadcrumb')
@@ -190,7 +195,11 @@
                                             </div>
                                         </div>
                                         <div class="preview-list-right">
-                                            <span>{{ @$item->value }}</span>
+                                            @if (@$item->type == "text" || @$item->type == "textarea")
+                                                <span>{{ @$item->value }}</span>
+                                            @elseif (@$item->type == "file")
+                                                <img class="image-resize" src="{{ get_image(@$item->value , 'kyc-files') }}" alt="" srcset="">
+                                            @endif
                                         </div>
                                     </div>
                                 @endforeach

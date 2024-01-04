@@ -395,13 +395,11 @@ class SellCryptoController extends Controller
             $outside_address    = [];
         }
         
-        
         $gateway = $gateway_currency->gateway;
         $amount = $temp_data->data->amount ?? null;
         if(!$amount) return redirect()->route('user.sell.crypto.index')->with(['error' => ['Transaction Failed. Failed to save information. Please try again']]);
-        if($temp_data->data->sender_wallet  == global_const()::OUTSIDE_WALLET){
+        if($temp_data->data->sender_wallet->type  == global_const()::OUTSIDE_WALLET){
             $dy_validation_rules                        = $this->generateValidationRules($gateway->input_fields);
-
             $dy_validation_rules_for_outside_address    = $this->generateValidationRules($outside_address->input_fields);
     
             $merged_validation_rules                    = array_merge($dy_validation_rules, $dy_validation_rules_for_outside_address);
@@ -478,6 +476,7 @@ class SellCryptoController extends Controller
         $payment_gateway_currency  = PaymentGatewayCurrency::where('id',$data->data->payment_method->id)->first();
         if(!$payment_gateway_currency) return redirect()->route('user.sell.crypto.index')->with(['error' => ['Payment Gateway Currency not found right now. Please try with another payment gateway']]);
         
+
         return view('user.sections.sell-crypto.preview',compact(
             'page_title',
             'data'
