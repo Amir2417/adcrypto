@@ -91,6 +91,11 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('sell-log','sellLog')->name('sell.log');
         Route::get('withdraw-log','withdrawLog')->name('withdraw.log');
         Route::get('exchange-log','exchangeLog')->name('exchange.log');
+
+        //search transaction logs
+        Route::controller(TransactionController::class)->prefix('search')->name('search.')->group(function(){
+            Route::post('buy-log','buyLogSearch')->name('buy.log');
+        });
     });
 
     //security

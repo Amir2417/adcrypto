@@ -58,6 +58,21 @@
                             <div class="preview-list-left">
                                 <div class="preview-list-user-wrapper">
                                     <div class="preview-list-user-icon">
+                                        <i class="las la-compact-disc"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("TRX ID") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>{{ $item->trx_id ?? '' }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
                                         <i class="las la-map-marked-alt"></i>
                                     </div>
                                     <div class="preview-list-user-content">

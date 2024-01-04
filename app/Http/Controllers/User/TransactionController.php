@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Constants\PaymentGatewayConst;
-use App\Http\Controllers\Controller;
+use Exception;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Http\Helpers\Response;
+use App\Http\Controllers\Controller;
+use App\Constants\PaymentGatewayConst;
+use Illuminate\Support\Facades\Validator;
 
 class TransactionController extends Controller
 {
@@ -61,5 +64,34 @@ class TransactionController extends Controller
             'page_title',
             'transactions',
         ));
+    }
+    /** 
+    * Method for search buy crypto log  
+    */
+    public function buyLogSearch(Request $request){
+        $page_title  = "- Buy Logs";
+        $validator = Validator::make($request->all(),[
+            'search_text'  => 'nullable|string',
+        ]);
+
+        if($validator->fails()) {
+            return Response::error($validator->errors(),null,400);
+        }
+
+        $validated = $validator->validate();
+        try{
+            if($validated['search_text'] != "" || $validated['search_text'] != null){
+                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)
+                                    ->search($validated['search_text'])->get();
+            }else{
+                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)->get();
+            }
+            
+        }catch(Exception $e){
+            return Response::error(['Something went worng!. Please try again.'],null,500);
+        }
+        
+        return response()->json(['transactions' => $transaction]);
+
     }
 }

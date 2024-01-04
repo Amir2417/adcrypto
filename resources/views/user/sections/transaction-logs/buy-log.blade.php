@@ -57,6 +57,21 @@
                             <div class="preview-list-left">
                                 <div class="preview-list-user-wrapper">
                                     <div class="preview-list-user-icon">
+                                        <i class="las la-compact-disc"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("TRX ID") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>{{ $item->trx_id ?? '' }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
                                         <i class="las la-keyboard"></i>
                                     </div>
                                     <div class="preview-list-user-content">
@@ -240,3 +255,16 @@
     </div>
 </div>
 @endsection
+@push('script')
+    <script>
+        $("#transaction-search").keyup(function(){
+            var url = '{{ route('user.transaction.search.buy.log') }}';
+            var value = $(this).val();
+            var token = '{{ csrf_token() }}';
+            $.post(url,{search_text:value,_token:token},function(response){
+                var transaction    = response.transactions;
+                console.log(transaction.length);
+            });
+        });
+    </script>
+@endpush

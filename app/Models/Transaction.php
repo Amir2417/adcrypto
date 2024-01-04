@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use App\Models\Admin\PaymentGateway;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\PaymentGatewayCurrency;
@@ -37,15 +38,10 @@ class Transaction extends Model
         'updated_at'                  => 'date:Y-m-d',
     ];
 
-
-
-    
-
-
     public function getConfirmAttribute()
     {
         if($this->currency == null) return false;
-        if($this->currency->gateway->isTatum($this->gateway_currency->gateway) && $this->status == global_const()::STATUS_PENDING) return true;
+        if($this->currency->gateway->isTatum($this->currency->gateway) && $this->status == global_const()::STATUS_PENDING) return true;
     }
 
     public function getDynamicInputsAttribute()
@@ -60,21 +56,37 @@ class Transaction extends Model
         if($this->confirm == false) return false;
         return setRoute('api.user.buy.crypto.payment.crypto.confirm', $this->trx_id);
     }
+    //relation user table
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    //relation with user wallet table
     public function user_wallets()
     {
         return $this->belongsTo(UserWallet::class, 'user_wallet_id');
     }
+
+    //relation with payment gateway table
     public function payment_gateway()
     {
         return $this->belongsTo(PaymentGateway::class);
     }
+
+    // relation with payment gateway currency table
     public function currency()
     {
         return $this->belongsTo(PaymentGatewayCurrency::class,'payment_gateway_id');
     }
+
+    //for search transaction log
+    public function scopeSearch($query,$data) {
+        return $query->where("trx_id",$data);
+    }
+    //find the auth user
+    public function scopeAuth($query){
+        return $query->where('user_id',auth()->user()->id);
+    }
+    
 }
