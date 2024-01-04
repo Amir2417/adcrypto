@@ -26,6 +26,7 @@ use App\Http\Controllers\Admin\PaymentGatewayCurrencyController;
 use App\Http\Controllers\Admin\PaymentGatewaysController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PushNotificationController;
+use App\Http\Controllers\Admin\SellCryptoLogController;
 use App\Http\Controllers\Admin\ServerInfoController;
 use App\Http\Controllers\Admin\SetupEmailController;
 use App\Http\Controllers\Admin\SetupKycController;
@@ -121,6 +122,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     //Buy Crypto Logs
     Route::controller(BuyCryptoLogController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+        Route::get('index','index')->name('all');
+        Route::get('details/{id}','details')->name('details');
+        Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');
+        Route::post('reject/{trx_id}','reject')->name('reject');
+        Route::get('pending','pending')->name('pending');
+        Route::get('confirm','confirm')->name('confirm');
+        Route::get('rejected','rejected')->name('rejected');
+        Route::get('canceled', 'canceled')->name('canceled');
+    });
+
+    //Sell Crypto Logs
+    Route::controller(SellCryptoLogController::class)->prefix('sell-crypto')->name('sell.crypto.')->group(function(){
         Route::get('index','index')->name('all');
         Route::get('details/{id}','details')->name('details');
         Route::post('status/update/{trx_id}','statusUpdate')->name('status.update');

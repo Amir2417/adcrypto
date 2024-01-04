@@ -1545,7 +1545,7 @@ function generateQr($val)
     return "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=$val&choe=UTF-8&chf=bg,s,FFFFFFFF";
 }
 
-function get_amount($amount, $currency = null, $precision = null)
+function get_amount($amount, $currency = null, $precision = "double")
 {
     if (!is_numeric($amount)) return "Not Number";
     if($precision == "double") {

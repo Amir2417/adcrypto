@@ -95,6 +95,32 @@
                                 ],
                             ],
                             [
+                                'title'     => "Sell Crypto Logs",
+                                'icon'      => "menu-icon lab la-sellcast",
+                                'links'     => [
+                                    [
+                                        'title'     => "Pending Logs",
+                                        'route'     => "admin.sell.crypto.pending",
+                                    ],
+                                    [
+                                        'title'     => "Confirm Logs",
+                                        'route'     => "admin.sell.crypto.confirm",
+                                    ],
+                                    [
+                                        'title'     => "Rejected Logs",
+                                        'route'     => "admin.sell.crypto.rejected",
+                                    ],
+                                    [
+                                        'title'     => "Canceled Logs",
+                                        'route'     => "admin.sell.crypto.canceled", 
+                                    ],
+                                    [
+                                        'title'     => "All Logs",
+                                        'route'     => "admin.sell.crypto.all", 
+                                    ]
+                                ],
+                            ],
+                            [
                                 'title'             => "Withdraw Crypto Logs",
                                 'icon'              => "menu-icon las la-sign-out-alt",
                                 'links'     => [

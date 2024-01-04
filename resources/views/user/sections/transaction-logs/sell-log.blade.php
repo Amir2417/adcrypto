@@ -91,6 +91,7 @@
                                     @if (@$data->type == "text" || @$data->type == "textarea")
                                         <span>{{ @$data->value }}</span>
                                     @elseif (@$data->type == "file")
+                                        
                                         <img class="image-resize" src="{{ get_image(@$data->value , 'kyc-files') }}" alt="" srcset="">
                                     @endif
                                 </div>

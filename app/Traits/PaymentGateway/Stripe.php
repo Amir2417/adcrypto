@@ -49,8 +49,7 @@ trait Stripe {
                                     ]
                                 ]
                             ],
-                            // 'unit_amount_decimal'   => get_amount($output['amount']->total_amount, null, 2) * 100, // as per stripe policy,
-                            'unit_amount_decimal'   => 1 * 100, // as per stripe policy,
+                            'unit_amount_decimal'   => get_amount($output['amount']->total_amount, null, 2) * 100, // as per stripe policy,
                             'currency'              => $output['currency']->currency_code,
                         ],
                         'quantity'                  => 1,
