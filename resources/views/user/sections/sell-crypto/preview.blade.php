@@ -128,7 +128,7 @@
                                             <i class="las la-battery-half"></i>
                                         </div>
                                         <div class="preview-list-user-content">
-                                            <span>{{ __("Network Charge") }}</span>
+                                            <span>{{ __("Network Fees") }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -169,8 +169,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            
+            </div> 
             <div class="col-xl-6 col-lg-6 mb-30">
                 @if ($data->data->sender_wallet->type == global_const()::OUTSIDE_WALLET)
                     <div class="custom-card mb-10">
@@ -229,7 +228,11 @@
                                     </div>
                                 </div>
                                 <div class="preview-list-right">
-                                    <span>{{ $item->value }}</span>
+                                    @if (@$item->type == "text" || @$item->type == "textarea")
+                                        <span>{{ @$item->value }}</span>
+                                    @elseif (@$item->type == "file")
+                                        <img class="image-resize" src="{{ get_image(@$item->value , 'kyc-files') }}" alt="" srcset="">
+                                    @endif
                                 </div>
                             </div>
                             @endforeach

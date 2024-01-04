@@ -21,7 +21,7 @@
             <h4 class="title">{{ __("Exchange Log") }}</h4>
         </div>
         <div class="dashboard-list-wrapper">
-            @foreach ($transactions ?? [] as $item)
+            @forelse ($transactions ?? [] as $item)
                 <div class="dashboard-list-item-wrapper">
                     <div class="dashboard-list-item sent">
                         <div class="dashboard-list-left">
@@ -145,26 +145,30 @@
                                 <span class="last">{{ $item->details->data->payable_amount ?? '' }} {{ $item->details->data->sender_wallet->code ?? '' }}</span>
                             </div>
                         </div>
-                        @if ($item->reject_reason != null)
-                        <div class="preview-list-item">
-                            <div class="preview-list-left">
-                                <div class="preview-list-user-wrapper">
-                                    <div class="preview-list-user-icon">
-                                        <i class="las la-money-check-alt"></i>
-                                    </div>
-                                    <div class="preview-list-user-content">
-                                        <span class="last">{{ __("Reject Reason") }}</span>
+                        @if ($item->status == global_const()::STATUS_REJECT)
+                            <div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
+                                            <i class="las la-money-check-alt"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span class="last">{{ __("Reject Reason") }}</span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="preview-list-right">
+                                    <span class="last">{{ $item->reject_reason ?? '' }}</span>
+                                </div>
                             </div>
-                            <div class="preview-list-right">
-                                <span class="last">{{ $item->reject_reason ?? '' }}</span>
-                            </div>
-                        </div>
                         @endif
                     </div>
                 </div>
-            @endforeach
+            @empty
+                <div class="alert alert-primary text-center">
+                    {{ __("Transaction data not found!") }}
+                </div>
+            @endforelse
         </div>
     </div>
 </div>

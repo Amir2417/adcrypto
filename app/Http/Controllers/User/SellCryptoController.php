@@ -501,7 +501,7 @@ class SellCryptoController extends Controller
             $available_balance  = $sender_wallet->balance - $data->data->total_payable;
 
         }else{
-            $available_balance = '';
+            $available_balance = null;
         }
         $trx_id = generateTrxString("transactions","trx_id","SC",8);
         $transaction_data = [

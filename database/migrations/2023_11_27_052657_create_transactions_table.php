@@ -32,7 +32,7 @@ return new class extends Migration
             $table->decimal('fixed_charge', 28, 8)->nullable();
             $table->decimal('total_charge', 28, 8)->nullable();
             $table->decimal('total_payable', 28, 8)->nullable();
-            $table->decimal('available_balance', 28, 8);
+            $table->decimal('available_balance', 28, 8)->nullable();
             $table->string('currency_code')->nullable();
             $table->string('remark')->nullable();
             $table->text('details')->nullable();

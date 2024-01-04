@@ -27,10 +27,13 @@ class TransactionController extends Controller
      * @return view
      */
     public function sellLog(){
-        $page_title  = "- Sell Logs";
+        $page_title     = "- Sell Logs";
+        $transactions   = Transaction::where("type",PaymentGatewayConst::SELL_CRYPTO)->orderBy('id','desc')->get();
+        
 
         return view('user.sections.transaction-logs.sell-log',compact(
             'page_title',
+            'transactions'
         ));
     }
     /**

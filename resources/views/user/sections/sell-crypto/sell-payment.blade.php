@@ -16,7 +16,7 @@
 @section('content')
 <div class="body-wrapper">
     <div class="row justify-content-center mt-30">
-        <div class="col-xxl-6 col-xl-8 col-lg-8">
+        <div class="col-xxl-6 col-xl-6 col-lg-6">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
                     <h5 class="title">{{ __("Sell Crypto Payment") }}</h5>
@@ -40,6 +40,107 @@
                             <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Continue") }}</span></button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-6 col-xl-6 col-lg-6 mb-30">
+            <div class="custom-card">
+                <div class="dashboard-header-wrapper">
+                    <h4 class="title">{{ __("Transactions Summary") }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="preview-list-wrapper">
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Receiving Method") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>{{ @$data->data->payment_method->name }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-wallet"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Enter Amount") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--success">{{ get_amount(@$data->data->amount,@$data->data->sender_wallet->code) }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-exchange-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Exchange Rate") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--warning">1 {{ @$data->data->sender_wallet->code }}  = {{ get_amount(@$data->data->exchange_rate,@$data->data->payment_method->code) }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-battery-half"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Network Fees") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--danger">{{ get_amount(@$data->data->total_charge,@$data->data->sender_wallet->code) }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span class="last">{{ __("Total Payable Amount") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="last">{{ get_amount(@$data->data->total_payable,@$data->data->sender_wallet->code) }}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span class="last">{{ __("Will Get Amount") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="last">{{ get_amount(@$data->data->will_get,@$data->data->payment_method->code) }}</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
