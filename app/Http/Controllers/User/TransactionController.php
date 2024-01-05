@@ -70,27 +70,19 @@ class TransactionController extends Controller
     */
     public function buyLogSearch(Request $request){
         $validator = Validator::make($request->all(),[
-            'search_text'  => 'nullable|string',
+            'text'  => 'required|string',
         ]);
-
         if($validator->fails()) {
-            return Response::error($validator->errors(),null,400);
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
         }
 
         $validated = $validator->validate();
-        try{
-            if($validated['search_text'] != "" || $validated['search_text'] != null){
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)
-                                    ->search($validated['search_text'])->get();
-            }else{
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)->get();
-            }
-            
-        }catch(Exception $e){
-            return Response::error(['Something went worng!. Please try again.'],null,500);
-        }
         
-        return response()->json(['transactions' => $transaction]);
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('user.components.search-logs.buy-log',compact('transactions'));
 
     }
     /** 
@@ -98,27 +90,19 @@ class TransactionController extends Controller
     */
     public function sellLogSearch(Request $request){
         $validator = Validator::make($request->all(),[
-            'search_text'  => 'nullable|string',
+            'text'  => 'required|string',
         ]);
-
         if($validator->fails()) {
-            return Response::error($validator->errors(),null,400);
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
         }
 
         $validated = $validator->validate();
-        try{
-            if($validated['search_text'] != "" || $validated['search_text'] != null){
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::SELL_CRYPTO)
-                                    ->search($validated['search_text'])->get();
-            }else{
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::SELL_CRYPTO)->get();
-            }
-            
-        }catch(Exception $e){
-            return Response::error(['Something went worng!. Please try again.'],null,500);
-        }
         
-        return response()->json(['transactions' => $transaction]);
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::SELL_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('user.components.search-logs.sell-log',compact('transactions'));
 
     }
     /** 
@@ -127,27 +111,19 @@ class TransactionController extends Controller
     public function withdrawLogSearch(Request $request){
        
         $validator = Validator::make($request->all(),[
-            'search_text'  => 'nullable|string',
+            'text'  => 'required|string',
         ]);
-
         if($validator->fails()) {
-            return Response::error($validator->errors(),null,400);
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
         }
 
         $validated = $validator->validate();
-        try{
-            if($validated['search_text'] != "" || $validated['search_text'] != null){
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)
-                                    ->search($validated['search_text'])->get();
-            }else{
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->get();
-            }
-            
-        }catch(Exception $e){
-            return Response::error(['Something went worng!. Please try again.'],null,500);
-        }
         
-        return response()->json(['transactions' => $transaction]);
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('user.components.search-logs.withdraw-log',compact('transactions'));
 
     }
     /** 
@@ -156,27 +132,19 @@ class TransactionController extends Controller
     public function exchangeLogSearch(Request $request){
        
         $validator = Validator::make($request->all(),[
-            'search_text'  => 'nullable|string',
+            'text'  => 'required|string',
         ]);
-
         if($validator->fails()) {
-            return Response::error($validator->errors(),null,400);
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
         }
 
         $validated = $validator->validate();
-        try{
-            if($validated['search_text'] != "" || $validated['search_text'] != null){
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)
-                                    ->search($validated['search_text'])->get();
-            }else{
-                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->get();
-            }
-            
-        }catch(Exception $e){
-            return Response::error(['Something went worng!. Please try again.'],null,500);
-        }
         
-        return response()->json(['transactions' => $transaction]);
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('user.components.search-logs.exchange-log',compact('transactions'));
 
     }
 }
