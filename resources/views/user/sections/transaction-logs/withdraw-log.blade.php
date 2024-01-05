@@ -264,7 +264,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--success">${transaction.amount}${transaction.details.data.sender_wallet.code}</span>
+                                <span class="text--success">${parseFloat(transaction.amount).toFixed(2)}${transaction.details.data.sender_wallet.code}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -279,7 +279,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--warning">{{ get_amount($item->details->data->sender_ex_rate,$item->details->data->sender_wallet->code) ?? '' }} = {{ get_amount($item->details->data->exchange_rate,$item->details->data->receiver_wallet->code) ?? '' }}</span>
+                                <span class="text--warning">${transaction.details.data.sender_ex_rate}${transaction.details.data.sender_wallet.code} = ${transaction.details.data.exchange_rate}${transaction.details.data.receiver_wallet.code}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -294,7 +294,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--danger">{{ get_amount($item->details->data->total_charge,$item->details->data->sender_wallet->code) ?? '' }}</span>
+                                <span class="text--danger">${parseFloat(transaction.total_charge).toFixed(4)}${transaction.details.data.sender_wallet.code}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -309,7 +309,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="last">{{ get_amount($item->details->data->payable_amount,$item->details->data->sender_wallet->code) ?? '' }}</span>
+                                <span class="last">${parseFloat(transaction.total_payable).toFixed(4)} ${transaction.details.data.sender_wallet.code}</span>
                             </div>
                         </div>
                         @if ($item->status == global_const()::STATUS_REJECT)
