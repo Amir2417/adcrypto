@@ -3,7 +3,21 @@
 @push('css')
     
 @endpush
-
+{{-- ${(transaction.details.data.wallet.type == global_const()::OUTSIDE_WALLET) ? `<div class="preview-list-item">
+    <div class="preview-list-left">
+        <div class="preview-list-user-wrapper">
+            <div class="preview-list-user-icon">
+                <i class="las la-map-marked-alt"></i>
+            </div>
+            <div class="preview-list-user-content">
+                <span>{{ __("Wallet Address") }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="preview-list-right">
+        <span>${transaction.details.data.wallet.address}</span>
+    </div>
+</div>` : ``} --}}
 @section('breadcrumb')
     @include('user.components.breadcrumb',['breadcrumbs' => [
         [
@@ -19,7 +33,7 @@
         <div class="dashboard-header-wrapper">
             <h4 class="title">{{ __("Buy Log") }}</h4>
         </div>
-        <div class="dashboard-list-wrapper">
+        <div class="dashboard-list-wrapper" id="transaction-results">
             @forelse ($transactions ?? [] as $item)
                 <div class="dashboard-list-item-wrapper">
                     <div class="dashboard-list-item sent">
@@ -262,9 +276,208 @@
             var value = $(this).val();
             var token = '{{ csrf_token() }}';
             $.post(url,{search_text:value,_token:token},function(response){
-                var transaction    = response.transactions;
-                console.log(transaction.length);
+                updateTransactionsOnPage(response);
             });
         });
+        function updateTransactionsOnPage(response) {
+            var transactionResults = $("#transaction-results");
+            transactionResults.empty();
+
+            var transactions = response.transactions;
+            
+            
+            if(transactions.length > 0){
+                transactions.forEach(function(transaction) {
+                    var transactionHtml = createTransactionHtml(transaction);
+                    transactionResults.append(transactionHtml);
+                });
+            }else{
+                var transactionHtml = createNoData();
+                transactionResults.append(transactionHtml);
+            } 
+        }
+        function createTransactionHtml(transaction, senderCurrency, receiverCurrency) {
+            var transactionHtml = `<div class="dashboard-list-item-wrapper">
+                    <div class="dashboard-list-item sent">
+                        <div class="dashboard-list-left">
+                            <div class="dashboard-list-user-wrapper">
+                                <div class="dashboard-list-user-icon">
+                                    <i class="las la-arrow-up"></i>
+                                </div>
+                                <div class="dashboard-list-user-content">
+                                    <h4 class="title">{{ __("Buy") }} <span>${transaction.details.data.wallet.name} (${transaction.details.data.wallet.code})</span></h4>
+                                    <span class="sub-title text--danger">${transaction.type} 
+                                        <span class="badge badge--warning ms-2">
+                                            ${getStatusBadge(transaction.status)}
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-list-right">
+                            <h4 class="main-money text--base mb-0">${parseFloat(transaction.amount).toFixed(2)} ${transaction.details.data.wallet.code}</h4>
+                        </div>
+                    </div>
+                    <div class="preview-list-wrapper">
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-compact-disc"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("TRX ID") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.trx_id}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-keyboard"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Wallet Type") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.details.data.wallet.type}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-coins"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Coin") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.details.data.wallet.name} (${transaction.details.data.wallet.code})</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-network-wired"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Network") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.details.data.network.name}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Payment Gateway") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.details.data.payment_method.name}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-wallet"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Enter Amount") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--success">${transaction.amount}${transaction.details.data.wallet.code}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-exchange-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Exchange Rate") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--warning">1 ${transaction.details.data.wallet.code} = ${transaction.details.data.exchange_rate} ${transaction.details.data.payment_method.code}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-battery-half"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Network Fees") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="text--danger">${transaction.total_charge}${transaction.details.data.wallet.code}</span>
+                            </div>
+                        </div>
+                        <div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-money-check-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span class="last">{{ __("Total Payable Amount") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span class="last">${transaction.total_payable}${transaction.details.data.payment_method.code}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+               
+            return transactionHtml;
+                
+        }
+        function createNoData(){
+            var transactionHtml = `<div class="alert alert-primary text-center">
+            Transaction Log Not Found!
+            </div>`;
+            
+            return transactionHtml;
+            
+        }
+        function getStatusBadge(status) {
+            if (status === {{ global_const()::STATUS_PENDING }}) {
+                return "{{ __("Pending") }}";
+            } else if (status === {{ global_const()::STATUS_CONFIRM_PAYMENT }}) {
+                return "{{ __("Confirm Payment") }}";
+            } else if (status === {{ global_const()::STATUS_CANCEL }}) {
+                return "{{ __("Cancel") }}";
+            } else {
+                return "{{ __("Reject") }}";
+            }
+        }
     </script>
 @endpush

@@ -205,7 +205,7 @@ $('#body-overlay').on('click', function (e) {
 
 
 // dashboard-list
-$('.dashboard-list-item').on('click', function (e) {
+$(document).on('click','.dashboard-list-item', function (e) {
   var element = $(this).parent('.dashboard-list-item-wrapper');
   if (element.hasClass('show')) {
     element.removeClass('show');

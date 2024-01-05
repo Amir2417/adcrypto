@@ -82,7 +82,7 @@ class Transaction extends Model
 
     //for search transaction log
     public function scopeSearch($query,$data) {
-        return $query->where("trx_id",$data);
+        return $query->where("trx_id",'LIKE','%'.$data.'%');
     }
     //find the auth user
     public function scopeAuth($query){
