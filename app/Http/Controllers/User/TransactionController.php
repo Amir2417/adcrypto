@@ -122,4 +122,33 @@ class TransactionController extends Controller
         return response()->json(['transactions' => $transaction]);
 
     }
+    /** 
+    * Method for search exchange crypto log  
+    */
+    public function exchangeLogSearch(Request $request){
+       
+        $validator = Validator::make($request->all(),[
+            'search_text'  => 'nullable|string',
+        ]);
+
+        if($validator->fails()) {
+            return Response::error($validator->errors(),null,400);
+        }
+
+        $validated = $validator->validate();
+        try{
+            if($validated['search_text'] != "" || $validated['search_text'] != null){
+                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)
+                                    ->search($validated['search_text'])->get();
+            }else{
+                $transaction    = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->get();
+            }
+            
+        }catch(Exception $e){
+            return Response::error(['Something went worng!. Please try again.'],null,500);
+        }
+        
+        return response()->json(['transactions' => $transaction]);
+
+    }
 }

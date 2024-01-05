@@ -3,21 +3,7 @@
 @push('css')
     
 @endpush
-{{-- ${(transaction.details.data.wallet.type == global_const()::OUTSIDE_WALLET) ? `<div class="preview-list-item">
-    <div class="preview-list-left">
-        <div class="preview-list-user-wrapper">
-            <div class="preview-list-user-icon">
-                <i class="las la-map-marked-alt"></i>
-            </div>
-            <div class="preview-list-user-content">
-                <span>{{ __("Wallet Address") }}</span>
-            </div>
-        </div>
-    </div>
-    <div class="preview-list-right">
-        <span>${transaction.details.data.wallet.address}</span>
-    </div>
-</div>` : ``} --}}
+
 @section('breadcrumb')
     @include('user.components.breadcrumb',['breadcrumbs' => [
         [
@@ -349,6 +335,21 @@
                                 <span>${transaction.details.data.wallet.type}</span>
                             </div>
                         </div>
+                        ${(transaction.details.data.wallet.type == "Outside Wallet") ? `<div class="preview-list-item">
+                            <div class="preview-list-left">
+                                <div class="preview-list-user-wrapper">
+                                    <div class="preview-list-user-icon">
+                                        <i class="las la-map-marked-alt"></i>
+                                    </div>
+                                    <div class="preview-list-user-content">
+                                        <span>{{ __("Wallet Address") }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-list-right">
+                                <span>${transaction.details.data.wallet.address}</span>
+                            </div>
+                        </div>` : ``}
                         <div class="preview-list-item">
                             <div class="preview-list-left">
                                 <div class="preview-list-user-wrapper">

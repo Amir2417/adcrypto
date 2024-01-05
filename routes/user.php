@@ -96,6 +96,7 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::controller(TransactionController::class)->prefix('search')->name('search.')->group(function(){
             Route::post('buy-log','buyLogSearch')->name('buy.log');
             Route::post('withdraw-log','withdrawLogSearch')->name('withdraw.log');
+            Route::post('exchange-log','exchangeLogSearch')->name('exchange.log');
         });
     });
 
