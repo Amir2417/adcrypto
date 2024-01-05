@@ -165,7 +165,7 @@
                                 <div class="preview-list-left">
                                     <div class="preview-list-user-wrapper">
                                         <div class="preview-list-user-icon">
-                                            <i class="las la-money-check-alt"></i>
+                                            <i class="las la-stop-circle"></i>
                                         </div>
                                         <div class="preview-list-user-content">
                                             <span class="last">{{ __("Reject Reason") }}</span>
@@ -344,7 +344,22 @@
                                 <span class="last">${transaction.details.data.payable_amount} ${transaction.details.data.sender_wallet.code}</span>
                             </div>
                         </div>
-                        
+                        ${(transaction.status == 4) ? 
+                            `<div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
+                                            <i class="las la-stop-circle"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span class="last">{{ __("Reject Reason") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-list-right">
+                                    <span class="last">${transaction.reject_reason}</span>
+                                </div>
+                            </div>` : ``}
                     </div>
                 </div>`;
                

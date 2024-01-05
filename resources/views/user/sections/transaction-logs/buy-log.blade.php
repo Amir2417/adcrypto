@@ -49,7 +49,7 @@
                             </div>
                         </div>
                         <div class="dashboard-list-right">
-                            <h4 class="main-money text--base mb-0">{{ get_amount($item->amount,$item->details->data->wallet->code,8) ?? '' }}</h4>
+                            <h4 class="main-money text--base mb-0">{{ get_amount($item->amount,$item->details->data->wallet->code) ?? '' }}</h4>
                         </div>
                     </div>
                     <div class="preview-list-wrapper">
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--success">{{ get_amount($item->amount) }} {{ $item->details->data->wallet->code ?? '' }}</span>
+                                <span class="text--success">{{ get_amount($item->amount,$item->details->data->wallet->code) }}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -187,7 +187,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--danger">{{ get_amount($item->total_charge,$item->details->data->wallet->code,4) ?? '' }}</span>
+                                <span class="text--danger">{{ get_amount($item->total_charge,$item->details->data->wallet->code) ?? '' }}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -202,7 +202,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="last">{{ get_amount($item->total_payable,$item->details->data->wallet->code,8) ?? '' }}</span>
+                                <span class="last">{{ get_amount($item->total_payable,$item->details->data->wallet->code) }}</span>
                             </div>
                         </div>
                         @if ($item->currency->gateway->isTatum($item->currency->gateway) && $item->status == global_const()::STATUS_PENDING)
@@ -212,18 +212,15 @@
                                     @php
                                         $input_fields = $item->details->payment_info->requirements ?? [];
                                     @endphp
-
                                     @foreach ($input_fields as $input)
                                         <div class="">
                                             <h4 class="mb-0">{{ $input->label }}</h4>
                                             <input type="text" class="form-control" name="{{ $input->name }}" placeholder="{{ $input->placeholder ?? "" }}">
                                         </div>
                                     @endforeach
-
                                     <div class="text-end">
                                         <button type="submit" class="btn--base my-2">{{ __("Process") }}</button>
                                     </div>
-
                                 </form>
                             </div>
                         @endif
@@ -232,7 +229,7 @@
                                 <div class="preview-list-left">
                                     <div class="preview-list-user-wrapper">
                                         <div class="preview-list-user-icon">
-                                            <i class="las la-money-check-alt"></i>
+                                            <i class="las la-stop-circle"></i>
                                         </div>
                                         <div class="preview-list-user-content">
                                             <span class="last">{{ __("Reject Reason") }}</span>
@@ -268,10 +265,7 @@
         function updateTransactionsOnPage(response) {
             var transactionResults = $("#transaction-results");
             transactionResults.empty();
-
             var transactions = response.transactions;
-            
-            
             if(transactions.length > 0){
                 transactions.forEach(function(transaction) {
                     var transactionHtml = createTransactionHtml(transaction);
@@ -407,7 +401,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--success">${transaction.amount}${transaction.details.data.wallet.code}</span>
+                                <span class="text--success">${parseFloat(transaction.amount).toFixed(4)}${transaction.details.data.wallet.code}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -437,7 +431,7 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="text--danger">${transaction.total_charge}${transaction.details.data.wallet.code}</span>
+                                <span class="text--danger">${parseFloat(transaction.total_charge).toFixed(4)}${transaction.details.data.wallet.code}</span>
                             </div>
                         </div>
                         <div class="preview-list-item">
@@ -452,9 +446,25 @@
                                 </div>
                             </div>
                             <div class="preview-list-right">
-                                <span class="last">${transaction.total_payable}${transaction.details.data.payment_method.code}</span>
+                                <span class="last">${parseFloat(transaction.total_payable).toFixed(4)}${transaction.details.data.payment_method.code}</span>
                             </div>
                         </div>
+                        ${(transaction.status == 4) ? 
+                            `<div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
+                                            <i class="las la-stop-circle"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span class="last">{{ __("Reject Reason") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-list-right">
+                                    <span class="last">${transaction.reject_reason}</span>
+                                </div>
+                            </div>` : ``}
                     </div>
                 </div>`;
                
