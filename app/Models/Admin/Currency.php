@@ -103,7 +103,7 @@ class Currency extends Model
 
     public function scopeSearch($query,$text) {
         $query->where(function($q) use ($text) {
-            $q->where("country","like","%".$text."%");
+            $q->where("code","like","%".$text."%");
         })->orWhere("name","like","%".$text."%")->orWhere("code","like","%".$text."%");
     }
 

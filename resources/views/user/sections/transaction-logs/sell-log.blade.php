@@ -298,7 +298,6 @@
         function createTransactionHtml(transaction, senderCurrency, receiverCurrency) {
             var data        = JSON.parse(transaction.details.data.details);
             var asset       = "{{ files_asset_path('kyc-files') }}";
-            console.log(data.outside_address_input_values);
             var transactionHtml = `<div class="dashboard-list-item-wrapper">
                     <div class="dashboard-list-item sent">
                         <div class="dashboard-list-left">

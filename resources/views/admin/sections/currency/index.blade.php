@@ -62,19 +62,6 @@
 
 @push('script')
     <script>
-
-        
-        $(document).ready(function() {
-            
-
-            
-
-        });
-
-        
-
-        
-
         $(".delete-modal-button").click(function(){
             var oldData = JSON.parse($(this).parents("tr").attr("data-item"));
 
