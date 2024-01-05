@@ -35,6 +35,10 @@
                                 <label id="public-address">{{ $outside_wallet_address->public_address }}</label>
                                 <div class="paste-text" id="copy-address"><i class="las la-paste"></i></div>
                             </div>
+                            <div class="col-xl-12 col-lg-12 form-group paste-form text-center">
+                                <label id="payable-amount">{{ $data->data->total_payable }}</label>
+                                <div class="paste-text" id="copy-amount"><i class="las la-paste"></i></div>
+                            </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
                             <button type="submit" class="btn--base w-100"><span class="w-100">{{ __("Continue") }}</span></button>
@@ -151,6 +155,20 @@
 <script>
     $('#copy-address').on('click',function(){
         var copyText = document.getElementById("public-address").textContent;
+
+        var tempTextarea = document.createElement('textarea');
+        tempTextarea.value = copyText;
+        document.body.appendChild(tempTextarea);
+
+        tempTextarea.select();
+        tempTextarea.setSelectionRange(0, 99999);
+        document.execCommand('copy');
+        document.body.removeChild(tempTextarea);
+
+        throwMessage('success', ["Copied: " + copyText]);
+    });
+    $('#copy-amount').on('click',function(){
+        var copyText = document.getElementById("payable-amount").textContent;
 
         var tempTextarea = document.createElement('textarea');
         tempTextarea.value = copyText;

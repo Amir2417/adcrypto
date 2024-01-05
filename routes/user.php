@@ -91,6 +91,7 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('sell-log','sellLog')->name('sell.log');
         Route::get('withdraw-log','withdrawLog')->name('withdraw.log');
         Route::get('exchange-log','exchangeLog')->name('exchange.log');
+        Route::get('file-download/{file}','download')->name('file.download');
 
         //search transaction logs
         Route::controller(TransactionController::class)->prefix('search')->name('search.')->group(function(){

@@ -147,4 +147,18 @@ class TransactionController extends Controller
         return view('user.components.search-logs.exchange-log',compact('transactions'));
 
     }
+    /**
+     * Method for download the file
+     * @param $file
+     */
+    public function download($file){
+        if ($file) {
+            $files = get_files_path('kyc-files') . '/' . $file;
+            if (file_exists($files)) {
+                return response()->download($files, $file);
+            } else {
+                return "File not found in storage: " . $files;
+            }
+        }
+    }
 }

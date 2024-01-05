@@ -65,7 +65,7 @@
                         @if (@$data->type == "text" || @$data->type == "textarea")
                             <span>{{ @$data->value }}</span>
                         @elseif (@$data->type == "file")
-                            <img class="image-resize" src="{{ get_image(@$data->value , 'kyc-files') }}" alt="" srcset="">
+                            <a href="{{ setRoute('user.transaction.file.download',$data->value) }}">{{ __("Download") }}</a>
                         @endif
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         @if (@$data->type == "text" || @$data->type == "textarea")
                             <span>{{ @$data->value }}</span>
                         @elseif (@$data->type == "file")
-                            <img class="image-resize" src="{{ get_image(@$data->value , 'kyc-files') }}" alt="" srcset="">
+                        <a href="{{ setRoute('user.transaction.file.download',$data->value) }}">{{ __("Download") }}</a>
                         @endif
                     </div>
                 </div>
