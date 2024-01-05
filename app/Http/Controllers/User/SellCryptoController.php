@@ -538,7 +538,6 @@ class SellCryptoController extends Controller
             }
             
         }catch(Exception $e) {
-            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return redirect()->route('user.buy.crypto.index')->with(['success' => ['Congratulations! Sell Crypto Successfull.']]);
