@@ -1,6 +1,3 @@
-// apex-chart
-
-
 // pie-chart
 $(function() {
   $('#chart6').easyPieChart({

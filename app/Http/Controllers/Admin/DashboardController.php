@@ -30,6 +30,12 @@ class DashboardController extends Controller
     public function index()
     {
         $page_title      = "Dashboard";
+
+        $last_month_start   = date('Y-m-01', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $last_month_end     = date('Y-m-31', strtotime('-1 month', strtotime(date('Y-m-d'))));
+        $this_month_start   = date('Y-m-01');
+        $this_month_end     = date('Y-m-d');
+
         $total_users     = (User::toBase()->count() == 0) ? 1 : User::toBase()->count();
         $unverified_user = User::toBase()->where('email_verified',0)->count();
         $active_user     = User::toBase()->where('status',true)->count();
@@ -70,6 +76,25 @@ class DashboardController extends Controller
         if($blog_percent > 100){
             $blog_percent = 100;
         }
+        
+        $total_transactions           = (Transaction::toBase()->count() == 0) ? 1 : Transaction::toBase()->count();
+        $pending_transactions         = Transaction::toBase()->where('status',global_const()::STATUS_PENDING)->count();
+        $confirm_transactions         = Transaction::toBase()->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
+        $percent_transactions         = ((($pending_transactions + $confirm_transactions) * 100) / $total_transactions);
+        
+        if($total_transactions > 100){
+            $total_transactions = 100;
+        }
+
+        $total_charges      = Transaction::toBase()->sum('total_charge');
+        $this_month_charge  = Transaction::toBase()->whereDate('created_at',">=" , $this_month_start)
+                            ->whereDate('created_at',"<=" , $this_month_end)
+                            ->sum('total_charge');
+
+        $last_month_charge = Transaction::toBase()->whereDate('created_at',">=" , $last_month_start)
+                            ->whereDate('created_at',"<=" , $last_month_end)
+                            ->sum('total_charge');
+
         $monthlyDataBuy    = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
@@ -159,27 +184,36 @@ class DashboardController extends Controller
         $transactions   = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)
                             ->orderBy('id','desc')->latest()->take(3)->get();
 
-        $data                       = [
-            'unverified_user'       => $unverified_user,
-            'active_user'           => $active_user,
-            'user_percent'          => $user_percent,
-            'total_user_count'      => User::all()->count(),
-            'user_chart_data'       => $user_chart,
+        $data                               = [
+            'unverified_user'               => $unverified_user,
+            'active_user'                   => $active_user,
+            'user_percent'                  => $user_percent,
+            'total_user_count'              => User::all()->count(),
+            'user_chart_data'               => $user_chart,
 
-            'active_ticket'         => $active_ticket,
-            'pending_ticket'        => $pending_ticket,
-            'percent_ticket'        => $percent_ticket,
-            'total_ticket_count'    => SupportTicket::all()->count(),
+            'active_ticket'                 => $active_ticket,
+            'pending_ticket'                => $pending_ticket,
+            'percent_ticket'                => $percent_ticket,
+            'total_ticket_count'            => SupportTicket::all()->count(),
 
-            'active_category'        => $active_category,
-            'inactive_category'      => $inactive_category,
-            'category_percent'       => $category_percent,
-            'total_category_count'   => BlogCategory::all()->count(),
+            'active_category'               => $active_category,
+            'inactive_category'             => $inactive_category,
+            'category_percent'              => $category_percent,
+            'total_category_count'          => BlogCategory::all()->count(),
 
-            'active_blog'            => $active_blog,
-            'inactive_blog'          => $inactive_blog,
-            'blog_percent'           => $blog_percent,
-            'total_blog_count'       => Blog::all()->count(),
+            'active_blog'                   => $active_blog,
+            'inactive_blog'                 => $inactive_blog,
+            'blog_percent'                  => $blog_percent,
+            'total_blog_count'              => Blog::all()->count(),
+
+            'pending_transactions'          => $pending_transactions,
+            'confirm_transactions'          => $confirm_transactions,
+            'percent_transactions'          => $percent_transactions,
+            'total_transaction_count'       => Transaction::all()->count(),
+
+            'total_charges'                 => $total_charges,
+            'this_month_charge'             => $this_month_charge,
+            'last_month_charge'             => $last_month_charge,
             
         ];
         return view('admin.sections.dashboard.index',compact(

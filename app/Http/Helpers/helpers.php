@@ -717,6 +717,15 @@ function get_default_currency_code($default_currency = null)
     return "";
 }
 
+function get_default_currency_symbol($default_currency = null)
+{
+    if($default_currency == null) $default_currency = CurrencyProvider::default();
+    if ($default_currency != false) {
+        return $default_currency->symbol;
+    }
+    return "";
+}
+
 function replace_array_key($array, $remove_keyword, $replace_keyword = "")
 {
     $filter = [];

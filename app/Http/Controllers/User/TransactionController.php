@@ -18,7 +18,7 @@ class TransactionController extends Controller
      */
     public function buyLog(){
         $page_title  = "- Buy Logs";
-        $transactions = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
+        $transactions = Transaction::auth()->where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->get();
         
         return view('user.sections.transaction-logs.buy-log',compact(
             'page_title',
@@ -31,7 +31,7 @@ class TransactionController extends Controller
      */
     public function sellLog(){
         $page_title     = "- Sell Logs";
-        $transactions   = Transaction::where("type",PaymentGatewayConst::SELL_CRYPTO)->orderBy('id','desc')->get();
+        $transactions   = Transaction::auth()->where("type",PaymentGatewayConst::SELL_CRYPTO)->orderBy('id','desc')->get();
         
 
         return view('user.sections.transaction-logs.sell-log',compact(
@@ -45,7 +45,7 @@ class TransactionController extends Controller
      */
     public function withdrawLog(){
         $page_title     = "- Withdraw Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->orderBy('id','desc')->get();
+        $transactions   = Transaction::auth()->where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->orderBy('id','desc')->get();
 
         return view('user.sections.transaction-logs.withdraw-log',compact(
             'page_title',
@@ -58,7 +58,7 @@ class TransactionController extends Controller
      */
     public function exchangeLog(){
         $page_title     = "- Exchange Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->get();
+        $transactions   = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->orderBy('id','desc')->get();
 
         return view('user.sections.transaction-logs.exchange-log',compact(
             'page_title',

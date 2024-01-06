@@ -17,10 +17,10 @@ class CurrencySeeder extends Seeder
     public function run()
     {
         $currencies = array(
-            array('admin_id' => '1','name' => 'Bitcoin','code' => 'BTC','symbol' => 'BTC','type' => 'CRYPTO','flag' => 'seeder/bitcoin.webp','rate' => '1.00000000','sender' => '1','receiver' => '1','default' => '1','status' => '1','created_at' => '2023-11-30 04:40:46','updated_at' => '2023-11-30 04:54:29'),
-            array('admin_id' => '1','name' => 'Ethereum','code' => 'ETH','symbol' => 'ETH','type' => 'CRYPTO','flag' => 'seeder/ethereum.webp','rate' => '15.00000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:52:47','updated_at' => '2023-11-30 04:55:31'),
-            array('admin_id' => '1','name' => 'Tether','code' => 'USDT','symbol' => 'USDT','type' => 'CRYPTO','flag' => 'seeder/tether.webp','rate' => '38017.77000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:57:30','updated_at' => '2023-11-30 04:57:32'),
-            array('admin_id' => '1','name' => 'Dogecoin','code' => 'DOGE','symbol' => 'DOGE','type' => 'CRYPTO','flag' => 'seeder/doge-coin.webp','rate' => '466020.56000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:58:49','updated_at' => '2023-11-30 04:59:08')
+            array('admin_id' => '1','name' => 'Bitcoin','code' => 'BTC','symbol' => '₿','type' => 'CRYPTO','flag' => 'seeder/bitcoin.webp','rate' => '1.00000000','sender' => '1','receiver' => '1','default' => '1','status' => '1','created_at' => '2023-11-30 04:40:46','updated_at' => '2023-11-30 04:54:29'),
+            array('admin_id' => '1','name' => 'Ethereum','code' => 'ETH','symbol' => 'Ξ','type' => 'CRYPTO','flag' => 'seeder/ethereum.webp','rate' => '15.00000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:52:47','updated_at' => '2023-11-30 04:55:31'),
+            array('admin_id' => '1','name' => 'Tether','code' => 'USDT','symbol' => '₮','type' => 'CRYPTO','flag' => 'seeder/tether.webp','rate' => '38017.77000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:57:30','updated_at' => '2023-11-30 04:57:32'),
+            array('admin_id' => '1','name' => 'Dogecoin','code' => 'DOGE','symbol' => 'Ɖ','type' => 'CRYPTO','flag' => 'seeder/doge-coin.webp','rate' => '466020.56000000','sender' => '1','receiver' => '1','default' => '0','status' => '1','created_at' => '2023-11-30 04:58:49','updated_at' => '2023-11-30 04:59:08')
         );
 
         Currency::insert($currencies);

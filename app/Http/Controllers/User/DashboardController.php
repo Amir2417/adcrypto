@@ -21,8 +21,8 @@ class DashboardController extends Controller
     public function index()
     {
         $page_title     = "- Dashboard";
-        $wallets        = UserWallet::auth()->with(['currency'])->get();
-        $monthlyDataBuy    = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->select(
+        $wallets           = UserWallet::auth()->with(['currency'])->get();
+        $monthlyDataBuy    = Transaction::auth()->where("type",PaymentGatewayConst::BUY_CRYPTO)->select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
@@ -32,7 +32,7 @@ class DashboardController extends Controller
         ->orderBy('month', 'asc')
         ->get();
 
-        $monthlyDataSell    = Transaction::where("type",PaymentGatewayConst::SELL_CRYPTO)->select(
+        $monthlyDataSell    = Transaction::auth()->where("type",PaymentGatewayConst::SELL_CRYPTO)->select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
@@ -42,7 +42,7 @@ class DashboardController extends Controller
         ->orderBy('month', 'asc')
         ->get();
 
-        $monthlyDataWithdraw    = Transaction::where("type",PaymentGatewayConst::WITHDRAW_CRYPTO)->select(
+        $monthlyDataWithdraw    = Transaction::auth()->where("type",PaymentGatewayConst::WITHDRAW_CRYPTO)->select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
@@ -92,7 +92,7 @@ class DashboardController extends Controller
             $withdraw_data[]    = $count;
         }
         
-        $transactions   = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)
+        $transactions   = Transaction::auth()->where("type",PaymentGatewayConst::BUY_CRYPTO)
         ->orderBy('id','desc')->latest()->take(3)->get();
         
         return view('user.dashboard',compact(
