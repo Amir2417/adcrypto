@@ -25,18 +25,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Total Visitors</h6>
+                                <h6 class="title">{{ __("Total Users") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">6258</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_user_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--success">Active 40</span>
-                                    <span class="badge badge--info">New 22</span>
-                                    <span class="badge badge--warning">Today 12</span>
+                                    <span class="badge badge--success">{{ __("Active") }} {{ $data['active_user'] }}</span>
+                                    <span class="badge badge--info">{{ __("Unverified") }} {{ $data['unverified_user'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart6" data-percent="65"><span>65%</span></div>
+                                <div class="chart" id="chart6" data-percent="{{ $data['user_percent'] }}"><span>{{ round($data['user_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -45,17 +44,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Add Money Balance</h6>
+                                <h6 class="title">{{ ("Total Blog Category") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$865k</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_category_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">Total 40k</span>
-                                    <span class="badge badge--warning">Pending 20K</span>
+                                    <span class="badge badge--info">{{ __("Active") }} {{ $data['active_category'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Inactive") }} {{ $data['inactive_category'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart7" data-percent="80"><span>80%</span></div>
+                                <div class="chart" id="chart7" data-percent="{{ $data['category_percent'] }}"><span>{{ round($data['category_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -64,17 +63,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Money Out Balance</h6>
+                                <h6 class="title">{{ ("Total Blogs") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$273</h2>
+                                    <h2 class="user-count">{{ formatNumberInKNotation($data['total_blog_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">Total 40k</span>
-                                    <span class="badge badge--warning">Pending 20K</span>
+                                    <span class="badge badge--info">{{ __("Active") }} {{ $data['active_blog'] }}</span>
+                                    <span class="badge badge--warning">{{ __("Inactive") }} {{ $data['inactive_blog'] }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart8" data-percent="90"><span>90%</span></div>
+                                <div class="chart" id="chart8" data-percent="{{ $data['blog_percent'] }}"><span>{{ round($data['blog_percent']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -83,17 +82,17 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">Total Profit</h6>
+                                <h6 class="title">{{ __("Total Support Ticket") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">$650</h2>
+                                    <h2 class="user-count">{{ formatNumberInkNotation($data['total_ticket_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">This Day 40k</span>
-                                    <span class="badge badge--warning">This Month 20K</span>
+                                    <span class="badge badge--info">{{ __("Active") }} {{ formatNumberInkNotation($data['active_ticket']) }}</span>
+                                    <span class="badge badge--warning">{{ __("Pending") }} {{ formatNumberInkNotation($data['pending_ticket']) }}</span>
                                 </div>
                             </div>
                             <div class="right">
-                                <div class="chart" id="chart9" data-percent="70"><span>70%</span></div>
+                                <div class="chart" id="chart9" data-percent="{{ $data['percent_ticket'] }}"><span>{{ round($data['percent_ticket']) }}%</span></div>
                             </div>
                         </div>
                     </div>
@@ -182,27 +181,7 @@
             <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
                 <div class="chart-wrapper">
                     <div class="chart-area-header">
-                        <h5 class="title">Monthly Add Money Chart</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart1" class="sales-chart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Revenue Chart</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart2" class="revenue-chart"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Add Money Analytics</h5>
+                        <h5 class="title">{{ __("Transaction Analytics") }}</h5>
                     </div>
                     <div class="chart-container">
                         <div id="chart3" class="order-chart"></div>
@@ -212,29 +191,14 @@
             <div class="col-xxxl-6 col-xxl-3 col-xl-6 col-lg-6 mb-15">
                 <div class="chart-wrapper">
                     <div class="chart-area-header">
-                        <h5 class="title">User Analytics</h5>
+                        <h5 class="title">{{ __("User Analytics") }}</h5>
                     </div>
                     <div class="chart-container">
-                        <div id="chart4" class="balance-chart"></div>
+                        <div id="chart4" class="balance-chart"  data-user_chart_data="{{ json_encode($data['user_chart_data']) }}"></div>
                     </div>
                     <div class="chart-area-footer">
                         <div class="chart-btn">
-                            <a href="javascript:void(0)" class="btn--base w-100">Send Report</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xxxl-12 col-xxl-3 col-xl-12 col-lg-12 mb-15">
-                <div class="chart-wrapper">
-                    <div class="chart-area-header">
-                        <h5 class="title">Growth</h5>
-                    </div>
-                    <div class="chart-container">
-                        <div id="chart5" class="growth-chart"></div>
-                    </div>
-                    <div class="chart-area-footer">
-                        <div class="chart-btn">
-                            <a href="javascript:void(0)" class="btn--base w-100">Send Report</a>
+                            <a href="{{ setRoute('admin.users.index') }}" class="btn--base w-100">{{ __("View User") }}</a>
                         </div>
                     </div>
                 </div>
@@ -244,85 +208,46 @@
     <div class="table-area mt-15">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">Latest Transactions</h5>
+                <h5 class="title">{{ __("Latest Buy Crypto Transactions") }}</h5>
             </div>
             <div class="table-responsive">
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>Full Name</th>
-                            <th>Email</th>
-                            <th>Username</th>
-                            <th>Phone</th>
-                            <th>Amount</th>
-                            <th>Method</th>
-                            <th>Status</th>
-                            <th>Time</th>
+                            <th>{{ __("S. Wallet") }}</th>
+                            <th>{{ __("Amount") }}</th>
+                            <th>{{ __("P. Method") }}</th>
+                            <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-1.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Sean Black</span></td>
-                            <td>sean@gmail.com</td>
-                            <td>sean</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Stripe</span></td>
-                            <td><span class="badge badge--warning">Pending</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-2.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Merri Diamond</span></td>
-                            <td>merri@gmail.com</td>
-                            <td>merri</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Paypal</span></td>
-                            <td><span class="badge badge--success">Completed</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <ul class="user-list">
-                                    <li><img src="assets/images/user/user-3.jpg" alt="user"></li>
-                                </ul>
-                            </td>
-                            <td><span>Sean Black</span></td>
-                            <td>sean@gmail.com</td>
-                            <td>sean</td>
-                            <td>123-456(008)90</td>
-                            <td>5.00</td>
-                            <td><span class="text--info">Razorpay</span></td>
-                            <td><span class="badge badge--danger">Canceled</span></td>
-                            <td>2022-05-30 03:46 PM</td>
-                            <td>
-                                <button type="button" class="btn btn--base bg--success"><i class="las la-check-circle"></i></button>
-                                <button type="button" class="btn btn--base bg--danger"><i class="las la-times-circle"></i></button>
-                                <a href="add-logs-edit.html" class="btn btn--base"><i class="las la-expand"></i></a>
-                            </td>
-                        </tr>
+                        @forelse ($transactions as $item)
+                            <tr>
+                                <td><span>{{ $item->details->data->wallet->name ?? '' }}</span></td>
+                                <td>{{ get_amount($item->amount,$item->details->data->wallet->code,8) }}</td>
+                                <td>{{ $item->currency->name ?? '' }} @if($item->currency->gateway->isManual()) ({{ __("Manual") }}) @endif</td>
+                                <td>
+                                   
+                                    @if ($item->status == global_const()::STATUS_PENDING)
+                                        <span>{{ __("Pending") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
+                                        <span>{{ __("Confirm Payment") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_REJECT)
+                                        <span>{{ __("Rejected") }}</span>
+                                    @elseif ($item->status == global_const()::STATUS_CANCEL)
+                                        <span>{{ __("Canceled") }}</span>
+                                    @else
+                                        <span>{{ __("Delayed") }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ setRoute('admin.buy.crypto.details',$item->id) }}" class="btn btn--base btn--primary"><i class="las la-info-circle"></i></a>
+                                </td>
+                            </tr>
+                        @empty
+                            @include('admin.components.alerts.empty',['colspan' => 5])
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -335,4 +260,130 @@
 <script src="{{ asset('public/backend/js/apexcharts.js') }}"></script>
 <!-- chart js -->
 <script src="{{ asset('public/backend/js/chart.js') }}"></script> 
+<script>
+
+    let stringMonths        = '@json($labels)';
+    let chartMonths         = JSON.parse(stringMonths);
+    let stringData          = '@json($buy_data)';
+    let chartData           = JSON.parse(stringData);
+
+    let sellStringData      = '@json($sell_data)';
+    let sellData            = JSON.parse(sellStringData);
+    let withdrawStringData  = '@json($withdraw_data)';
+    let withdrawData        = JSON.parse(withdrawStringData);
+    let exchangeStringData  = '@json($exchange_data)';
+    let exchangeData        = JSON.parse(exchangeStringData);
+
+    var options = {
+    series: [{
+    name: 'Buy Crypto',
+    color: "#5A5278",
+    data: chartData
+    }, {
+    name: 'Sell Crypto',
+    color: "#6F6593",
+    data: sellData
+    }, {
+    name: 'Withdraw Crypto',
+    color: "#8075AA",
+    data: withdrawData
+    },{
+    name: 'Exchange Crypto',
+    color: "#8075AA",
+    data: exchangeData
+    }],
+    chart: {
+    type: 'bar',
+    toolbar: {
+        show: false
+    },
+    height: 325
+    },
+    plotOptions: {
+    bar: {
+        horizontal: false,
+        columnWidth: '55%',
+        borderRadius: 5,
+        endingShape: 'rounded'
+    },
+    },
+    dataLabels: {
+    enabled: false
+    },
+    stroke: {
+    show: true,
+    width: 2,
+    colors: ['transparent']
+    },
+    xaxis: {
+    categories: chartMonths,
+    },
+    yaxis: {
+    title: {
+        text: 'Total Transactions'
+    }
+    },
+    fill: {
+    opacity: 1
+    },
+    tooltip: {
+    y: {
+        formatter: function (val) {
+        return val
+        }
+    }
+    }
+    };
+
+    var chart = new ApexCharts(document.querySelector("#chart3"), options);
+    chart.render();
+
+
+    var chart4 = $('#chart4');
+        var user_chart_data = chart4.data('user_chart_data');
+        var options = {
+        series: user_chart_data,
+        chart: {
+        width: 350,
+        type: 'pie'
+        },
+        colors: ['#5A5278', '#6F6593', '#8075AA', '#A192D9'],
+        labels: ['Active', 'Banned', 'Unverified', 'All'],
+        responsive: [{
+        breakpoint: 1480,
+        options: {
+            chart: {
+            width: 280
+            },
+            legend: {
+            position: 'bottom'
+            }
+        },
+        breakpoint: 1199,
+        options: {
+            chart: {
+            width: 380
+            },
+            legend: {
+            position: 'bottom'
+            }
+        },
+        breakpoint: 575,
+        options: {
+            chart: {
+            width: 280
+            },
+            legend: {
+            position: 'bottom'
+            }
+        }
+        }],
+        legend: {
+        position: 'bottom'
+        },
+        };
+
+        var chart = new ApexCharts(document.querySelector("#chart4"), options);
+        chart.render();
+</script>
 @endpush
