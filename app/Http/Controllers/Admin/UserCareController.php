@@ -135,10 +135,10 @@ class UserCareController extends Controller
                                     ->where('status',global_const()::STATUS_PENDING)->count();
         $confirm_transactions   = Transaction::where('user_id',$user->id)
                                     ->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
-        if($transactions != 0){
-            $percent_transactions   = ((($pending_transactions + $confirm_transactions) * 100) / $transactions);
-        }else{
+        if($transactions == 0){
             $percent_transactions   = 0;
+        }else{
+            $percent_transactions   = ((($pending_transactions + $confirm_transactions) * 100) / $transactions);
         }
         
 
