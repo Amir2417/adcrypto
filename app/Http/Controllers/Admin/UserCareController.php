@@ -130,7 +130,7 @@ class UserCareController extends Controller
         $user                   = User::where('username', $username)->first();
         if(!$user) return back()->with(['error' => ['Opps! User not exists']]);
         $user_wallet            = UserWallet::with(['currency'])->where('user_id',$user->id)->get();
-        $transactions           = Transaction::where('user_id',$user->id)->count();
+        $transactions           = (Transaction::where('user_id',$user->id)->count() == 0) ? 1 : Transaction::where('user_id',$user->id)->count();
         $pending_transactions   = Transaction::where('user_id',$user->id)
                                     ->where('status',global_const()::STATUS_PENDING)->count();
         $confirm_transactions   = Transaction::where('user_id',$user->id)
