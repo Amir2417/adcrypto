@@ -20,6 +20,69 @@
 @endsection
 
 @section('content')
+    <div class="dashboard-area">
+        <div class="dashboard-item-area">
+            <div class="row">
+                @foreach ($user_wallet as $item)
+                    <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                        <div class="dashbord-item">
+                            <div class="dashboard-content">
+                                <div class="left">
+                                    <h6 class="title">{{ __("Current Balance") }}</h6>
+                                    <div class="user-info">
+                                        <h2 class="user-count">{{ $item->currency->symbol }} {{ numeric_unit_converter(get_amount($item?->balance ?? 0,null,4))->number . numeric_unit_converter($item?->balance ?? 0,null,4)->unit }}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                
+                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                    <div class="dashbord-item">
+                        <div class="dashboard-content">
+                            <div class="left">
+                                <h6 class="title">{{ __("Total Transactions") }}</h6>
+                                <div class="user-info">
+                                    <h2 class="user-count">{{ formatNumberInkNotation($transactions) }}</h2>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--danger">{{ __("Pending") }} {{ formatNumberInkNotation($pending_transactions) }}</span>
+                                    <span class="badge badge--success">{{ __("Confirm") }} {{ formatNumberInkNotation($confirm_transactions) }}</span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="chart" id="chart10" data-percent="{{ $percent_transactions }}"><span>{{ round($percent_transactions) }}%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                    @php
+                        $total_pending_solved_support_ticket = ($pending_support_ticket + $solved_support_ticket);
+                        $one_percent_of_support_ticket = (($total_pending_solved_support_ticket / 100) == 0) ? 1 : ($total_pending_solved_support_ticket / 100);
+                    @endphp
+                    <div class="dashbord-item">
+                        <div class="dashboard-content">
+                            <div class="left">
+                                <h6 class="title">{{ __('Active Tickets') }}</h6>
+                                <div class="user-info">
+                                    <h2 class="user-count">{{ $active_support_ticket }}</h2>
+                                </div>
+                                <div class="user-badge">
+                                    <span class="badge badge--danger">{{ __("Pending") }} {{ $pending_support_ticket }}</span>
+                                    <span class="badge badge--success">{{ __("Solved") }} {{ $solved_support_ticket }}</span>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="chart" id="chart9" data-percent="{{ floor($pending_support_ticket / $one_percent_of_support_ticket) }}"><span>{{ floor($pending_support_ticket / $one_percent_of_support_ticket) }}%</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="custom-card mt-15">
         <div class="card-header">
             <h6 class="title">{{ __("User Overview") }}</h6>
@@ -271,6 +334,8 @@
 @endsection
 
 @push('script')
+<!-- chart js -->
+<script src="{{ asset('public/backend/js/chart.js') }}"></script>
     <script>
         getAllCountries("{{ setRoute('global.countries') }}");
         $(document).ready(function() {

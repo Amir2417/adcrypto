@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Admin;
 use Exception;
 use App\Models\User;
 use App\Models\UserWallet;
+use App\Models\Transaction;
 use App\Models\UserMailLog;
 use Illuminate\Support\Arr;
 use App\Models\UserLoginLog;
 use Illuminate\Http\Request;
+use App\Models\SupportTicket;
 use App\Constants\GlobalConst;
 use App\Http\Helpers\Response;
 use Illuminate\Support\Facades\DB;
@@ -73,7 +75,7 @@ class UserCareController extends Controller
     public function emailUnverified()
     {
         $page_title = "Email Unverified Users";
-        $users = User::active()->orderBy('id', 'desc')->emailUnverified()->paginate(12);
+        $users      = User::active()->orderBy('id', 'desc')->emailUnverified()->paginate(12);
         return view('admin.sections.user-care.index', compact(
             'page_title',
             'users'
@@ -124,12 +126,37 @@ class UserCareController extends Controller
      */
     public function userDetails($username)
     {
-        $page_title = "User Details";
-        $user = User::where('username', $username)->first();
+        $page_title             = "User Details";
+        $user                   = User::where('username', $username)->first();
         if(!$user) return back()->with(['error' => ['Opps! User not exists']]);
+        $user_wallet            = UserWallet::with(['currency'])->where('user_id',$user->id)->get();
+        $transactions           = Transaction::where('user_id',$user->id)->count();
+        $pending_transactions   = Transaction::where('user_id',$user->id)
+                                    ->where('status',global_const()::STATUS_PENDING)->count();
+        $confirm_transactions   = Transaction::where('user_id',$user->id)
+                                    ->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
+        $percent_transactions   = ((($pending_transactions + $confirm_transactions) * 100) / $transactions);
+
+        if($transactions > 100){
+            $transactions = 100;
+        }
+
+        $active_support_ticket = SupportTicket::active()->count();
+        $pending_support_ticket = SupportTicket::pending()->count();
+        $solved_support_ticket = SupportTicket::solved()->count();
+
+        
         return view('admin.sections.user-care.details', compact(
             'page_title',
             'user',
+            'user_wallet',
+            'transactions',
+            'pending_transactions',
+            'confirm_transactions',
+            'percent_transactions',
+            'active_support_ticket',
+            'pending_support_ticket',
+            'solved_support_ticket',
         ));
     }
 
