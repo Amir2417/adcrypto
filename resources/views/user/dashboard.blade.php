@@ -48,7 +48,7 @@
             <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
                 <div class="chart-wrapper">
                     <div class="dashboard-header-wrapper">
-                        <h5 class="title">Buy Crypto Chart</h5>
+                        <h5 class="title">{{ __("Buy Crypto Chart") }}</h5>
                     </div>
                     <div class="chart-container">
                         <div id="chart1" class="chart"></div>
@@ -58,7 +58,7 @@
             <div class="col-xxl-6 col-xl-6 col-lg-6 mb-20">
                 <div class="chart-wrapper">
                     <div class="dashboard-header-wrapper">
-                        <h5 class="title">Sell Crypto Chart</h5>
+                        <h5 class="title">{{ __("Sell Crypto Chart") }}</h5>
                     </div>
                     <div class="chart-container">
                         <div id="chart2" class="chart"></div>
@@ -86,11 +86,17 @@
 @endsection
 @push('script')
 <script>
+    let stringMonths = '@json($labels)';
+    let chartMonths = JSON.parse(stringMonths);
+    let stringData  = '@json($data)';
+    let chartData   = JSON.parse(stringData);
+    console.log(chartMonths);
+
     var options = {
         series: [{
             name: 'Transactions',
             color: "#0194FC",
-            data: [33, 41, 50, 101, 60, 46, 42, 33, 24, 18, 25, 12]
+            data: chartData
         }],
         chart: {
             height: 350,
@@ -110,7 +116,7 @@
         dataLabels: {
             enabled: true,
             formatter: function (val) {
-                return val + "$";
+                return val;
             },
             offsetY: -20,
             style: {
@@ -120,7 +126,7 @@
         },
 
         xaxis: {
-            categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            categories: chartMonths,
             position: 'top',
             axisBorder: {
                 show: false
