@@ -199,7 +199,7 @@ class WithdrawCryptoController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.withdraw.crypto.index')->with(['success'  => ['Withdraw Crypto request send successfully!']]);
+        return redirect()->route('user.withdraw.crypto.index')->with(['success'  => ['Withdraw Crypto Successfull!']]);
     }
 
     //update sender wallet balance

@@ -1416,7 +1416,7 @@ function get_only_numeric_data($string) {
     return preg_replace("/[^0-9]/","",$string);
 }
 function get_user_notifications(){
-    $notifications  = UserNotification::auth()->latest()->take(5)->get();
+    $notifications  = UserNotification::auth()->latest()->take(10)->get();
     return $notifications;
 }
 function generate_random_number($length = 12)

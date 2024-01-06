@@ -205,7 +205,7 @@ class ExchangeCryptoController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.exchange.crypto.index')->with(['success' => ['Successfully! Exchange Crypto request sent to Admin.']]);       
+        return redirect()->route('user.exchange.crypto.index')->with(['success' => ['Exchange Crypto Successfull']]);       
     }
 
     //update sender wallet balance

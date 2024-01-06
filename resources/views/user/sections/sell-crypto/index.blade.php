@@ -46,6 +46,7 @@
                                             <input type="hidden" class="payment-method-rate">
                                             <input type="hidden" class="payment-method-code">
                                             <input type="hidden" class="payment-method-min-amount">
+                                            <input type="hidden" class="payment-method-max-amount">
                                             <img src="{{ get_image(@$first_currency->flag , 'currency-flag') }}" alt="flag" class="custom-flag">
                                             <span class="custom-currency">{{ @$first_currency->code }}</span>
                                         </div>
@@ -84,6 +85,7 @@
                                     <div class="input-group-text currency-code"></div>
                                 </div>
                                 <code class="d-block mt-2 min-amount"></code>
+                                <code class="d-block mt-2 max-amount"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Receiving Method") }}<span>*</span></label>
@@ -174,8 +176,9 @@
         var paymentMethodCode      = $('.payment-method-code').val();
         var paymentMethodRate      = $('.payment-method-rate').val();
         var paymentMinAmount       = $('.payment-method-min-amount').val();
+        var paymentMaxAmount       = $('.payment-method-max-amount').val();
 
-        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
 
     });
 
@@ -209,25 +212,29 @@
     // Payment Method
     $('select[name=payment_method]').on('change',function(){
         var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
+        var paymentMaxAmount    = $("select[name=payment_method] :selected").attr("data-max_amount");
         var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
         var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
         var currencyRate        = $('.currency-rate').val();
         var currencyCode        = $('.currency-code').text();
         
-        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });
 
-    function calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode){
+    function calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode){
         var minAmount           = parseFloat(currencyRate) / parseFloat(paymentMethodRate);
         var totalMinAmount      = parseFloat(paymentMinAmount) * parseFloat(minAmount);
+        var totalMaxAmount      = parseFloat(paymentMaxAmount) * parseFloat(minAmount);
         
         $('.min-amount').text('Min Amount :' + totalMinAmount.toFixed(10) + " " + currencyCode);
+        $('.max-amount').text('Max Amount :' + totalMaxAmount.toFixed(10) + " " + currencyCode);
 
         var exchangeRate        = parseFloat(paymentMethodRate) / parseFloat(currencyRate);
         $('.exchange-rate').text("Rate :" + " " + "1" + " " + currencyCode + " " + "=" + " " + exchangeRate.toFixed(10) + " " + paymentMethodCode);
         $('.payment-method-code').val(paymentMethodCode);
         $('.payment-method-rate').val(paymentMethodRate);
         $('.payment-method-min-amount').val(paymentMinAmount);
+        $('.payment-method-max-amount').val(paymentMaxAmount);
         $('.currency-rate').val(currencyRate);
         $('.currency-code').text(currencyCode);
     }
@@ -248,12 +255,13 @@
         $('.currency-rate').val(data.rate);
 
         var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
+        var paymentMaxAmount    = $("select[name=payment_method] :selected").attr("data-max_amount");
         var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
         var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
         var currencyRate        = data.rate;
         
         
-        calculation(paymentMinAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });
 
 

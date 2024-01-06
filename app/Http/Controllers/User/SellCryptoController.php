@@ -540,7 +540,7 @@ class SellCryptoController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.buy.crypto.index')->with(['success' => ['Congratulations! Sell Crypto Successfull.']]);
+        return redirect()->route('user.buy.crypto.index')->with(['success' => ['Sell Crypto Successfull.']]);
     }
     //update sender wallet balance
     function updateSenderWalletBalance($sender_wallet,$available_balance){

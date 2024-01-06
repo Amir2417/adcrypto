@@ -162,8 +162,8 @@
             var totalMaxLimit       = maxLimit * rate;
             
 
-            $('.available-balance').text("Available Balance "+ " " + parseFloat(walletBalance).toFixed(2) + " " + currency);
-            $('.limit').text("Limit "+ ":" + " " + parseFloat(totalMinLimit).toFixed(2) + " " + currency + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(2) + " " + currency);
+            $('.available-balance').text("Available Balance "+ " " + parseFloat(walletBalance).toFixed(8) + " " + currency);
+            $('.limit').text("Limit "+ ":" + " " + parseFloat(totalMinLimit).toFixed(8) + " " + currency + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(8) + " " + currency);
             
         }
 
