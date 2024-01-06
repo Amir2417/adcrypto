@@ -56,7 +56,7 @@
                             'icon'      => "menu-icon las la-wallet",
                         ],
                         [
-                            'title'     => "Outside Wallet Address",
+                            'title'     => "Outside Address",
                             'route'     => "admin.outside.wallet.index",
                             'icon'      => "menu-icon las la-address-book",
                         ],
