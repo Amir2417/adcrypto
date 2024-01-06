@@ -90,11 +90,15 @@
     let chartMonths = JSON.parse(stringMonths);
     let stringData  = '@json($data)';
     let chartData   = JSON.parse(stringData);
-    console.log(chartMonths);
+
+    let sellStringData      = '@json($sell_data)';
+    let sellData            = JSON.parse(sellStringData);
+    let withdrawStringData  = '@json($withdraw_data)';
+    let withdrawData        = JSON.parse(withdrawStringData);
 
     var options = {
         series: [{
-            name: 'Transactions',
+            name: 'Total Transactions',
             color: "#0194FC",
             data: chartData
         }],
@@ -160,7 +164,7 @@
             labels: {
                 show: false,
                 formatter: function (val) {
-                    return val + "$";
+                    return val;
                 }
             }
 
@@ -183,15 +187,15 @@
         series: [{
         name: 'Buy Crypto',
         color: "#00ABB3",
-        data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+        data: chartData
         }, {
         name: 'Sell Crypto',
         color: "#0194FC",
-        data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
+        data: sellData
         }, {
         name: 'Withdraw Crypto',
         color: "#cdbb71",
-        data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+        data: withdrawData
         }],
         chart: {
         type: 'bar',
@@ -217,7 +221,7 @@
         colors: ['transparent']
         },
         xaxis: {
-        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+        categories: chartMonths,
         },
         yaxis: {
         title: {
@@ -230,7 +234,7 @@
         tooltip: {
         y: {
             formatter: function (val) {
-            return "$ " + val + " thousands"
+            return val
             }
         }
         }

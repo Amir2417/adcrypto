@@ -22,7 +22,27 @@ class DashboardController extends Controller
     {
         $page_title     = "- Dashboard";
         $wallets        = UserWallet::auth()->with(['currency'])->get();
-        $monthlyData    = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->select(
+        $monthlyDataBuy    = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        $monthlyDataSell    = Transaction::where("type",PaymentGatewayConst::SELL_CRYPTO)->select(
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('COUNT(*) as total')
+        )
+        ->groupBy('year', 'month')
+        ->orderBy('year', 'asc')
+        ->orderBy('month', 'asc')
+        ->get();
+
+        $monthlyDataWithdraw    = Transaction::where("type",PaymentGatewayConst::WITHDRAW_CRYPTO)->select(
             DB::raw('YEAR(created_at) as year'),
             DB::raw('MONTH(created_at) as month'),
             DB::raw('COUNT(*) as total')
@@ -33,15 +53,29 @@ class DashboardController extends Controller
         ->get();
         
         // Prepare data for the chart
-        $labels = [];
-        $data = [];
+        $labels         = [];
+        $data           = [];
+        $sell_data      = [];
+        $withdraw_data  = [];
+
+        
         
         // Create an array with all months 
-        $monthsArray = array_fill_keys(range(1, 12), 0);
+        $monthsArray            = array_fill_keys(range(1, 12), 0);
+        $monthsArraySell        = array_fill_keys(range(1, 12), 0);
+        $monthsArrayWithdraw    = array_fill_keys(range(1, 12), 0);
         
         
-        foreach ($monthlyData as $record) {
+        foreach ($monthlyDataBuy as $record) {
             $monthsArray[$record->month] = $record->total;
+        }
+
+        foreach ($monthlyDataSell as $record) {
+            $monthsArraySell[$record->month] = $record->total;
+        }
+
+        foreach ($monthlyDataWithdraw as $record) {
+            $monthsArrayWithdraw[$record->month] = $record->total;
         }
         
         foreach ($monthsArray as $month => $count) {
@@ -49,16 +83,26 @@ class DashboardController extends Controller
             $labels[] = $monthName;
             $data[] = $count;
         }
+
+        foreach ($monthsArraySell as $month => $count) {
+            $sell_data[]    = $count;
+        }
+
+        foreach ($monthsArrayWithdraw as $month => $count) {
+            $withdraw_data[]    = $count;
+        }
         
-        $transactions   = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->latest()->take(3)->get();
+        $transactions   = Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)
+        ->orderBy('id','desc')->latest()->take(3)->get();
         
         return view('user.dashboard',compact(
             "page_title",
             "wallets",
             'transactions',
-            'months',
             'labels',
-            'data'
+            'data',
+            'sell_data',
+            'withdraw_data'
         ));
     }
 
