@@ -67,6 +67,7 @@ class SellCryptoLogController extends Controller
         $validated      = $validator->validate();
         $transaction    = Transaction::with(['user','user_wallets','currency'])->where('trx_id',$trx_id)->first();
         
+        
         $form_data = [
             'data'        => $transaction,
             'status'      => "Confirm",
@@ -75,7 +76,11 @@ class SellCryptoLogController extends Controller
             $transaction->update([
                 'status' => $validated['status'],
             ]);
-            
+            if($validated['status'] == global_const()::STATUS_CONFIRM_PAYMENT && $transaction->details->data->sender_wallet->type == global_const()::OUTSIDE_WALLET){
+                $transaction->user_wallets->update([
+                    'balance'   => $transaction->user_wallets->balance - $transaction->amount,
+                ]);
+            }
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new SellCryptoMailNotification($form_data));
             }
