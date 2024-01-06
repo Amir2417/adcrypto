@@ -43,12 +43,12 @@
                         [
                             'title'     => "Setup Network",
                             'route'     => "admin.network.index",
-                            'icon'      => "menu-icon las la-coins",
+                            'icon'      => "menu-icon las la-network-wired",
                         ],
                         [
                             'title'     => "Setup Currency",
                             'route'     => "admin.currency.index",
-                            'icon'      => "menu-icon las la-coins",
+                            'icon'      => "menu-icon las la-shekel-sign",
                         ],
                         [
                             'title'     => "Fees & Charges",
@@ -58,7 +58,7 @@
                         [
                             'title'     => "Outside Wallet Address",
                             'route'     => "admin.outside.wallet.index",
-                            'icon'      => "menu-icon las la-wallet",
+                            'icon'      => "menu-icon las la-address-book",
                         ],
                     ]
                 ])
