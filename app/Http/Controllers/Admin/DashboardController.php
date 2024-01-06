@@ -82,8 +82,8 @@ class DashboardController extends Controller
         $confirm_transactions         = Transaction::toBase()->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
         $percent_transactions         = ((($pending_transactions + $confirm_transactions) * 100) / $total_transactions);
         
-        if($total_transactions > 100){
-            $total_transactions = 100;
+        if($percent_transactions > 100){
+            $percent_transactions = 100;
         }
 
         $total_charges      = Transaction::toBase()->sum('total_charge');

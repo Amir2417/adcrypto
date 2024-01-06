@@ -130,15 +130,20 @@ class UserCareController extends Controller
         $user                   = User::where('username', $username)->first();
         if(!$user) return back()->with(['error' => ['Opps! User not exists']]);
         $user_wallet            = UserWallet::with(['currency'])->where('user_id',$user->id)->get();
-        $transactions           = (Transaction::where('user_id',$user->id)->count() == 0) ? 1 : Transaction::where('user_id',$user->id)->count();
+        $transactions           = Transaction::where('user_id',$user->id)->count();
         $pending_transactions   = Transaction::where('user_id',$user->id)
                                     ->where('status',global_const()::STATUS_PENDING)->count();
         $confirm_transactions   = Transaction::where('user_id',$user->id)
                                     ->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
-        $percent_transactions   = ((($pending_transactions + $confirm_transactions) * 100) / $transactions);
+        if($transactions != 0){
+            $percent_transactions   = ((($pending_transactions + $confirm_transactions) * 100) / $transactions);
+        }else{
+            $percent_transactions   = 0;
+        }
+        
 
-        if($transactions > 100){
-            $transactions = 100;
+        if($percent_transactions > 100){
+            $percent_transactions = 100;
         }
 
         $active_support_ticket = SupportTicket::active()->count();
