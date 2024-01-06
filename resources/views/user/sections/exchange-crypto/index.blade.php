@@ -116,14 +116,14 @@
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
             
             var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
-            var sendAmount       = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
-            var amount           = $("input[name=send_amount]").val();
+            var sendAmount          = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
+            var amount              = $("input[name=send_amount]").val();
 
             amountCalculation(amount);
             chargeCalculation(amount);
         });
         $(".send-amount").keyup(function(){
-            var amount = $(this).val();
+            var amount              = $(this).val();
             var walletBalance       = selectedVariable().senderWalletBalance;
             
             amountCalculation(amount);
@@ -163,8 +163,8 @@
             var totalMaxLimit       = maxLimit * senderRate;
 
             $(".exchange-rate").html("1" + " " + senderCurrency + " " + "=" + " " + parseFloat(exchangeRate).toFixed(6) + " " + receiverCurrency);
-            $(".available-balance").html("Available Balance " + parseFloat(walletBalance).toFixed(2) + " " + senderCurrency);
-            $(".limit").html("Limit : " + parseFloat(totalMinLimit).toFixed(2) + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(2) + " " + senderCurrency);
+            $(".available-balance").html("Available Balance " + parseFloat(walletBalance).toFixed(8) + " " + senderCurrency);
+            $(".limit").html("Limit : " + parseFloat(totalMinLimit).toFixed(8) + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(8) + " " + senderCurrency);
         }
 
         //amount Calculation
@@ -194,7 +194,7 @@
             var percentChargeCalc   = (amount / 100) * percentCharge;
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
 
-            $(".charges").html("Network Charge :" + parseFloat(totalCharge).toFixed(2) + " " + senderCurrency);
+            $(".charges").html("Network Charge :" + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
         }
         
     </script>

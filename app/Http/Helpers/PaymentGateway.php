@@ -534,7 +534,7 @@ class PaymentGateway {
                 'created_at'                    => now(),
             ]);
 
-            if($status === global_const()::STATUS_PENDING) {
+            if($status === global_const()::STATUS_CONFIRM_PAYMENT) {
                 $this->updateWalletBalance($output);
             }
 

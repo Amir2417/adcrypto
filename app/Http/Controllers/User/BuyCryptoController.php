@@ -443,10 +443,7 @@ class BuyCryptoController extends Controller
         $client_ip = request()->ip() ?? false;
         $location = geoip()->getLocation($client_ip);
         $agent = new Agent();
-
-
         $mac = "";
-
         DB::beginTransaction();
         try{
             DB::table("transaction_devices")->insert([
