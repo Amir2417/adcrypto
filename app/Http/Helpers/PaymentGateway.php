@@ -232,7 +232,7 @@ class PaymentGateway {
             $percent_charges = 0;
         }
 
-        $fixed_charge_calc = ($min_max_rate * $fixed_charges);
+        $fixed_charge_calc = $fixed_charges;
         
         $percent_charge_calc = ($amount / 100 ) * $percent_charges;
 

@@ -113,7 +113,7 @@ class BuyCryptoController extends Controller
             if($amount < $min_amount || $amount > $max_amount){
                 return back()->with(['error' => ['Please follow the transaction limit.']]);
             }
-            $fixed_charge   = ($payment_gateway_currency->fixed_charge) * $min_max_rate;
+            $fixed_charge   = $payment_gateway_currency->fixed_charge;
             $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
             $total_charge   = $fixed_charge + $percent_charge;
             $payable_amount = ($amount * $rate) + $total_charge;
@@ -199,7 +199,7 @@ class BuyCryptoController extends Controller
             if($amount < $min_amount || $amount > $max_amount){
                 return back()->with(['error' => ['Please follow the transaction limit.']]);
             }
-            $fixed_charge   = ($payment_gateway_currency->fixed_charge) * $min_max_rate;
+            $fixed_charge   = $payment_gateway_currency->fixed_charge;
             $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
             $total_charge   = $fixed_charge + $percent_charge;
             $payable_amount = ($amount * $rate) + $total_charge;
@@ -309,7 +309,7 @@ class BuyCryptoController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => [$e->getMessage()]]);
         }
-        return redirect()->route("user.buy.crypto.index")->with(['success' => ['Successfully added money']]);
+        return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successfull.']]);
     }
 
     public function cancel(Request $request, $gateway) {

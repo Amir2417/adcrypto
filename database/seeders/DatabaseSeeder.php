@@ -33,7 +33,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-       
+        //fresh
+        // $this->call([
+        //     AdminSeeder::class,
+        //     RoleSeeder::class,
+        //     TransactionSettingSeeder::class,
+        //     BasicSettingsSeeder::class,
+        //     SetupSeoSeeder::class,
+        //     AppSettingsSeeder::class,
+        //     SiteSectionsSeeder::class,
+        //     SetupKycSeeder::class,
+        //     ExtensionSeeder::class,
+        //     AdminHasRoleSeeder::class,
+        //     SetupPageSeeder::class,
+        //     PaymentGatewaySeeder::class,
+        //     LanguageSeeder::class,
+        //     UsefulLinkSeeder::class,
+        //     BlogSeeder::class,
+        //     CoinSeeder::class,
+        //     NetworkSeeder::class,
+        //     CurrencySeeder::class,
+        //     OutsideWalletAddressSeeder::class
+        // ]);
+
+        // demo
         $this->call([
             AdminSeeder::class,
             RoleSeeder::class,
