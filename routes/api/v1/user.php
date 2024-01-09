@@ -45,6 +45,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::get("cancel/response/{gateway}",'cancel')->withoutMiddleware(['auth:api'])->name("payment.cancel");
 
             Route::get('manual/input-fields','manualInputFields'); 
+            Route::post("manual/submit","manualSubmit");
         });
         
     });

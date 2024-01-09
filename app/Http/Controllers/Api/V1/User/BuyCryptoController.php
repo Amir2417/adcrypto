@@ -6,11 +6,15 @@ use Exception;
 use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\Admin\Network;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
+use App\Models\UserNotification;
+use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
@@ -97,7 +101,7 @@ class BuyCryptoController extends Controller
             if($validator->fails()){
                 return Response::error($validator->errors()->all(),[]);
             }
-            $validated            = $validator->validate();
+            $validated          = $validator->validate();
             $wallet_currency    = $validated['sender_currency'];
             $amount             = $validated['amount'];
 
@@ -334,5 +338,262 @@ class BuyCryptoController extends Controller
             // Handel error
         }
         return Response::success([__('Payment process cancel successfully!')],[],200);
+    }
+    /**
+     * Manual Input Fields
+     */
+    public function manualInputFields(Request $request) {
+       
+        $validator = Validator::make($request->all(),[
+            'alias'         => "required|string|exists:payment_gateway_currencies",
+        ]);
+
+        if($validator->fails()) {
+            return Response::error($validator->errors()->all(),[],400);
+        }
+
+        $validated = $validator->validate();
+        $gateway_currency = PaymentGatewayCurrency::where("alias",$validated['alias'])->first();
+
+        $gateway = $gateway_currency->gateway;
+
+        if(!$gateway->isManual()) return Response::error([__('Can\'t get fields. Requested gateway is automatic')],[],400);
+
+        if(!$gateway->input_fields || !is_array($gateway->input_fields)) return Response::error([__("This payment gateway is under constructions. Please try with another payment gateway")],[],503);
+
+        try{
+            $input_fields = json_decode(json_encode($gateway->input_fields),true);
+            $input_fields = array_reverse($input_fields);
+        }catch(Exception $e) {
+            return Response::error([__("Something went wrong! Please try again")],[],500);
+        }
+        
+        return Response::success([__('Payment gateway input fields fetch successfully!')],[
+            'gateway'           => [
+                'desc'          => $gateway->desc
+            ],
+            'input_fields'      => $input_fields,
+            'currency'          => $gateway_currency->only(['alias']),
+        ],200);
+    }
+    public function manualSubmit(Request $request) {
+        
+        $basic_setting = BasicSettings::first();
+        $user          = auth()->user();
+        try{
+            $instance = PaymentGatewayHelper::init($request->all())->gateway()->get();
+        }catch(Exception $e) {
+            return Response::error([$e->getMessage()],[],401);
+        }
+        $data   = TemporaryData::where('identifier',$request->identifier)->first();
+        
+        // Check it's manual or automatic
+        if(!isset($instance['gateway_type']) || $instance['gateway_type'] != PaymentGatewayConst::MANUAL) return Response::error([__('Can\'t submit automatic gateway in manual link')],[],400);
+       
+        $gateway_currency = PaymentGatewayCurrency::find($data->data->payment_method->id);
+        if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return Response::error([__('Selected Gateway is invalid')],[],400);
+        $gateway = $gateway_currency->gateway;
+        $amount = $instance['amount'];
+    
+        if(!$amount) Response::error([__('Transaction Failed. Failed to save information. Please try again')],[],400);
+        
+        $wallet = UserWallet::find($data->data->wallet->wallet_id ?? null);
+        if(!$wallet) return Response::error([__('Your Wallet is invalid')],[],400);
+        
+        $this->file_store_location = "transaction";
+        $dy_validation_rules = $this->generateValidationRules($gateway->input_fields);
+        
+        $validator = Validator::make($request->all(),$dy_validation_rules);
+        
+        if($validator->fails()) return Response::error($validator->errors()->all(),[],400);
+        $validated = $validator->validate();
+        
+        $get_values = $this->placeValueWithFields($gateway->input_fields,$validated);
+        
+        
+        $trx_id = generateTrxString("transactions","trx_id","BC",8);
+        // Make Transaction
+        DB::beginTransaction();
+        try{
+            $id = DB::table("transactions")->insertGetId([
+                'type'                          => PaymentGatewayConst::BUY_CRYPTO,
+                'user_id'                       => $wallet->user->id,
+                'user_wallet_id'                => $wallet->id,
+                'payment_gateway_id'            => $gateway_currency->id,
+                'trx_id'                        => $trx_id,
+                'amount'                        => $amount->requested_amount,
+                'percent_charge'                => $amount->percent_charge,
+                'fixed_charge'                  => $amount->fixed_charge,
+                'total_charge'                  => $amount->total_charge,
+                'total_payable'                 => $amount->total_amount,
+                'available_balance'             => $wallet->balance,
+                'currency_code'                 => $gateway_currency->currency_code,
+                'remark'                        => ucwords(remove_special_char(PaymentGatewayConst::BUY_CRYPTO," ")) . " With " . $gateway_currency->name,
+                'details'                       => json_encode(['input_values' => $get_values,'data' => $data->data]),
+                'status'                        => global_const()::STATUS_PENDING,
+                'callback_ref'                  => $output['callback_ref'] ?? null,
+                'created_at'                    => now(),
+            ]);
+
+            if( $basic_setting->email_notification == true){
+                Notification::route("mail",$user->email)->notify(new BuyCryptoManualMailNotification($user,$data,$trx_id));
+            }
+            $this->transactionDevice($id);
+            $this->userNotification($id);
+            DB::table("temporary_datas")->where("identifier",$data->identifier)->delete();
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            return Response::error([__('Something went wrong! Please try again')],[],400);
+        }
+        return Response::success([__('Transaction Success. Please wait for admin confirmation')],200);
+        
+    }
+    //user notification
+    function userNotification($id){
+        $user   = auth()->user();
+        $data = Transaction::where('id',$id)->first();
+        
+        UserNotification::create([
+            'user_id'       => $user->id,
+            'message'       => [
+                'title'     => "Buy Crypto",
+                'payment'   => $data->details->data->payment_method->name,
+                'wallet'    => $data->details->data->wallet->name,
+                'code'      => $data->details->data->wallet->code,
+                'amount'    => $data->amount,
+                'success'   => "Successfully Added."
+            ],
+        ]);
+    }
+    // transaction device
+    function transactionDevice($id){
+        $client_ip = request()->ip() ?? false;
+        $location = geoip()->getLocation($client_ip);
+        $agent = new Agent();
+        $mac = "";
+        DB::beginTransaction();
+        try{
+            DB::table("transaction_devices")->insert([
+                'transaction_id'=> $id,
+                'ip'            => $client_ip,
+                'mac'           => $mac,
+                'city'          => $location['city'] ?? "",
+                'country'       => $location['country'] ?? "",
+                'longitude'     => $location['lon'] ?? "",
+                'latitude'      => $location['lat'] ?? "",
+                'timezone'      => $location['timezone'] ?? "",
+                'browser'       => $agent->browser() ?? "",
+                'os'            => $agent->platform() ?? "",
+            ]);
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+    public function gatewayAdditionalFields(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'currency'          => "required|string|exists:payment_gateway_currencies,alias",
+        ]);
+        if($validator->fails()) return Response::error($validator->errors()->all(),[],400);
+        $validated = $validator->validate();
+
+        $gateway_currency = PaymentGatewayCurrency::where("alias",$validated['currency'])->first();
+
+        $gateway = $gateway_currency->gateway;
+
+        $data['available'] = false;
+        $data['additional_fields']  = [];
+        if(Gpay::isGpay($gateway)) {
+            $gpay_bank_list = Gpay::getBankList();
+            if($gpay_bank_list == false) return Response::error(['Gpay bank list server response failed! Please try again'],[],500);
+            $data['available']  = true;
+
+            $gpay_bank_list_array = json_decode(json_encode($gpay_bank_list),true);
+
+            $gpay_bank_list_array = array_map(function ($array){
+                
+                $data['name']       = $array['short_name_by_gpay'];
+                $data['value']      = $array['gpay_bank_code'];
+
+                return $data;
+        
+            }, $gpay_bank_list_array);
+
+            $data['additional_fields'][] = [
+                'type'      => "select",
+                'label'     => "Select Bank",
+                'title'     => "Select Bank",
+                'name'      => "bank",
+                'values'    => $gpay_bank_list_array,
+            ];
+
+        }
+
+        return Response::success([__('Request response fetch successfully!')],$data,200);
+    }
+
+    public function cryptoPaymentConfirm(Request $request, $trx_id) 
+    {
+        
+        $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::REMITTANCE_STATUS_REVIEW_PAYMENT)->firstOrFail();
+
+        $dy_input_fields = $transaction->details->payment_info->requirements ?? [];
+        $validation_rules = $this->generateValidationRules($dy_input_fields);
+
+        $validated = [];
+        if(count($validation_rules) > 0) {
+            $validated = Validator::make($request->all(), $validation_rules)->validate();
+        }
+
+        if(!isset($validated['txn_hash'])) return Response::error(['Transaction hash is required for verify']);
+
+        $receiver_address = $transaction->details->payment_info->receiver_address ?? "";
+
+        // check hash is valid or not
+        $crypto_transaction = CryptoTransaction::where('txn_hash', $validated['txn_hash'])
+                                                ->where('receiver_address', $receiver_address)
+                                                ->where('asset',$transaction->currency->currency_code)
+                                                ->where(function($query) {
+                                                    return $query->where('transaction_type',"Native")
+                                                                ->orWhere('transaction_type', "native");
+                                                })
+                                                ->where('status',PaymentGatewayConst::NOT_USED)
+                                                ->first();
+                                                
+        if(!$crypto_transaction) return Response::error(['Transaction hash is not valid! Please input a valid hash'],[],404);
+
+        if($crypto_transaction->amount >= $transaction->total_payable == false) {
+            if(!$crypto_transaction) Response::error(['Insufficient amount added. Please contact with system administrator'],[],400);
+        }
+
+        DB::beginTransaction();
+        try{
+
+            
+
+            // update crypto transaction as used
+            DB::table($crypto_transaction->getTable())->where('id', $crypto_transaction->id)->update([
+                'status'        => PaymentGatewayConst::USED,
+            ]);
+
+            // update transaction status
+            $transaction_details = json_decode(json_encode($transaction->details), true);
+            $transaction_details['payment_info']['txn_hash'] = $validated['txn_hash'];
+
+            DB::table($transaction->getTable())->where('id', $transaction->id)->update([
+                'details'       => json_encode($transaction_details),
+                'status'        => global_const()::REMITTANCE_STATUS_CONFIRM_PAYMENT,
+            ]);
+
+            DB::commit();
+
+        }catch(Exception $e) {
+            DB::rollback();
+            return Response::error(['Something went wrong! Please try again'],[],500);
+        }
+
+        return Response::success(['Payment Confirmation Success!'],[],200);
     }
 }

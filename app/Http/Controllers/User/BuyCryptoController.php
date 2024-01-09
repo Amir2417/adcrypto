@@ -12,6 +12,7 @@ use App\Models\Admin\Network;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
+use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
@@ -430,6 +431,7 @@ class BuyCryptoController extends Controller
                 Notification::route("mail",$user->email)->notify(new BuyCryptoManualMailNotification($user,$data,$trx_id));
             }
             $this->transactionDevice($id);
+            $this->userNotification($id);
             DB::table("temporary_datas")->where("identifier",$token)->delete();
             DB::commit();
         }catch(Exception $e) {
@@ -437,6 +439,23 @@ class BuyCryptoController extends Controller
             return redirect()->route('user.buy.crypto.manual.form',$token)->with(['error' => ['Something went wrong! Please try again']]);
         }
         return redirect()->route('user.buy.crypto.index')->with(['success' => ['Transaction Success. Please wait for admin confirmation']]);
+    }
+    //user notification
+    function userNotification($id){
+        $user   = auth()->user();
+        $data   = Transaction::where('id',$id)->first();
+        
+        UserNotification::create([
+            'user_id'       => $user->id,
+            'message'       => [
+                'title'     => "Buy Crypto",
+                'payment'   => $data->details->data->payment_method->name,
+                'wallet'    => $data->details->data->wallet->name,
+                'code'      => $data->details->data->wallet->code,
+                'amount'    => $data->amount,
+                'success'   => "Successfully Added."
+            ],
+        ]);
     }
     // transaction device
     function transactionDevice($id){
