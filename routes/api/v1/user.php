@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\SettingController;
 use App\Http\Controllers\Api\V1\User\ProfileController;
 use App\Http\Controllers\Api\V1\User\MyBookingController;
 use App\Http\Controllers\Api\V1\User\AuthorizationController;
+use App\Http\Controllers\Api\V1\User\BuyCryptoController;
 use App\Http\Controllers\Api\V1\User\ParlourBookingController;
 use App\Http\Controllers\Api\V1\User\TransactionLogController;
 
@@ -28,6 +29,12 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::get('sell-log','sellLog');
             Route::get('withdraw-log','withdrawLog');
             Route::get('exchange-log','exchangeLog');
+        });
+
+        //buy crypto 
+        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->group(function(){
+            Route::get('index','index');
+            Route::post('store','store');
         });
         
     });
