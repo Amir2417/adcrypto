@@ -15,9 +15,11 @@ use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
+use App\Traits\PaymentGateway\Gpay;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
+use App\Models\Admin\CryptoTransaction;
 use App\Models\Admin\CurrencyHasNetwork;
 use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
@@ -537,7 +539,7 @@ class BuyCryptoController extends Controller
     public function cryptoPaymentConfirm(Request $request, $trx_id) 
     {
         
-        $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::REMITTANCE_STATUS_REVIEW_PAYMENT)->firstOrFail();
+        $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::STATUS_PENDING)->firstOrFail();
 
         $dy_input_fields = $transaction->details->payment_info->requirements ?? [];
         $validation_rules = $this->generateValidationRules($dy_input_fields);
@@ -571,7 +573,10 @@ class BuyCryptoController extends Controller
         DB::beginTransaction();
         try{
 
-            
+            // Update user wallet balance
+            DB::table($transaction->user_wallets->getTable())
+            ->where('id',$transaction->user_wallets->id)
+            ->increment('balance',$transaction->details->data->will_get);
 
             // update crypto transaction as used
             DB::table($crypto_transaction->getTable())->where('id', $crypto_transaction->id)->update([
@@ -584,7 +589,7 @@ class BuyCryptoController extends Controller
 
             DB::table($transaction->getTable())->where('id', $transaction->id)->update([
                 'details'       => json_encode($transaction_details),
-                'status'        => global_const()::REMITTANCE_STATUS_CONFIRM_PAYMENT,
+                'status'        => global_const()::STATUS_CONFIRM_PAYMENT,
             ]);
 
             DB::commit();

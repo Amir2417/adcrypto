@@ -46,6 +46,12 @@ Route::prefix("user")->name("api.user.")->group(function(){
 
             Route::get('manual/input-fields','manualInputFields'); 
             Route::post("manual/submit","manualSubmit");
+
+            Route::get('payment-gateway/additional-fields','gatewayAdditionalFields');
+            
+            Route::prefix('payment')->name('payment.')->group(function() {
+                Route::post('crypto/confirm/{trx_id}','cryptoPaymentConfirm')->name('crypto.confirm');
+            });
         });
         
     });
