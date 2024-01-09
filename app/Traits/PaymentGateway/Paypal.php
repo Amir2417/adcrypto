@@ -176,6 +176,7 @@ trait Paypal
             'creator_guard' => get_auth_guard(),
             'user_record'   => $output['form_data']['identifier'],
         ];
+        
         return TemporaryData::create([
             'type'          => PaymentGatewayConst::BUY_CRYPTO,
             'identifier'    => $response['id'],

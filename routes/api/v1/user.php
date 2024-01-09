@@ -32,9 +32,19 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //buy crypto 
-        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->group(function(){
+        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
             Route::get('index','index');
             Route::post('store','store');
+            Route::post('submit','submit');
+             // POST Route For Unauthenticated Request
+            Route::post('success/response/{gateway}', 'postSuccess')->name('payment.success')->withoutMiddleware(['auth:api']);
+            Route::post('cancel/response/{gateway}', 'postCancel')->name('payment.cancel')->withoutMiddleware(['auth:api']);
+        
+            // Automatic Gateway Response Routes
+            Route::get('success/response/{gateway}','success')->withoutMiddleware(['auth:api'])->name("payment.success");
+            Route::get("cancel/response/{gateway}",'cancel')->withoutMiddleware(['auth:api'])->name("payment.cancel");
+
+            Route::get('manual/input-fields','manualInputFields'); 
         });
         
     });
