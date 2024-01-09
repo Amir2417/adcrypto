@@ -67,7 +67,6 @@ trait Tatum {
         
         DB::beginTransaction();
         try{
-            $trx_id = generate_unique_string("transactions","trx_id",16);
             $qr_image = 'https://chart.googleapis.com/chart?cht=qr&chs=350x350&chl='.$crypto_active_wallet->address;
 
             DB::table('transactions')->insert([
