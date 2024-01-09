@@ -540,6 +540,7 @@ class BuyCryptoController extends Controller
     {
         
         $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::STATUS_PENDING)->firstOrFail();
+        
 
         $dy_input_fields = $transaction->details->payment_info->requirements ?? [];
         $validation_rules = $this->generateValidationRules($dy_input_fields);

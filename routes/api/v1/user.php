@@ -6,8 +6,11 @@ use App\Http\Controllers\Api\V1\User\ProfileController;
 use App\Http\Controllers\Api\V1\User\MyBookingController;
 use App\Http\Controllers\Api\V1\User\AuthorizationController;
 use App\Http\Controllers\Api\V1\User\BuyCryptoController;
+use App\Http\Controllers\Api\V1\User\ExchangeCryptoController;
 use App\Http\Controllers\Api\V1\User\ParlourBookingController;
+use App\Http\Controllers\Api\V1\User\SellCryptoController;
 use App\Http\Controllers\Api\V1\User\TransactionLogController;
+use App\Http\Controllers\Api\V1\User\WithdrawCryptoController;
 
 Route::prefix("user")->name("api.user.")->group(function(){
     
@@ -52,6 +55,20 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::prefix('payment')->name('payment.')->group(function() {
                 Route::post('crypto/confirm/{trx_id}','cryptoPaymentConfirm')->name('crypto.confirm');
             });
+        });
+        
+        //sell crypto 
+        Route::controller(SellCryptoController::class)->prefix('sell-crypto')->group(function(){
+
+        });
+
+        //withdraw crypto 
+        Route::controller(WithdrawCryptoController::class)->prefix('sell-crypto')->group(function(){
+
+        });
+        //sell crypto 
+        Route::controller(ExchangeCryptoController::class)->prefix('sell-crypto')->group(function(){
+
         });
         
     });
