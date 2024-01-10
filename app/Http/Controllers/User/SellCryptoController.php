@@ -10,16 +10,13 @@ use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\Admin\Network;
 use App\Models\TemporaryData;
-use App\Constants\GlobalConst;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
-use Illuminate\Auth\Events\Validated;
 use App\Constants\PaymentGatewayConst;
-use App\Models\Admin\TransactionSetting;
 use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\OutsideWalletAddress;
@@ -27,7 +24,6 @@ use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\User\SellCryptoEmailNotification;
-use App\Notifications\User\BuyCryptoManualMailNotification;
 
 class SellCryptoController extends Controller
 {
@@ -102,8 +98,10 @@ class SellCryptoController extends Controller
             }
             
             $network            = Network::where('id',$validated['network'])->first();
-            
-            $payment_gateway_currency   = PaymentGatewayCurrency::with(['gateway'])->where('id',$validated['payment_method'])->first();
+           
+            $payment_gateway_currency   = PaymentGatewayCurrency::where('id',$validated['payment_method'])->whereHas('gateway', function ($gateway) {
+                $gateway->where('slug', PaymentGatewayConst::money_out_slug())->where('status', 1);
+            })->first();
 
             if(!$payment_gateway_currency){
                 return back()->with(['error' => ['Payment Method not found!']]);
@@ -197,7 +195,9 @@ class SellCryptoController extends Controller
             
             $network            = Network::where('id',$validated['network'])->first();
             
-            $payment_gateway_currency   = PaymentGatewayCurrency::with(['gateway'])->where('id',$validated['payment_method'])->first();
+            $payment_gateway_currency   = PaymentGatewayCurrency::where('id',$validated['payment_method'])->whereHas('gateway', function ($gateway) {
+                $gateway->where('slug', PaymentGatewayConst::money_out_slug())->where('status', 1);
+            })->first();
 
             if(!$payment_gateway_currency){
                 return back()->with(['error' => ['Payment Method not found!']]);
@@ -287,7 +287,7 @@ class SellCryptoController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function sellPaymentStore(Request $request,$identifier){
-        $temp_data               = TemporaryData::where('identifier',$identifier)->first();
+        $temp_data          = TemporaryData::where('identifier',$identifier)->first();
         $validator          = Validator::make($request->all(),[
             'slug'          => 'required|string'
         ]);
