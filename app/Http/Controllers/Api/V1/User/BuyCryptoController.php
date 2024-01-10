@@ -84,7 +84,7 @@ class BuyCryptoController extends Controller
             'currencies'            => $currencies,
             'user_wallet'           => $user_wallet,
             'payment_gateway'       => $payment_gateway,
-            'image_paths'           => $image_paths,
+            'currency_image_paths'           => $image_paths,
             'payment_image_paths'   => $payment_image_paths,
         ],200);
     }
