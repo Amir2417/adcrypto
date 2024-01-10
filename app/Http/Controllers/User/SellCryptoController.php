@@ -536,7 +536,7 @@ class SellCryptoController extends Controller
                 $this->userNotification($data);
                 $this->transactionDevice($transaction);
             }
-            
+            $data->delete();
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }

@@ -4,22 +4,31 @@ namespace App\Http\Controllers\Api\V1\User;
 
 use Exception;
 use App\Models\UserWallet;
+use App\Models\Transaction;
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\Admin\Network;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
+use App\Models\UserNotification;
+use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\CurrencyHasNetwork;
+use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\OutsideWalletAddress;
 use App\Models\Admin\PaymentGatewayCurrency;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
+use App\Notifications\User\SellCryptoEmailNotification;
 
 class SellCryptoController extends Controller
 {
+    use ControlDynamicInputFields;
     /**
      * Method for store buy crypto index
      */
@@ -155,9 +164,9 @@ class SellCryptoController extends Controller
                         'balance'       => floatval($user_wallet->balance),
                     ],
                     'network'           => [
+                        'id'            => $network->network->id,
                         'name'          => $network->network->name,
                         'arrival_time'  => $network->network->arrival_time,
-                        'fees'          => $network->fees,
                     ],
                     'payment_method'    => [
                         'id'            => $payment_gateway_currency->id,
@@ -258,9 +267,9 @@ class SellCryptoController extends Controller
                         'balance'       => floatval($user_wallet->balance),
                     ],
                     'network'           => [
+                        'id'            => $network->network->id,
                         'name'          => $network->network->name,
                         'arrival_time'  => $network->network->arrival_time,
-                        'fees'          => $network->fees,
                     ],
                     'payment_method'    => [
                         'id'            => $payment_gateway_currency->id,
@@ -288,9 +297,278 @@ class SellCryptoController extends Controller
             return Response::success([__("Sell Crypto Store Successfully using Outside Wallet.")],[
                 'data'                      => $temporary_data,
                 'payment_gateway_fields'    => $payment_gateway_currency->gateway->input_fields,
+                'slug'                      => $outside_address->slug,
                 'payment_proof_fields'      => $outside_address->input_fields
             ],200);
         }
     }
+    /**
+     * Method for sell crypto sell payment store
+     * @param $identifier, $slug
+     * @param \Illuminate\Http\Request $request
+     */
+    public function sellPaymentStore(Request $request){
+        $validator          = Validator::make($request->all(),[
+            'slug'          => 'required|string',
+            'identifier'    => 'required|string'
+        ]);
+        if($validator->fails()) return Response::error($validator->errors()->all(),[]);
+        $temp_data          = TemporaryData::where('identifier',$request->identifier)->first();
+        $outside_wallet     = OutsideWalletAddress::where('slug',$request->slug)->first();
+        $validated          = $validator->validate();
+        $data               = [
+            'type'                  => $temp_data->type,
+            'identifier'            => $temp_data->identifier,
+            'data'                  => [
+                'sender_wallet'     => [
+                    'type'          => $temp_data->data->sender_wallet->type,
+                    'wallet_id'     => $temp_data->data->sender_wallet->wallet_id,
+                    'currency_id'   => $temp_data->data->sender_wallet->currency_id,
+                    'name'          => $temp_data->data->sender_wallet->name,
+                    'code'          => $temp_data->data->sender_wallet->code,
+                    'rate'          => $temp_data->data->sender_wallet->rate,
+                    'balance'       => $temp_data->data->sender_wallet->balance,
+                ],
+                'network'           => [
+                    'id'            => $temp_data->data->network->id,
+                    'name'          => $temp_data->data->network->name,
+                    'arrival_time'  => $temp_data->data->network->arrival_time,
+                ],
+                'payment_method'    => [
+                    'id'            => $temp_data->data->payment_method->id,
+                    'name'          => $temp_data->data->payment_method->name,
+                    'code'          => $temp_data->data->payment_method->code,
+                    'alias'         => $temp_data->data->payment_method->alias,
+                    'rate'          => $temp_data->data->payment_method->rate,
+                ],
+                'outside_address'   => [
+                    'id'            => $outside_wallet->id,
+                    'public_address'=> $outside_wallet->public_address,
+                    'slug'          => $outside_wallet->slug,
+                ],
+                'amount'            => $temp_data->data->amount,
+                'exchange_rate'     => $temp_data->data->exchange_rate,
+                'min_max_rate'      => $temp_data->data->min_max_rate,
+                'fixed_charge'      => $temp_data->data->fixed_charge,
+                'percent_charge'    => $temp_data->data->percent_charge,
+                'total_charge'      => $temp_data->data->total_charge,
+                'total_payable'     => $temp_data->data->total_payable,
+                'will_get'          => $temp_data->data->will_get,
+            ]
+        ];
+        try{
+            $temp_data->update($data);
+        }catch(Exception $e){
+            return Response::error(['Something went wrong! Please try again.'],[],404);
+        }
+        return Response::success([__("Sell Crypto Store Successfully using Outside Wallet.")],[
+            'data'                      => $temp_data,
+        ],200);
+    }
+    /**
+     * Method for sell crypto payment info store
+     * @param $identifier
+     * @param \Illuminate\Http\Request $request
+     */
+    public function paymentInfoStore(Request $request){
+        $request->merge(['identifier' => $request->identifier]);
+        $tempDataValidate = Validator::make($request->all(),[
+            'identifier'        => "required|string|exists:temporary_datas",
+        ])->validate();
+
+        $temp_data = TemporaryData::search($tempDataValidate['identifier'])->first();
+        if(!$temp_data || $temp_data->data == null || !isset($temp_data->data->payment_method->id)) return Response::error(['Invalid Request'],[],404);
+        $gateway_currency = PaymentGatewayCurrency::find($temp_data->data->payment_method->id);
+        
+        if(!$gateway_currency || !$gateway_currency->gateway->isManual()) return Response::error(['Selected gateway is invalid.'],[],404);
+        if($temp_data->data->sender_wallet->type == global_const()::OUTSIDE_WALLET){
+            $outside_address     = OutsideWalletAddress::find($temp_data->data->outside_address->id);
+            if(!$outside_address) return Response::error(['Selected Outside Address is invalid.'],[],404);
+        }else{
+            $outside_address    = [];
+        }
+        
+        $gateway = $gateway_currency->gateway;
+        $amount = $temp_data->data->amount ?? null;
+        if(!$amount) return Response::error(['Transaction Failed. Failed to save information. Please try again'],[],404);
+        if($temp_data->data->sender_wallet->type  == global_const()::OUTSIDE_WALLET){
+            $dy_validation_rules                        = $this->generateValidationRules($gateway->input_fields);
+            $dy_validation_rules_for_outside_address    = $this->generateValidationRules($outside_address->input_fields);
     
+            $merged_validation_rules                    = array_merge($dy_validation_rules, $dy_validation_rules_for_outside_address);
+            $validated                                  = Validator::make($request->all(),$merged_validation_rules)->validate();
+            $get_values                                 = $this->placeValueWithFields($gateway->input_fields,$validated);
+            $get_values_for_outside_address             = $this->placeValueWithFields($outside_address->input_fields,$validated);
+        }else{
+            $dy_validation_rules                        = $this->generateValidationRules($gateway->input_fields);
+            $validated                                  = Validator::make($request->all(),$dy_validation_rules)->validate();
+            $get_values                                 = $this->placeValueWithFields($gateway->input_fields,$validated);
+            $get_values_for_outside_address             = [];
+        }
+
+        
+        $data                              = [
+            'type'                  => $temp_data->type,
+            'identifier'            => $temp_data->identifier,
+            'data'                  => [
+                'sender_wallet'     => [
+                    'type'          => $temp_data->data->sender_wallet->type,
+                    'wallet_id'     => $temp_data->data->sender_wallet->wallet_id,
+                    'currency_id'   => $temp_data->data->sender_wallet->currency_id,
+                    'name'          => $temp_data->data->sender_wallet->name,
+                    'code'          => $temp_data->data->sender_wallet->code,
+                    'rate'          => $temp_data->data->sender_wallet->rate,
+                    'balance'       => $temp_data->data->sender_wallet->balance,
+                ],
+                'network'           => [
+                    'name'          => $temp_data->data->network->name,
+                    'arrival_time'  => $temp_data->data->network->arrival_time,
+                ],
+                'payment_method'    => [
+                    'id'            => $temp_data->data->payment_method->id,
+                    'name'          => $temp_data->data->payment_method->name,
+                    'code'          => $temp_data->data->payment_method->code,
+                    'alias'         => $temp_data->data->payment_method->alias,
+                    'rate'          => $temp_data->data->payment_method->rate,
+                ],
+                'outside_address'   => [
+                    'id'            => $temp_data->data->outside_address->id ?? '',
+                    'public_address'=> $temp_data->data->outside_address->public_address ?? '',
+                    'slug'          => $temp_data->data->outside_address->slug ?? '',
+                ],
+                'details'           => json_encode(['gateway_input_values' => $get_values,'outside_address_input_values' => $get_values_for_outside_address]),
+                'amount'            => $temp_data->data->amount,
+                'exchange_rate'     => $temp_data->data->exchange_rate,
+                'min_max_rate'      => $temp_data->data->min_max_rate,
+                'fixed_charge'      => $temp_data->data->fixed_charge,
+                'percent_charge'    => $temp_data->data->percent_charge,
+                'total_charge'      => $temp_data->data->total_charge,
+                'total_payable'     => $temp_data->data->total_payable,
+                'will_get'          => $temp_data->data->will_get,
+
+            ]
+        ];
+        
+        try{
+            $temp_data->update($data);
+        }catch(Exception $e){
+            return Response::error(['Something went wrong! Please try again.'],[],404);
+        }              
+        return Response::success([__("Sell Crypto Store Successfully using Outside Wallet.")],[
+            'data'                      => $temp_data,
+        ],200);
+    }
+    /**
+     * Method for sell crypto confirm
+     * @param $identifier
+     * @param \Illuminate\Http\Request $request
+     */
+    public function confirm(Request $request){
+        $validator          = Validator::make($request->all(),[
+            'identifier'    => 'required|string'
+        ]);
+        if($validator->fails()) return Response::error($validator->errors()->all(),[]);
+        $basic_setting  = BasicSettings::first();
+        $user           = auth()->user();
+        $data           = TemporaryData::where('identifier',$request->identifier)->first();
+        if(!$data) return Response::error(['Data not found!'],[],404);
+        $send_wallet  = $data->data->sender_wallet->wallet_id;
+        
+        $sender_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($send_wallet) {
+            $q->where("id",$send_wallet)->active();
+        })->active()->first();
+        if($data->data->sender_wallet->type == global_const()::INSIDE_WALLET){
+            $available_balance  = $sender_wallet->balance - $data->data->total_payable;
+
+        }else{
+            $available_balance = null;
+        }
+        $trx_id = generateTrxString("transactions","trx_id","SC",8);
+        $transaction_data = [
+            'type'                          => PaymentGatewayConst::SELL_CRYPTO,
+            'user_id'                       => $user->id,
+            'user_wallet_id'                => $data->data->sender_wallet->wallet_id,
+            'payment_gateway_id'            => $data->data->payment_method->id,
+            'trx_id'                        => $trx_id,
+            'amount'                        => $data->data->amount,
+            'percent_charge'                => $data->data->percent_charge,
+            'fixed_charge'                  => $data->data->fixed_charge,
+            'total_charge'                  => $data->data->total_charge,
+            'total_payable'                 => $data->data->total_payable,
+            'available_balance'             => $available_balance,
+            'currency_code'                 => $data->data->payment_method->code,
+            'remark'                        => ucwords(remove_special_char(PaymentGatewayConst::SELL_CRYPTO," ")) . " With " . $data->data->payment_method->name,
+            'details'                       => ['data' => $data->data],
+            'status'                        => global_const()::STATUS_PENDING,
+            'created_at'                    => now(),
+        ];
+        try{
+            $transaction    = Transaction::create($transaction_data);
+
+            if( $basic_setting->email_notification == true){
+                Notification::route("mail",$user->email)->notify(new SellCryptoEmailNotification($user,$data,$trx_id));
+            }
+            if($transaction->details->data->sender_wallet->type == global_const()::INSIDE_WALLET){
+                $this->updateSenderWalletBalance($sender_wallet,$available_balance);
+                $this->userNotification($data);
+                $this->transactionDevice($transaction);
+            }else{
+                $this->userNotification($data);
+                $this->transactionDevice($transaction);
+            }
+            $data->delete();
+        }catch(Exception $e) {
+            return Response::error(['Something went wrong! Please try again.'],[],404);
+        }
+        return Response::success([__("Sell Crypto Successfull")],[],200);
+    }
+    //update sender wallet balance
+    function updateSenderWalletBalance($sender_wallet,$available_balance){
+        $sender_wallet->update([
+            'balance'   => $available_balance,
+        ]);
+    }
+    //user notification
+    function userNotification($data){
+        UserNotification::create([
+            'user_id'       => auth()->user()->id,
+            'message'       => [
+                'title'     => "Sell Crypto",
+                'wallet'    => $data->data->sender_wallet->name,
+                'code'      => $data->data->sender_wallet->code,
+                'amount'    => $data->data->amount,
+                'status'    => global_const()::STATUS_PENDING,
+                'success'   => "Successfully Request Send."
+            ],
+        ]);
+    }
+    // transaction device
+    function transactionDevice($transaction){
+        $client_ip = request()->ip() ?? false;
+        $location = geoip()->getLocation($client_ip);
+        $agent = new Agent();
+
+
+        $mac = "";
+
+        DB::beginTransaction();
+        try{
+            DB::table("transaction_devices")->insert([
+                'transaction_id'=> $transaction->id,
+                'ip'            => $client_ip,
+                'mac'           => $mac,
+                'city'          => $location['city'] ?? "",
+                'country'       => $location['country'] ?? "",
+                'longitude'     => $location['lon'] ?? "",
+                'latitude'      => $location['lat'] ?? "",
+                'timezone'      => $location['timezone'] ?? "",
+                'browser'       => $agent->browser() ?? "",
+                'os'            => $agent->platform() ?? "",
+            ]);
+            DB::commit();
+        }catch(Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
 }

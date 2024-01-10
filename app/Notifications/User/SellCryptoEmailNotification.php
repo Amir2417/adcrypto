@@ -59,7 +59,7 @@ class SellCryptoEmailNotification extends Notification
             ->line("Request Amount: " . $data->data->amount.' '. $data->data->sender_wallet->code)
             ->line("Fees & Charges: " . getAmount($data->data->total_charge).' '. $data->data->sender_wallet->code)
             ->line("Will Get: " . getAmount($data->data->will_get,2).' '. $data->data->payment_method->code)
-            ->line("Total Payable Amount: " . getAmount($data->data->total_payable,2).' '. $data->data->sender_wallet->code)
+            ->line("Total Payable Amount: " . getAmount($data->data->total_payable).' '. $data->data->sender_wallet->code)
             ->line("Transaction Id: " .$trx_id)
             ->line("Date And Time: " .$dateTime)
             ->line('Thank you for using our application!');

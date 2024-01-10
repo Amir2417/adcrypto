@@ -61,6 +61,9 @@ Route::prefix("user")->name("api.user.")->group(function(){
         Route::controller(SellCryptoController::class)->prefix('sell-crypto')->group(function(){
             Route::get('index','index');
             Route::post('store','store');
+            Route::post('payment-info-store','paymentInfoStore');
+            Route::post('sell-payment-store','sellPaymentStore');
+            Route::post('confirm','confirm');
         });
 
         //withdraw crypto 
