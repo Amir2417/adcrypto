@@ -499,7 +499,6 @@ class SellCryptoController extends Controller
         })->active()->first();
         if($data->data->sender_wallet->type == global_const()::INSIDE_WALLET){
             $available_balance  = $sender_wallet->balance - $data->data->total_payable;
-
         }else{
             $available_balance = null;
         }

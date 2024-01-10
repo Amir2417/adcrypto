@@ -76,11 +76,7 @@ class SellCryptoLogController extends Controller
             $transaction->update([
                 'status' => $validated['status'],
             ]);
-            if($validated['status'] == global_const()::STATUS_CONFIRM_PAYMENT && $transaction->details->data->sender_wallet->type == global_const()::OUTSIDE_WALLET){
-                $transaction->user_wallets->update([
-                    'balance'   => $transaction->user_wallets->balance - $transaction->amount,
-                ]);
-            }
+            
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new SellCryptoMailNotification($form_data));
             }
@@ -130,7 +126,11 @@ class SellCryptoLogController extends Controller
                 'status'            => $validated['status'],
                 'reject_reason'     => $validated['reject_reason']
             ]);
-            
+            if($validated['status'] == global_const()::STATUS_REJECT && $transaction->details->data->sender_wallet->type == global_const()::INSIDE_WALLET){
+                $transaction->user_wallets->update([
+                    'balance'   => $transaction->user_wallets->balance + $transaction->total_payable,
+                ]);
+            }
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new SellCryptoRejectMailNotification($form_data));
             }

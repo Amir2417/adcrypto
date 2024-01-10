@@ -479,9 +479,10 @@ class SellCryptoController extends Controller
         })->active()->first();
         if($data->data->sender_wallet->type == global_const()::INSIDE_WALLET){
             $available_balance  = $sender_wallet->balance - $data->data->total_payable;
-
+            $status             = global_const()::STATUS_CONFIRM_PAYMENT;
         }else{
             $available_balance = null;
+            $status            = global_const()::STATUS_PENDING;
         }
         $trx_id = generateTrxString("transactions","trx_id","SC",8);
         $transaction_data = [
@@ -499,7 +500,7 @@ class SellCryptoController extends Controller
             'currency_code'                 => $data->data->payment_method->code,
             'remark'                        => ucwords(remove_special_char(PaymentGatewayConst::SELL_CRYPTO," ")) . " With " . $data->data->payment_method->name,
             'details'                       => ['data' => $data->data],
-            'status'                        => global_const()::STATUS_PENDING,
+            'status'                        => $status,
             'created_at'                    => now(),
         ];
         try{

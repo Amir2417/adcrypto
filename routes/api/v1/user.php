@@ -67,8 +67,10 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //withdraw crypto 
-        Route::controller(WithdrawCryptoController::class)->prefix('sell-crypto')->group(function(){
-
+        Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->group(function(){
+            Route::get('index','index');
+            Route::post('store','store');
+            Route::post('confirm','confirm');
         });
         //sell crypto 
         Route::controller(ExchangeCryptoController::class)->prefix('sell-crypto')->group(function(){
