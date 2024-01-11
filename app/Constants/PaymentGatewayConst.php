@@ -46,6 +46,9 @@ class PaymentGatewayConst {
     const FLUTTERWAVE               = 'flutterwave';
     const SSLCOMMERZ                = 'sslcommerz';
     const RAZORPAY                  = 'razorpay';
+    const PERFECT_MONEY             = 'perfect-money';
+
+    const REDIRECT_USING_HTML_FORM = "REDIRECT_USING_HTML_FORM";
 
     const PROJECT_CURRENCY_MULTIPLE = "PROJECT_CURRENCY_MULTIPLE";
     const PROJECT_CURRENCY_SINGLE   = "PROJECT_CURRENCY_SINGLE";
@@ -71,6 +74,7 @@ class PaymentGatewayConst {
             self::FLUTTERWAVE   => 'flutterwaveInit',
             self::SSLCOMMERZ    => 'sslCommerzInit',
             self::RAZORPAY      => 'razorpayInit',
+            self::PERFECT_MONEY => 'perfectMoneyInit'
         ];
 
         if($alias == null) {
@@ -85,15 +89,16 @@ class PaymentGatewayConst {
 
     public static function registerGatewayRecognization() {
         return [
-            'isGpay'        => self::G_PAY,
-            'isPaypal'      => self::PAYPAL,
-            'isCoinGate'    => self::COIN_GATE,
-            'isQrpay'       => self::QRPAY,
-            'isTatum'       => self::TATUM,
-            'isStripe'      => self::STRIPE,
-            'isFlutterwave' => self::FLUTTERWAVE,
-            'isSslCommerz'  => self::SSLCOMMERZ,
-            'isRazorpay'    => self::RAZORPAY,
+            'isGpay'            => self::G_PAY,
+            'isPaypal'          => self::PAYPAL,
+            'isCoinGate'        => self::COIN_GATE,
+            'isQrpay'           => self::QRPAY,
+            'isTatum'           => self::TATUM,
+            'isStripe'          => self::STRIPE,
+            'isFlutterwave'     => self::FLUTTERWAVE,
+            'isSslCommerz'      => self::SSLCOMMERZ,
+            'isRazorpay'        => self::RAZORPAY,
+            'isPerfectMoney'    => self::PERFECT_MONEY,
         ];
     }
 
@@ -116,11 +121,13 @@ class PaymentGatewayConst {
                 'return_url'    => 'user.buy.crypto.payment.success',
                 'cancel_url'    => 'user.buy.crypto.payment.cancel',
                 'callback_url'  => 'user.buy.crypto.payment.callback',
+                'redirect_form' => 'user.buy.crypto.payment.redirect.form',
             ],
             'api'       => [
                 'return_url'    => 'api.user.buy.crypto.payment.success',
                 'cancel_url'    => 'api.user.buy.crypto.payment.cancel',
                 'callback_url'  => 'user.buy.crypto.payment.callback',
+                'redirect_form' => 'user.buy.crypto.payment.redirect.form',
             ],
         ];
     }

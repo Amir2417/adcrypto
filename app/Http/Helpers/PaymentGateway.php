@@ -27,6 +27,7 @@ use App\Providers\Admin\CurrencyProvider;
 use App\Traits\PaymentGateway\SslCommerz;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\PaymentGateway\Flutterwave;
+use App\Traits\PaymentGateway\PerfectMoney;
 use App\Models\Admin\PaymentGatewayCurrency;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
@@ -35,7 +36,7 @@ use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
 
 class PaymentGateway {
 
-    use Paypal, Gpay, CoinGate, QRPay, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay;
+    use Paypal, Gpay, CoinGate, QRPay, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney;
 
     protected $request_data;
     protected $output;
@@ -414,6 +415,9 @@ class PaymentGateway {
             case PaymentGatewayConst::SSLCOMMERZ:
                     return $response['token'] ?? "";
                     break;
+            case PaymentGatewayConst::PERFECT_MONEY:
+                        return $response['PAYMENT_ID'] ?? "";
+                        break;
             default:
                 throw new Exception("Oops! Gateway not registered in getToken method");
         }
@@ -786,5 +790,12 @@ class PaymentGateway {
             }
         }
         return $result;
+    }
+
+    public function generateLinkForRedirectForm($token, $gateway)
+    {
+        $redirection = $this->getRedirection();
+        $form_redirect_route = $redirection['redirect_form'];
+        return route($form_redirect_route, [$gateway, 'token' => $token]);
     }
 }

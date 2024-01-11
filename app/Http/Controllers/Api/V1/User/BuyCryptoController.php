@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Traits\PaymentGateway\Gpay;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\CryptoTransaction;
@@ -328,7 +329,11 @@ class BuyCryptoController extends Controller
 
         
     }
-
+    /**
+     * Method for buy crypto cancel
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
     public function cancel(Request $request,$gateway) {
         $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
         $temp_data = TemporaryData::where("identifier",$token)->first();
@@ -340,6 +345,42 @@ class BuyCryptoController extends Controller
             // Handel error
         }
         return Response::success([__('Payment process cancel successfully!')],[],200);
+    }
+    /**
+     * Method for buy crypto SSL Commerz Success
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
+    public function postSuccess(Request $request, $gateway)
+    {
+        try{
+            $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
+            $temp_data = TemporaryData::where("identifier",$token)->first();
+            if($temp_data && $temp_data->data->creator_guard != 'api') {
+                Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
+            }
+        }catch(Exception $e) {
+            return Response::error([$e->getMessage()]);
+        }
+        return $this->success($request, $gateway);
+    }
+    /**
+     * Method for buy crypto SSL Commerz Cancel
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
+    public function postCancel(Request $request, $gateway)
+    {
+        try{
+            $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
+            $temp_data = TemporaryData::where("identifier",$token)->first();
+            if($temp_data && $temp_data->data->creator_guard != 'api') {
+                Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
+            }
+        }catch(Exception $e) {
+            return Response::error([$e->getMessage()]);
+        }
+        return $this->cancel($request, $gateway);
     }
     /**
      * Manual Input Fields
@@ -378,6 +419,11 @@ class BuyCryptoController extends Controller
             'currency'          => $gateway_currency->only(['alias']),
         ],200);
     }
+    /**
+     * Method for buy crypto manual Submit
+     * @param $token
+     * @param \Illuminate\Http\Request $request
+     */
     public function manualSubmit(Request $request) {
         
         $basic_setting = BasicSettings::first();
@@ -494,6 +540,9 @@ class BuyCryptoController extends Controller
             throw new Exception($e->getMessage());
         }
     }
+    /**
+     * Method for gateway additional fields
+     */
     public function gatewayAdditionalFields(Request $request) {
         $validator = Validator::make($request->all(),[
             'currency'          => "required|string|exists:payment_gateway_currencies,alias",
@@ -535,7 +584,11 @@ class BuyCryptoController extends Controller
 
         return Response::success([__('Request response fetch successfully!')],$data,200);
     }
-
+    /**
+     * Method for buy crypto crypto payment address
+     * @param $trx_id
+     * @param \Illuminate\Http\Request $request
+     */
     public function cryptoPaymentConfirm(Request $request, $trx_id) 
     {
         

@@ -274,6 +274,7 @@ class BuyCryptoController extends Controller
        
         try{
             $instance = PaymentGatewayHelper::init($request->all())->type(PaymentGatewayConst::BUY_CRYPTO)->gateway()->render();
+            
             if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
                 $manual_handler = $instance['distribute'];
                 return $this->$manual_handler($instance);
@@ -348,6 +349,20 @@ class BuyCryptoController extends Controller
             return redirect()->route('index');
         }
         return $this->success($request, $gateway);
+    }
+    /**
+     * Method for buy crypto redirect html form for perfect money
+     */
+    public function redirectUsingHTMLForm(Request $request, $gateway)
+    {
+        $temp_data = TemporaryData::where('identifier', $request->token)->first();
+        
+        if(!$temp_data || $temp_data->data->action_type != PaymentGatewayConst::REDIRECT_USING_HTML_FORM) return back()->with(['error' => ['Request token is invalid!']]);
+        $redirect_form_data = $temp_data->data->redirect_form_data;
+        $action_url         = $temp_data->data->action_url;
+        $form_method        = $temp_data->data->form_method;
+        // dd($redirect_form_data,$action_url,$form_method);
+        return view('payment-gateway.redirect-form', compact('redirect_form_data', 'action_url', 'form_method'));
     }
     /**
      * Method for buy crypto SSL Commerz Cancel
