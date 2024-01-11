@@ -48,6 +48,16 @@ class BuyCryptoController extends Controller
                     'arrival_time'      => $item->network->arrival_time
                 ];
             });
+
+            $wallet                     = UserWallet::auth()->where('currency_id',$data->id)->get()->map(function($item){
+                return [
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'currency_id'       => $item->currency_id,
+                    'public_address'    => $item->public_address,
+                    'balance'           => $item->balance
+                ];
+            });
             
             return [
                 'id'                    => $data->id,
@@ -57,10 +67,11 @@ class BuyCryptoController extends Controller
                 'flag'                  => $data->flag,
                 'rate'                  => $data->rate,
                 'networks'              => $networks,
+                'wallet'                => $wallet
             ];
         });
 
-        $user_wallet        = UserWallet::where('user_id',$user->id)->get();
+        
         $payment_gateway    = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
             $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
             $gateway->where('status', 1);
@@ -81,12 +92,11 @@ class BuyCryptoController extends Controller
         ];
 
         return Response::success([__("Buy Crypto Data")],[
-            'wallet_type'           => $wallet_type,
-            'currencies'            => $currencies,
-            'user_wallet'           => $user_wallet,
-            'payment_gateway'       => $payment_gateway,
-            'currency_image_paths'           => $image_paths,
-            'payment_image_paths'   => $payment_image_paths,
+            'wallet_type'               => $wallet_type,
+            'currencies'                => $currencies,
+            'payment_gateway'           => $payment_gateway,
+            'currency_image_paths'      => $image_paths,
+            'payment_image_paths'       => $payment_image_paths,
         ],200);
     }
     /**
