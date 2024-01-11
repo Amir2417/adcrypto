@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Admin\Language;
+use Illuminate\Support\Facades\Session;
 
 class GlobalController extends Controller
 {
@@ -21,8 +23,9 @@ class GlobalController extends Controller
         $country_states = get_country_states($country_id);
         return response()->json($country_states,200);
     }
-
-
+    /**
+     * Method for get cities
+     */
     public function getCities(Request $request) {
         $request->validate([
             'state_id' => 'required|integer',
@@ -34,94 +37,34 @@ class GlobalController extends Controller
         return response()->json($state_cities,200);
         // return $state_id;
     }
-
-
+    /**
+     * Method for get countries
+     */
     public function getCountries(Request $request) {
         $countries = get_all_countries();
 
         return response()->json($countries,200);
     }
-
-
+    /**
+     * Method for get time zones
+     */
     public function getTimezones(Request $request) {
         $timeZones = get_all_timezones();
 
         return response()->json($timeZones,200);
     }
-
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * Method for language swithch
      */
-    public function index()
-    {
-        //
-    }
+    public function languageSwitch(Request $request) {
+        $code = $request->target;
+        $language = Language::where("code",$code)->first();
+        if(!$language) {
+            return back()->with(['error' => ['Oops! Language Not Found!']]);
+        }
+        Session::put('local',$code);
+        Session::put('local_dir',$language->dir);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return back()->with(['success' => ['Language Switch to ' . $language->name ]]);
     }
 }
