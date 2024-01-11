@@ -73,7 +73,7 @@ class SetupSectionsController extends Controller
                 'view'          => "footerView",
                 'update'        => "footerUpdate"
             ],
-            'news-letter-section' =>[
+            'news-letter' =>[
                 'view'            => "newsLetterView",
                 'update'          => "newsLetterUpdate",    
             ],
