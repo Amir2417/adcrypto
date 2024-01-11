@@ -34,7 +34,7 @@
                     @include('admin.components.link.add-default',[
                         'href'          => "#onboard-screen-add",
                         'class'         => "modal-btn",
-                        'text'          => "Add New Screen",
+                        'text'          => __("Add New Screen"),
                         'permission'    => "admin.app.settings.onboard.screen.store",
                     ])
                 </div>
@@ -44,9 +44,9 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Title</th>
-                            <th>Sub Title</th>
-                            <th>Status</th>
+                            <th>{{ __("Title") }}</th>
+                            <th>{{ __("Sub Title") }}</th>
+                            <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
                     </thead>

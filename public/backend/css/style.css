@@ -844,6 +844,7 @@ blockquote .quote-icon {
 }
 .custom-table tbody tr td .user-list li {
   display: inline-block;
+  width: 32px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
