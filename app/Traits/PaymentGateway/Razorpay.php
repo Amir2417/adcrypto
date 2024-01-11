@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Http;
 use App\Constants\PaymentGatewayConst;
 use Illuminate\Http\Client\RequestException;
 use App\Http\Controllers\Api\V1\User\AddMoneyController;
+use App\Http\Controllers\User\BuyCryptoController;
 
 trait Razorpay  {
 
@@ -24,7 +25,7 @@ trait Razorpay  {
         if(!$output) $output = $this->output;
 
         $request_credentials = $this->getRazorpayRequestCredentials($output);
-
+        
         try{
             return $this->createRazorpayPaymentLink($output, $request_credentials);
         }catch(Exception $e) {
@@ -39,7 +40,7 @@ trait Razorpay  {
         $key_id = $request_credentials->key_id;
         $secret_key = $request_credentials->secret_key;
 
-        $temp_record_token = generate_unique_string('temporary_datas','identifier',35);
+        $temp_record_token = generate_unique_string('temporary_datas','identifier','',35);
         $this->setUrlParams("token=" . $temp_record_token); // set Parameter to URL for identifying when return success/cancel
 
         $redirection = $this->getRedirection();
@@ -47,7 +48,8 @@ trait Razorpay  {
 
         $user = auth()->guard(get_auth_guard())->user();
 
-        $temp_data = $this->flutterWaveJunkInsert($temp_record_token); // create temporary information
+        $temp_data = $this->razorPayJunkInsert($temp_record_token); // create temporary information
+        
 
         $response = Http::withBasicAuth($key_id, $secret_key)->withHeaders([
             'Content-Type' => 'application/json',
@@ -94,23 +96,27 @@ trait Razorpay  {
         return redirect()->away($response_array['short_url']);
     }
 
-    public function razorPayWaveJunkInsert($temp_token) 
+    public function razorPayJunkInsert($temp_token) 
     {
         $output = $this->output;
 
         $data = [
             'gateway'       => $output['gateway']->id,
             'currency'      => $output['currency']->id,
+            'payment_method'=> $output['currency'],
             'amount'        => json_decode(json_encode($output['amount']),true),
             'wallet_table'  => $output['wallet']->getTable(),
-            'wallet_id'     => $output['wallet']->id,
+            'wallet'        => [
+                'wallet_id' => $output['wallet']->id,
+            ],
             'creator_table' => auth()->guard(get_auth_guard())->user()->getTable(),
             'creator_id'    => auth()->guard(get_auth_guard())->user()->id,
             'creator_guard' => get_auth_guard(),
+            'user_record'   => $output['form_data']['identifier'],
         ];
 
         return TemporaryData::create([
-            'type'          => PaymentGatewayConst::TYPEADDMONEY,
+            'type'          => PaymentGatewayConst::BUY_CRYPTO,
             'identifier'    => $temp_token,
             'data'          => $data,
         ]);
@@ -205,8 +211,8 @@ trait Razorpay  {
             $response_array = json_decode(json_encode($redirect_response), true);
 
             if(isset($response_array['r-source']) && $response_array['r-source'] == PaymentGatewayConst::APP) {
-                if($output['type'] == PaymentGatewayConst::TYPEADDMONEY) {
-                    return (new AddMoneyController())->cancel(new Request([
+                if($output['type'] == PaymentGatewayConst::BUY_CRYPTO) {
+                    return (new BuyCryptoController())->cancel(new Request([
                         'token' => $identifier,
                     ]), PaymentGatewayConst::RAZORPAY);
                 }

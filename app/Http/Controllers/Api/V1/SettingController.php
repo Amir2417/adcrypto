@@ -19,6 +19,9 @@ use App\Models\Admin\ParlourListHasSchedule;
 
 class SettingController extends Controller
 {
+    /**
+     * Method for language
+     */
     public function languages(){
         try{
             $api_languages = get_api_languages();
