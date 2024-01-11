@@ -73,8 +73,10 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::post('confirm','confirm');
         });
         //sell crypto 
-        Route::controller(ExchangeCryptoController::class)->prefix('sell-crypto')->group(function(){
-
+        Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->group(function(){
+            Route::get('index','index');
+            Route::post('store','store');
+            Route::post('confirm','confirm');
         });
         
     });

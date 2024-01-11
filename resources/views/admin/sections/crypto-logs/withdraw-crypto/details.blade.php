@@ -96,6 +96,7 @@
                     <ul class="list">
                         <li>{{ __("Transaction Number") }} <span>{{ $transaction->trx_id ?? ''  }}</span> </li>
                         <li>{{ __("Transaction Type") }} <span>{{ $transaction->type ?? ''  }}</span> </li>
+                        <li>{{ __("Amount") }} <span>{{ get_amount($transaction->amount,$transaction->details->data->sender_wallet->code)  }}</span> </li>
                         <li>{{ __("Total Charge") }} <span>{{ get_amount($transaction->total_charge,$transaction->details->data->sender_wallet->code)  }}</span> </li>
                         <li>{{ __("Payable Amount") }} <span>{{ get_amount($transaction->total_payable,$transaction->currency_code)  }}</span> </li>
                         <li>{{ __("Payment Status") }}

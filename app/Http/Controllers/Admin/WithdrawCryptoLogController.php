@@ -115,6 +115,7 @@ class WithdrawCryptoLogController extends Controller
 
         $validated = $validator->validate();
         $transaction   = Transaction::with(['user','user_wallets'])->where('trx_id',$trx_id)->first();
+        
         $form_data = [
             'data'        => $transaction,
             'status'      => "Reject",
@@ -124,7 +125,11 @@ class WithdrawCryptoLogController extends Controller
                 'status'            => $validated['status'],
                 'reject_reason'     => $validated['reject_reason']
             ]);
-            
+            if($validated['status'] == global_const()::STATUS_REJECT){
+                $transaction->user_wallets->update([
+                    'balance'   => $transaction->user_wallets->balance + $transaction->total_payable,
+                ]);
+            }
             if($basic_setting->email_notification == true){
                 Notification::route("mail",$transaction->user->email)->notify(new WithdrawCryptoRejectMailNotification($form_data));
             }
