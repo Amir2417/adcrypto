@@ -411,6 +411,9 @@ class PaymentGateway {
             case PaymentGatewayConst::RAZORPAY:
                 return $response['token'] ?? "";
                 break;
+            case PaymentGatewayConst::SSLCOMMERZ:
+                    return $response['token'] ?? "";
+                    break;
             default:
                 throw new Exception("Oops! Gateway not registered in getToken method");
         }

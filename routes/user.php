@@ -49,6 +49,10 @@ Route::prefix("user")->name("user.")->group(function(){
             Route::post('crypto/confirm/{trx_id}','cryptoPaymentConfirm')->name('crypto.confirm');
         });
 
+        // POST Route For Unauthenticated Request
+        Route::post('success/response/{gateway}', 'postSuccess')->name('payment.success')->withoutMiddleware(['auth','verification.guard','user.google.two.factor']);
+        Route::post('cancel/response/{gateway}', 'postCancel')->name('payment.cancel')->withoutMiddleware(['auth','verification.guard','user.google.two.factor']);
+
         //paypal
         Route::match('get','success/response/{gateway}','success')->name('payment.success');
         Route::match('post',"cancel/response/{gateway}",'cancel')->name('payment.cancel');

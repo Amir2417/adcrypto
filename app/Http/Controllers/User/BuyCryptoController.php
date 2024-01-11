@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\PaymentGateway;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
 use App\Models\Admin\CryptoTransaction;
@@ -282,7 +283,11 @@ class BuyCryptoController extends Controller
         }
         return $instance;
     }
-
+    /**
+     * Method for buy crypto success
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
     public function success(Request $request, $gateway){
     
         try{
@@ -312,7 +317,11 @@ class BuyCryptoController extends Controller
         }
         return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successfull.']]);
     }
-
+    /**
+     * Method for buy crypto cancel
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
     public function cancel(Request $request, $gateway) {
         if($request->has('token')) {
             $identifier = $request->token;
@@ -322,7 +331,46 @@ class BuyCryptoController extends Controller
         }
         return redirect()->route('user.buy.crypto.index');
     }
-
+    /**
+     * Method for buy crypto SSL Commerz Success
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
+    public function postSuccess(Request $request, $gateway)
+    {
+        try{
+            $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
+            $temp_data = TemporaryData::where("identifier",$token)->first();
+            
+            Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
+        }catch(Exception $e) {
+            
+            return redirect()->route('index');
+        }
+        return $this->success($request, $gateway);
+    }
+    /**
+     * Method for buy crypto SSL Commerz Cancel
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
+    public function postCancel(Request $request, $gateway)
+    {
+        try{
+            $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
+            $temp_data = TemporaryData::where("identifier",$token)->first();
+            Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
+        }catch(Exception $e) {
+            
+            return redirect()->route('index');
+        }
+        return $this->cancel($request, $gateway);
+    }
+    /**
+     * Method for buy crypto Callback
+     * @param $gateway
+     * @param \Illuminate\Http\Request $request
+     */
     public function callback(Request $request,$gateway) {
 
         $callback_token = $request->get('token');
@@ -335,7 +383,11 @@ class BuyCryptoController extends Controller
             logger($e);
         }
     }
-
+    /**
+     * Method for buy crypto Manual payment store
+     * @param $payment_info
+     * @param \Illuminate\Http\Request $request
+     */
     public function handleManualPayment($payment_info) {
 
         
@@ -358,7 +410,11 @@ class BuyCryptoController extends Controller
         }
         return redirect()->route('user.buy.crypto.manual.form',$data['identifier']);
     }
-
+    /**
+     * Method for buy crypto manual form show
+     * @param $token
+     * @param \Illuminate\Http\Request $request
+     */
     public function showManualForm($token) {
         
         $tempData = TemporaryData::search($token)->first();
@@ -372,7 +428,11 @@ class BuyCryptoController extends Controller
         $page_title = "- Payment Instructions";
         return view('user.sections.buy-crypto.manual.instruction',compact("gateway","page_title","token","amount"));
     }
-
+    /**
+     * Method for buy crypto manual Submit
+     * @param $token
+     * @param \Illuminate\Http\Request $request
+     */
     public function manualSubmit(Request $request,$token) {
         $basic_setting = BasicSettings::first();
         $user          = auth()->user();
@@ -483,7 +543,11 @@ class BuyCryptoController extends Controller
             throw new Exception($e->getMessage());
         }
     }
-
+    /**
+     * Method for buy crypto crypto payment address
+     * @param $trx_id
+     * @param \Illuminate\Http\Request $request
+     */
     public function cryptoPaymentAddress(Request $request, $trx_id) {
 
         $page_title = "- Crypto Payment Address";
@@ -498,7 +562,11 @@ class BuyCryptoController extends Controller
 
         return abort(404);
     }
-
+    /**
+     * Method for buy crypto crypto payment confirm
+     * @param $trx_id
+     * @param \Illuminate\Http\Request $request
+     */
     public function cryptoPaymentConfirm(Request $request, $trx_id) 
     {
         $transaction = Transaction::where('trx_id',$trx_id)->where('status', global_const()::STATUS_PENDING)->firstOrFail();
