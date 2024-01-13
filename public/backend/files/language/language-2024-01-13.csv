@@ -41,7 +41,7 @@ Mail Resend Success!,Mail Resend Success!,¡El correo de reenvío de correo!,إ�
 Please verify your mail address. Check your mail inbox to get verification code,Please verify your mail address. Check your mail inbox to get verification code,Verifique su dirección de correo. Verifique su bandeja de entrada de correo para obtener el código de verificación,يرجى التحقق من عنوان البريد الخاص بك. تحقق من صندوق البريد الخاص بك للحصول على رمز التحقق
 Account successfully verified,Account successfully verified,Cuenta verificada con éxito,تم التحقق من الحساب بنجاح
 Reset Your Forgotten Password?,Reset Your Forgotten Password?,Restablecer su contraseña olvidada?,أعد تعيين كلمة المرور المنسية؟
-Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,#VALUE!,تحكم في حسابك عن طريق إعادة تعيين كلمة المرور الخاصة بك. توجهك صفحة استرداد كلمة المرور الخاصة بنا من خلال الخطوات اللازمة لإعادة تعيين كلمة المرور الخاصة بك بشكل آمن.
+Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,Tome el control de su cuenta restableciendo su contraseña. Nuestra página de recuperación de contraseña lo guía a través de los pasos necesarios para restablecer de forma segura su contraseña.,تحكم في حسابك عن طريق إعادة تعيين كلمة المرور الخاصة بك. توجهك صفحة استرداد كلمة المرور الخاصة بنا من خلال الخطوات اللازمة لإعادة تعيين كلمة المرور الخاصة بك بشكل آمن.
 Send OTP,Send OTP,Enviar OTP,إرسال OTP
 Verification code sent to your email address.,Verification code sent to your email address.,Código de verificación enviado a su dirección de correo electrónico.,تم إرسال رمز التحقق إلى عنوان بريدك الإلكتروني.
 Password Reset,Password Reset,Restablecimiento de contraseña,إعادة تعيين كلمة المرور
@@ -259,3 +259,158 @@ View User,View User,Ver usuario,عرض المستخدم
 Latest Buy Crypto Transactions,Latest Buy Crypto Transactions,Las últimas transacciones de compra de cripto,أحدث معاملات شراء التشفير
 S. Wallet,S. Wallet,S. billetera,S. محفظة
 P. Method,P. Method,P. método,طريقة P.
+Developed by,Developed by,Desarrollado por,طورت بواسطة
+Appdevs.,Appdevs.,Appdevs.,appdevs.
+Welcome To,Welcome To,Bienvenido a,مرحبا بك في
+Admin Panel,Admin Panel,Panel de administrador,لوحة الادارة
+Default,Default,Por defecto,تقصير
+Setup Coin,Setup Coin,Moneda de configuración,عملة الإعداد
+Setup Network,Setup Network,Red de configuración,شبكة الإعداد
+Setup Currency,Setup Currency,Moneda de configuración,الإعداد العملة
+Fees & Charges,Fees & Charges,Tarifas y cargos,الرسوم والرسوم
+Outside Address,Outside Address,Dirección exterior,عنوان خارج
+Transactions & Logs,Transactions & Logs,Transacciones y registros,المعاملات والسجلات
+Buy Crypto Logs,Buy Crypto Logs,Comprar registros de cifrado,شراء سجلات التشفير
+Pending Logs,Pending Logs,Registros pendientes,سجلات معلقة
+Confirm Logs,Confirm Logs,Confirmar registros,تأكيد سجلات
+Rejected Logs,Rejected Logs,Registros rechazados,سجلات مرفوضة
+All Logs,All Logs,Todos los registros,جميع السجلات
+Interface Panel,Interface Panel,Panel de interfaz,لوحة واجهة
+User Care,User Care,Cuidado de los usuarios,رعاية المستخدم
+Active Users,Active Users,Usuarios activos,المستخدمين النشطين
+Email Unverified,Email Unverified,Correo electrónico no verificado,البريد الإلكتروني غير التحقق
+All Users,All Users,Todos los usuarios,جميع المستخدمين
+Email To Users,Email To Users,Correo electrónico a los usuarios,البريد الإلكتروني للمستخدمين
+Banned Users,Banned Users,Usuarios prohibidos,المستخدمين المحظورون
+Admin Care,Admin Care,Atención administrativa,رعاية المسؤول
+All Admin,All Admin,Todos los administradores,كل المشرف
+Admin Role,Admin Role,Rol de administrador,دور المسؤول
+Role Permission,Role Permission,Permiso de rol,إذن الدور
+Email To Admin,Email To Admin,Correo electrónico al administrador,البريد الإلكتروني إلى المسؤول
+Settings,Settings,Ajustes,إعدادات
+Web Settings,Web Settings,Configuración web,إعدادات الويب
+Basic Settings,Basic Settings,Ajustes básicos,الإعدادات الأساسية
+App Settings,App Settings,Ajustes de Aplicacion,إعدادات التطبيقات
+Image Assets,Image Assets,Activos de imagen,أصول الصورة
+Setup SEO,Setup SEO,Configuración de SEO,إعداد SEO
+Splash Screen,Splash Screen,Pantalla de bienvenida,شاشة البداية
+Onboard Screen,Onboard Screen,Pantalla a bordo,على متن الشاشة
+App URLs,App URLs,URL de aplicaciones,APP urls
+Languages,Languages,Lenguas,اللغات
+Verification Center,Verification Center,Centro de verificación,مركز التحقق
+Setup Email,Setup Email,Correo electrónico de configuración,إعداد البريد الإلكتروني
+Email Method,Email Method,Método de correo electrónico,طريقة البريد الإلكتروني
+Setup Web Content,Setup Web Content,Configurar contenido web,إعداد محتوى الويب
+Setup Section,Setup Section,Sección de configuración,قسم الإعداد
+Banner Section,Banner Section,Banner,قسم لافتة
+Security Section,Security Section,Sección de seguridad,قسم الأمن
+How Its Work Section,How Its Work Section,Cómo su sección de trabajo,كيف قسم عملها
+Download App Section,Download App Section,Descargar la sección de aplicaciones,تنزيل قسم التطبيق
+Statistic Section,Statistic Section,Sección estadística,قسم الإحصاء
+Call To Action Section,Call To Action Section,Sección de llamada a la acción,قسم الاتصال إلى الإجراءات
+Footer Section,Footer Section,Sección de pies,قسم تذييل
+News Letter Section,News Letter Section,Sección de la carta de noticias,قسم الرسائل الإخبارية
+About Section,About Section,Acerca de la sección,حول القسم
+Faq Section,Faq Section,Sección de preguntas frecuentes,قسم الأسئلة الشائعة
+Service Section,Service Section,Sección de servicio,قسم الخدمة
+Blog Section,Blog Section,Sección de blogs,قسم المدونة
+Contact Section,Contact Section,Sección de contacto,قسم الاتصال
+Login Section,Login Section,Sección de inicio de sesión,قسم تسجيل الدخول
+Register Section,Register Section,Sección de registro,قسم التسجيل
+Setup Pages,Setup Pages,Configuración de páginas,صفحات الإعداد
+Extensions,Extensions,Extensiones,الامتدادات
+Useful Links,Useful Links,Enlaces útiles,روابط مفيدة
+Subscribers,Subscribers,Suscriptores,مشتركين
+Contact Messages,Contact Messages,Mensajes de contacto,اتصل بالرسائل
+Payment Methods,Payment Methods,Métodos de pago,طرق الدفع
+Automatic,Automatic,Automático,تلقائي
+Manual,Manual,Manual,يدوي
+Money Out,Money Out,Apagarse,لم يبقى اي من المال
+Push Notification,Push Notification,Notificación de inserción,إشعار دفع
+Setup Notification,Setup Notification,Notificación de configuración,إشعار الإعداد
+Send Notification,Send Notification,Enviar notificación,إرسال إشعار
+Bonus,Bonus,Prima,علاوة
+GDPR Cookie,GDPR Cookie,Galleta GDPR,ملف تعريف الارتباط الناتج المحلي الإجمالي
+Server Info,Server Info,Información del servidor,معلومات الخادم
+Clear Cache,Clear Cache,Limpiar cache,مسح ذاكرة التخزين المؤقت
+Sell Crypto Logs,Sell Crypto Logs,Vender registros de cifrado,بيع سجلات التشفير
+Withdraw Crypto Logs,Withdraw Crypto Logs,Retirar registros de cifrado,سحب سجلات التشفير
+Exchange Crypto Logs,Exchange Crypto Logs,Intercambiar registros criptográficos,تبادل سجلات التشفير
+Admin Profile,Admin Profile,Perfil de administración,ملف تعريف المسؤول
+Profile Image,Profile Image,Imagen de perfil,صورة الملف الشخصي
+Select State,Select State,Seleccione estado,اختر ولايه
+Select City,Select City,Ciudad selecta,اختر مدينة
+Save & Change,Save & Change,Guardar cambios,حفظ وتغيير
+Profile Information Updated Successfully!,Profile Information Updated Successfully!,¡Información de perfil actualizada con éxito!,معلومات الملف الشخصي تحديث بنجاح!
+Coins,Coins,Monedas,عملات معدنية
+Add Coin,Add Coin,Agregar moneda,إضافة عملة
+Write Name,Write Name,Escribir nombre,اكتب الاسم
+Title,Title,Título,عنوان
+Write Title,Write Title,Escribir título,اكتب العنوان
+Add,Add,Agregar,يضيف
+Coin already exists,Coin already exists,Ya existe monedas,عملة موجودة بالفعل
+Coin Added Successfully,Coin Added Successfully,Moneda agregada con éxito,وأضاف العملة بنجاح
+Coin updated successfully!,Coin updated successfully!,¡Moneda actualizada con éxito!,تم تحديث العملة بنجاح!
+Coin Deleted Successfully!,Coin Deleted Successfully!,¡Moneda eliminada con éxito!,تم حذف العملة بنجاح!
+Coin status updated successfully!,Coin status updated successfully!,Estado de la moneda actualizado con éxito!,تم تحديث حالة العملة بنجاح!
+Edit Coin,Edit Coin,Editar moneda,تحرير العملة
+Cancel,Cancel,Cancelar,يلغي
+delete,delete,borrar,يمسح
+this Coin?,this Coin?,esta moneda?,هذه العملة؟
+Networks,Networks,Redes,الشبكات
+Add Network,Add Network,Agregar red,اضافة شبكة
+Coin Name,Coin Name,Nombre de la moneda,اسم العملة
+Arrival Time,Arrival Time,Hora de llegada,وقت الوصول
+Write Arrival Time,Write Arrival Time,Escribir la hora de llegada,اكتب وقت الوصول
+Write Description,Write Description,Escribir descripción,اكتب الوصف
+Min,Min,Mínimo,دقيقة
+this Network?,this Network?,esta red?,هذه الشبكة؟
+The arrival time field is required.,The arrival time field is required.,Se requiere el campo de hora de llegada.,مطلوب حقل وقت الوصول.
+The coin field is required.,The coin field is required.,Se requiere el campo de la moneda.,حقل العملة مطلوب.
+Network already exists,Network already exists,La red ya existe,شبكة موجودة بالفعل
+Network Added Successfully,Network Added Successfully,Red agregada con éxito,أضافت الشبكة بنجاح
+The edit_coin field is required.,The edit_coin field is required.,Se requiere el campo edit_coin.,حقل edit_coin مطلوب.
+The edit_name field is required.,The edit_name field is required.,Se requiere el campo edit_name.,حقل EDIT_NAME مطلوب.
+The edit_arrival_time field is required.,The edit_arrival_time field is required.,Se requiere el campo edit_arrival_time.,حقل edit_arrival_time مطلوب.
+Network updated successfully!,Network updated successfully!,Network actualizada con éxito!,تم تحديث الشبكة بنجاح!
+Network Deleted Successfully!,Network Deleted Successfully!,Network eliminada con éxito!,تم حذف الشبكة بنجاح!
+Network status updated successfully!,Network status updated successfully!,Estado de la red actualizado correctamente!,تم تحديث حالة الشبكة بنجاح!
+Symbol,Symbol,Símbolo,رمز
+Type,Type,Tipo,يكتب
+Rate,Rate,Tasa,معدل
+Role,Role,Role,دور
+Code,Code,Código,شفرة
+The code field is required.,The code field is required.,Se requiere el campo de código.,حقل الكود مطلوب.
+The symbol field is required.,The symbol field is required.,Se requiere el campo de símbolos.,حقل الرمز مطلوب.
+The option field is required.,The option field is required.,Se requiere el campo de opción.,حقل الخيار مطلوب.
+The rate field is required.,The rate field is required.,Se requiere el campo de tarifa.,حقل السعر مطلوب.
+The network field is required.,The network field is required.,Se requiere el campo de red.,حقل الشبكة مطلوب.
+Default currency make failed! Please try again.,Default currency make failed! Please try again.,¡Falló la moneda predeterminada! Inténtalo de nuevo.,العملة الافتراضية تجعل فشل! حاول مرة اخرى.
+Currency Saved Successfully!,Currency Saved Successfully!,¡Moneda ahorrada con éxito!,العملة المحفوظة بنجاح!
+Currency record not found in our system.,Currency record not found in our system.,Registro de divisas no se encuentra en nuestro sistema.,سجل العملة غير موجود في نظامنا.
+Currency status updated successfully!,Currency status updated successfully!,Estado de divisas actualizado con éxito!,تم تحديث حالة العملة بنجاح!
+Currency not found!,Currency not found!,Moneda no encontrada!,العملة لم يتم العثور عليها!
+The currency name field is required.,The currency name field is required.,Se requiere el campo Nombre de la moneda.,حقل اسم العملة مطلوب.
+The currency code field is required.,The currency code field is required.,Se requiere el campo de código de divisas.,حقل رمز العملة مطلوب.
+The currency symbol field is required.,The currency symbol field is required.,Se requiere el campo de símbolo de moneda.,مطلوب حقل رمز العملة.
+The currency rate field is required.,The currency rate field is required.,Se requiere el campo de tasa de divisas.,حقل معدل العملة مطلوب.
+The currrency option field is required.,The currrency option field is required.,Se requiere el campo de la opción Currrency.,مطلوب حقل خيار العملات.
+Image file upload faild!,Image file upload faild!,Archivo de imagen Carga Faild!,ملف الصورة تحميل فشل!
+Successfully updated the information.,Successfully updated the information.,Actualizó con éxito la información.,تم تحديث المعلومات بنجاح.
+Can\'t deletable default currency.,Can\'t deletable default currency.,Puede \ 't Deletible Moneda predeterminada.,لا يمكن \ 't قابلة لحذف العملة الافتراضية.
+Currency deleted successfully!,Currency deleted successfully!,¡Moneda eliminada con éxito!,تم حذف العملة بنجاح!
+Search,Search,Buscar,يبحث
+Flag,Flag,Bandera,علَم
+Add Currency,Add Currency,Agregar moneda,أضف العملة
+Edit Currency,Edit Currency,Editar moneda,تحرير العملة
+currency?,currency?,¿divisa?,عملة؟
+Withdraw Crypto Charges,Withdraw Crypto Charges,Retirar cargos criptográficos,سحب رسوم التشفير
+Exchange Crypto Charges,Exchange Crypto Charges,Intercambiar cargos criptográficos,تبادل رسوم التشفير
+Charges,Charges,Cargos,رسوم
+Fixed Charge,Fixed Charge,Cargo fijo,تهمة ثابتة
+Percent Charge,Percent Charge,Porcentaje de cargo,تكلفة في المئة
+Range,Range,Rango,يتراوح
+Minimum Amount,Minimum Amount,Monto minimo,الحد الأدنى للمبلغ
+Maximum Amount,Maximum Amount,Cantidad máxima,الحد الأقصى للمبلغ
+Transaction charge not found!,Transaction charge not found!,¡Cargo por transacción no encontrado!,شحنة المعاملة غير موجودة!
+Charge Updated Successfully!,Charge Updated Successfully!,¡Cargo actualizado con éxito!,تم تحديث الرسوم بنجاح!

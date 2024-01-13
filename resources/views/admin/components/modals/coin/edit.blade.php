@@ -13,14 +13,14 @@
                         
                         <div class="col-xl-12 col-lg-12 form-group">
                             @include('admin.components.form.input',[
-                                'label'         => 'Name*',
+                                'label'         => __('Name')."*",
                                 'name'          => 'edit_name',
                                 'value'         => old('edit_name')
                             ])
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
                             @include('admin.components.form.input',[
-                                'label'         => 'Title',
+                                'label'         => __('Title'),
                                 'name'          => 'edit_title',
                                 'value'         => old('edit_title')
                             ])

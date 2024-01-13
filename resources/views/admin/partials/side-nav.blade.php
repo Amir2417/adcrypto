@@ -26,37 +26,37 @@
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.dashboard',
-                    'title'     => "Dashboard",
+                    'title'     => __("Dashboard"),
                     'icon'      => "menu-icon las la-rocket",
                 ])
                 
                 
 
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Default",
+                    'group_title'       => __("Default"),
                     'group_links'       => [
                         [
-                            'title'     => "Setup Coin",
+                            'title'     => __("Setup Coin"),
                             'route'     => "admin.coin.index",
                             'icon'      => "menu-icon las la-coins",
                         ],
                         [
-                            'title'     => "Setup Network",
+                            'title'     => __("Setup Network"),
                             'route'     => "admin.network.index",
                             'icon'      => "menu-icon las la-network-wired",
                         ],
                         [
-                            'title'     => "Setup Currency",
+                            'title'     => __("Setup Currency"),
                             'route'     => "admin.currency.index",
                             'icon'      => "menu-icon las la-shekel-sign",
                         ],
                         [
-                            'title'     => "Fees & Charges",
+                            'title'     => __("Fees & Charges"),
                             'route'     => "admin.trx.settings.index",
                             'icon'      => "menu-icon las la-wallet",
                         ],
                         [
-                            'title'     => "Outside Address",
+                            'title'     => __("Outside Address"),
                             'route'     => "admin.outside.wallet.index",
                             'icon'      => "menu-icon las la-address-book",
                         ],
@@ -65,109 +65,93 @@
 
                 
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Transactions & Logs",
+                    'group_title'       => __("Transactions & Logs"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Buy Crypto Logs",
+                                'title'     => __("Buy Crypto Logs"),
                                 'icon'      => "menu-icon las la-calculator",
                                 'links'     => [
                                     [
-                                        'title'     => "Pending Logs",
+                                        'title'     => __("Pending Logs"),
                                         'route'     => "admin.buy.crypto.pending",
                                     ],
                                     [
-                                        'title'     => "Confirm Logs",
+                                        'title'     => __("Confirm Logs"),
                                         'route'     => "admin.buy.crypto.confirm",
                                     ],
                                     [
-                                        'title'     => "Rejected Logs",
+                                        'title'     => __("Rejected Logs"),
                                         'route'     => "admin.buy.crypto.rejected",
                                     ],
                                     [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.buy.crypto.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
+                                        'title'     => __("All Logs"),
                                         'route'     => "admin.buy.crypto.all", 
                                     ]
                                 ],
                             ],
                             [
-                                'title'     => "Sell Crypto Logs",
+                                'title'     => __("Sell Crypto Logs"),
                                 'icon'      => "menu-icon lab la-sellcast",
                                 'links'     => [
                                     [
-                                        'title'     => "Pending Logs",
+                                        'title'     => __("Pending Logs"),
                                         'route'     => "admin.sell.crypto.pending",
                                     ],
                                     [
-                                        'title'     => "Confirm Logs",
+                                        'title'     => __("Confirm Logs"),
                                         'route'     => "admin.sell.crypto.confirm",
                                     ],
                                     [
-                                        'title'     => "Rejected Logs",
+                                        'title'     => __("Rejected Logs"),
                                         'route'     => "admin.sell.crypto.rejected",
                                     ],
                                     [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.sell.crypto.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
+                                        'title'     => __("All Logs"),
                                         'route'     => "admin.sell.crypto.all", 
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "Withdraw Crypto Logs",
+                                'title'             => __("Withdraw Crypto Logs"),
                                 'icon'              => "menu-icon las la-sign-out-alt",
                                 'links'     => [
                                     [
-                                        'title'     => "Pending Logs",
+                                        'title'     => __("Pending Logs"),
                                         'route'     => "admin.withdraw.crypto.pending",
                                     ],
                                     [
-                                        'title'     => "Confirm Logs",
+                                        'title'     => __("Confirm Logs"),
                                         'route'     => "admin.withdraw.crypto.confirm",
                                     ],
                                     [
-                                        'title'     => "Rejected Logs",
+                                        'title'     => __("Rejected Logs"),
                                         'route'     => "admin.withdraw.crypto.rejected",
                                     ],
                                     [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.withdraw.crypto.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
+                                        'title'     => __("All Logs"),
                                         'route'     => "admin.withdraw.crypto.all", 
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "Exchange Crypto Logs",
+                                'title'             => __("Exchange Crypto Logs"),
                                 'icon'              => "menu-icon las la-exchange-alt",
                                 'links'     => [
                                     [
-                                        'title'     => "Pending Logs",
+                                        'title'     => __("Pending Logs"),
                                         'route'     => "admin.exchange.crypto.pending",
                                     ],
                                     [
-                                        'title'     => "Confirm Logs",
+                                        'title'     => __("Confirm Logs"),
                                         'route'     => "admin.exchange.crypto.confirm",
                                     ],
                                     [
-                                        'title'     => "Rejected Logs",
+                                        'title'     => __("Rejected Logs"),
                                         'route'     => "admin.exchange.crypto.rejected",
                                     ],
                                     [
-                                        'title'     => "Canceled Logs",
-                                        'route'     => "admin.exchange.crypto.canceled", 
-                                    ],
-                                    [
-                                        'title'     => "All Logs",
+                                        'title'     => __("All Logs"),
                                         'route'     => "admin.exchange.crypto.all", 
                                     ]
                                 ],
@@ -178,53 +162,53 @@
                 ])
                 {{-- Interface Panel --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Interface Panel",
+                    'group_title'       => __("Interface Panel"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "User Care",
+                                'title'     => __("User Care"),
                                 'icon'      => "menu-icon las la-user-edit",
                                 'links'     => [
                                     [
-                                        'title'     => "Active Users",
+                                        'title'     => __( "Active Users"),
                                         'route'     => "admin.users.active",
                                     ],
                                     [
-                                        'title'     => "Email Unverified",
+                                        'title'     => __("Email Unverified"),
                                         'route'     => "admin.users.email.unverified",
                                     ],
                                     [
-                                        'title'     => "All Users",
+                                        'title'     => __("All Users"),
                                         'route'     => "admin.users.index",
                                     ],
                                     [
-                                        'title'     => "Email To Users",
+                                        'title'     => __("Email To Users"),
                                         'route'     => "admin.users.email.users",
                                     ],
                                     [
-                                        'title'     => "Banned Users",
+                                        'title'     => __("Banned Users"),
                                         'route'     => "admin.users.banned",
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "Admin Care",
+                                'title'             => __("Admin Care"),
                                 'icon'              => "menu-icon las la-user-shield",
                                 'links'     => [
                                     [
-                                        'title'     => "All Admin",
+                                        'title'     => __("All Admin"),
                                         'route'     => "admin.admins.index",
                                     ],
                                     [
-                                        'title'     => "Admin Role",
+                                        'title'     => __("Admin Role"),
                                         'route'     => "admin.admins.role.index",
                                     ],
                                     [
-                                        'title'     => "Role Permission",
+                                        'title'     => __("Role Permission"),
                                         'route'     => "admin.admins.role.permission.index", 
                                     ],
                                     [
-                                        'title'     => "Email To Admin",
+                                        'title'     => __("Email To Admin"),
                                         'route'     => "admin.admins.email.admins",
                                     ]
                                 ],
@@ -236,41 +220,41 @@
 
                 {{-- Section Settings --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Settings",
+                    'group_title'       => __("Settings"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Web Settings",
+                                'title'     => __("Web Settings"),
                                 'icon'      => "menu-icon lab la-safari",
                                 'links'     => [
                                     [
-                                        'title'     => "Basic Settings",
+                                        'title'     => __("Basic Settings"),
                                         'route'     => "admin.web.settings.basic.settings",
                                     ],
                                     [
-                                        'title'     => "Image Assets",
+                                        'title'     => __("Image Assets"),
                                         'route'     => "admin.web.settings.image.assets",
                                     ],
                                     [
-                                        'title'     => "Setup SEO",
+                                        'title'     => __("Setup SEO"),
                                         'route'     => "admin.web.settings.setup.seo", 
                                     ]
                                 ],
                             ],
                             [
-                                'title'             => "App Settings",
+                                'title'             => __("App Settings"),
                                 'icon'              => "menu-icon las la-mobile",
                                 'links'     => [
                                     [
-                                        'title'     => "Splash Screen",
+                                        'title'     => __("Splash Screen"),
                                         'route'     => "admin.app.settings.splash.screen",
                                     ],
                                     [
-                                        'title'     => "Onboard Screen",
+                                        'title'     => __("Onboard Screen"),
                                         'route'     => "admin.app.settings.onboard.screens",
                                     ],
                                     [
-                                        'title'     => "App URLs",
+                                        'title'     => __("App URLs"),
                                         'route'     => "admin.app.settings.urls", 
                                     ],
                                 ],
@@ -281,21 +265,21 @@
                 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.languages.index',
-                    'title'     => "Languages",
+                    'title'     => __("Languages"),
                     'icon'      => "menu-icon las la-language",
                 ])
 
                 {{-- Verification Center --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Verification Center",
+                    'group_title'       => __("Verification Center"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Setup Email",
+                                'title'     => __("Setup Email"),
                                 'icon'      => "menu-icon las la-envelope-open-text",
                                 'links'     => [
                                     [
-                                        'title'     => "Email Method",
+                                        'title'     => __("Email Method"),
                                         'route'     => "admin.setup.email.config",
                                     ],
                                 ],
@@ -305,14 +289,8 @@
                     ]
                 ])
 
-                @include('admin.components.side-nav.link',[
-                    'route'     => 'admin.setup.kyc.index',
-                    'title'     => "Setup KYC",
-                    'icon'      => "menu-icon las la-clipboard-list",
-                ])
-
                 @if (admin_permission_by_name("admin.setup.sections.section"))
-                    <li class="sidebar-menu-header">Setup Web Content</li>
+                    <li class="sidebar-menu-header">{{ __("Setup Web Content") }}</li>
                     @php
                         $current_url = URL::current();
                         $setup_section_childs  = [
@@ -408,13 +386,13 @@
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.setup.pages.index',
-                    'title'     => "Setup Pages",
+                    'title'     => __("Setup Pages"),
                     'icon'      => "menu-icon las la-file-alt",
                 ])
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.extensions.index',
-                    'title'     => "Extensions",
+                    'title'     => __("Extensions"),
                     'icon'      => "menu-icon las la-puzzle-piece",
                 ])
 
@@ -465,26 +443,26 @@
                     <li class="sidebar-menu-item @if ($current_url == setRoute('admin.payment.gateway.view',['money-out','manual'])) active @endif">
                         <a href="{{ setRoute('admin.payment.gateway.view',['money-out','manual']) }}">
                             <i class="menu-icon las la-print"></i>
-                            <span class="menu-title">Money Out</span>
+                            <span class="menu-title">{{ __("Money Out") }}</span>
                         </a>
                     </li>
                 @endif
 
                 {{-- Notifications --}}
                 @include('admin.components.side-nav.link-group',[
-                    'group_title'       => "Notification",
+                    'group_title'       => __("Notification"),
                     'group_links'       => [
                         'dropdown'      => [
                             [
-                                'title'     => "Push Notification",
+                                'title'     => __("Push Notification"),
                                 'icon'      => "menu-icon las la-bell",
                                 'links'     => [
                                     [
-                                        'title'     => "Setup Notification",
+                                        'title'     => __("Setup Notification"),
                                         'route'     => "admin.push.notification.config",
                                     ],
                                     [
-                                        'title'     => "Send Notification",
+                                        'title'     => __("Send Notification"),
                                         'route'     => "admin.push.notification.index",
                                     ]
                                 ],
@@ -503,24 +481,24 @@
                 @endphp 
 
                 @if (admin_permission_by_name_array($bonus_routes))   
-                    <li class="sidebar-menu-header">Bonus</li>
+                    <li class="sidebar-menu-header">{{ __("Bonus") }}</li>
                 @endif
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.cookie.index',
-                    'title'     => "GDPR Cookie",
+                    'title'     => __("GDPR Cookie"),
                     'icon'      => "menu-icon las la-cookie-bite",
                 ])
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.server.info.index',
-                    'title'     => "Server Info",
+                    'title'     => __("Server Info"),
                     'icon'      => "menu-icon las la-sitemap",
                 ])
 
                 @include('admin.components.side-nav.link',[
                     'route'     => 'admin.cache.clear',
-                    'title'     => "Clear Cache",
+                    'title'     => __("Clear Cache"),
                     'icon'      => "menu-icon las la-broom",
                 ])
             </ul>

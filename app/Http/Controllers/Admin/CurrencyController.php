@@ -47,7 +47,6 @@ class CurrencyController extends Controller
             'name'          => 'required|string',
             'code'          => 'required|string|unique:currencies',
             'symbol'        => 'required|string',
-            'role'          => 'required|string',
             'option'        => 'required|string',
             'flag'          => 'nullable|image|mimes: jpg,png,jpeg,svg,webp',
             'rate'          => 'required',
@@ -62,27 +61,7 @@ class CurrencyController extends Controller
         }
         $validated = $validator->validate();
 
-        $roles = [
-            'both'  => [
-                'sender'    => true,
-                'receiver'  => true,
-            ],
-            'sender'    => [
-                'sender'    => true,
-                'receiver'  => false,
-            ],
-            'receiver'  => [
-                'sender'    => false,
-                'receiver'  => true,
-            ]
-        ];
-        foreach($roles as $key => $item) {
-            if($key == $validated['role']) {
-                foreach($item as $column => $value) {
-                    $validated[$column] = $value;
-                }
-            }   
-        }
+       
         
         $default = [
             'default' => true,
@@ -107,6 +86,8 @@ class CurrencyController extends Controller
         $validated['default']       = $default[$validated['option']];
         $validated['created_at']    = now();
         $validated['admin_id']      = Auth::user()->id;
+        $validated['sender']        = true;
+        $validated['receiver']      = true;
         $network                    = $validated['network'];
         
         $validated = Arr::except($validated,['role','flag','option','network']);
@@ -210,7 +191,6 @@ class CurrencyController extends Controller
             'currency_rate'      => 'required|numeric',
             'currency_option'    => 'required|string',
             'currency_target'    => 'nullable|string',
-            'currency_role'      => 'required|string',
             'network'            => 'required|array',
             'network.*'          => 'required|string',
             'fees'               => 'nullable|array',
@@ -221,28 +201,6 @@ class CurrencyController extends Controller
         }
         
         $validated = $validator->validate();
-
-        $roles = [
-            'both'  => [
-                'sender'    => true,
-                'receiver'  => true,
-            ],
-            'sender'    => [
-                'sender'    => true,
-                'receiver'  => false,
-            ],
-            'receiver'  => [
-                'sender'    => false,
-                'receiver'  => true,
-            ]
-        ];
-        foreach($roles as $key => $item) {
-            if($key == $validated['currency_role']) {
-                foreach($item as $column => $value) {
-                    $validated[$column] = $value;
-                }
-            }   
-        }
 
         $default = [
             '1' => true,

@@ -36,7 +36,7 @@
                         'name'  => 'currency_search',
                     ])
                     @include('admin.components.link.add-default',[
-                        'text'          => "Add Currency",
+                        'text'          => __("Add Currency"),
                         'href'          => "#currency-add",
                         'class'         => "modal-btn",
                         'permission'    => "admin.currency.store", 
@@ -67,11 +67,12 @@
 
             var actionRoute =  "{{ setRoute('admin.currency.delete') }}";
             var target      = oldData.code;
-            var message     = `Are you sure to delete <strong>${oldData.code}</strong> currency?`;
+            var message     = `{{ __("Are you sure to delete") }} <strong>${oldData.code}</strong> {{ __("currency?") }}`;
 
             openDeleteModal(actionRoute,target,message);
         });
 
         itemSearch($("input[name=currency_search]"),$(".currency-search-table"),"{{ setRoute('admin.currency.search') }}",1);
     </script>
+    
 @endpush

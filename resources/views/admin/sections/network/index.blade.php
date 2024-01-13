@@ -33,7 +33,7 @@
             <h5 class="title">{{ __($page_title) }}</h5>
             <div class="table-btn-area">
                 @include('admin.components.link.add-default',[
-                    'text'          => "Add network",
+                    'text'          => __("Add Network"),
                     'href'          => "#add-network",
                     'class'         => "modal-btn",
                     'permission'    => "admin.network.store",
@@ -45,7 +45,7 @@
                 <thead>
                     <tr>
                         <th>{{ __("Coin Name") }}</th>
-                        <th>{{ __("Net Name") }}</th>
+                        <th>{{ __("Network Name") }}</th>
                         <th>{{ __("Status") }}</th>
                         <th></th>
                     </tr>
@@ -94,7 +94,7 @@
             var oldData     = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute = "{{ setRoute('admin.network.delete') }}";
             var target      = oldData.id;
-            var message     = `Are you sure to <strong>delete</strong> this Network?`;
+            var message     = `{{ __("Are you sure to") }} <strong>{{ __("delete") }}</strong> {{ __("this Network?") }}`;
 
             openDeleteModal(actionRoute,target,message);
 

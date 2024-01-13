@@ -2,11 +2,11 @@
     <thead>
         <tr>
             <th></th>
-            <th>Name | Code</th>
-            <th>Symbol</th>
-            <th>Type | Rate</th>
-            <th>Role</th>
-            <th>Status</th>
+            <th>{{ __("Name") }} | {{ __("Code") }}</th>
+            <th>{{ __("Symbol") }}</th>
+            <th>{{ __("Type") }} | {{ __("Rate") }}</th>
+            <th>{{ __("Role") }}</th>
+            <th>{{ __("Status") }}</th>
             <th></th>
         </tr>
     </thead>

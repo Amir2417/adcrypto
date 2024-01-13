@@ -23,7 +23,7 @@
             <div class="table-header">
                 <h5 class="title">{{ ("Outside Wallet Payment Receiving Address") }}</h5>
                 @include('admin.components.link.custom',[
-                    'text'          => "Add Outside Wallet Address",
+                    'text'          => __("Add Outside Wallet Address"),
                     'class'         => 'btn btn--base',
                     'href'          => setRoute('admin.outside.wallet.create'),
                 ])
@@ -81,7 +81,7 @@
             var oldData     = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute = "{{ setRoute('admin.outside.wallet.delete') }}";
             var target      = oldData.id;
-            var message     = `Are you sure to <strong>delete</strong> this Outside Wallet?`;
+            var message     = `{{ __("Are you sure to") }} <strong>{{ __("delete") }}</strong> {{ __("this Outside Wallet?") }}`;
 
             openDeleteModal(actionRoute,target,message);
 
