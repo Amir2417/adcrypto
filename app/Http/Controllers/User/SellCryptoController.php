@@ -120,7 +120,7 @@ class SellCryptoController extends Controller
             $payable_amount = $amount + $total_charge;
             $will_get       = $amount * $rate;
             if($payable_amount > $user_wallet->balance){
-                return back()->with(['error' => ['Sorry! Insufficient Balance']]);
+                return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
             }
 
             $data                       = [
@@ -539,7 +539,7 @@ class SellCryptoController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.buy.crypto.index')->with(['success' => ['Sell Crypto Successfull.']]);
+        return redirect()->route('user.sell.crypto.index')->with(['success' => ['Sell Crypto Successful.']]);
     }
     //update sender wallet balance
     function updateSenderWalletBalance($sender_wallet,$available_balance){

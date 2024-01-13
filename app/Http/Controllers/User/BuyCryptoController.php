@@ -316,7 +316,7 @@ class BuyCryptoController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => [$e->getMessage()]]);
         }
-        return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successfull.']]);
+        return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successful.']]);
     }
     /**
      * Method for buy crypto cancel
@@ -644,7 +644,7 @@ class BuyCryptoController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Payment Confirmation Success!']]);
+        return back()->with(['success' => ['Payment Confirmation Success.']]);
     }
 
 

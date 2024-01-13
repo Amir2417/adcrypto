@@ -17,7 +17,7 @@
             @if ($current_url == setRoute('user.transaction.buy.log') || $current_url == setRoute('user.transaction.sell.log') || $current_url == setRoute('user.transaction.withdraw.log') || $current_url == setRoute('user.transaction.exchange.log'))
                 <form class="header-search-wrapper">
                     <div class="position-relative">
-                        <input class="form-control" name="search_text" type="text" placeholder="Ex: Buy Crypto, Sell Crypto" aria-label="Search">
+                        <input class="form-control" name="search_text" type="text" placeholder="{{ __("Ex: Buy Crypto, Sell Crypto") }}" aria-label="Search">
                         <span class="las la-search"></span>
                     </div>
                 </form>

@@ -8,7 +8,7 @@
                         <i class="las la-arrow-up"></i>
                     </div>
                     <div class="dashboard-list-user-content">
-                        <h4 class="title">{{ __("Sell") }} <span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></h4>
+                        <h4 class="title">{{ $item->type ?? '' }} <span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></h4>
                         <span class="sub-title text--danger">{{ $item->details->data->sender_wallet->type ?? '' }} <span class="badge badge--warning ms-2">
                             @if ($item->status == global_const()::STATUS_PENDING)
                                 <span>{{ __("Pending") }}</span>
@@ -37,7 +37,7 @@
                             <i class="las la-compact-disc"></i>
                         </div>
                         <div class="preview-list-user-content">
-                            <span>{{ __("TRX ID") }}</span>
+                            <span>{{ __("Transaction ID") }}</span>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                                 <i class="las la-map-marked-alt"></i>
                             </div>
                             <div class="preview-list-user-content">
-                                <span>{{ @$data->label }}</span>
+                                <span>{{ __(@$data->label) }}</span>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                                 <i class="las la-university"></i>
                             </div>
                             <div class="preview-list-user-content">
-                                <span>{{ @$data->label }}</span>
+                                <span>{{ __(@$data->label) }}</span>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                             <i class="las la-money-check"></i>
                         </div>
                         <div class="preview-list-user-content">
-                            <span>{{ __("Receiving Method") }}</span>
+                            <span>{{ __("Payment Method") }}</span>
                         </div>
                     </div>
                 </div>
@@ -208,7 +208,7 @@
                             <i class="las la-money-check-alt"></i>
                         </div>
                         <div class="preview-list-user-content">
-                            <span class="last">{{ ("Total Payable Amount") }}</span>
+                            <span class="last">{{ __("Total Payable Amount") }}</span>
                         </div>
                     </div>
                 </div>

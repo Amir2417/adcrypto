@@ -70,7 +70,7 @@
                                 @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($gateway->input_fields)])
                             </div>
                             <div class="col-xl-12 col-lg-12">
-                                <button type="submit" class="btn--base mt-10 w-100"><span class="w-100">Continue</span></button>
+                                <button type="submit" class="btn--base mt-10 w-100"><span class="w-100">{{ __("Continue") }}</span></button>
                             </div>
                         </div>
                     </div>

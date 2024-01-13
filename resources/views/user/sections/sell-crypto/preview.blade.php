@@ -83,7 +83,7 @@
                                             <i class="las la-money-check"></i>
                                         </div>
                                         <div class="preview-list-user-content">
-                                            <span>{{ __("Receiving Method") }}</span>
+                                            <span>{{ __("Payment Method") }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@
                                                     <i class="las la-compact-disc"></i>
                                                 </div>
                                                 <div class="preview-list-user-content">
-                                                    <span>{{ @$item->label }}</span>
+                                                    <span>{{ __(@$item->label) }}</span>
                                                 </div>
                                             </div>
                                         </div>
@@ -223,7 +223,7 @@
                                             <i class="las la-university"></i>
                                         </div>
                                         <div class="preview-list-user-content">
-                                            <span>{{ @$item->label }}</span>
+                                            <span>{{ __(@$item->label) }}</span>
                                         </div>
                                     </div>
                                 </div>

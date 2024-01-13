@@ -55,7 +55,7 @@
                                 @include('admin.components.form.textarea',[
                                     'label'         => __('Message').'<span class="text--base">'.'('.__("Optional").')'.'</span>',
                                     'name'          => "desc",
-                                    'placeholder'   => "Write Here...",
+                                    'placeholder'   => __("Write Here")."...",
                                 ])
                             </div>
                             <div class="col-xl-4 col-lg-6 form-group">

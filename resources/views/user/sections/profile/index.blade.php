@@ -75,7 +75,7 @@
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     <label>{{__("Country")}}<span>*</span></label>
-                                    <select class="form--control select2-auto-tokenize country-select" data-placeholder="Select Country" data-old="{{ old('country',auth()->user()->address->country ?? "") }}" name="country"></select>
+                                    <select class="form--control select2-auto-tokenize country-select" data-placeholder="{{ __("Select Country") }}" data-old="{{ old('country',auth()->user()->address->country ?? "") }}" name="country"></select>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 form-group">
                                     @include('admin.components.form.input',[
@@ -186,10 +186,10 @@
         $(".delete-btn").click(function(){
             var actionRoute =  "{{ setRoute('user.delete.account') }}";
             var target      = 1;
-            var btnText     = "Delete Account";
+            var btnText     = `{{ __("Delete Account") }}`;
             var projectName = "{{ @$basic_settings->site_name }}";
             var name        = $(this).data('name');
-            var message     = `Are you sure to delete <strong>your account</strong>?<br>If you do not think you will use “<strong>${projectName}</strong>”  again and like your account deleted, we can take card of this for you. Keep in mind you will not be able to reactivate your account or retrieve any of the content or information you have added. If you would still like your account deleted, click “Delete Account”.?`;
+            var message     = `{{ __("Are you sure to delete") }} <strong>{{ __("your account") }}</strong>?<br>{{ __("If you do not think you will use") }} “<strong>${projectName}</strong>”  {{ __("again and like your account deleted, we can take card of this for you. Keep in mind you will not be able to reactivate your account or retrieve any of the content or information you have added. If you would still like your account deleted, click “Delete Account”.?") }}`;
             openAlertModal(actionRoute,target,message,btnText,"DELETE");
         });
     </script>

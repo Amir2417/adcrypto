@@ -55,7 +55,7 @@
                             {{ __("Payment Received Successfully!") }}
                         </div>
                         <div class="txn-hash text-center mt-2 text--info">
-                            <strong>{{ __("Txn Hash:") }} </strong>
+                            <strong>{{ __("Txn Hash") }} :</strong>
                             <span>{{ $transaction->details->payment_info->txn_hash ?? "" }}</span>
                         </div>
                     </div>

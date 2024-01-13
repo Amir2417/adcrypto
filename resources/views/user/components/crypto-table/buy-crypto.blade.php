@@ -8,7 +8,7 @@
                         <i class="las la-arrow-up"></i>
                     </div>
                     <div class="dashboard-list-user-content">
-                        <h4 class="title">{{ __("Buy") }} <span>{{ $item->details->data->wallet->name ?? '' }} ({{ $item->details->data->wallet->code ?? '' }})</span></h4>
+                        <h4 class="title">{{ $item->type ?? '' }} <span>{{ $item->details->data->wallet->name ?? '' }} ({{ $item->details->data->wallet->code ?? '' }})</span></h4>
                         <span class="sub-title text--danger">{{ $item->type ?? '' }} 
                             <span class="badge badge--warning ms-2">
                                 @if ($item->status == global_const()::STATUS_PENDING)
@@ -39,7 +39,7 @@
                             <i class="las la-compact-disc"></i>
                         </div>
                         <div class="preview-list-user-content">
-                            <span>{{ __("TRX ID") }}</span>
+                            <span>{{ __("Transaction ID") }}</span>
                         </div>
                     </div>
                 </div>
@@ -116,7 +116,7 @@
                             <i class="las la-money-check"></i>
                         </div>
                         <div class="preview-list-user-content">
-                            <span>{{ __("Payment Gateway") }}</span>
+                            <span>{{ __("Payment Method") }}</span>
                         </div>
                     </div>
                 </div>

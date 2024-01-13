@@ -95,7 +95,7 @@
                                             <i class="las la-money-check"></i>
                                         </div>
                                         <div class="preview-list-user-content">
-                                            <span>{{ __("Payment Gateway") }}</span>
+                                            <span>{{ __("Payment Method") }}</span>
                                         </div>
                                     </div>
                                 </div>

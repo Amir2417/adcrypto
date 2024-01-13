@@ -18,7 +18,7 @@
     <div class="table-area mt-30">
         <div class="table-wrapper">
             <div class="dashboard-header-wrapper">
-                <h5 class="title">Support Tickets</h5>
+                <h5 class="title">{{ __("Support Tickets") }}</h5>
                 <div class="dashboard-btn-wrapper">
                     <div class="dashboard-btn">
                         <a href="{{ route('user.support.ticket.create') }}" class="btn--base"><span><i class="las la-plus me-1"></i> {{ __("Add New") }}</span></a>

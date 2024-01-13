@@ -61,7 +61,7 @@
                                         <i class="las la-money-check"></i>
                                     </div>
                                     <div class="preview-list-user-content">
-                                        <span>{{ __("Receiving Method") }}</span>
+                                        <span>{{ __("Payment Method") }}</span>
                                     </div>
                                 </div>
                             </div>

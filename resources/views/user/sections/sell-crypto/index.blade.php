@@ -10,7 +10,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("user.dashboard"),
         ]
-    ], 'active' => __("sell Crypto")])
+    ], 'active' => __("Sell Crypto")])
 @endsection
 
 @section('content')
@@ -19,7 +19,7 @@
         <div class="col-xxl-6 col-xl-8 col-lg-8">
             <div class="custom-card">
                 <div class="dashboard-header-wrapper">
-                    <h5 class="title">{{ __("sell Crypto") }}</h5>
+                    <h5 class="title">{{ __("Sell Crypto") }}</h5>
                 </div>
                 <div class="card-body">
                     <form action="{{ setRoute('user.sell.crypto.store') }}" class="card-form" method="POST">
@@ -88,7 +88,7 @@
                                 <code class="d-block mt-2 max-amount"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>{{ __("Receiving Method") }}<span>*</span></label>
+                                <label>{{ __("Payment Method") }}<span>*</span></label>
                                 <select class="select2-basic" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
                                         <option 

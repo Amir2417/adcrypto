@@ -24,11 +24,11 @@
                     @csrf
                     <div class="row">
                         <div class="col-lg-12 form-group show_hide_password">
-                            <input type="password" class="form-control form--control" name="password" placeholder="Enter New Password..." required>
+                            <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Enter New Password") }}..." required>
                             <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                         </div>
                         <div class="col-lg-12 form-group show_hide_password">
-                            <input type="password" class="form-control form--control" name="password_confirmation" placeholder="Enter Confirm Password..." required>
+                            <input type="password" class="form-control form--control" name="password_confirmation" placeholder="{{ __("Enter Confirm Password") }}..." required>
                             <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                         </div>
                         <div class="col-lg-12 form-group text-center">

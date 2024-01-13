@@ -94,7 +94,7 @@
                                 <code class="d-block mt-2 max-amount"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
-                                <label>{{ __("Receiving Method") }}<span>*</span></label>
+                                <label>{{ __("Payment Method") }}<span>*</span></label>
                                 <select class="select2-basic" name="payment_method">
                                     @foreach ($payment_gateway ?? [] as $item)
                                         <option 
@@ -108,7 +108,7 @@
                                         >{{ $item->name ?? '' }} @if ($item->gateway->isManual())
                                             (Manual)
                                         @endif</option>
-                                    @endforeach
+                                @endforeach
                                 </select>
                                 <code class="d-block mt-2 exchange-rate"></code>
                             </div>

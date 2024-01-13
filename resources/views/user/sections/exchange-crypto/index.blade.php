@@ -33,7 +33,7 @@
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Exchange From") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control send-amount number-input" name="send_amount" placeholder="Enter Amount...">
+                                    <input type="text" class="form--control send-amount number-input" name="send_amount" placeholder="{{ __("Enter Amount") }}...">
                                     <div class="input-group-text two max-amount">{{ __("Max") }}</div>
                                     <select class="form--control nice-select" name="sender_wallet">
                                         @foreach ($currencies as $item)
@@ -51,7 +51,7 @@
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Exchange To") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control receive-money" name="receive_money" placeholder="Enter Amount...">
+                                    <input type="text" class="form--control receive-money" name="receive_money" placeholder="{{ __("Enter Amount") }}...">
                                     <select class="form--control nice-select" name="receiver_currency">
                                         @foreach ($currencies as $item)
                                             <option 

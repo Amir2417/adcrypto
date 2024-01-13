@@ -93,7 +93,7 @@
                                             <i class="las la-battery-half"></i>
                                         </div>
                                         <div class="preview-list-user-content">
-                                            <span>{{ __("Network Charge") }}</span>
+                                            <span>{{ __("Network Fees") }}</span>
                                         </div>
                                     </div>
                                 </div>

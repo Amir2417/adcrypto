@@ -75,7 +75,7 @@ class WithdrawCryptoController extends Controller
         if(!$sender_wallet) return back()->with(['error' => ['Wallet not found']]);
 
         if($amount > $sender_wallet->balance){
-            return back()->with(['error' => ['Insufficient Balance!']]);
+            return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
         $sender_rate        = $sender_wallet->currency->rate / $sender_wallet->currency->rate;
         $receiver_address   = UserWallet::with(['currency'])->where('public_address',$validated['wallet_address'])->first();
@@ -89,7 +89,7 @@ class WithdrawCryptoController extends Controller
         $max_amount         = $max_limit * $sender_wallet->currency->rate;
 
         if($amount < $min_amount || $amount > $max_amount){
-            return back()->with(['error' => ['Please follow the transaction limit!']]);
+            return back()->with(['error' => ['Please follow the transaction limit.']]);
         }
         
         $fixed_charge           = $transaction_fees->fixed_charge * $sender_wallet->currency->rate;
@@ -99,7 +99,7 @@ class WithdrawCryptoController extends Controller
         $payable_amount         = $amount + $total_charge;
         $will_get_amount        = $amount * $exchange_rate;
         if($payable_amount > $sender_wallet->balance){
-            return back()->with(['error' => ['Insufficient Balance!']]);
+            return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
 
         $data                   = [
@@ -199,7 +199,7 @@ class WithdrawCryptoController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.withdraw.crypto.index')->with(['success'  => ['Withdraw Crypto Successfull!']]);
+        return redirect()->route('user.withdraw.crypto.index')->with(['success'  => ['Withdraw Crypto Successful!']]);
     }
 
     //update sender wallet balance

@@ -64,7 +64,7 @@ class ExchangeCryptoController extends Controller
         }
         
         if($send_amount > $send_wallet->balance){
-            return back()->with(['error' => ['Insufficient Balance!']]);
+            return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
         $receive_wallet     = UserWallet::auth()->whereHas("currency",function($q) use ($receiver_wallet) {
             $q->where("id",$receiver_wallet)->active();
@@ -95,7 +95,7 @@ class ExchangeCryptoController extends Controller
         $payable        = $send_amount + $total_charge;
 
         if($payable > $send_wallet->balance){
-            return back()->with(['error' => ['Insufficient Balance!']]);
+            return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
         
     
@@ -205,7 +205,7 @@ class ExchangeCryptoController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('user.exchange.crypto.index')->with(['success' => ['Exchange Crypto Successfull']]);       
+        return redirect()->route('user.exchange.crypto.index')->with(['success' => ['Exchange Crypto Successful.']]);       
     }
 
     //update sender wallet balance

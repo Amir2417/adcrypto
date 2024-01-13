@@ -39,7 +39,7 @@
                                 <i class="las la-compact-disc"></i>
                             </div>
                             <div class="preview-list-user-content">
-                                <span>{{ __("TRX ID") }}</span>
+                                <span>{{ __("Transaction ID") }}</span>
                             </div>
                         </div>
                     </div>

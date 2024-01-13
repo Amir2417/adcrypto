@@ -33,7 +33,10 @@
                         
                         <ul class="footer-list">
                             @foreach ($menues as $item)
-                                <li><a href="{{ url($item->url) }}">{{ $item->title }}</a></li>
+                            @php
+                                $title = $item->title ?? "";
+                            @endphp
+                                <li><a href="{{ url($item->url) }}">{{ __($title) }}</a></li>
                             @endforeach
                         </ul>
                     </div>
