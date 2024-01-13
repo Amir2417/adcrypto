@@ -44,7 +44,7 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">{{ ("Total Blog Category") }}</h6>
+                                <h6 class="title">{{ __("Total Blog Category") }}</h6>
                                 <div class="user-info">
                                     <h2 class="user-count">{{ formatNumberInKNotation($data['total_category_count']) }}</h2>
                                 </div>
@@ -63,7 +63,7 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">{{ ("Total Blogs") }}</h6>
+                                <h6 class="title">{{ __("Total Blogs") }}</h6>
                                 <div class="user-info">
                                     <h2 class="user-count">{{ formatNumberInKNotation($data['total_blog_count']) }}</h2>
                                 </div>
@@ -120,7 +120,7 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">{{ ("Total Fees & Charges") }}</h6>
+                                <h6 class="title">{{ __("Total Fees & Charges") }}</h6>
                                 <div class="user-info">
                                     <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_charges']) }}</h2>
                                 </div>
