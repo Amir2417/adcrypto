@@ -69,6 +69,12 @@
                         </ul>
                     </li>
                     <li class="sidebar-menu-item">
+                        <a href="{{ setRoute('user.authorize.kyc') }}">
+                            <i class="menu-icon las la-user-alt"></i>
+                            <span class="menu-title">{{__("KYC Verification")}}</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-menu-item">
                         <a href="{{ setRoute('user.security.google.2fa') }}">
                             <i class="menu-icon las la-qrcode"></i>
                             <span class="menu-title">{{ __("2FA Security") }}</span>

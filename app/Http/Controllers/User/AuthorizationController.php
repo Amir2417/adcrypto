@@ -10,6 +10,7 @@ use App\Constants\GlobalConst;
 use App\Models\Admin\SetupKyc;
 use App\Models\UserAuthorization;
 use Illuminate\Support\Facades\DB;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Traits\ControlDynamicInputFields;
 use Illuminate\Support\Facades\Validator;
@@ -130,20 +131,34 @@ class AuthorizationController extends Controller
         }
         return back()->with(['warning' => ['Failed to login. Please try again']]);
     }
+    /**
+     * kyc form
+     */
     public function showKycFrom() {
-        $user = auth()->user();
-        if($user->kyc_verified == GlobalConst::VERIFIED) return back()->with(['success' => ['You are already KYC Verified User']]);
-        $page_title = setPageTitle("KYC Verification");
-        $user_kyc = SetupKyc::userKyc()->first();
-        if(!$user_kyc) return back();
-        $kyc_data = $user_kyc->fields;
-        $kyc_fields = [];
+        $basic_settings   = BasicSettings::first();
+        
+        if($basic_settings['kyc_verification'] == false) return back()->with(['success' => ['Do not need to identity verification!!']]);
+
+        $user         = auth()->user();
+        $page_title   = "| KYC Verification";
+        $user_kyc     = SetupKyc::userKyc()->first();
+        if(!$user_kyc) return back()->with(['success' => ['Do not need to identity verification!!']]);
+            $kyc_data   = $user_kyc->fields;
+            $kyc_fields = [];
         if($kyc_data) {
             $kyc_fields = array_reverse($kyc_data);
         }
-        return view('user.auth.authorize.verify-kyc',compact("page_title","kyc_fields"));
-    }
 
+        return view('user.sections.kyc.verify-kyc',compact(
+            "page_title",
+            "kyc_fields",
+            "user_kyc",
+            
+        ));
+    }
+    /**
+     * kyc submit
+     */
     public function kycSubmit(Request $request) {
 
         $user = auth()->user();
@@ -174,9 +189,9 @@ class AuthorizationController extends Controller
                 'kyc_verified'  => GlobalConst::DEFAULT,
             ]);
             $this->generatedFieldsFilesDelete($get_values);
-            return back()->with(['error' => ['Something went wrong! Please try again']]);
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 
-        return redirect()->route("user.profile.index")->with(['success' => ['KYC information successfully submited']]);
+        return back()->with(['success' => ['KYC information successfully submitted']]);
     }
 }

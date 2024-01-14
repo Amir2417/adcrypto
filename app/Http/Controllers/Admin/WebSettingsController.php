@@ -163,7 +163,7 @@ class WebSettingsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 
-        return back()->with(['success' => ['Image assets updated successfully!.']]);
+        return back()->with(['success' => ['Image assets updated successfully!']]);
     }
 
     /**

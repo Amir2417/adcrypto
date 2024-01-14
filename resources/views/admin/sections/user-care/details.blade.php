@@ -96,7 +96,7 @@
                                 @include('admin.components.button.custom',[
                                     'type'          => "button",
                                     'class'         => "wallet-balance-update-btn bg--danger two",
-                                    'text'          => "Add/Subtract Balance",
+                                    'text'          => __("Add/Subtract Balance"),
                                     'icon'          => "las la-wallet me-1",
                                     'permission'    => "admin.users.wallet.balance.update",
                                 ])
@@ -106,7 +106,7 @@
                                     'href'          => setRoute('admin.users.login.logs',$user->username),
                                     'class'         => "bg--warning four",
                                     'icon'          => "las la-sign-in-alt me-1",
-                                    'text'          => "Login Logs",
+                                    'text'          => __("Login Logs"),
                                     'permission'    => "admin.users.login.logs",
                                 ])
                             </div>
@@ -115,7 +115,7 @@
                                     'href'          => "#email-send",
                                     'class'         => "bg--success three modal-btn",
                                     'icon'          => "las la-mail-bulk me-1",
-                                    'text'          => "Send Email",
+                                    'text'          => __("Send Email"),
                                     'permission'    => "admin.users.send.mail",
                                 ])
                             </div>
@@ -123,7 +123,7 @@
                                 @include('admin.components.link.custom',[
                                     'class'         => "bg--info two login-as-member",
                                     'icon'          => "las la-user-check me-1",
-                                    'text'          => "Login as Member",
+                                    'text'          => __("Login as Member"),
                                     'permission'    => "admin.users.login.as.member",
                                 ])
                             </div>
@@ -132,7 +132,7 @@
                                     'href'          => setRoute('admin.users.mail.logs',$user->username),
                                     'class'         => "bg--base one",
                                     'icon'          => "las la-history me-1",
-                                    'text'          => "Email Logs",
+                                    'text'          => __("Email Logs"),
                                     'permission'    => "admin.users.mail.logs",
                                 ])
                             </div>
@@ -145,11 +145,11 @@
                     </div>
                     <div class="col-xl-4 col-lg-4 form-group">
                         <ul class="user-profile-list">
-                            <li class="bg--base one">{{ __("Full Name:") }} <span>{{ $user->fullname }}</span></li>
-                            <li class="bg--info two">{{ __("Username:") }} <span>{{ "@".$user->username }}</span></li>
-                            <li class="bg--success three">{{ __("Email:") }} <span>{{ $user->email }}</span></li>
-                            <li class="bg--warning four">{{ __("Status:") }} <span>{{ $user->stringStatus->value }}</span></li>
-                            <li class="bg--danger five">{{ __("Last Login:") }} <span>{{ $user->lastLogin }}</span></li>
+                            <li class="bg--base one">{{ __("Full Name") }} :<span>{{ $user->fullname }}</span></li>
+                            <li class="bg--info two text-capitalize">{{ __("username") }} :<span>{{ "@".$user->username }}</span></li>
+                            <li class="bg--success three">{{ __("Email") }} :<span>{{ $user->email }}</span></li>
+                            <li class="bg--warning four">{{ __("Status") }} :<span>{{ $user->stringStatus->value }}</span></li>
+                            <li class="bg--danger five">{{ __("Last Login") }} :<span>{{ $user->lastLogin }}</span></li>
                         </ul>
                     </div>
                 </div>
@@ -167,20 +167,20 @@
                 <div class="row mb-10-none">
                     <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
-                            'label'         => "First Name*",
+                            'label'         => __("First Name")."*",
                             'name'          => "firstname",
                             'value'         => old("firstname",$user->firstname),
                             'attribute'     => "required",
-                            'placeholder'   => "Write Here...",
+                            'placeholder'   => __("Write Here")."...",
                         ])
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
-                            'label'         => "Last Name*",
+                            'label'         => __("Last Name")."*",
                             'name'          => "lastname",
                             'value'         => old("lastname",$user->lastname),
                             'attribute'     => "required",
-                            'placeholder'   => "Write Here...",
+                            'placeholder'   => __("Write Here")."...",
                         ])
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
@@ -190,7 +190,7 @@
                     <div class="col-xl-6 col-lg-6 form-group">
                         <label>{{ __("Phone Number") }}</label>
                         <div class="input-group">
-                            <input type="text" class="form--control" placeholder="Write Here..." name="mobile" value="{{ old('mobile',$user->mobile) }}">
+                            <input type="text" class="form--control" placeholder="{{ __("Write Here") }}..." name="mobile" value="{{ old('mobile',$user->mobile) }}">
                         </div>
                         @error("mobile")
                             <span class="invalid-feedback d-block" role="alert">
@@ -203,7 +203,7 @@
                             $old_state = old('state',$user->address->state ?? "");
                         @endphp
                         <label>{{ __("State") }}</label>
-                        <select name="state" class="form--control select2-auto-tokenize state-select" data-placeholder="Select State" data-old="{{ $old_state }}">
+                        <select name="state" class="form--control select2-auto-tokenize state-select" data-placeholder={{ __("Select State") }} data-old="{{ $old_state }}">
                             @if ($old_state)
                                 <option value="{{ $old_state }}" selected>{{ $old_state }}</option>
                             @endif
@@ -214,7 +214,7 @@
                             $old_city = old('city',$user->address->city ?? "");
                         @endphp
                         <label>{{ __("City") }}</label>
-                        <select name="city" class="form--control select2-auto-tokenize city-select" data-placeholder="Select City" data-old="{{ $old_city }}">
+                        <select name="city" class="form--control select2-auto-tokenize city-select" data-placeholder={{ __("Select City") }} data-old="{{ $old_city }}">
                             @if ($old_city)
                                 <option value="{{ $old_city }}" selected>{{ $old_city }}</option>
                             @endif
@@ -222,21 +222,21 @@
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
-                            'label'         => "Zip/Postal",
+                            'label'         => __("Zip Code"),
                             'name'          => "zip_code",
-                            'placeholder'   => "Write Here...",
+                            'placeholder'   => __("Write Here")."...",
                             'value'         => old('zip_code',$user->address->zip ?? "")
                         ])
                     </div>
                     <div class="col-xl-6 col-lg-6 form-group">
                         @include('admin.components.form.input',[
-                            'label'         => "Address",
+                            'label'         => __("Address"),
                             'name'          => 'address',
                             'value'         => old("address",$user->address->address ?? ""),
-                            'placeholder'   => "Write Here...",
+                            'placeholder'   => __("Write Here")."...",
                         ])
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
                             'label'         => 'User Status',
                             'value'         => old('status',$user->status),
@@ -245,7 +245,7 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
                             'label'         => 'Email Verification',
                             'value'         => old('email_verified',$user->email_verified),
@@ -254,7 +254,7 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
-                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 form-group">
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
                             'label'     => '2FA Verification',
                             'value'     => old('two_factor_verified',$user->two_factor_verified),
@@ -263,9 +263,19 @@
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
+
+                    <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
+                        @include('admin.components.form.switcher', [
+                            'label'     => 'KYC Verification',
+                            'value'     => old('kyc_verified',$user->kyc_verified),
+                            'name'      => "kyc_verified",
+                            'options'   => ['Verified' => 1, 'Unverified' => 0],
+                            'permission'    => "admin.users.details.update",
+                        ])
+                    </div>
                     <div class="col-xl-12 col-lg-12 form-group mt-4">
                         @include('admin.components.button.form-btn',[
-                            'text'          => "Update",
+                            'text'          => __("Update"),
                             'permission'    => "admin.users.details.update",
                             'class'         => "w-100 btn-loading",
                         ])
@@ -291,15 +301,15 @@
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <label for="balance">{{ __("Type") }}<span>*</span></label>
                                 <select name="type" id="balance" class="form--control nice-select">
-                                    <option disabled selected>Select Type</option>
-                                    <option value="add">Balance Add</option>
-                                    <option value="subtract">Balance Subtract</option>
+                                    <option disabled selected>{{ __("Select Type") }}</option>
+                                    <option value="add">{{ __("Balance Add") }}</option>
+                                    <option value="subtract">{{ __("Balance Subtract") }}</option>
                                 </select>
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <label for="wallet">{{ __("User Wallet") }}<span>*</span></label>
                                 <select name="wallet" id="wallet" class="form--control select2-auto-tokenize">
-                                    <option disabled selected>Select User Wallet</option>
+                                    <option disabled selected>{{ __("Select User Wallet") }}</option>
                                     @foreach ($user->wallets()->get() ?? [] as $item)
                                         <option value="{{ $item->id }}">{{ $item->currency->code }}</option>
                                     @endforeach
@@ -307,7 +317,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => 'Amount',
+                                    'label'         => __('Amount'),
                                     'label_after'   => "<span>*</span>",
                                     'name'          => 'amount',
                                     'value'         => old("amount"),
@@ -316,7 +326,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => "Remark",
+                                    'label'         => __("Remark"),
                                     'name'          => "remark",
                                     'value'         => old("remark"),
                                 ])

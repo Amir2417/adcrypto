@@ -8,13 +8,13 @@
             <div class="row add-row-wrapper align-items-end">
                 <div class="col-xl-3 col-lg-3 form-group">
                     @include('admin.components.form.input',[
-                        'label'     => __("Field Name"),
+                        'label'     => __("Field Name")."*",
                         'name'      => "label[]",
                         'attribute' => "required",
                     ])
                 </div>
                 <div class="col-xl-2 col-lg-2 form-group">
-                    <label>{{ __("Field Types*") }}</label>
+                    <label>{{ __("Field Types") }}*</label>
                     <select class="form--control nice-select field-input-type" name="input_type[]">
                         <option value="text" selected>{{ __("Input Text") }}</option>
                         <option value="file">{{ __("File") }}</option>
@@ -28,7 +28,7 @@
 
                 <div class="col-xl-2 col-lg-2 form-group">
                     @include('admin.components.form.switcher',[
-                        'label'     => __("Field Necessity"),
+                        'label'     => __("Field Necessity")."*",
                         'name'      => "field_necessity[]",
                         'options'   => ['Required' => "1",'Optional' => "0"],
                         'value'     => old("field_necessity[]","1"),

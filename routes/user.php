@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\User\BuyCryptoController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\User\DashboardController;
-use App\Http\Controllers\User\ExchangeCryptoController;
+use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\User\SecurityController;
+use App\Http\Controllers\User\BuyCryptoController;
+use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\SellCryptoController;
-use App\Http\Controllers\User\SupportTicketController;
 use App\Http\Controllers\User\TransactionController;
-use App\Http\Controllers\User\WalletController;
+use App\Http\Controllers\User\AuthorizationController;
+use App\Http\Controllers\User\SupportTicketController;
+use App\Http\Controllers\User\ExchangeCryptoController;
 use App\Http\Controllers\User\WithdrawCryptoController;
 
 Route::prefix("user")->name("user.")->group(function(){
@@ -33,7 +34,7 @@ Route::prefix("user")->name("user.")->group(function(){
     });
 
     //buy crypto
-    Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+    Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->middleware(['kyc.verification.guard'])->name('buy.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
         Route::post('store','store')->name('store');
@@ -65,7 +66,7 @@ Route::prefix("user")->name("user.")->group(function(){
     });
 
     //sell crypto
-    Route::controller(SellCryptoController::class)->prefix('sell-crypto')->name('sell.crypto.')->group(function(){
+    Route::controller(SellCryptoController::class)->prefix('sell-crypto')->middleware(['kyc.verification.guard'])->name('sell.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('get/currency/networks','getCurrencyNetworks')->name('get.currency.networks');
         Route::post('store','store')->name('store');
@@ -78,7 +79,7 @@ Route::prefix("user")->name("user.")->group(function(){
     });
 
     //withdraw crypto
-    Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->name('withdraw.crypto.')->group(function(){
+    Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->middleware(['kyc.verification.guard'])->name('withdraw.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('check/wallet/address','checkWalletAddress')->name('check.address.exist');
         Route::post('store','store')->name('store');
@@ -87,7 +88,7 @@ Route::prefix("user")->name("user.")->group(function(){
     });
 
     //exchange crypto
-    Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->name('exchange.crypto.')->group(function(){
+    Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->middleware(['kyc.verification.guard'])->name('exchange.crypto.')->group(function(){
         Route::get('/','index')->name('index');
         Route::post('store','store')->name('store');
         Route::get('preview/{identifier}','preview')->name('preview');
@@ -124,6 +125,12 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::post('store', 'store')->name('store');
         Route::get('conversation/{encrypt_id}','conversation')->name('conversation');
         Route::post('message/send','messageSend')->name('message.send');
+    });
+
+    //kyc verification
+    Route::controller(AuthorizationController::class)->prefix("authorize")->name('authorize.')->group(function(){
+        Route::get('kyc','showKycFrom')->name('kyc');
+        Route::post('kyc/submit','kycSubmit')->name('kyc.submit');
     });
 
 });

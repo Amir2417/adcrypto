@@ -129,7 +129,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
-        Route::get('canceled', 'canceled')->name('canceled');
     });
 
     //Sell Crypto Logs
@@ -141,7 +140,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
-        Route::get('canceled', 'canceled')->name('canceled');
     });
 
     //withdraw crypto logs
@@ -153,7 +151,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
-        Route::get('canceled', 'canceled')->name('canceled');
     });
 
     //exchange crypto logs
@@ -165,7 +162,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
-        Route::get('canceled', 'canceled')->name('canceled');
     });
 
     // Add Money Logs

@@ -72,13 +72,13 @@
                 @if ($transaction->status  == global_const()::STATUS_PENDING)
                     <div class="d-flex">
                         @include('admin.components.link.status-update',[
-                            'text'          => "Confirm",
+                            'text'          => __("Confirm"),
                             'href'          => "#confirm",
                             'class'         => "modal-btn",
                             'permission'    => "admin.sell.crypto.status.update",
                         ])
                         @include('admin.components.link.status-update',[
-                            'text'          => "Reject",
+                            'text'          => __("Reject"),
                             'href'          => "#reject",
                             'class'         => "modal-btn ms-1",
                         ])
@@ -128,7 +128,7 @@
 <div id="confirm" class="mfp-hide large">
     <div class="modal-data">
         <div class="modal-header px-0">
-            <h5 class="modal-title">{{ __("Transaction Number :") }} {{ $transaction->trx_id }}</h5>
+            <h5 class="modal-title">{{ __("Transaction Number") }} :{{ $transaction->trx_id }}</h5>
         </div>
         <div class="modal-form-data">
             <form class="modal-form" method="POST" action="{{ setRoute('admin.sell.crypto.status.update',$transaction->trx_id) }}">
@@ -150,7 +150,7 @@
 <div id="reject" class="mfp-hide large">
     <div class="modal-data">
         <div class="modal-header px-0">
-            <h5 class="modal-title">{{ __("Transaction Number :") }} {{ $transaction->trx_id }}</h5>
+            <h5 class="modal-title">{{ __("Transaction Number") }} :{{ $transaction->trx_id }}</h5>
         </div>
         <div class="modal-form-data">
             <form class="modal-form" method="POST" action="{{ setRoute('admin.sell.crypto.reject',$transaction->trx_id) }}">
@@ -158,7 +158,7 @@
                 <div class="row mb-10-none">
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.form.textarea',[
-                            'label'         => 'Reject Reason',
+                            'label'         => __('Reject Reason'),
                             'name'          => 'reject_reason',
                         ])
                     </div>

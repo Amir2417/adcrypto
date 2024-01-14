@@ -35,7 +35,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //buy crypto 
-        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
+        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->middleware(['kyc.verification.guard'])->name('buy.crypto.')->group(function(){
             Route::get('index','index');
             Route::post('store','store');
             Route::post('submit','submit');
@@ -59,7 +59,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
         
         //sell crypto 
-        Route::controller(SellCryptoController::class)->prefix('sell-crypto')->group(function(){
+        Route::controller(SellCryptoController::class)->prefix('sell-crypto')->middleware(['kyc.verification.guard'])->group(function(){
             Route::get('index','index');
             Route::post('store','store');
             Route::post('payment-info-store','paymentInfoStore');
@@ -68,23 +68,18 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //withdraw crypto 
-        Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->group(function(){
+        Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->middleware(['kyc.verification.guard'])->group(function(){
             Route::get('index','index');
             Route::post('store','store');
             Route::post('confirm','confirm');
         });
         //sell crypto 
-        Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->group(function(){
+        Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->middleware(['kyc.verification.guard'])->group(function(){
             Route::get('index','index');
             Route::post('store','store');
             Route::post('confirm','confirm');
-        });
-        
-    });
-    
-    
-    
-    
+        }); 
+    });  
 });
 
 

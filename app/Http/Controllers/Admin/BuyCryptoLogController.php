@@ -187,16 +187,5 @@ class BuyCryptoLogController extends Controller
             'transactions'
         ));
     }
-    /**
-     * Method for canceled buy crypto logs
-     */
-    public function canceled(){
-        $page_title     = "Canceled Buy Crypto Logs";
-        $transactions   = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->orderBy('id','desc')->where('status',global_const()::STATUS_CANCEL)->get();
-
-        return view('admin.sections.crypto-logs.buy-crypto.cancel',compact(
-            'page_title',
-            'transactions'
-        ));
-    }
+    
 }

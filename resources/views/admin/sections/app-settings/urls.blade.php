@@ -30,7 +30,7 @@
                     <div class="col-xl-12 col-lg-12">
                         <div class="form-group">
                             @include('admin.components.form.input',[
-                                'label'             => "Title*",
+                                'label'             => __("Title")."*",
                                 'name'              => "url_title",
                                 'value'             => old('url_title',$app_settings->url_title),
                                 'attribute'         => "data-limit=255",
@@ -38,7 +38,7 @@
                         </div>
                         <div class="form-group">
                             @include('admin.components.form.input',[
-                                'label'             => "Android App URL*",
+                                'label'             => __("Android App URL")."*",
                                 'name'              => "android_url",
                                 'value'             => old('android_url',$app_settings->android_url),
                                 'attribute'         => "data-limit=255",
@@ -46,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             @include('admin.components.form.input',[
-                                'label'             => "iOS App URL",
+                                'label'             => __("iOS App URL"),
                                 'name'              => "iso_url",
                                 'value'             => old('iso_url',$app_settings->iso_url),
                                 'attribute'         => "data-limit=255",

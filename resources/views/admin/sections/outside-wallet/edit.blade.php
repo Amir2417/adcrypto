@@ -25,7 +25,6 @@
     <div class="card-body">
         <form class="card-form" action="{{ setRoute('admin.outside.wallet.update',$data->public_address) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            
             <div class="row justify-content-center mb-10-none">
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>{{ __("Select Currency") }}*</label>
@@ -45,14 +44,14 @@
                 </div>
                 <div class="col-xl-12 col-lg-12 form-group">
                     @include('admin.components.form.input',[
-                        'label'     => "Public Address*",
+                        'label'     => __("Public Address")."*",
                         'name'      => "public_address",
                         'value'     => old("public_address",$data->public_address),
                     ])
                 </div>
                 <div class="col-xl-12 col-lg-12 form-group">
                     @include('admin.components.form.input-text-rich',[
-                        'label'     => "Instruction*",
+                        'label'     => __("Instruction"),
                         'name'      => "desc",
                         'value'     => old("desc",$data->desc),
                     ])
@@ -69,7 +68,7 @@
                                     <div class="row add-row-wrapper align-items-end">
                                         <div class="col-xl-3 col-lg-3 form-group">
                                             @include('admin.components.form.input',[
-                                                'label'     => "Field Name*",
+                                                'label'     => __("Field Name")."*",
                                                 'name'      => "label[]",
                                                 'attribute' => "required",
                                                 'value'     => $item->label,
@@ -79,7 +78,7 @@
                                             @php
                                                 $selectOptions = ['text' => "Input Text", 'file' => "File", 'textarea' => "Textarea"];
                                             @endphp
-                                            <label>{{ __("Field Types*") }}</label>
+                                            <label>{{ __("Field Types") }}*</label>
                                             <select class="form--control nice-select field-input-type" name="input_type[]" data-old="{{ $item->type }}" data-show-db="true">
                                                 @foreach ($selectOptions as $key => $value)
                                                     <option value="{{ $key }}" {{ ($key == $item->type) ? "selected" : "" }}>{{ $value }}</option>
@@ -92,7 +91,7 @@
                                                 <div class="row">
                                                     <div class="col-xl-6 col-lg-6 form-group">
                                                         @include('admin.components.form.input',[
-                                                            'label'         => "Max File Size (mb)*",
+                                                            'label'         => __("Max File Size (mb)")."*",
                                                             'name'          => "file_max_size[]",
                                                             'type'          => "number",
                                                             'attribute'     => "required",
@@ -102,7 +101,7 @@
                                                     </div>
                                                     <div class="col-xl-6 col-lg-6 form-group">
                                                         @include('admin.components.form.input',[
-                                                            'label'         => "File Extension*",
+                                                            'label'         => __("File Extension")."*",
                                                             'name'          => "file_extensions[]",
                                                             'attribute'     => "required",
                                                             'value'         => old('file_extensions[]',implode(",",$item->validation->mimes)),
@@ -114,7 +113,7 @@
                                                 <div class="row">
                                                     <div class="col-xl-6 col-lg-6 form-group">
                                                         @include('admin.components.form.input',[
-                                                            'label'         => "Min Character*",
+                                                            'label'         => __("Min Character")."*",
                                                             'name'          => "min_char[]",
                                                             'type'          => "number",
                                                             'attribute'     => "required",
@@ -124,7 +123,7 @@
                                                     </div>
                                                     <div class="col-xl-6 col-lg-6 form-group">
                                                         @include('admin.components.form.input',[
-                                                            'label'         => "Max Character*",
+                                                            'label'         => __("Max Character")."*",
                                                             'name'          => "max_char[]",
                                                             'type'          => "number",
                                                             'attribute'     => "required",
@@ -138,9 +137,9 @@
     
                                         <div class="col-xl-2 col-lg-2 form-group">
                                             @include('admin.components.form.switcher',[
-                                                'label'     => "Field Necessity*",
+                                                'label'     => __("Field Necessity")."*",
                                                 'name'      => "field_necessity[]",
-                                                'options'   => ['Required' => 1,'Optional' => 0],
+                                                'options'   => [__('Required') => 1,__('Optional') => 0],
                                                 'value'     => old("field_necessity[]",$item->required),
                                             ])
                                         </div>
@@ -156,7 +155,7 @@
                 <div class="col-xl-12 col-lg-12 form-group">
                     @include('admin.components.button.form-btn',[
                         'class'         => "w-100 btn-loading",
-                        'text'          => "Submit",
+                        'text'          => __("Submit"),
                         'permission'    => "admin.outside.wallet.store"
                     ])
                 </div>

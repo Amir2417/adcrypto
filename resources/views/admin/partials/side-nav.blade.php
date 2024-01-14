@@ -178,6 +178,10 @@
                                         'route'     => "admin.users.email.unverified",
                                     ],
                                     [
+                                        'title'     => "KYC Unverified",
+                                        'route'     => "admin.users.kyc.unverified",
+                                    ],
+                                    [
                                         'title'     => __("All Users"),
                                         'route'     => "admin.users.index",
                                     ],
@@ -288,7 +292,11 @@
 
                     ]
                 ])
-
+                @include('admin.components.side-nav.link',[
+                    'route'     => 'admin.setup.kyc.index',
+                    'title'     => __("Setup KYC"),
+                    'icon'      => "menu-icon las la-clipboard-list",
+                ])
                 @if (admin_permission_by_name("admin.setup.sections.section"))
                     <li class="sidebar-menu-header">{{ __("Setup Web Content") }}</li>
                     @php
