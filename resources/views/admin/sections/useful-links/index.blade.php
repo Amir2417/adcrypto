@@ -13,7 +13,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Usefull Links")])
+    ], 'active' => __("Useful Links")])
 @endsection
 
 @section('content')
@@ -164,7 +164,7 @@
 
         var actionRoute =  "{{ setRoute('admin.useful.links.delete') }}";
         var target      = oldData.id;
-        var message     = `Are you sure to delete this link?`;
+        var message     = `{{ __("Are you sure to delete this link?") }}`;
 
         openDeleteModal(actionRoute,target,message);
     });

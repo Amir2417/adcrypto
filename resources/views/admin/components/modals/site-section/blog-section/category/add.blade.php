@@ -23,10 +23,10 @@
                                 <div class="tab-pane @if (get_default_language_code() == $item->code) fade show active @endif" id="modal-{{ $item->name }}" role="tabpanel" aria-labelledby="modal-{{$item->name}}-tab">
                                     <div class="col-xl-12 col-lg-12 form-group">
                                         @include('admin.components.form.input',[
-                                            'label'         => "Name*",
+                                            'label'         => __("Name")."*",
                                             'name'          => $item->code . "_name",
                                             'data_limit'    => 150,
-                                            'placeholder'   => "Write Name...",
+                                            'placeholder'   => __("Write Name")."...",
                                             'value'         => old($lang_code . "_name"),
                                         ])
                                     </div>
@@ -37,7 +37,7 @@
                             @include('admin.components.button.form-btn',[
                                 'class'         => "w-100 btn-loading",
                                 'permission'    => "admin.setup.sections.category.store",
-                                'text'          => "Add",
+                                'text'          => __("Add"),
                             ])
                         </div>
                     </div>

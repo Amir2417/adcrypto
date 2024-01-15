@@ -20,6 +20,9 @@ class ContactMessageController extends Controller
             'contact_requests'
         ));
     }
+    /**
+     * Method for reply
+     */
     public function reply(Request $request){
         $validator = Validator::make($request->all(),[
             'target'        => "required|integer|exists:contact_requests,id",

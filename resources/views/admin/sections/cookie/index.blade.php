@@ -28,7 +28,7 @@
                 @method("PUT")
                 <div class="row mb-10-none">
                     <div class="col-xl-10 col-lg-10 col-md-9 col-sm-8 form-group">
-                        <label>{{ __("Policy Link*") }}</label>
+                        <label>{{ __("Policy Link") }}*</label>
                         <div class="input-group append">
                             <span class="input-group-text">#</span>
                             <input type="text" class="form--control" name="link" value="{{ $site_cookie->value->link }}">
@@ -36,15 +36,15 @@
                     </div>
                     <div class="col-xl-2 col-lg-2 col-md-3 col-sm-4 form-group">
                         @include('admin.components.form.switcher',[
-                            'label'     => "Status*",
+                            'label'     => __("Status")."*",
                             'name'      => "status",
-                            'options'   => ["Enable" => 1, "Disabled" => 0],
+                            'options'   => [__("Enable") => 1, __("Disable") => 0],
                             'value'     => old('status',$site_cookie->value->status),
                         ])
                     </div>
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.form.input-text-rich',[
-                            'label'     => "Description*",
+                            'label'     => __("Description")."*",
                             'name'      => "desc",
                             'value'     => $site_cookie->value->desc,
                         ])
@@ -52,7 +52,7 @@
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Submit",
+                            'text'          => __("Submit"),
                             'permission'    => "admin.cookie.update"
                         ])
                     </div>

@@ -19,7 +19,7 @@ class UsefulLinkController extends Controller
      * Method for view the useful link page
      */
     public function index(){
-        $page_title     = "Usefull Links";
+        $page_title     = "Useful Links";
         $languages      = Language::get();
         $useful_links   = UsefulLink::get();
 
@@ -30,7 +30,10 @@ class UsefulLinkController extends Controller
         ));
     }
 
-    //store method
+    /**
+     * Method for useful link store
+     * @param Illuminate\Http\Request $request
+     */
     public function store(Request $request){
         $section_data['title']['language']  = $this->contentValidate($request,['title'     => 'required|string|max:255'],'link-add');
         if($section_data['title']['language'] instanceof RedirectResponse) {
@@ -67,16 +70,14 @@ class UsefulLinkController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Usefull link added successfully!']]);
+        return back()->with(['success' => ['Useful link added successfully!']]);
     }
-
     /**
      * Show the form for editing the specified resource.
      * @param object $request
      * @param array $basic_field_name
      * @return array $language_wise_data
      */
-
     public function edit($slug){
         $page_title    = "Edit Usefull Link";
         $useful_link  = UsefulLink::where('slug',$slug)->first();
@@ -107,7 +108,7 @@ class UsefulLinkController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return redirect()->route('admin.useful.links.index')->with(['success' => ['Usefull link updated successfully!']]);
+        return redirect()->route('admin.useful.links.index')->with(['success' => ['Useful link updated successfully!']]);
     }
     /**
      * Method for delete useful link page

@@ -22,7 +22,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Add Money")])
+    ], 'active' => __("Automatic Payment Method")])
 @endsection
 
 @section('content')
@@ -41,7 +41,7 @@
                 <div class="row mb-10-none">
                     <div class="col-xl-3 col-lg-3 form-group">
                         @include('admin.components.form.input-file',[
-                            'label'             => "Gateway Image*",
+                            'label'             => __("Gateway Image")."*",
                             'name'              => "image",
                             'class'             => "file-holder",
                             'old_files'         => $gateway->image,
@@ -57,10 +57,10 @@
                             {{-- Production/Sandbox Switcher --}}
                             <div class="col-12 col-md-6 form-group">
                                 @include('admin.components.form.switcher', [
-                                    'label'         => 'Gateway Environment',
+                                    'label'         => __('Gateway Environment'),
                                     'value'         => old('mode',$gateway->env),
                                     'name'          => "mode",
-                                    'options'       => ['Production' => payment_gateway_const()::ENV_PRODUCTION, 'Sandbox' => payment_gateway_const()::ENV_SANDBOX],
+                                    'options'       => [__('Production') => payment_gateway_const()::ENV_PRODUCTION, __('Sandbox') => payment_gateway_const()::ENV_SANDBOX],
                                 ])
                             </div>
 
@@ -70,32 +70,28 @@
                                     @include('admin.components.link.custom',[
                                         'href'          => setRoute('admin.crypto.assets.gateway.index', $gateway->alias),
                                         'permission'    => 'admin.crypto.assets.gateway.index',
-                                        'text'          => 'Crypto Assets',
+                                        'text'          => __('Crypto Assets'),
                                         'icon'          => 'las la-info-circle me-2',
                                         'class'         => 'btn--base',
                                     ])
                                 </div>
                             @endif
                         </div>
-
                     </div>
-
                     <div class="col-xl-3 col-lg-3 form-group">
                         @include('admin.components.payment-gateway.automatic.supported-currencies',compact('gateway'))
                     </div>
                 </div>
             </div>
         </div>
-
         @include('admin.components.payment-gateway.automatic.gateway-currency',compact('gateway'))
-
         <div class="custom-card mt-15">
             <div class="card-body">
                 <div class="row mb-10-none">
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Update",
+                            'text'          => __("Update"),
                             'permission'    => "admin.payment.gateway.update",
                         ])
                     </div>

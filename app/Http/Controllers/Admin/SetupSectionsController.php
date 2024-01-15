@@ -216,7 +216,7 @@ class SetupSectionsController extends Controller
 
         $validator  = Validator::make($request->all(),[
             'image'             => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
-            'button_image'             => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
+            'button_image'      => "nullable|image|mimes:jpg,png,svg,webp|max:10240",
             'button_link'       => "required|string|url|max:255",
         ]);
 
@@ -511,7 +511,7 @@ class SetupSectionsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Section Updated Successfully!']]);
+        return back()->with(['success' => ['Section updated successfully!']]);
      
     }
     /**
@@ -696,7 +696,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
     /**
@@ -894,7 +894,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
     /**
@@ -1184,7 +1184,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e) {
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
-        return back()->with(['success' => ['Section Updated Successfully!']]);
+        return back()->with(['success' => ['Section updated successfully!']]);
     }
     /**
      * Method for show newsLetter section page
@@ -1296,7 +1296,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
     /**
@@ -1542,7 +1542,7 @@ class SetupSectionsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Section Updated Successfully!']]);
+        return back()->with(['success' => ['Section updated successfully!']]);
      
     }
     /**
@@ -1764,7 +1764,7 @@ class SetupSectionsController extends Controller
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return back()->with(['success' => ['Section Updated Successfully!']]);
+        return back()->with(['success' => ['Section updated successfully!']]);
      
     }
     /**
@@ -1826,7 +1826,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
 /**
@@ -1888,7 +1888,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
     /**
@@ -1950,7 +1950,7 @@ class SetupSectionsController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
-        return back()->with( ['success' => ['Section Updated Successfully!']]);
+        return back()->with( ['success' => ['Section updated successfully!']]);
 
     }
     /**

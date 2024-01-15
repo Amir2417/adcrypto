@@ -29,7 +29,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("security Section")])
+    ], 'active' => __("Security Section")])
 @endsection
 
 @section('content')
@@ -70,7 +70,7 @@
 
                                         <div class="form-group">
                                             @include('admin.components.form.input',[
-                                                'label'     => __("Heading")."(For Separate Heading color use '|' sing to divide)"."*",
+                                                'label'     => __("Heading")."(".__('For Separate Heading color use '|' sing to divide').")"."*",
                                                 'name'      => $lang_code . "_heading",
                                                 'placeholder'=> __('Heading').'...',
                                                 'value'     => old($lang_code . "_heading",$data->value->language->$lang_code->heading ?? "")
@@ -96,7 +96,7 @@
         <div class="table-wrapper">
             <div class="table-header justify-content-end">
                 <div class="table-btn-area">
-                    <a href="#security-add" class="btn--base modal-btn"><i class="fas fa-plus me-1"></i> {{ __("Add security") }}</a>
+                    <a href="#security-add" class="btn--base modal-btn"><i class="fas fa-plus me-1"></i> {{ __("Add New Security") }}</a>
                 </div>
             </div>
             <div class="table-responsive">
@@ -181,7 +181,7 @@
             var oldData        = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute    = "{{ setRoute('admin.setup.sections.section.item.delete',$slug)}}";
             var target         = oldData.id;
-            var message        = `Are you sure to <strong>delete</strong> this item?`;
+            var message        = `{{ __("Are you sure to") }} <strong>{{ __("delete") }}</strong> {{ __("this item?") }}`;
 
             openDeleteModal(actionRoute,target,message);
         });

@@ -47,7 +47,7 @@
             <div class="row justify-content-center mb-10-none">
                 <div class="col-xl-4 col-lg-4 form-group">
                     @include('admin.components.form.input-file',[
-                        'label'             => "Image:",
+                        'label'             => __("Image"),
                         'name'              => "image",
                         'class'             => "file-holder",
                         'old_files_path'    => files_asset_path("site-section"),
@@ -72,7 +72,7 @@
                                     
                                     <div class="form-group">
                                         @include('admin.components.form.input',[
-                                            'label'         => "Title",
+                                            'label'         => __("Title"),
                                             'label_after'   => "*",
                                             'name'          => $item->code . "_title",
                                             'value'         => old($item->code . "_title",$blog->data->language->$lang_code->title ?? '')
@@ -81,7 +81,7 @@
                                     
                                     <div class="form-group">
                                         @include('admin.components.form.input-text-rich',[
-                                            'label'         => "Description",
+                                            'label'         => __("Description"),
                                             'label_after'   => "*",
                                             'name'          => $item->code . "_description",
                                             'value'         => old($item->code . "_description",$blog->data->language->$lang_code->description ?? '')
@@ -92,7 +92,7 @@
                                             $tags    = $blog->data->language->$lang_code->tags ?? [];
                                         @endphp
                                         <label>{{ __("Tags") }}<span>*</span></label>
-                                        <select name="{{ $item->code }}_tags[]" class="form-control select2-auto-tokenize"  multiple="multiple" data-placeholder="Add Tags">
+                                        <select name="{{ $item->code }}_tags[]" class="form-control select2-auto-tokenize"  multiple="multiple" data-placeholder="{{ __("Add Tags") }}">
                                             @foreach ($tags as $item)
                                                 <option value="{{ $item }}" selected>{{ $item }}</option>    
                                             @endforeach
@@ -103,7 +103,7 @@
                             <div class="form-group">
                                 <label>{{ __("Select Category*") }}</label>
                                 <select class="form--control select2-basic" name="category">
-                                    <option disabled selected>Select Category</option>
+                                    <option disabled selected>{{ __("Select Category") }}</option>
                                     @foreach ($category as $data)
                                         <option value="{{ $data->id }}" {{ $data->id ==  $blog->category_id ? 'selected' : ''}}>{{ $data->name->language->$app_local->name }}</option>
                                     @endforeach
@@ -116,7 +116,7 @@
                 <div class="col-xl-12 col-lg-12 form-group">
                     @include('admin.components.button.form-btn',[
                         'class'         => "w-100 btn-loading",
-                        'text'          => "Update",
+                        'text'          => __("Update"),
                         'permission'    => "admin.setup.sections.section.update"
                     ])
                 </div>

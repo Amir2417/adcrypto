@@ -22,14 +22,14 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Add Money")])
+    ], 'active' => __("Manual Payment Method Create")])
 @endsection
 
 @section('content')
     <form action="{{ setRoute('admin.payment.gateway.store',['payment-method','manual']) }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @include('admin.components.payment-gateway.manual.gateway-header',['title' => "Manual Add Money"])
+        @include('admin.components.payment-gateway.manual.gateway-header',['title' => "Manual Payment Method Create"])
 
         <div class="custom-card mt-15">
             <div class="card-body">
@@ -37,7 +37,7 @@
                     @include('admin.components.payment-gateway.manual.charges')
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.form.input-text-rich',[
-                            'label'     => "Instruction*",
+                            'label'     => __("Instruction")."*",
                             'name'      => "desc",
                             'value'     => old("desc"),
                         ])
@@ -50,7 +50,7 @@
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Add",
+                            'text'          => __("Add"),
                             'permission'    => "admin.payment.gateway.store",
                         ])
                     </div>
@@ -60,7 +60,3 @@
 
     </form>
 @endsection
-
-@push('script')
-
-@endpush

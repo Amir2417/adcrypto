@@ -81,7 +81,7 @@
                                         </div>
                                         <div class="form-group">
                                             @include('admin.components.form.input',[
-                                                'label'     => __("Heading")."(For Separate Heading color use '|' sing to divide)"."*",
+                                                'label'     => __("Heading")."(For color use '[]')"."*",
                                                 'name'      => $lang_code . "_heading",
                                                 'value'     => old($lang_code . "_heading",$data->value->language->$lang_code->heading ?? "")
                                             ])
@@ -106,7 +106,7 @@
                         </div>
                         <div class="form-group">
                             @include('admin.components.form.input',[
-                                'label'     => "Button Link*",
+                                'label'     => __("Button Link").'*',
                                 'name'      => "button_link",
                                 'value'     => old("button_link",$data->value->button_link ?? "")
                             ])
@@ -124,7 +124,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-    
-@endpush

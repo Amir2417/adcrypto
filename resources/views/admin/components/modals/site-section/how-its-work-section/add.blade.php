@@ -10,11 +10,9 @@
                     <div class="language-tab">
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                
                                 @foreach ($languages as $item)
                                     <button class="nav-link @if (get_default_language_code() == $item->code) active @endif" id="modal-{{$item->name}}-tab" data-bs-toggle="tab" data-bs-target="#modal-{{$item->name}}" type="button" role="tab" aria-controls="modal-{{ $item->name }}" aria-selected="true">{{ $item->name }}</button>
                                 @endforeach
-
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
@@ -26,14 +24,14 @@
                                 <div class="tab-pane @if (get_default_language_code() == $item->code) fade show active @endif" id="modal-{{ $item->name }}" role="tabpanel" aria-labelledby="modal-{{$item->name}}-tab">
                                     <div class="form-group">
                                         @include('admin.components.form.input',[
-                                            'label'     => "Title *",
+                                            'label'     => __("Title")."*",
                                             'name'      => $lang_code . "_item_title",
                                             'value'     => old($lang_code . "_item_title"),
                                         ])
                                     </div> 
                                     <div class="form-group">
                                         @include('admin.components.form.input',[
-                                            'label'     => "Heading *",
+                                            'label'     => __("Heading")."*",
                                             'name'      => $lang_code . "_item_heading",
                                             'value'     => old($lang_code . "_item_heading"),
                                         ])
@@ -44,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         @include('admin.components.form.input',[
-                            'label'     => "Icon *",
+                            'label'     => __("Icon")."*",
                             'name'      => "icon",
                             'class'     => "form--control icp icp-auto iconpicker-element iconpicker-input",
                             'value'     => old("icon",$data->value->icon ?? ""),

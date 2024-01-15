@@ -55,7 +55,7 @@
                                     @include('admin.components.form.switcher',[
                                         'name'        => 'status',
                                         'value'       => $item->status,
-                                        'options'     => ['Enable' => 1, 'Disable' => 0],
+                                        'options'     => [__('Enable') => 1, __('Disable') => 0],
                                         'onload'      => true,
                                         'data_target' => $item->id,
                                     ])
@@ -92,7 +92,7 @@
             var actionRoute = "{{ setRoute('admin.setup.sections.category.delete') }}";
             var target      = oldData.id;
             
-            var message     = `Are you sure to <span>delete</span> this category?`;
+            var message     = `{{ __("Are you sure to") }} <span>{{ __("delete") }}</span> {{ __("this category?") }}`;
             openDeleteModal(actionRoute,target,message);
         });
         

@@ -506,7 +506,7 @@ class PaymentGatewaysController extends Controller
      * Function for create new Manual Add Money Gateway
      */
     public function manualPaymentMethodCreate() {
-        $page_title = "Manual Payment Method";
+        $page_title = "Manual Payment Method Create";
         return view('admin.sections.payment-gateways.payment-method.manual.create',compact(
             'page_title',
         ));

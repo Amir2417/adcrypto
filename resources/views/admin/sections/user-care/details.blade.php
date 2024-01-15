@@ -238,10 +238,10 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
-                            'label'         => 'User Status',
+                            'label'         => __('User Status'),
                             'value'         => old('status',$user->status),
                             'name'          => "status",
-                            'options'       => ['Active' => 1, 'Banned' => 0],
+                            'options'       => [__('Active') => 1, __('Banned') => 0],
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
@@ -250,7 +250,7 @@
                             'label'         => 'Email Verification',
                             'value'         => old('email_verified',$user->email_verified),
                             'name'          => "email_verified",
-                            'options'       => ['Verified' => 1, 'Unverified' => 0],
+                            'options'       => [__('Verified') => 1, __('Unverified') => 0],
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
@@ -259,17 +259,17 @@
                             'label'     => '2FA Verification',
                             'value'     => old('two_factor_verified',$user->two_factor_verified),
                             'name'      => "two_factor_verified",
-                            'options'   => ['Verified' => 1, 'Unverified' => 0],
+                            'options'   => [__('Verified') => 1, __('Unverified') => 0],
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>
 
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
-                            'label'     => 'KYC Verification',
+                            'label'     => __('KYC Verification'),
                             'value'     => old('kyc_verified',$user->kyc_verified),
                             'name'      => "kyc_verified",
-                            'options'   => ['Verified' => 1, 'Unverified' => 0],
+                            'options'   => [__('Verified') => 1, __('Unverified') => 0],
                             'permission'    => "admin.users.details.update",
                         ])
                     </div>

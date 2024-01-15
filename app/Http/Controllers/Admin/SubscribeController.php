@@ -26,7 +26,9 @@ class SubscribeController extends Controller
             'subscribers'
         ));
     }
-
+    /**
+     * Method for send mail
+     */
     public function sendMail(Request $request) {
         $validator  = Validator::make($request->all(),[
             'subject'      => "required|string|max:255",

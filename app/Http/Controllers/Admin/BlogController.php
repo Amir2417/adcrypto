@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Validator;
 
 class BlogController extends Controller
 {
+    /**
+     * Method for blog create page
+     * @return view
+     */
     public function create(){
         $page_title = "New Blog Create ";
         $category   = BlogCategory::where('status',true)->get();
@@ -26,6 +30,10 @@ class BlogController extends Controller
             'languages'
         ));
     }
+    /**
+     * Method for blog store
+     * @param Illuminate\Http\Request $request
+     */
     public function store(Request $request) {
         $basic_field_name = [
             'title'         => "required|string|max:255",
@@ -73,7 +81,10 @@ class BlogController extends Controller
 
         return redirect()->route('admin.setup.sections.section','blog')->with(['success' => ['Blog created successfully!']]);
     }
-
+    /**
+     * Method for blog status update
+     * @param Illuminate\Http\Request $request
+     */
     public function statusUpdate(Request $request){
         $validator = Validator::make($request->all(), [
             'status'                    => 'required|boolean',
@@ -102,6 +113,10 @@ class BlogController extends Controller
         $success = ['success' => ['Blog status updated successfully!']];
         return Response::success($success, null, 200);
     }
+     /**
+     * Method for blog edit page
+     * @return view
+     */
     public function edit($slug){
         $blog           = Blog::where('slug',$slug)->first();
         if(!$blog) return back()->with(['error' => ['Blog Does not exists']]);
@@ -116,6 +131,10 @@ class BlogController extends Controller
             'languages'
         ));
     }
+     /**
+     * Method for blog update
+     * @param Illuminate\Http\Request $request
+     */
     public function update(Request $request,$slug){
         $blog            = Blog::where('slug',$slug)->first();
         $basic_field_name   = [
@@ -147,6 +166,10 @@ class BlogController extends Controller
         }
         return redirect()->route('admin.setup.sections.section','blog')->with(['success' => ['Blog Data Updated Successfully.']]);
     }
+     /**
+     * Method for blog delete
+     * @param Illuminate\Http\Request $request
+     */
     public function delete(Request $request){
         
         $request->validate([

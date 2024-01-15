@@ -29,7 +29,7 @@
             'name'  => __("Dashboard"),
             'url'   => setRoute("admin.dashboard"),
         ]
-    ], 'active' => __("Usefull Links")])
+    ], 'active' => __("Useful Links")])
 @endsection
 
 @section('content')
@@ -81,7 +81,7 @@
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Update",
+                            'text'          => __("Update"),
                             'permission'    => "admin.setup.sections.section.update"
                         ])
                     </div>
@@ -90,7 +90,3 @@
         </div>
     </div>
 @endsection
-
-@push('script')
-
-@endpush

@@ -20,26 +20,26 @@
 @section('content')
     <div class="table-area">
         <div class="table-wrapper">
-            @includeUnless($languages->where("status",1)->count(),'admin.components.alerts.warning',['message' => "There is no default language in your system. System will automatically select English as a default language."])
+            @includeUnless($languages->where("status",1)->count(),'admin.components.alerts.warning',['message' => __("There is no default language in your system. System will automatically select English as a default language.")])
             <div class="table-header">
                 <h5 class="title">{{ __($page_title) }}</h5>
                 <div class="table-btn-area">
                     @include('admin.components.link.add-default',[
                         'href'          => "#language-add",
                         'class'         => "py-2 px-4 modal-btn",
-                        'text'          => "Add New",
+                        'text'          => __("Add New"),
                         'permission'    => "admin.languages.store",
                     ])
                     @include('admin.components.link.custom',[
                         'href'          => "#language-import",
                         'class'         => "btn--base py-2 px-4 bg--info modal-btn",
                         'icon'          => "fas fa-upload me-1",
-                        'text'          => "Import",
+                        'text'          => __("Import"),
                         'permission'    => "admin.languages.import",
                     ])
                     @if (language_file_exists())
                         @include('admin.components.link.custom',[
-                            'text'          => "Download",
+                            'text'          => __("Download"),
                             'icon'          => "fas fa-download me-1",
                             'permission'    => "admin.languages.download",
                             'href'          => setRoute('admin.languages.download'),
@@ -52,9 +52,9 @@
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Code</th>
-                            <th>Status</th>
+                            <th>{{ __("Name") }}</th>
+                            <th>{{ __("Code") }}</th>
+                            <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -67,7 +67,7 @@
                                     @include('admin.components.form.switcher',[
                                         'name'          => 'status',
                                         'value'         => $item->status,
-                                        'options'       => ['Default' => 1,'Selectable' => 0],
+                                        'options'       => [__('Default') => 1,__('Selectable') => 0],
                                         'onload'     => true,
                                         'data_target'   => $item->id,
                                     ])

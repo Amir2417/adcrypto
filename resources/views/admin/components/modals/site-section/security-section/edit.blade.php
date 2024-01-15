@@ -46,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         @include('admin.components.form.input',[
-                            'label'     => "Icon*",
+                            'label'     => __("Icon")."*",
                             'name'      => "icon_edit",
                             'class'     => "form--control icp icp-auto iconpicker-element iconpicker-input",
                             'value'     => old("icon_edit",$data->value->items->icon ?? "")

@@ -28,7 +28,7 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Key</th>
+                            <th>{{ __("Key") }}</th>
                             <th>{{ ucwords($language->name) }}</th>
                             <th></th>
                         </tr>
@@ -71,14 +71,14 @@
                     <div class="row mb-10-none mt-2">
                         <div class="col-xl-6 col-lg-6 form-group">
                             @include('admin.components.form.input',[
-                                'label'         => 'Language Name*',
+                                'label'         => __('Language Name')."*",
                                 'name'          => 'name',
                                 'value'         => old('name')
                             ])
                         </div>
                         <div class="col-xl-6 col-lg-6 form-group">
                             @include('admin.components.form.input',[
-                                'label'         => 'Language Code*',
+                                'label'         => __('Language Code')."*",
                                 'name'          => 'code',
                                 'value'         => old('code')
                             ])

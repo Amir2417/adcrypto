@@ -19,7 +19,7 @@
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
                             @include('admin.components.form.input-text-rich',[
-                                'label'         => __("Details")."*",
+                                'label'         => __("Message")."*",
                                 'name'          => "message",
                                 'value'         => old('message'),
                             ])

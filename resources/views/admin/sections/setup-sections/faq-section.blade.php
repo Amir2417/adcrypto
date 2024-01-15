@@ -70,7 +70,7 @@
 
                                         <div class="form-group">
                                             @include('admin.components.form.input',[
-                                                'label'     => __("Heading")."(For Separate Heading color use '|' sing to divide)"."*",
+                                                'label'     => __("Heading")."(".__('For Separate Heading color use '|' sing to divide').")"."*",
                                                 'name'      => $lang_code . "_heading",
                                                 'placeholder'=> __('Heading').'...',
                                                 'value'     => old($lang_code . "_heading",$data->value->language->$lang_code->heading ?? "")
@@ -84,7 +84,7 @@
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Update",
+                            'text'          => __("Update"),
                             'permission'    => "admin.setup.sections.section.update"
                         ])
                     </div>
@@ -177,7 +177,7 @@
             var oldData        = JSON.parse($(this).parents("tr").attr("data-item"));
             var actionRoute    = "{{ setRoute('admin.setup.sections.section.item.delete',$slug)}}";
             var target         = oldData.id;
-            var message        = `Are you sure to <strong>delete</strong> this item?`;
+            var message        = `{{ __("Are you sure to") }} <strong>{{ __("delete") }}</strong> {{ __("this item?") }}`;
 
             openDeleteModal(actionRoute,target,message);
         });

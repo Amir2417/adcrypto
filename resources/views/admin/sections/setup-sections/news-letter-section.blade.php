@@ -85,7 +85,7 @@
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.button.form-btn',[
                             'class'         => "w-100 btn-loading",
-                            'text'          => "Submit",
+                            'text'          => __("Submit"),
                             'permission'    => "admin.setup.sections.section.update"
                         ])
                     </div>

@@ -178,7 +178,7 @@
                                         'route'     => "admin.users.email.unverified",
                                     ],
                                     [
-                                        'title'     => "KYC Unverified",
+                                        'title'     => __("KYC Unverified"),
                                         'route'     => "admin.users.kyc.unverified",
                                     ],
                                     [

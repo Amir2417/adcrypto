@@ -66,7 +66,7 @@
                                     <div class="tab-pane @if (get_default_language_code() == $item->code) fade show active @endif" id="{{ $item->name }}" role="tabpanel" aria-labelledby="english-tab">
                                         <div class="form-group">
                                             @include('admin.components.form.input',[
-                                                'label'         => "Description",
+                                                'label'         => __("Description"),
                                                 'label_after'   => "*",
                                                 'name'          => $item->code . "_description",
                                                 'value'         => old($item->code . "_description",$data->value->footer->language->$lang_code->description ?? "")
@@ -94,7 +94,7 @@
                                             <div class="row align-items-end">
                                                 <div class="col-xl-3 col-lg-3 form-group">
                                                     @include('admin.components.form.input',[
-                                                        'label'         => "Icon*",
+                                                        'label'         => __("Icon").'*',
                                                         'name'          => "icon[]",
                                                         'class'         => "form--control icp icp-auto iconpicker-element iconpicker-input",
                                                         'value'         => $item->icon ?? "",
@@ -102,7 +102,7 @@
                                                 </div>
                                                 <div class="col-xl-8 col-lg-8 form-group">
                                                     @include('admin.components.form.input',[
-                                                        'label'         => "Link*",
+                                                        'label'         => __("Link").'*',
                                                         'name'          => "link[]",
                                                         'value'         => $item->link ?? "",
                                                     ])
@@ -115,14 +115,14 @@
                                             <div class="row align-items-end">
                                                 <div class="col-xl-3 col-lg-3 form-group">
                                                     @include('admin.components.form.input',[
-                                                        'label'         => "Icon*",
+                                                        'label'         => __("Icon").'*',
                                                         'name'          => "icon[]",
                                                         'class'         => "form--control icp icp-auto iconpicker-element iconpicker-input",
                                                     ])
                                                 </div>
                                                 <div class="col-xl-8 col-lg-8 form-group">
                                                     @include('admin.components.form.input',[
-                                                        'label'         => "Link*",
+                                                        'label'         => __("Link").'*',
                                                         'name'          => "link[]",
                                                     ])
                                                 </div>
@@ -138,7 +138,7 @@
                         <div class="col-xl-12 col-lg-12 form-group">
                             @include('admin.components.button.form-btn',[
                                 'class'         => "w-100 btn-loading",
-                                'text'          => "Update",
+                                'text'          => __("Update"),
                                 'permission'    => "admin.setup.sections.section.update"
                             ])
                         </div>

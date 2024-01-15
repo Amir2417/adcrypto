@@ -20,7 +20,7 @@
 @section('content')
     <div class="custom-card">
         <div class="card-header">
-            <h6 class="title">{{ __("App Urls") }}</h6>
+            <h6 class="title">{{ __("App URLs") }}</h6>
         </div>
         <div class="card-body">
             <form class="card-form" method="POST" action="{{ setRoute('admin.app.settings.urls.update') }}">

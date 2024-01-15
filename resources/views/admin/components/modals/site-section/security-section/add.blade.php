@@ -44,7 +44,7 @@
                     </div>
                     <div class="col-xl-12 col-lg-12 form-group">
                         @include('admin.components.form.input',[
-                            'label'     => "Icon*",
+                            'label'     => __("Icon")."*",
                             'name'      => "icon",
                             'class'     => "form--control icp icp-auto iconpicker-element iconpicker-input",
                             'value'     => old("icon",$data->value->icon ?? ""),
