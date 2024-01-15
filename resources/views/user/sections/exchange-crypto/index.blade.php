@@ -194,7 +194,7 @@
             var percentChargeCalc   = (amount / 100) * percentCharge;
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
 
-            $(".charges").html("Network Charge :" + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
+            $(".charges").html("Network Fees :" + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
         }
         
     </script>
