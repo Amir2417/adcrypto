@@ -59,9 +59,9 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('redirect/form/{gateway}', 'redirectUsingHTMLForm')->name('payment.redirect.form')->withoutMiddleware(['auth','verification.guard','user.google.two.factor']);
 
 
-        //paypal
-        Route::match('get','success/response/{gateway}','success')->name('payment.success');
-        Route::match('post',"cancel/response/{gateway}",'cancel')->name('payment.cancel');
+
+        Route::get('success/response/{gateway}','success')->name('payment.success');
+        Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
         Route::post("callback/response/{gateway}",'callback')->name('payment.callback')->withoutMiddleware(['web','auth','verification.guard','user.google.two.factor']);
     });
 

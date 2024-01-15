@@ -32,7 +32,7 @@ class WalletController extends Controller
         $wallet         = UserWallet::auth()->with(['currency'])->where('public_address',$public_address)->first();
         if(!$wallet) return back()->with(['error' => ['Wallet not found!']]);
         $qr_code        = generateQr($wallet->public_address);
-        
+       
         $get_total_networks     = CurrencyHasNetwork::where('currency_id',$wallet->currency_id)->pluck('network_id');
         $network_names          = Network::whereIn('id',$get_total_networks)->pluck('name');
         
