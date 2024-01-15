@@ -29,7 +29,7 @@
                         @foreach (@$download_app->value->items ?? [] as $item)
                             <a href="{{ $item->link }}" class="app-btn">
                                 <div class="content">
-                                    <h5 class="title">{{ $item->language->$app_local->item_title }}</h5>
+                                    <h5 class="title">{{ $item->language->$app_local->item_title ?? ''}}</h5>
                                 </div>
                                 <div class="icon">
                                     <img src="{{ get_image($item->image , 'site-section') }}" alt="element">

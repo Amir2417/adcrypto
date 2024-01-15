@@ -1,9 +1,4 @@
 @extends('user.layouts.master')
-
-@push('css')
-    
-@endpush
-
 @section('breadcrumb')
     @include('user.components.breadcrumb',['breadcrumbs' => [
         [
@@ -12,7 +7,6 @@
         ]
     ], 'active' => __("Wallet Details")])
 @endsection
-
 @section('content')
 
 <div class="body-wrapper">
@@ -38,7 +32,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <div class="qr-code-thumb two text-center">
-                                    @dd($qr_code)
+                                    
                                     <img class="mx-auto" src="{{ $qr_code }}">
                                 </div>
                             </div>
@@ -51,7 +45,7 @@
                                 <div class="dashbord-item-details-list-wrapper">
                                     <h5 class="title">{{ __("Available Network") }}</h5>
                                     <ul class="dashbord-item-details-list">
-                                        @foreach ($network_names as $item)
+                                        @foreach ($network_names ?? [] as $item)
                                             <li>{{ __("Netwok Name") }} <span>{{ $item ?? '' }}</span></li>
                                         @endforeach
                                     </ul>
@@ -64,7 +58,6 @@
         </div>
     </div>
 </div>
-
 @endsection
 
 @push('script')

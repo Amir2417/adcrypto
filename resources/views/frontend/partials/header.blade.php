@@ -27,7 +27,7 @@
                                     <li><a href="{{ url($item->url) }}" class=" @if($current_url == url($item->url)) active @endif ">{{ __($title) }}</a></li>
                                 @endforeach
                             </ul>
-                            <div class="language-select">
+                            <div class="header-language">
                                 @php
                                     $__current_local = session("local") ?? get_default_language_code();
                                 @endphp

@@ -1617,3 +1617,7 @@ function get_api_languages(){
     return $lang;
 }
 
+function get_default_language_dir() {
+    return session()->get('local_dir') ?? "ltr";
+}
+

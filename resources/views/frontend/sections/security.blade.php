@@ -29,8 +29,8 @@
                                 <i class="{{ $item->icon }}"></i>
                             </div>
                             <div class="security-content">
-                                <h3 class="title">{{ $item->language->$app_local->item_title }}</h3>
-                                <p>{{ $item->language->$app_local->item_heading }}</p>
+                                <h3 class="title">{{ $item->language->$app_local->item_title ?? '' }}</h3>
+                                <p>{{ $item->language->$app_local->item_heading ?? '' }}</p>
                             </div>
                         </div>
                     </div>
