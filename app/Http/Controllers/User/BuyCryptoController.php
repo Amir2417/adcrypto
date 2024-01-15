@@ -116,9 +116,10 @@ class BuyCryptoController extends Controller
                 return back()->with(['error' => ['Please follow the transaction limit.']]);
             }
             $fixed_charge   = $payment_gateway_currency->fixed_charge;
-            $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
+            $convert_amount = $amount * $rate;
+            $percent_charge = ($convert_amount / 100) * $payment_gateway_currency->percent_charge;
             $total_charge   = $fixed_charge + $percent_charge;
-            $payable_amount = ($amount * $rate) + $total_charge;
+            $payable_amount = $convert_amount + $total_charge;
             
             $validated['identifier']    = Str::uuid();
             $data                       = [

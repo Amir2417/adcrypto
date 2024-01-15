@@ -47,6 +47,8 @@
                                             <input type="hidden" class="payment-method-code">
                                             <input type="hidden" class="payment-method-min-amount">
                                             <input type="hidden" class="payment-method-max-amount">
+                                            <input type="hidden" class="payment-method-fixed-charge">
+                                            <input type="hidden" class="payment-method-percent-charge">
                                             <img src="{{ get_image(@$first_currency->flag , 'currency-flag') }}" alt="flag" class="custom-flag">
                                             <span class="custom-currency">{{ @$first_currency->code }}</span>
                                         </div>
@@ -87,7 +89,7 @@
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
-                                    <input type="text" class="form--control number-input" name="amount" placeholder="{{ __("Enter Amount") }}...">
+                                    <input type="text" class="form--control number-input amount" name="amount" placeholder="{{ __("Enter Amount") }}...">
                                     <div class="input-group-text currency-code"></div>
                                 </div>
                                 <code class="d-block mt-2 min-amount"></code>
@@ -111,6 +113,7 @@
                                 @endforeach
                                 </select>
                                 <code class="d-block mt-2 exchange-rate"></code>
+                                <code class="d-block mt-2 charge"></code>
                             </div>
                         </div>
                         <div class="col-xl-12 col-lg-12">
@@ -183,8 +186,10 @@
         var paymentMethodRate      = $('.payment-method-rate').val();
         var paymentMinAmount       = $('.payment-method-min-amount').val();
         var paymentMaxAmount       = $('.payment-method-max-amount').val();
+        var paymentFixedCharge     = $('.payment-method-fixed-charge').val();
+        var paymentPercentCharge   = $('.payment-method-percent-charge').val();
 
-        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentFixedCharge,paymentPercentCharge,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
 
     });
 
@@ -219,21 +224,30 @@
     $('select[name=payment_method]').on('change',function(){
         var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
         var paymentMaxAmount    = $("select[name=payment_method] :selected").attr("data-max_amount");
+        var paymentFixedCharge  = $("select[name=payment_method] :selected").attr("data-fixed_charge");
+        var paymentPercentCharge= $("select[name=payment_method] :selected").attr("data-percent_charge");
         var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
         var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
         var currencyRate        = $('.currency-rate').val();
         var currencyCode        = $('.currency-code').text();
         
-        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentFixedCharge,paymentPercentCharge,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });
 
-    function calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode){
+    function calculation(paymentMinAmount,paymentMaxAmount,paymentFixedCharge,paymentPercentCharge,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode){
         var minAmount           = parseFloat(currencyRate) / parseFloat(paymentMethodRate);
         var totalMinAmount      = parseFloat(paymentMinAmount) * parseFloat(minAmount);
         var totalMaxAmount      = parseFloat(paymentMaxAmount) * parseFloat(minAmount);
-        
+        var sendingAmount       = $('.amount').val();
+        var rate                = parseFloat(paymentMethodRate) / parseFloat(currencyRate);
+        var amount              = sendingAmount * rate;
+        var fixedCharge         = parseFloat(paymentFixedCharge);
+        var percentCharge       = (amount / 100) * parseFloat(paymentPercentCharge);
+        var totalCharge         = parseFloat(fixedCharge) + parseFloat(percentCharge);
+
         $('.min-amount').text('Min Amount :' + totalMinAmount.toFixed(10) + " " + currencyCode);
         $('.max-amount').text('Max Amount :' + totalMaxAmount.toFixed(10) + " " + currencyCode);
+        $('.charge').text('Network Fees :' + totalCharge.toFixed(10) + " " + paymentMethodCode);
 
         var exchangeRate        = parseFloat(paymentMethodRate) / parseFloat(currencyRate);
         $('.exchange-rate').text("Rate :" + " " + "1" + " " + currencyCode + " " + "=" + " " + exchangeRate.toFixed(10) + " " + paymentMethodCode);
@@ -241,6 +255,8 @@
         $('.payment-method-rate').val(paymentMethodRate);
         $('.payment-method-min-amount').val(paymentMinAmount);
         $('.payment-method-max-amount').val(paymentMaxAmount);
+        $('.payment-method-fixed-charge').val(fixedCharge);
+        $('.payment-method-percent-charge').val(percentCharge);
         $('.currency-rate').val(currencyRate);
         $('.currency-code').text(currencyCode);
     }
@@ -262,14 +278,28 @@
 
         var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
         var paymentMaxAmount    = $("select[name=payment_method] :selected").attr("data-max_amount");
+        var paymentFixedCharge  = $("select[name=payment_method] :selected").attr("data-fixed_charge");
+        var paymentPercentCharge= $("select[name=payment_method] :selected").attr("data-percent_charge");
         var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
         var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
         var currencyRate        = data.rate;
         
         
-        calculation(paymentMinAmount,paymentMaxAmount,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+        calculation(paymentMinAmount,paymentMaxAmount,paymentFixedCharge,paymentPercentCharge,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
     });
-
+    //amount
+    $('.amount').keyup(function(){
+        var paymentMinAmount    = $("select[name=payment_method] :selected").attr("data-min_amount");
+        var paymentMaxAmount    = $("select[name=payment_method] :selected").attr("data-max_amount");
+        var paymentFixedCharge  = $("select[name=payment_method] :selected").attr("data-fixed_charge");
+        var paymentPercentCharge= $("select[name=payment_method] :selected").attr("data-percent_charge");
+        var paymentMethodRate   = $("select[name=payment_method] :selected").attr("data-rate");
+        var paymentMethodCode   = $("select[name=payment_method] :selected").attr("data-currency");
+        var currencyRate        = $('.currency-rate').val();
+        var currencyCode        = $('.currency-code').text();
+        
+        calculation(paymentMinAmount,paymentMaxAmount,paymentFixedCharge,paymentPercentCharge,paymentMethodRate,paymentMethodCode,currencyRate,currencyCode);
+    });
 
 </script>
 @endpush
