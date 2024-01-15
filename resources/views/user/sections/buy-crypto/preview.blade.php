@@ -122,6 +122,24 @@
                                 <div class="preview-list-left">
                                     <div class="preview-list-user-wrapper">
                                         <div class="preview-list-user-icon">
+                                            <i class="las la-money-check"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span>{{ __("Convert Amount") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="preview-list-right">
+                                    @php
+                                        $amount     = $data->data->amount * $data->data->exchange_rate;
+                                    @endphp
+                                    <span class="text--success">{{ get_amount($amount,$data->data->wallet->code) ?? '' }}</span>
+                                </div>
+                            </div>
+                            <div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
                                             <i class="las la-exchange-alt"></i>
                                         </div>
                                         <div class="preview-list-user-content">
