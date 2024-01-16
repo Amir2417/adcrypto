@@ -113,7 +113,7 @@ class ExchangeCryptoController extends Controller
             return Response::error(['Please follow the transaction limit!'],[],404);
         }
         $charge_rate    = $send_wallet->currency->rate / $send_wallet->currency->rate;
-        $fixed_charge   = $transaction_fees->fixed_charge * $charge_rate;
+        $fixed_charge   = $transaction_fees->fixed_charge * $sender_rate;
         $percent_charge = ($send_amount / 100) * $transaction_fees->percent_charge;
         
         $total_charge   = $fixed_charge + $percent_charge;

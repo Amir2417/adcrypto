@@ -55,6 +55,9 @@ class ExchangeCryptoController extends Controller
         $receiver_wallet            = $validated['receiver_currency'];
         $validated['identifier']    = Str::uuid();
 
+        if($sender_wallet == $receiver_wallet ){
+            return back()->with(['error' => ['You cannot exchange crypto using the same wallet']]);
+        }
         $send_wallet        = UserWallet::auth()->whereHas("currency",function($q) use ($sender_wallet) {
             $q->where("id",$sender_wallet)->active();
         })->active()->first();
@@ -69,7 +72,7 @@ class ExchangeCryptoController extends Controller
         $receive_wallet     = UserWallet::auth()->whereHas("currency",function($q) use ($receiver_wallet) {
             $q->where("id",$receiver_wallet)->active();
         })->active()->first();
-
+        
         if(!$receive_wallet){
             return back()->with(['error' => ['Receiver Wallet not found!']]);
         }
@@ -88,7 +91,7 @@ class ExchangeCryptoController extends Controller
             return back()->with(['error' => ['Please follow the transaction limit.']]);
         }
         $charge_rate    = $send_wallet->currency->rate / $send_wallet->currency->rate;
-        $fixed_charge   = $transaction_fees->fixed_charge * $charge_rate;
+        $fixed_charge   = $transaction_fees->fixed_charge * $sender_rate;
         $percent_charge = ($send_amount / 100) * $transaction_fees->percent_charge;
         
         $total_charge   = $fixed_charge + $percent_charge;

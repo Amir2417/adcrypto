@@ -190,7 +190,7 @@
             var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
             var percentCharge       = '{{ $transaction_fees->percent_charge }}';
             var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
-            var fixedChargeCalc     = parseFloat(fixedCharge) * exchangeRate;
+            var fixedChargeCalc     = parseFloat(fixedCharge) * senderRate;
             var percentChargeCalc   = (amount / 100) * percentCharge;
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
 
