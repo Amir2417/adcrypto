@@ -74,6 +74,8 @@ class WithdrawCryptoController extends Controller
         $sender_wallet      = UserWallet::with(['currency'])->where('id',$validated['sender_wallet'])->first();
         if(!$sender_wallet) return back()->with(['error' => ['Wallet not found']]);
 
+        $user               = UserWallet::auth()->where('public_address',$validated['wallet_address'])->first();
+        if($user) return back()->with(['error' => ['Can\'t withdraw/request to your own']]);
         if($amount > $sender_wallet->balance){
             return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }

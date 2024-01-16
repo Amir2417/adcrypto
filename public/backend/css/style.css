@@ -1883,12 +1883,12 @@ input::placeholder, textarea::placeholder {
   color: #343a40;
 }
 
-textarea {
+/* textarea {
   display: block;
   width: 100%;
   display: block;
   min-height: 220px;
-}
+} */
 
 input,
 select,
@@ -5998,5 +5998,8 @@ textPath {
 }
 .transaction-area .content .list li + li {
   margin-top: 15px;
+}
+.custom-inner-card .select2-selection--single{
+  background-color: #ffffff !important;
 }
 /* ERROR PAGE CODE END */
