@@ -31,7 +31,7 @@ class ExchangeCryptoLogController extends Controller
         ));
     }
     /** 
-    * Method for search buy crypto log  
+    * Method for search exchange crypto log  
     */
     public function search(Request $request) {
         $validator = Validator::make($request->all(),[

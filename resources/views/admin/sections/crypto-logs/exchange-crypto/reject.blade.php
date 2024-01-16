@@ -24,7 +24,7 @@
                 <h5 class="title">{{ ("Rejected Exchange Crypto Logs") }}</h5>
                 <div class="table-btn-area">
                     @include('admin.components.search-input',[
-                        'name'  => 'buy_crypto_search',
+                        'name'  => 'exchange_crypto_search',
                     ])
                 </div>
             </div>

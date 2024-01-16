@@ -31,7 +31,7 @@ class SellCryptoLogController extends Controller
         ));
     }
     /** 
-    * Method for search buy crypto log  
+    * Method for search sell crypto log  
     */
     public function search(Request $request) {
         $validator = Validator::make($request->all(),[

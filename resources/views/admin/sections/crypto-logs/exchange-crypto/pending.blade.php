@@ -24,7 +24,7 @@
                 <h5 class="title">{{ ("Prending Exchange Crypto Logs") }}</h5>
                 <div class="table-btn-area">
                     @include('admin.components.search-input',[
-                        'name'  => 'buy_crypto_search',
+                        'name'  => 'exchange_crypto_search',
                     ])
                 </div>
             </div>
@@ -32,6 +32,7 @@
                 @include('admin.components.data-table.exchange-crypto-table',[
                     'data'  => $transactions
                 ])
+            </div>
         </div>
     </div>
 @endsection
