@@ -24,7 +24,7 @@
                         </div>
                         <div class="col-xl-12 col-lg-12 form-group">
                             @include('admin.components.form.input-file',[
-                                'label'     => "Language File (.xlsx, .csv)"."*",
+                                'label'     => __("Language File (.xlsx, .csv)")."*",
                                 'name'      => "file",
                                 'class'     => "form--control",
                                 'accept'    => ".csv,.xlsx",

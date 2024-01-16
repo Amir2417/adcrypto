@@ -676,6 +676,7 @@ class PaymentGateway {
     public function requestIsApiUser() {
         $request_source = request()->get('r-source');
         if($request_source != null && $request_source == PaymentGatewayConst::APP) return true;
+        if(request()->routeIs('api.*')) return true;
         return false;
     }
 

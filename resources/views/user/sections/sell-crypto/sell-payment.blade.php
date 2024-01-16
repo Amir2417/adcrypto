@@ -27,7 +27,7 @@
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <div class="qr-code-thumb text-center">
-                                    <img class="mx-auto" src="{{ $qr_code }}">
+                                    {{ $qr_code }}
                                 </div>
                             </div>
                             <input type="hidden" name="slug" value="{{ $outside_wallet_address->slug }}">

@@ -25,26 +25,27 @@ class BasicSettingsSeeder extends Seeder
             'user_registration' => 1,
             'agree_policy'      => 1,
             'broadcast_config'  => [
-                "method" => "pusher", 
-                "app_id" => "1574360", 
-                "primary_key" => "971ccaa6176db78407bf", 
-                "secret_key" => "a30a6f1a61b97eb8225a", 
-                "cluster" => "ap2" 
+                "method"        => "pusher", 
+                "app_id"        => "1574360", 
+                "primary_key"   => "971ccaa6176db78407bf", 
+                "secret_key"    => "a30a6f1a61b97eb8225a", 
+                "cluster"       => "ap2" 
             ],
             'mail_config'       => [
-                "method" => "smtp", 
-                "host" => "appdevs.net",
-                "port" => "465", 
-                "encryption" => "ssl",
-                "username" => "system@appdevs.net",
-                "password" => "QP2fsLk?80Ac",
-                "from" => "system@appdevs.net", 
-                "app_name" => "AdCrypto",
+                "method"        => "smtp", 
+                "host"          => "appdevs.net",
+                "port"          => "465", 
+                "encryption"    => "ssl",
+                "username"      => "system@appdevs.net",
+                "password"      => "QP2fsLk?80Ac",
+                "from"          => "system@appdevs.net", 
+                "mail_address"  => "system@appdevs.net", 
+                "app_name"      => "AdCrypto",
             ],
             'push_notification_config'  => [
-                "method" => "pusher", 
-                "instance_id" => "fd7360fa-4df7-43b9-b1b5-5a40002250a1", 
-                "primary_key" => "6EEDE8A79C61800340A87C89887AD14533A712E3AA087203423BF01569B13845"
+                "method"                => "pusher", 
+                "instance_id"           => "fd7360fa-4df7-43b9-b1b5-5a40002250a1", 
+                "primary_key"           => "6EEDE8A79C61800340A87C89887AD14533A712E3AA087203423BF01569B13845"
             ],
             'email_verification'    => true,
             'email_notification'    => true,

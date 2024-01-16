@@ -25,6 +25,7 @@ use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Models\Admin\AdminNotification;
 
 use App\Providers\Admin\CurrencyProvider;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Providers\Admin\BasicSettingsProvider;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\User\Auth\SendAuthorizationCode;
@@ -1551,7 +1552,7 @@ function google_2fa_verify($secret_key,$code) {
 
 function generateQr($val)
 {
-    return "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=$val&choe=UTF-8&chf=bg,s,FFFFFFFF";
+    return QrCode::size(200)->generate($val);;
 }
 
 function get_amount($amount, $currency = null, $precision = "double")

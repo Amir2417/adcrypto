@@ -66,7 +66,7 @@
                                 'label'         => __('Option')."*",
                                 'name'          => 'option',
                                 'value'         => old('option','optional'),
-                                'options'       => ['Optional' => 'optional','Default' => 'default'],
+                                'options'       => [__('Optional') => 'optional',__('Default') => 'default'],
                             ])
                         </div>
 

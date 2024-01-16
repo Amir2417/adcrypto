@@ -5774,6 +5774,29 @@ option {
   border: 1px solid #ffffff;
   color: #ffffff;
 }
+.white-popup{
+  background: var(--primary-color);
+}
+.white-popup .card{
+  background: var(--primary-color);
+}
+.mfp-close-btn-in .mfp-close {
+  color: #ddd;
+}
+.header-language {
+  margin-right: 15px;
+}
+.header-language .nice-select {
+  background-color: #142B57;
+  border: none !important;
+  height: 40px;
+  line-height: 40px;
+  padding-left: 18px;
+}
+.header-language .nice-select .current {
+  color: #ffffff;
+  font-weight: 600;
+}
 
 /* RTL */
 .rtl{

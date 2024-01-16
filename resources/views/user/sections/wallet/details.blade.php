@@ -33,7 +33,7 @@
                             <div class="col-xl-12 col-lg-12 form-group">
                                 <div class="qr-code-thumb two text-center">
                                     
-                                    <img class="mx-auto" src="{{ $qr_code }}">
+                                    {!! $qr_code !!}
                                 </div>
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group paste-form text-center mb-0">

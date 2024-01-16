@@ -120,13 +120,13 @@
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
-                                <h6 class="title">{{ __("Total Fees & Charges") }}</h6>
+                                <h6 class="title">{{ __("Total Buy Crypto Transactions") }}</h6>
                                 <div class="user-info">
-                                    <h2 class="user-count">{{ get_default_currency_symbol() }}{{ get_amount($data['total_charges']) }}</h2>
+                                    <h2 class="user-count">{{ formatNumberInkNotation($data['total_buy_crypto_count']) }}</h2>
                                 </div>
                                 <div class="user-badge">
-                                    <span class="badge badge--info">{{ __("This Month") }} {{ get_default_currency_symbol() }}{{ get_amount($data['this_month_charge']) }}</span>
-                                    <span class="badge badge--warning">{{ __("Last Month") }} {{ get_default_currency_symbol() }}{{ get_amount($data['last_month_charge']) }}</span>
+                                    <span class="badge badge--info">{{ __("Pending") }} {{ formatNumberInkNotation($data['pending_buy_crypto']) }}</span>
+                                    <span class="badge badge--warning">{{ __("Confirm") }} {{ formatNumberInkNotation($data['pending_buy_crypto']) }}</span>
                                 </div>
                             </div>
                         </div>

@@ -22,6 +22,18 @@
                     </div>
                 </form>
             @endif
+            <div class="header-language">
+                @php
+                    $__current_local = session("local") ?? get_default_language_code();
+                @endphp
+                <select class="form--control nice-select" name="lang_switcher" id="">
+                    @foreach ($__languages as $__item)
+                        <option value="{{ $__item->code }}" @if ($__current_local == $__item->code)
+                            @selected(true)
+                        @endif>{{ $__item->name }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="header-notification-wrapper">
                 <button class="notification-icon">
                     <i class="las la-bell"></i>

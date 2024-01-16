@@ -86,6 +86,15 @@ class DashboardController extends Controller
             $percent_transactions = 100;
         }
 
+        $total_buy_crypto   = (Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->toBase()->count() == 0) ? 1 : Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->toBase()->count();
+        $pending_buy_crypto         = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->toBase()->where('status',global_const()::STATUS_PENDING)->count();
+        $confirm_buy_crypto         = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->toBase()->where('status',global_const()::STATUS_CONFIRM_PAYMENT)->count();
+        $percent_buy_crypto         = ((($pending_buy_crypto + $confirm_buy_crypto) * 100) / $total_buy_crypto);
+        
+        if($percent_buy_crypto > 100){
+            $percent_buy_crypto = 100;
+        }
+
         $total_charges      = Transaction::toBase()->sum('total_charge');
         $this_month_charge  = Transaction::toBase()->whereDate('created_at',">=" , $this_month_start)
                             ->whereDate('created_at',"<=" , $this_month_end)
@@ -210,6 +219,11 @@ class DashboardController extends Controller
             'confirm_transactions'          => $confirm_transactions,
             'percent_transactions'          => $percent_transactions,
             'total_transaction_count'       => Transaction::all()->count(),
+
+            'pending_buy_crypto'            => $pending_buy_crypto,
+            'confirm_buy_crypto'            => $confirm_buy_crypto,
+            'percent_buy_crypto'            => $percent_buy_crypto,
+            'total_buy_crypto_count'        => Transaction::where("type",PaymentGatewayConst::BUY_CRYPTO)->get()->count(),
 
             'total_charges'                 => $total_charges,
             'this_month_charge'             => $this_month_charge,
