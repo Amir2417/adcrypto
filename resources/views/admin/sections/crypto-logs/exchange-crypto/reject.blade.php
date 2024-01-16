@@ -22,6 +22,11 @@
         <div class="table-wrapper">
             <div class="table-header">
                 <h5 class="title">{{ ("Rejected Exchange Crypto Logs") }}</h5>
+                <div class="table-btn-area">
+                    @include('admin.components.search-input',[
+                        'name'  => 'buy_crypto_search',
+                    ])
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="custom-table">

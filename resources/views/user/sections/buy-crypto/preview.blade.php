@@ -133,7 +133,7 @@
                                     @php
                                         $amount     = $data->data->amount * $data->data->exchange_rate;
                                     @endphp
-                                    <span class="text--success">{{ get_amount($amount,$data->data->wallet->code) ?? '' }}</span>
+                                    <span class="text--success">{{ get_amount($amount,$data->data->payment_method->code) ?? '' }}</span>
                                 </div>
                             </div>
                             <div class="preview-list-item">

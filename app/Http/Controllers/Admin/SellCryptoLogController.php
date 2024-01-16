@@ -30,6 +30,26 @@ class SellCryptoLogController extends Controller
             'transactions'
         ));
     }
+    /** 
+    * Method for search buy crypto log  
+    */
+    public function search(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'text'  => 'required|string',
+        ]);
+        if($validator->fails()) {
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
+        }
+
+        $validated = $validator->validate();
+        
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::SELL_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('admin.components.search.sell-crypto-search',compact('transactions'));
+        
+    }
     /**
      * Method for sell crypto details page
      * @param $id

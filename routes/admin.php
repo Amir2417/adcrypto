@@ -129,6 +129,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
+        Route::post('search','search')->name("search");
     });
 
     //Sell Crypto Logs
@@ -140,6 +141,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
+        Route::post('search','search')->name("search");
     });
 
     //withdraw crypto logs
@@ -151,6 +153,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
+        Route::post('search','search')->name("search");
     });
 
     //exchange crypto logs
@@ -162,6 +165,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('pending','pending')->name('pending');
         Route::get('confirm','confirm')->name('confirm');
         Route::get('rejected','rejected')->name('rejected');
+        Route::post('search','search')->name("search");
     });
 
     // Add Money Logs

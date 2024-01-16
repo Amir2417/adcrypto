@@ -49,6 +49,7 @@ class BasicSettingsSeeder extends Seeder
             ],
             'email_verification'    => true,
             'email_notification'    => true,
+            'kyc_verification'      => true,
             'site_logo_dark'        => 'seeder/logo-dark.webp',
             'site_logo'             => 'seeder/logo-white.webp',
             'site_fav_dark'         => 'seeder/fav-icon.webp',

@@ -22,47 +22,16 @@
         <div class="table-wrapper">
             <div class="table-header">
                 <h5 class="title">{{ ("Confirm Sell Crypto Logs") }}</h5>
+                <div class="table-btn-area">
+                    @include('admin.components.search-input',[
+                        'name'  => 'sell_crypto_search',
+                    ])
+                </div>
             </div>
             <div class="table-responsive">
-                <table class="custom-table">
-                    <thead>
-                        <tr>
-                            <th>{{ __("S. Wallet") }}</th>
-                            <th>{{ __("Amount") }}</th>
-                            <th>{{ __("P. Method") }}</th>
-                            <th>{{ __("Status") }}</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($transactions as $item)
-                            <tr>
-                                <td><span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></td>
-                                <td>{{ get_amount($item->amount,$item->details->data->sender_wallet->code,8) }}</td>
-                                <td>{{ $item->currency->name ?? '' }}</td>
-                                <td>
-                                    @if ($item->status == global_const()::STATUS_PENDING)
-                                        <span>{{ __("Pending") }}</span>
-                                    @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)
-                                        <span>{{ __("Confirm Payment") }}</span>
-                                    @elseif ($item->status == global_const()::STATUS_REJECT)
-                                        <span>{{ __("Rejected") }}</span>
-                                    @elseif ($item->status == global_const()::STATUS_CANCEL)
-                                        <span>{{ __("Canceled") }}</span>
-                                    @else
-                                        <span>{{ __("Delayed") }}</span>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="{{ setRoute('admin.sell.crypto.details',$item->id) }}" class="btn btn--base btn--primary"><i class="las la-info-circle"></i></a>
-                                </td>
-                            </tr>
-                        @empty
-                            @include('admin.components.alerts.empty',['colspan' => 5])
-                        @endforelse
-                        
-                    </tbody>
-                </table>
+                @include('admin.components.data-table.sell-crypto-table',[
+                    'data'  => $transactions
+                ])
             </div>
         </div>
     </div>

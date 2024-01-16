@@ -30,6 +30,26 @@ class BuyCryptoLogController extends Controller
             'transactions'
         ));
     }
+    /** 
+    * Method for search buy crypto log  
+    */
+    public function search(Request $request) {
+        $validator = Validator::make($request->all(),[
+            'text'  => 'required|string',
+        ]);
+        if($validator->fails()) {
+            $error = ['error' => $validator->errors()];
+            return Response::error($error,null,400);
+        }
+
+        $validated = $validator->validate();
+        
+        $transactions    = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)
+                                    ->search($validated['text'])->get();
+       
+        return view('admin.components.search.buy-crypto-search',compact('transactions'));
+        
+    }
     /**
      * Method for buy crypto details page
      * @param $id

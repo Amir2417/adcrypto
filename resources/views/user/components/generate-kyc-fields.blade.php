@@ -1,10 +1,15 @@
 @if(isset($fields) && count($fields) > 0)
     @foreach ($kyc_fields as $item)
+   
         @if ($item->type == "select")
             <div class="col-lg-12 form-group">
-                <label for="{{ $item->name }}">{{ $item->label }}</label>
+                <label for="{{ $item->name }}">{{ $item->label }}
+                @if($item->required == true) 
+                *
+                @endif 
+                </label>
                 <select name="{{ $item->name }}" id="{{ $item->name }}" class="form--control nice-select">
-                    <option selected disabled>Choose One</option>
+                    <option selected disabled>{{ __("Choose One") }}</option>
                     @foreach ($item->validation->options as $innerItem)
                         <option value="{{ $innerItem }}">{{ $innerItem }}</option>
                     @endforeach
@@ -18,10 +23,11 @@
         @elseif ($item->type == "file")
             <div class="col-lg-12 form-group">
                 @include('admin.components.form.input',[
-                    'label'     => $item->label,
-                    'name'      => $item->name,
-                    'type'      => $item->type,
-                    'value'     => old($item->name),
+                    'label'             => $item->label,
+                    'name'              => $item->name,
+                    'type'              => $item->type,
+                    'dynamic_required'  => $item->required,
+                    'value'             => old($item->name),
                 ])
             </div>
         @elseif ($item->type == "text")
@@ -30,6 +36,7 @@
                     'label'     => $item->label,
                     'name'      => $item->name,
                     'type'      => $item->type,
+                    'dynamic_required'  => $item->required,
                     'value'     => old($item->name),
                 ])
             </div>
@@ -38,6 +45,7 @@
                 @include('admin.components.form.textarea',[
                     'label'     => $item->label,
                     'name'      => $item->name,
+                    'dynamic_required'  => $item->required,
                     'value'     => old($item->name),
                 ])
             </div>
