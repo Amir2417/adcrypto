@@ -103,14 +103,11 @@
                     var cloneNetwork        = networkAddBlock.clone();
 
                     cloneNetwork.removeClass('d-none network-add-block').prependTo('.results');
-                    cloneNetwork.find('select').select2();
+                    
                     var selectedCurrency = localStorage.getItem("selectedCurrency");
                     $('.selcted-currency').text(selectedCurrency);
-                });
-
-                
+                });  
             });
-            
         </script>
     @endpush
 @endif

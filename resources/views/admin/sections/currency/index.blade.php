@@ -71,7 +71,12 @@
 
             openDeleteModal(actionRoute,target,message);
         });
-
+        $('.add-network-btn').click(function(){
+            setTimeout(() => {
+                $('select[name="network[]"]').first().select2();
+            }, 500);
+        });
+        
         itemSearch($("input[name=currency_search]"),$(".currency-search-table"),"{{ setRoute('admin.currency.search') }}",1);
     </script>
     
