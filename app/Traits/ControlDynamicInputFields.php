@@ -11,7 +11,7 @@ trait ControlDynamicInputFields {
     public function generateValidationRules($kyc_fields) {
         $validation_rules = [];
         foreach($kyc_fields ?? [] as $item) {
-            $validation_rules[$item->name] = ($item->required) ? "required" : "";
+            $validation_rules[$item->name] = ($item->required) ? "required" : "nullable";
             $min = $item->validation->min ?? 0;
             $max = $item->validation->max ?? 0;
             if($item->type == "text" || $item->type == "textarea") {

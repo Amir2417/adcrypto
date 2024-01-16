@@ -27,12 +27,12 @@ return new class extends Migration
             $table->unsignedBigInteger('user_wallet_id')->nullable();
             $table->unsignedBigInteger('payment_gateway_id')->nullable();
             $table->string('trx_id')->comment('Transaction ID');
-            $table->decimal('amount', 28, 8)->nullable();
-            $table->decimal('percent_charge', 28, 8)->nullable();
-            $table->decimal('fixed_charge', 28, 8)->nullable();
-            $table->decimal('total_charge', 28, 8)->nullable();
-            $table->decimal('total_payable', 28, 8)->nullable();
-            $table->decimal('available_balance', 28, 8)->nullable();
+            $table->decimal('amount', 28, 16)->nullable();
+            $table->decimal('percent_charge', 28, 16)->nullable();
+            $table->decimal('fixed_charge', 28, 16)->nullable();
+            $table->decimal('total_charge', 28, 16)->nullable();
+            $table->decimal('total_payable', 28, 16)->nullable();
+            $table->decimal('available_balance', 28, 16)->nullable();
             $table->string('currency_code')->nullable();
             $table->string('remark')->nullable();
             $table->text('details')->nullable();
