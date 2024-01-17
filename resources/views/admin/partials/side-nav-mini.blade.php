@@ -75,7 +75,7 @@
                         @include('admin.components.side-nav-mini.support.link',[
                             'links'     => [
                                 [
-                                    'title'     => "Pending Ticket $span",
+                                    'title'     => __("Pending Ticket").$span,
                                     'route'     => "admin.support.ticket.pending",
                                 ],
                                 [

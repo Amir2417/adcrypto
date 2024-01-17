@@ -89,6 +89,7 @@ class AuthorizationController extends Controller
     }
 
     public function authLogout(Request $request) {
+        
         $user_token = Auth::guard(get_auth_guard())->user()->token();
         $user_token->revoke();
     }

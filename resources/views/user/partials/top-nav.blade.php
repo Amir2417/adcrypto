@@ -82,3 +82,13 @@
         </div>
     </div>
 </nav>
+@push('script')
+<script>
+    $("select[name=lang_switcher]").change(function(){
+        var selected_value = $(this).val();
+        var submitForm = `<form action="{{ setRoute('languages.switch') }}" id="local_submit" method="POST"> @csrf <input type="hidden" name="target" value="${$(this).val()}" ></form>`;
+        $("body").append(submitForm);
+        $("#local_submit").submit();
+    });
+</script>
+@endpush

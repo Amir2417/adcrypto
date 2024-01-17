@@ -107,7 +107,7 @@
 <script>
     $(".logout-btn").click(function(){
       
-        var actionRoute =  "{{ setRoute('user.logout') }}";
+        var actionRoute = "{{ setRoute('user.logout') }}";
         var target      = 1;
         var message     = `{{ __("Are you sure to") }} <strong>{{ __("Logout") }}</strong>?`;
   

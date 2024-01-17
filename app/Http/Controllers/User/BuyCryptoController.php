@@ -362,7 +362,7 @@ class BuyCryptoController extends Controller
         $redirect_form_data = $temp_data->data->redirect_form_data;
         $action_url         = $temp_data->data->action_url;
         $form_method        = $temp_data->data->form_method;
-        // dd($redirect_form_data,$action_url,$form_method);
+        
         return view('payment-gateway.redirect-form', compact('redirect_form_data', 'action_url', 'form_method'));
     }
     /**

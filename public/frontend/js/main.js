@@ -356,7 +356,7 @@ function getAllCountries(hitUrl,targetElement = $(".country-select"),errorElemen
  * @returns 
  */
 function openAlertModal(URL,target,message,actionBtnText = "Remove",method = "DELETE"){
-  console.log("test");
+
   if(URL == "" || target == "") {
       return false;
   }

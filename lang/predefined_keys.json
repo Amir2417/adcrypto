@@ -848,5 +848,10 @@
     "Basic Settings Data Fetch Successfully.",
     "Language data fetch successfully!",
     "Notification Data Fetch Successfully.",
-    "Country List Fetch Successfully!"
+    "Country List Fetch Successfully!",
+    "Netwok Name",
+    "Active Ticket",
+    "Solved Ticket",
+    "Pending Ticket",
+    "All Ticket"
 ]

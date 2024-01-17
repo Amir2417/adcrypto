@@ -21,7 +21,7 @@
     <div class="table-area">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">{{ ("Prending Withdraw Crypto Logs") }}</h5>
+                <h5 class="title">{{ __("Prending Withdraw Crypto Logs") }}</h5>
                 <div class="table-btn-area">
                     @include('admin.components.search-input',[
                         'name'  => 'withdraw_crypto_search',
