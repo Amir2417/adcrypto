@@ -96,26 +96,35 @@ class AuthorizationController extends Controller
     // Get KYC Input Fields
     public function getKycInputFields() {
         $user = auth()->guard(get_auth_guard())->user();
-        if($user->kyc_verified == GlobalConst::VERIFIED) return Response::warning(['You are already KYC Verified User'],[],400);
-        if($user->kyc_verified == GlobalConst::PENDING) return Response::warning(['Your KYC information is submitted. Please wait for admin confirmation'],[],400);
+
         $user_kyc = SetupKyc::userKyc()->first();
-        if(!$user_kyc) return Response::error(['User KYC section is under maintenance'],[],503);
         $kyc_data = $user_kyc->fields;
-        if(!$kyc_data) return Response::error(['User KYC section is under maintenance'],[],503);
         $kyc_fields = array_reverse($kyc_data);
-        return Response::success(['User KYC input fields fetch successfully!'],['input_fields' => $kyc_fields],200);
+
+        $data = [
+            'status_info'  => '0: Unverified, 1: Verified, 2: Pending, 3: Rejected',
+            'kyc_status'   => $user->kyc_verified,
+            'input_fields' => $kyc_fields
+        ];
+
+        if(!$user_kyc) return Response::success(['User KYC section is under maintenance'], $data);
+        if($user->kyc_verified == GlobalConst::VERIFIED) return Response::success(['You are already KYC Verified User'], $data);
+        if($user->kyc_verified == GlobalConst::PENDING) return Response::success(['Your KYC information is submitted. Please wait for admin confirmation'], $data);
+
+        return Response::success(['User KYC input fields fetch successfully!'], $data);
     }
 
     public function KycSubmit(Request $request) {
         $user = auth()->guard(get_auth_guard())->user();
-        if($user->kyc_verified == GlobalConst::VERIFIED) return Response::warning(['You are already KYC Verified User'],[],400);
+
+        if($user->kyc_verified == GlobalConst::VERIFIED) return Response::warning(['You are already KYC Verified User']);
 
         $user_kyc_fields = SetupKyc::userKyc()->first()->fields ?? [];
         $validation_rules = $this->generateValidationRules($user_kyc_fields);
 
         $validated = Validator::make($request->all(),$validation_rules)->validate();
         $get_values = $this->placeValueWithFields($user_kyc_fields,$validated);
-        
+
         $create = [
             'user_id'       => auth()->guard(get_auth_guard())->user()->id,
             'data'          => json_encode($get_values),
@@ -135,10 +144,10 @@ class AuthorizationController extends Controller
                 'kyc_verified'  => GlobalConst::DEFAULT,
             ]);
             $this->generatedFieldsFilesDelete($get_values);
-            return Response::error(['Something went wrong! Please try again'],[],500);
+            return Response::error(['KYC information successfully submitted']);
         }
 
-        return Response::success(['KYC information successfully submitted'],[],200);
+       return Response::success(['KYC information successfully submitted'],[],200);
     }
 
     // User 2Fa authorization

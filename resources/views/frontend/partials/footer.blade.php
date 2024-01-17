@@ -66,7 +66,7 @@
                     @endforeach
                 </ul>
                 <div class="copyright-area">
-                    <p>© 2023 <a href="{{ setRoute('index') }}">{{ $basic_settings->site_name }}</a> {{ __("is Proudly Powered by AppDevs") }}</p>
+                    <p>© 2024 <a href="{{ setRoute('index') }}">{{ $basic_settings->site_name }}</a> {{ __("is Proudly Powered by AppDevs") }}</p>
                 </div>
             </div>
         </div>

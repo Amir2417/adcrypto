@@ -19,8 +19,13 @@ Route::prefix("user")->name("api.user.")->group(function(){
         
         Route::controller(ProfileController::class)->prefix('profile')->group(function(){
             Route::get('info','profileInfo');
-            Route::post('info/update','profileInfoUpdate');
-            Route::post('password/update','profilePasswordUpdate');
+            Route::post('info/update','profileInfoUpdate')->middleware('app.mode');
+            Route::post('delete-account','deleteProfile')->middleware('app.mode');
+            Route::post('password/update','profilePasswordUpdate')->middleware('app.mode');
+            Route::controller(AuthorizationController::class)->prefix('kyc')->group(function(){
+                Route::get('input-fields','getKycInputFields');
+                Route::post('submit','KycSubmit');
+            });
         });
         // Logout Route
         Route::post('logout',[ProfileController::class,'logout']);

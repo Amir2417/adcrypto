@@ -1014,7 +1014,7 @@ h4 a:hover {
   position: relative;
   z-index: 1;
   text-align: center;
-  left: 21px;
+  left: 15px;
   top: 0;
   line-height: 26px;
 }
@@ -3316,7 +3316,7 @@ option {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  background-color: #0194FC
+  background-color: #0194FC;
   color: #ffffff;
   font-size: 22px;
   border-radius: 50%;

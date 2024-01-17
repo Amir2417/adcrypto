@@ -148,6 +148,27 @@ class ProfileController extends Controller
         return Response::success(['Password successfully updated!'],[],200);
     }
 
+    /**
+     * Method for delete user profile 
+     */
+    public function deleteProfile(){
+        $user = Auth::guard(get_auth_guard())->user();
+        if(!$user){
+            $message = ['success' =>  ['No user found']];
+            return Response::error($message, []);
+        }
+
+        try {
+            $user->status            = 0;
+            $user->deleted_at        = now();
+            $user->save();
+        } catch (Exception $e) {
+            return Response::error(['Something went wrong, please try again!'], []);
+        }
+
+        return Response::success(['User deleted successfull'], $user);
+    }
+    
     public function logout(Request $request) {
         
         $user = Auth::guard(get_auth_guard())->user();
