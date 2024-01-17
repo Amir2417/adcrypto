@@ -131,7 +131,7 @@ class SiteController extends Controller
         $validator      = Validator::make($request->all(),[
             'email'     => "required|string|email|max:255|unique:subscribes",
         ]);
-        if($validator->fails()) return redirect('/#subscribe-form')->withErrors($validator)->withInput();
+        if($validator->fails()) return redirect(url()->previous() . '/#subscribe-form')->withErrors($validator)->withInput();
         $validated = $validator->validate();
         try{
             Subscribe::create([
