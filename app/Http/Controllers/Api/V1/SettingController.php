@@ -62,11 +62,26 @@ class SettingController extends Controller
         });
         //login section data
         $slug           = Str::slug(SiteSectionConst::LOGIN_SECTION);
-        $login          = SiteSections::getData($slug)->first();
+        
+        $login              = SiteSections::getData($slug)->get()->map(function($data){
+            $app_local      = get_default_language_code();
+            return [
+                'image'     => $data->value->image,
+                'title'  => $data->value->language->$app_local->title,
+                'heading'  => $data->value->language->$app_local->heading,
+            ];
+        });
 
         //register section data
         $register_slug           = Str::slug(SiteSectionConst::REGISTER_SECTION);
-        $register                = SiteSections::getData($register_slug)->first();
+        $register                = SiteSections::getData($register_slug)->get()->map(function($data){
+            $app_local           = get_default_language_code();
+            return [
+                'image'     => $data->value->image,
+                'title'  => $data->value->language->$app_local->title,
+                'heading'  => $data->value->language->$app_local->heading,
+            ];
+        });
         
 
         // splash screen
