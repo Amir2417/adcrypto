@@ -29,16 +29,16 @@
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>{{ __("Select Currency") }}*</label>
                     <select class="form--control select2-basic" name="currency">
-                        @foreach ($currencies as $item)
-                            <option value="{{ $item->id }}" {{ $item->id == $data->currency_id ? 'selected' : '' }}>{{ $item->name }}({{ $item->code }})</option>
-                        @endforeach
+                        
+                            <option value="{{ $currencies->id }}" {{ $currencies->id == $data->currency_id ? 'selected' : '' }}>{{ $currencies->name }}({{ $currencies->code }})</option>
+                        
                     </select>
                 </div>
                 <div class="col-xl-6 col-lg-6 form-group">
                     <label>{{ __("Select Network") }}*</label>
                     <select class="form--control select2-basic" name="network">
                         @foreach ($networks as $item)
-                            <option value="{{ $item->id }}" {{ $item->id == $data->network_id ? 'selected' : '' }}>{{ $item->name }}</option>
+                            <option value="{{ $item->network->id }}" {{ $item->network->id == $data->network_id ? 'selected' : '' }}>{{ $item->network->name }}</option>
                         @endforeach
                     </select>
                 </div>

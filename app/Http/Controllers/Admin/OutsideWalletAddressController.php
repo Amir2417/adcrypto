@@ -10,6 +10,7 @@ use App\Models\Admin\Network;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\CurrencyHasNetwork;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Admin\OutsideWalletAddress;
 use Illuminate\Validation\ValidationException;
@@ -90,9 +91,14 @@ class OutsideWalletAddressController extends Controller
         ]);
         if($validator->fails()) return back()->withErrors($validator)->withInput($request->all());
         $validated                  = $validator->validate();
+        if(OutsideWalletAddress::where('currency_id',$validated['currency'])->where('network_id',$validated['network'])->exists()){
+            throw ValidationException::withMessages([
+                'name'  => "Outside Address already exists in selected currency and network!",
+            ]);
+        }
         if(OutsideWalletAddress::where('public_address',$validated['public_address'])->exists()){
             throw ValidationException::withMessages([
-                'name'  => "Outside Address already exists!",
+                'name'  => "Outside Public Address already exists!",
             ]);
         }
 
@@ -119,9 +125,10 @@ class OutsideWalletAddressController extends Controller
      */
     public function edit($public_address){
         $page_title         = "Outside Wallet Edit";
-        $currencies         = Currency::with(['networks'])->where('status',true)->orderBy('id')->get();
-        $networks           = Network::where('status',true)->orderBy('id')->get();
         $data               = OutsideWalletAddress::with(['currency','network'])->where('public_address',$public_address)->first();
+        $currencies         = Currency::with(['networks'])->where('id',$data->currency_id)->where('status',true)->first();
+        $networks           = CurrencyHasNetwork::with(['network'])->where('currency_id',$data->currency_id)->orderBy('id')->get();
+        
         if(!$data) return back()->with(['error' => ['Sorry!Data not found!']]);
         
         return view('admin.sections.outside-wallet.edit',compact(
@@ -160,7 +167,12 @@ class OutsideWalletAddressController extends Controller
         ]);
         if($validator->fails()) return back()->withErrors($validator)->withInput($request->all());
         $validated                      = $validator->validate();
-
+        if(OutsideWalletAddress::where('public_address',$validated['public_address'])->exists()){
+            throw ValidationException::withMessages([
+                'name'  => "Outside Public Address already exists!",
+            ]);
+        }
+        
         $validated['currency_id']       = $validated['currency'];
         $validated['network_id']        = $validated['network'];
         $validated['public_address']    = $validated['public_address'];
@@ -172,6 +184,7 @@ class OutsideWalletAddressController extends Controller
         try{
             $data->update($validated);
         }catch(Exception $e){
+            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet Updated successfully.']]);

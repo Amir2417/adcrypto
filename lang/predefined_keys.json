@@ -853,5 +853,7 @@
     "Active Ticket",
     "Solved Ticket",
     "Pending Ticket",
-    "All Ticket"
+    "All Ticket",
+    "Outside Address already exists in selected currency and network!",
+    "Outside Public Address already exists!"
 ]

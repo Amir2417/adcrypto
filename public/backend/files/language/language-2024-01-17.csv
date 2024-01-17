@@ -855,3 +855,5 @@ Active Ticket,Active Ticket,Boleto activo,تذكرة نشطة
 Solved Ticket,Solved Ticket,Boleto resuelto,تذكرة حل
 Pending Ticket,Pending Ticket,Boleto pendiente,تذكرة معلقة
 All Ticket,All Ticket,Todo el boleto,كل التذاكر
+Outside Address already exists in selected currency and network!,Outside Address already exists in selected currency and network!,¡Ya existe una dirección exterior en moneda y red seleccionadas!,يوجد بالفعل العنوان الخارجي في العملة والشبكة المختارة!
+Outside Public Address already exists!,Outside Public Address already exists!,¡Ya existe una dirección pública fuera!,يوجد خطاب خارج عام بالفعل!
