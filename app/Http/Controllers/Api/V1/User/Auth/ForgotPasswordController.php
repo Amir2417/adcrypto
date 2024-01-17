@@ -51,7 +51,7 @@ class ForgotPasswordController extends Controller
             
             $user->notify(new PasswordResetEmail($user,$password_reset));
         }catch(Exception $e) {
-            return Response::error(['Something went wrong! Please try again'],[],500);
+            return Response::error([__('Something went wrong! Please try again')],[],500);
         }
 
         return Response::success(['Verification code sended to your email address.'],['token' => $token,'wait_time' => ""],200);

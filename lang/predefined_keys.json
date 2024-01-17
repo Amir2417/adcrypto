@@ -843,5 +843,10 @@
     "Topbar Color",
     "Layout Mode",
     "Total Buy Crypto Transactions",
-    "Convert Amount"
+    "Convert Amount",
+    "You cannot exchange crypto using the same wallet",
+    "Basic Settings Data Fetch Successfully.",
+    "Language data fetch successfully!",
+    "Notification Data Fetch Successfully.",
+    "Country List Fetch Successfully!"
 ]
