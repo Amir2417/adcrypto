@@ -95,8 +95,14 @@
                     <ul class="list">
                         <li>{{ __("Transaction Number") }} <span>{{ $transaction->trx_id ?? ''  }}</span> </li>
                         <li>{{ __("Transaction Type") }} <span>{{ $transaction->type ?? ''  }}</span> </li>
+                        <li>{{ __("Send Amount") }} <span>{{ get_amount($transaction->amount,$transaction->details->data->sender_wallet->code)  }}</span> </li>
                         <li>{{ __("Total Charge") }} <span>{{ get_amount($transaction->total_charge,$transaction->details->data->sender_wallet->code)  }}</span> </li>
                         <li>{{ __("Payable Amount") }} <span>{{ get_amount($transaction->total_payable,$transaction->currency_code)  }}</span> </li>
+                        <li>{{ __("Exchange Rate") }} <span>1 {{ $transaction->details->data->sender_wallet->code ?? '' }} = {{ get_amount($transaction->details->data->exchange_rate) ?? '' }} {{ $transaction->details->data->receiver_wallet->code ?? '' }}</span> </li>
+                        @php
+                            $get_amount = $transaction->amount * $transaction->details->data->exchange_rate;
+                        @endphp
+                        <li>{{ __("Will Get Amount") }} <span>{{ get_amount($get_amount,$transaction->details->data->receiver_wallet->code)  }}</span> </li>
                         <li>{{ __("Payment Status") }}
                             @if ($transaction->status == global_const()::STATUS_PENDING)
                                 <span>{{ __("Pending") }}</span>

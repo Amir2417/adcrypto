@@ -100,6 +100,24 @@
                                     <span class="last">{{ $data->data->payable_amount ?? '' }} {{ $data->data->sender_wallet->code ?? '' }}</span>
                                 </div>
                             </div>
+                            <div class="preview-list-item">
+                                <div class="preview-list-left">
+                                    <div class="preview-list-user-wrapper">
+                                        <div class="preview-list-user-icon">
+                                            <i class="las la-money-check"></i>
+                                        </div>
+                                        <div class="preview-list-user-content">
+                                            <span class="last">{{ __("Will Get Amount") }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                @php
+                                    $get_amount = $data->data->amount * $data->data->exchange_rate; 
+                                @endphp
+                                <div class="preview-list-right">
+                                    <span class="last">{{ $get_amount ?? '' }} {{ $data->data->receiver_wallet->code ?? '' }}</span>
+                                </div>
+                            </div>
                             <button type="submit" class="btn--base mt-20 w-100"><span class="w-100">{{ __("Confirm") }}</span></button>
                         </div>
                     </div>

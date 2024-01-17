@@ -98,7 +98,12 @@
                         <li>{{ __("Transaction Type") }} <span>{{ $transaction->type ?? ''  }}</span> </li>
                         <li>{{ __("Payment Gateway") }} <span>{{ $transaction->currency->name ?? ''  }}</span> </li>
                         <li>{{ __("Send Amount") }} <span>{{ get_amount($transaction->amount,$transaction->details->data->wallet->code)  }}</span> </li>
-                        <li>{{ __("Total Charge") }} <span>{{ get_amount($transaction->total_charge,$transaction->details->data->wallet->code)  }}</span> </li>
+                        <li>{{ __("Exchange Rate") }} <span>1 {{ $transaction->details->data->wallet->code ?? '' }} = {{ $transaction->details->data->exchange_rate ?? '' }} {{ $transaction->details->data->payment_method->code ?? '' }}</span> </li>
+                        @php
+                            $convert_amount =  $transaction->amount * $transaction->details->data->exchange_rate;
+                        @endphp
+                        <li>{{ __("Convert Amount") }} <span>{{ get_amount($convert_amount,$transaction->details->data->payment_method->code)  }}</span> </li>
+                        <li>{{ __("Total Charge") }} <span>{{ get_amount($transaction->total_charge,$transaction->details->data->payment_method->code)  }}</span> </li>
                         <li>{{ __("Payable Amount") }} <span>{{ get_amount($transaction->total_payable,$transaction->currency_code)  }}</span> </li>
                         <li>{{ __("Payment Status") }}
                             @if ($transaction->status == global_const()::STATUS_PENDING)
