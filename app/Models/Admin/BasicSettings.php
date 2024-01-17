@@ -22,6 +22,7 @@ class BasicSettings extends Model
         'site_fav'                 => 'string',
         'email_notification'          => 'boolean',
         'email_verification'          => 'boolean',
+        'kyc_verification'          => 'boolean',
     ];
 
 

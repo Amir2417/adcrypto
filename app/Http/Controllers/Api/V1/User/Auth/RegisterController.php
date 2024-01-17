@@ -39,6 +39,7 @@ class RegisterController extends Controller
      */
     public function register(Request $request){
         $basic_settings = $this->basic_settings;
+      
         $passowrd_rule = "required|string|min:6";
 
         if($basic_settings->secure_password) {
@@ -108,6 +109,8 @@ class RegisterController extends Controller
         }
 
         $data = [
+            'email_verification'    => $basic_settings->email_verification,
+            'kyc_verification'    => $basic_settings->kyc_verification,
             'token' => $token,
             'image_path' => get_files_public_path('user-profile'),
             'default_image' => get_files_public_path('default'),
