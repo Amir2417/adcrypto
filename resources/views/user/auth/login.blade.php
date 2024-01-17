@@ -29,7 +29,7 @@
                     @csrf
                     <div class="row">
                         <div class="col-lg-12 form-group">
-                            <input type="email" class="form-control form--control" name="credentials" placeholder="{{ __("Enter Email") }}..." required>
+                            <input type="email" class="form-control form--control" name="credentials" placeholder="{{ __("Enter Email") }}.." required>
                         </div>
                         <div class="col-lg-12 form-group show_hide_password">
                             <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Enter Password") }}..." required>
