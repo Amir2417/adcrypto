@@ -25,7 +25,7 @@
                     <form action="{{ setRoute('user.withdraw.crypto.store') }}" class="card-form" method="POST">
                         @csrf
                         <div class="row">
-                            <div class="col-xl-12 col-lg-12 form-group text-center">
+                            <div class="col-xl-12 col-lg-12 form-group text-center exchange-box">
                                 <div class="exchange-area">
                                     <code class="d-block text-center exchange-rate"></code>
                                 </div>
@@ -90,7 +90,8 @@
                     }
                     $('.exchange-rate').html('');
                     $('.exist').addClass('text--danger').text(response.own);
-                    $('.withdraw').attr('disabled',true)
+                    $('.withdraw').attr('disabled',true);
+                    $('.exchange-box').removeClass('d-none');
                     return false
                 }
                 if(response['data'] != null){
@@ -107,7 +108,8 @@
                     $('.exist').text(`Valid Address for transaction.`).addClass('text--success');
                     localStorage.setItem('exchangeRate', rate);
                     localStorage.setItem('exchangeCode', walletCode);
-                    $('.withdraw').attr('disabled',false)
+                    $('.withdraw').attr('disabled',false);
+                    $('.exchange-box').removeClass('d-none');
                 } else {
                     if($('.exist').hasClass('text--success')){
                         $('.exist').removeClass('text--success');
@@ -115,7 +117,8 @@
                     
                     $('.exchange-rate').html('');
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
-                    $('.withdraw').attr('disabled',true)
+                    $('.withdraw').attr('disabled',true);
+                    $('.exchange-box').removeClass('d-none');
                     return false
                 }
 
@@ -123,9 +126,11 @@
         });
         $(document).ready(function () {
             getPreview();
+            $('.exchange-box').addClass('d-none');
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();
+            $('.exchange-box').removeClass('d-none');
             getPreview();
             getExchangePreview();
             chargeCalculation(amount);
@@ -145,7 +150,7 @@
             var percentChargeCalc   = (walletBalance / 100) * percentCharge;
             var totalCharge         = fixedChargeCalc + percentChargeCalc;
             var amount              = parseFloat(walletBalance) - parseFloat(totalCharge);
-            
+            $('.exchange-box').removeClass('d-none');
             $(".amount").val(amount);
             chargeCalculation(amount);
 
