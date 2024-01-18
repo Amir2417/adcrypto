@@ -198,7 +198,7 @@
                     </div>
                 </div>
                 <div class="preview-list-right">
-                    <span class="text--danger">{{ get_amount(@$item->total_charges,@$item->details->data->sender_wallet->code) }}</span>
+                    <span class="text--danger">{{ get_amount(@$item->total_charge,@$item->details->data->sender_wallet->code) }}</span>
                 </div>
             </div>
             <div class="preview-list-item">
