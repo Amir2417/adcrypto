@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="dashboard-list-right">
-                    <h4 class="main-money text--base mb-0">{{ get_amount($item->details->data->will_get,$item->details->data->sender_wallet->code) ?? '' }} </h4>
+                    <h4 class="main-money text--base mb-0">{{ get_amount($item->amount,$item->details->data->sender_wallet->code) ?? '' }} </h4>
                 </div>
             </div>
             <div class="preview-list-wrapper">
