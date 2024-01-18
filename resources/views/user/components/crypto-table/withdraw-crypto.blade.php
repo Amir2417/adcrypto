@@ -122,6 +122,24 @@
                         <span class="last">{{ get_amount($item->details->data->payable_amount,$item->details->data->sender_wallet->code) ?? '' }}</span>
                     </div>
                 </div>
+                <div class="preview-list-item">
+                    <div class="preview-list-left">
+                        <div class="preview-list-user-wrapper">
+                            <div class="preview-list-user-icon">
+                                <i class="las la-money-check"></i>
+                            </div>
+                            <div class="preview-list-user-content">
+                                <span class="last">{{ __("Will Get Amount") }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-list-right">
+                        @php
+                            $get_amount = $item->amount * $item->details->data->exchange_rate; 
+                        @endphp
+                        <span class="last">{{ get_amount($get_amount,$item->details->data->receiver_wallet->code) ?? '' }}</span>
+                    </div>
+                </div>
                 @if ($item->status == global_const()::STATUS_REJECT)
                     <div class="preview-list-item">
                         <div class="preview-list-left">
