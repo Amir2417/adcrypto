@@ -73,7 +73,7 @@ class AuthorizationController extends Controller
             return redirect()->route('index')->with(['error' => ['Something went wrong! Please try again']]);
         }
 
-        return redirect()->intended(route("user.profile.index"))->with(['success' => ['Account successfully verified']]);
+        return redirect()->intended(route("user.dashboard"))->with(['success' => ['Account successfully verified']]);
     }
     public function mailResend($token) {
         $user_authorize = UserAuthorization::where("token",$token)->first();
