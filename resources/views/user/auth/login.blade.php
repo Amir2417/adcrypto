@@ -53,7 +53,7 @@
                                 @php
                                     $data = App\Models\Admin\UsefulLink::where('type',global_const()::USEFUL_LINK_PRIVACY_POLICY)->first();
                                 @endphp
-                                <label>{{ __("By clicking Login you are agreeing with our") }} <a href="{{ setRoute('link',$data->slug) }}">{{ __("Terms of feature") }}</a></label>
+                                <label>{{ __("By clicking Login you are agreeing with our") }} <a href="{{ setRoute('link',$data->slug) }}" target="_blank">{{ __("Terms of feature") }}</a></label>
                             </div>
                         </div>
                     </div>

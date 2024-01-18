@@ -29,13 +29,13 @@ Start Account
                     @csrf
                     <div class="row">
                         <div class="col-lg-6 col-md-12 form-group">
-                            <input type="text" class="form-control form--control" name="firstname" placeholder="{{ __("First Name") }}" required>
+                            <input type="text" class="form-control form--control" name="firstname" value="{{ old('firstname') }}" placeholder="{{ __("First Name") }}" required>
                         </div>
                         <div class="col-lg-6 col-md-12 form-group">
-                            <input type="text" class="form-control form--control" name="lastname" placeholder="{{ __("Last Name") }}" required>
+                            <input type="text" class="form-control form--control" name="lastname" value="{{ old('lastname') }}" placeholder="{{ __("Last Name") }}" required>
                         </div>
                         <div class="col-lg-12 form-group">
-                            <input type="email" class="form-control form--control" name="email" placeholder="{{ __("Email") }}" required>
+                            <input type="email" class="form-control form--control" name="email" value="{{ old('email') }}" placeholder="{{ __("Email") }}" required>
                         </div>
                         <div class="col-lg-12 form-group show_hide_password">
                             <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Password") }}" required>
