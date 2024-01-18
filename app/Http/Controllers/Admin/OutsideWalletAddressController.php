@@ -167,6 +167,11 @@ class OutsideWalletAddressController extends Controller
         ]);
         if($validator->fails()) return back()->withErrors($validator)->withInput($request->all());
         $validated                      = $validator->validate();
+        if(OutsideWalletAddress::whereNot('id',$data->id)->where('currency_id',$validated['currency'])->where('network_id',$validated['network'])->exists()){
+            throw ValidationException::withMessages([
+                'name'  => "Outside Address already exists in selected currency and network!",
+            ]);
+        }
         if(OutsideWalletAddress::where('public_address',$validated['public_address'])->exists()){
             throw ValidationException::withMessages([
                 'name'  => "Outside Public Address already exists!",
