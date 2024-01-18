@@ -38,7 +38,7 @@ Start Account
                             <input type="email" class="form-control form--control" name="email" value="{{ old('email') }}" placeholder="{{ __("Email") }}" required>
                         </div>
                         <div class="col-lg-12 form-group show_hide_password">
-                            <input type="password" class="form-control form--control" name="password" placeholder="{{ __("Password") }}" required>
+                            <input type="password" class="form-control form--control" name="password" value="{{ old('password') }}" placeholder="{{ __("Password") }}" required>
                             <span class="show-pass"><i class="fa fa-eye-slash" aria-hidden="true"></i></span>
                         </div>
                         <div class="col-lg-12 form-group">
@@ -70,5 +70,26 @@ Start Account
 @endsection
 
 @push('script')
+<script>
+    function deRequireCb(elClass) {
+  el = document.getElementsByClassName(elClass);
 
+  var atLeastOneChecked = false; //at least one cb is checked
+  for (i = 0; i < el.length; i++) {
+    if (el[i].checked === true) {
+      atLeastOneChecked = true;
+    }
+  }
+
+  if (atLeastOneChecked === true) {
+    for (i = 0; i < el.length; i++) {
+      el[i].required = false;
+    }
+  } else {
+    for (i = 0; i < el.length; i++) {
+      el[i].required = true;
+    }
+  }
+}
+</script>
 @endpush

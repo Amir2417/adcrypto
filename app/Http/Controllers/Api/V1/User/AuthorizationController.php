@@ -122,8 +122,9 @@ class AuthorizationController extends Controller
 
         $user_kyc_fields = SetupKyc::userKyc()->first()->fields ?? [];
         $validation_rules = $this->generateValidationRules($user_kyc_fields);
-
+        
         $validated = Validator::make($request->all(),$validation_rules)->validate();
+
         $get_values = $this->placeValueWithFields($user_kyc_fields,$validated);
 
         $create = [

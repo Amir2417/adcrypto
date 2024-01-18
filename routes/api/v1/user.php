@@ -22,6 +22,8 @@ Route::prefix("user")->name("api.user.")->group(function(){
             Route::post('info/update','profileInfoUpdate')->middleware('app.mode');
             Route::post('delete-account','deleteProfile')->middleware('app.mode');
             Route::post('password/update','profilePasswordUpdate')->middleware('app.mode');
+            Route::get('/google-2fa', 'google2FA')->middleware('app.mode');
+            Route::post('/google-2fa/status/update', 'google2FAStatusUpdate')->middleware('app.mode');
             Route::controller(AuthorizationController::class)->prefix('kyc')->group(function(){
                 Route::get('input-fields','getKycInputFields');
                 Route::post('submit','KycSubmit');
