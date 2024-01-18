@@ -9,6 +9,7 @@ use App\Constants\GlobalConst;
 use App\Http\Helpers\Response;
 use App\Models\UserAuthorization;
 use App\Traits\User\LoggedInUsers;
+use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -44,6 +45,7 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {
+        $basic_settings  = BasicSettings::first();
         $validator = Validator::make($request->all(),[
             'email' => 'required|max:40',
             'password' => 'required|min:6',
@@ -88,7 +90,11 @@ class LoginController extends Controller
             $this->createLoginLog($user);
 
             $message = ['Login Successfull'];
-            return Response::success($message,$user_data);
+            return Response::success($message,[
+                'email_verification'    => $basic_settings->email_verification,
+                'kyc_verification'    => $basic_settings->kyc_verification,
+                'user_data'     => $user_data
+            ]);
         }else{
             $error = ['The credentials does not match'];
             return Response::error($error,[],400);
