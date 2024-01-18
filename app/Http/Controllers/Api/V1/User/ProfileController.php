@@ -40,10 +40,7 @@ class ProfileController extends Controller
         $response_data['state']          = $user->address->state ?? "";
         $response_data['zip']    = $user->address->zip ?? "";
         $response_data['address']        = $user->address->address ?? "";
-        $response_data['kyc']            = [
-            'data'          => $user->kyc->data ?? [],
-            'reject_reason' => $user->kyc->reject_reason ?? "", 
-        ];
+        
 
         $image_paths = [
             'base_url'          => url("/"),
@@ -51,15 +48,13 @@ class ProfileController extends Controller
             'default_image'     => files_asset_path_basename("profile-default"),
         ];
 
-        $instructions = [
-            'kyc_verified'      => "0: Default, 1: Approved, 2: Pending, 3:Rejected",
-        ];
+        
 
         return Response::success(['Profile info fetch successfully!'],[
-            'instructions'  => $instructions,
+            
             'user_info'     => $response_data , 
             'image_paths'   => $image_paths,
-            'countries'     => get_all_countries(['id','name','mobile_code']),
+            
         ],200);
     }
 
