@@ -4520,7 +4520,16 @@ option {
     padding-left: 20px;
   }
 }
-
+.dashboard-header-status-wrapper{
+  background: var(--primary-color);
+  border-radius: 5px;
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  border-left: 2px solid #0194FC;
+}
+.dashboard-header-status-wrapper .title{
+  margin-bottom: 0;
+}
 .dashboard-header-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;

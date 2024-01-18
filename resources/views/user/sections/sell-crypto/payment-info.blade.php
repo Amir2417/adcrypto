@@ -18,7 +18,7 @@
     @if ($data->data->sender_wallet->type  == global_const()::INSIDE_WALLET)
     <form action="{{ setRoute('user.sell.crypto.payment.info.store',$data->identifier) }}" class="card-form-area" method="POST" enctype="multipart/form-data">
         @csrf
-        <div class="row mt-30 mb-20-none">
+        <div class="row justify-content-center mt-30 mb-20-none">
             <div class="col-xl-6 col-lg-6 mb-20">
                 <div class="custom-card">
                     <div class="dashboard-header-wrapper">
@@ -27,7 +27,7 @@
                     <div class="card-body">
                         <div class="card-form">
                             <div class="row">
-                                <h3>{!! $gateway->desc !!}</h3>
+                                <p>{!! $gateway->desc !!}</p>
                                 @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($gateway->input_fields)])
                             </div>
                             <div class="col-xl-12 col-lg-12">
@@ -51,7 +51,7 @@
                     <div class="card-body">
                         <div class="card-form">
                             <div class="row mb-20-none">
-                                <h3>{!! $outside_wallet->desc !!}</h3>
+                                <p>{!! $outside_wallet->desc !!}</p>
                                 @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($outside_wallet->input_fields)])
                             </div>
                         </div>
@@ -66,7 +66,7 @@
                     <div class="card-body">
                         <div class="card-form">
                             <div class="row">
-                                <h3>{!! $gateway->desc !!}</h3>
+                                <p>{!! $gateway->desc !!}</p>
                                 @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($gateway->input_fields)])
                             </div>
                             <div class="col-xl-12 col-lg-12">

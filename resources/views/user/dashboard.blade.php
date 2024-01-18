@@ -12,7 +12,12 @@
 @section('content')
 
 <div class="body-wrapper">
-    
+    @if (auth()->user()->kyc_verified == global_const()::DEFAULT)
+        <div class="dashboard-header-status-wrapper mt-20">
+            <h6 class="title">{{ __("Please verify your KYC information before any transactional action.") }} <a href="{{ setRoute('user.authorize.kyc') }}" class="text--base">{{ __("Verify Now.") }}</a></h6>
+        </div>
+    @else
+    @endif
     @if ($wallets->isNotEmpty())
         <div class="dashboard-area mt-20">
             <div class="dashboard-header-wrapper">
