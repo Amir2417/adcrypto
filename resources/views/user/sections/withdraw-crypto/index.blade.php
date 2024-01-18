@@ -99,11 +99,14 @@
                         $('.exist').removeClass('text--danger');
                     }
                     var walletRate     = response['data'].currency.rate;
+                    console.log(walletRate);
                     var walletCode     = response['data'].currency.code;
                     var senderRate     = selectedValue().senderRate;
+                    var senderBaseRate = senderRate /senderRate;
                     var senderCode     = selectedValue().senderCurrency;
                     var rate           = walletRate / senderRate;
-                    $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(senderRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
+                    console.log(senderRate,rate);
+                    $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(senderBaseRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
 
                     $('.exist').text(`Valid Address for transaction.`).addClass('text--success');
                     localStorage.setItem('exchangeRate', rate);
@@ -130,7 +133,6 @@
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();
-            $('.exchange-box').removeClass('d-none');
             getPreview();
             getExchangePreview();
             chargeCalculation(amount);
