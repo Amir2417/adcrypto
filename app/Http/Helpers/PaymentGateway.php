@@ -134,9 +134,7 @@ class PaymentGateway {
         }
         $wallet_model = $register_wallets[$guard];
         
-        $user_wallet = $wallet_model::auth()->whereHas("currency",function($q) use ($wallet_currency){
-            $q->where("id",$wallet_currency->id);
-        })->first();
+        $user_wallet = $wallet_model::auth()->where("id",$wallet_currency->id)->first();
         
 
         if(!$user_wallet) {
@@ -211,9 +209,7 @@ class PaymentGateway {
         if($this->predefined_user_wallet) {
             $user_wallet = $this->predefined_user_wallet;
         }else{
-            $user_wallet    =  UserWallet::auth()->whereHas("currency",function($q) use ($temporary_data) {
-                $q->where("id",$temporary_data->data->wallet->wallet_id)->active();
-            })->active()->first();
+            $user_wallet    =  UserWallet::auth()->where("id",$temporary_data->data->wallet->wallet_id)->first();
         } 
         
         

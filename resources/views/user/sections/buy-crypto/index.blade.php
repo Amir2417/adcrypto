@@ -173,7 +173,7 @@
         if(currency == '' || currency == null){
             return false;
         }
-
+        console.log(selectedCurrency);
         //pass the currency as parameter to get network
         getNetwork(currency,currencyCode);
         $('.sender_currency').val(currency);
@@ -269,7 +269,7 @@
         if(currency == '' || currency == null){
             return false;
         }
-
+        console.log(data);
         //pass the currency as parameter to get network
         getNetwork(currency,currencyCode);
         $('.sender_currency').val(currency);
