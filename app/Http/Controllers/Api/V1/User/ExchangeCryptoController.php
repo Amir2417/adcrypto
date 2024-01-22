@@ -182,9 +182,7 @@ class ExchangeCryptoController extends Controller
         
         $send_wallet  = $record->data->sender_wallet->id;
         
-        $sender_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($send_wallet) {
-            $q->where("id",$send_wallet)->active();
-        })->active()->first();
+        $sender_wallet  = UserWallet::auth()->where("id",$send_wallet)->first();
     
         $available_balance  = $sender_wallet->balance - $record->data->payable_amount;
         
@@ -240,9 +238,7 @@ class ExchangeCryptoController extends Controller
         if(!$record) return back()->with(['error'  => ['Data not found!']]);
         $wallet  = $record->data->receiver_wallet->id;
 
-        $receiver_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($wallet) {
-            $q->where("id",$wallet)->active();
-        })->active()->first();
+        $receiver_wallet  = UserWallet::auth()->where("id",$wallet)->first();
 
         $balance  = $receiver_wallet->balance + $record->data->get_amount;
 
