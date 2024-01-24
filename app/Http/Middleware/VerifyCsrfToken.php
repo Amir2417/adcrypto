@@ -17,5 +17,7 @@ class VerifyCsrfToken extends Middleware
         'user/check/email',
         'user/buy-crypto/success/response/' . PaymentGatewayConst::SSLCOMMERZ,
         'user/buy-crypto/cancel/response/' . PaymentGatewayConst::SSLCOMMERZ,
+        'user/buy-crypto/success/response/' . PaymentGatewayConst::RAZORPAY,
+        'user/buy-crypto/cancel/response/' . PaymentGatewayConst::RAZORPAY,
     ];
 }

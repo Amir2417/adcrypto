@@ -665,4 +665,15 @@ class BuyCryptoController extends Controller
 
         return Response::success(['Payment Confirmation Success!'],[],200);
     }
+    /**
+     * Redirect Users for collecting payment via Button Pay (JS Checkout)
+     */
+    public function redirectBtnPay(Request $request, $gateway)
+    {
+        try{
+            return PaymentGatewayHelper::init([])->type(PaymentGatewayConst::BUY_CRYPTO)->handleBtnPay($gateway, $request->all());
+        }catch(Exception $e) {
+            return Response::error([$e->getMessage()], [], 500);
+        }
+    }
 }

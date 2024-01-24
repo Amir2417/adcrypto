@@ -42,7 +42,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //buy crypto 
-        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->middleware(['kyc.verification.guard'])->name('buy.crypto.')->group(function(){
+        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
             Route::get('index','index');
             Route::post('store','store');
             Route::post('submit','submit');
@@ -54,6 +54,9 @@ Route::prefix("user")->name("api.user.")->group(function(){
             // Automatic Gateway Response Routes
             Route::get('success/response/{gateway}','success')->withoutMiddleware(['auth:api'])->name("payment.success");
             Route::get("cancel/response/{gateway}",'cancel')->withoutMiddleware(['auth:api'])->name("payment.cancel");
+
+            //redirect with Btn Pay
+            Route::get('redirect/btn/checkout/{gateway}', 'redirectBtnPay')->name('payment.btn.pay')->withoutMiddleware(['auth:api']);
 
             Route::get('manual/input-fields','manualInputFields'); 
             Route::post("manual/submit","manualSubmit");

@@ -122,12 +122,14 @@ class PaymentGatewayConst {
                 'cancel_url'    => 'user.buy.crypto.payment.cancel',
                 'callback_url'  => 'user.buy.crypto.payment.callback',
                 'redirect_form' => 'user.buy.crypto.payment.redirect.form',
+                'btn_pay'       => 'user.buy.crypto.payment.btn.pay',
             ],
             'api'       => [
                 'return_url'    => 'api.user.buy.crypto.payment.success',
                 'cancel_url'    => 'api.user.buy.crypto.payment.cancel',
                 'callback_url'  => 'user.buy.crypto.payment.callback',
                 'redirect_form' => 'user.buy.crypto.payment.redirect.form',
+                'btn_pay'       => 'api.user.buy.crypto.payment.btn.pay',
             ],
         ];
     }
