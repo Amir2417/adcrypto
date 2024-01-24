@@ -275,7 +275,7 @@ class BuyCryptoController extends Controller
        
         try{
             $instance = PaymentGatewayHelper::init($request->all())->type(PaymentGatewayConst::BUY_CRYPTO)->gateway()->render();
-            
+           
             if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
                 $manual_handler = $instance['distribute'];
                 return $this->$manual_handler($instance);
@@ -318,6 +318,73 @@ class BuyCryptoController extends Controller
             return back()->with(['error' => [$e->getMessage()]]);
         }
         return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successful.']]);
+    }
+    /**
+     * Method for pagadito success
+     */
+    public function successPagadito(Request $request, $gateway){
+        $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
+        $temp_data = TemporaryData::where("type",PaymentGatewayConst::BUY_CRYPTO)->where("identifier",$token)->first();
+        if($temp_data->data->creator_guard == 'web'){
+            Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
+            try{
+                if(Transaction::where('callback_ref', $token)->exists()) {
+                    if(!$temp_data) return redirect()->route("user.transfer.money.payment.confirmed.page",$temp_data['data']->transaction_id)->with(['success' => [__('Transaction request sended successfully!')]]);
+                }else {
+                    if(!$temp_data) return redirect()->route('frontend.index')->with(['error' => [__("transaction_record")]]);
+                }
+
+                $update_temp_data = json_decode(json_encode($temp_data->data),true);
+                $update_temp_data['callback_data']  = $request->all();
+                $temp_data->update([
+                    'data'  => $update_temp_data,
+                ]);
+                $temp_data = $temp_data->toArray();
+                $instance = PaymentGatewayHelper::init($temp_data)->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_MULTIPLE)->responseReceive();
+            }catch(Exception $e) {
+                return back()->with(['error' => [$e->getMessage()]]);
+            }
+            return redirect()->route("user.buy.crypto.index")->with(['success' => [__('Successfully Transfer Money')]]);
+        }elseif($temp_data->data->creator_guard =='api'){
+            $creator_table = $temp_data->data->creator_table ?? null;
+            $creator_id = $temp_data->data->creator_id ?? null;
+            $creator_guard = $temp_data->data->creator_guard ?? null;
+            $api_authenticated_guards = PaymentGatewayConst::apiAuthenticateGuard();
+            if($creator_table != null && $creator_id != null && $creator_guard != null) {
+                if(!array_key_exists($creator_guard,$api_authenticated_guards)) return Response::success([__('Request user doesn\'t save properly. Please try again')],[],400);
+                $creator = DB::table($creator_table)->where("id",$creator_id)->first();
+                if(!$creator) return Response::success([__('Request user doesn\'t save properly. Please try again')],[],400);
+                $api_user_login_guard = $api_authenticated_guards[$creator_guard];
+                Auth::guard($api_user_login_guard)->loginUsingId($creator->id);
+            }
+            try{
+                if(!$temp_data) {
+                    if(Transaction::where('callback_ref',$token)->exists()) {
+                        return Response::success([__('Transaction request sended successfully!')],[],400);
+                    }else {
+                        return Response::error([__('transaction_record')],[],400);
+                    }
+                }
+                $update_temp_data = json_decode(json_encode($temp_data->data),true);
+                $update_temp_data['callback_data']  = $request->all();
+                $temp_data->update([
+                    'data'  => $update_temp_data,
+                ]);
+                $temp_data = $temp_data->toArray();
+                $instance = PaymentGatewayHelper::init($temp_data)->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_MULTIPLE)->responseReceive();
+
+                // return $instance;
+            }catch(Exception $e) {
+                return Response::error([$e->getMessage()],[],500);
+            }
+            return Response::success([__('Successfully Transfer Money')],[
+                'transaction_trx'     => $temp_data['data']->transaction_id??''
+            ],200);
+
+        }
+
+
+
     }
     /**
      * Method for buy crypto cancel
@@ -647,6 +714,7 @@ class BuyCryptoController extends Controller
 
         return back()->with(['success' => ['Payment Confirmation Success.']]);
     }
+    
     /**
      * Redirect Users for collecting payment via Button Pay (JS Checkout)
      */

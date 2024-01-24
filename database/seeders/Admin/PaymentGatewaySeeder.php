@@ -65,7 +65,7 @@ class PaymentGatewaySeeder extends Seeder
 
             array('payment_gateway_id' => '8','name' => 'Razorpay USD','alias' => 'payment-method-razorpay-usd-automatic','currency_code' => 'USD','currency_symbol' => NULL,'image' => NULL,'min_limit' => '1.00000000','max_limit' => '1000.00000000','percent_charge' => '2.00000000','fixed_charge' => '1.00000000','rate' => '37675.20000000','created_at' => '2023-11-09 17:36:05','updated_at' => '2023-11-09 17:36:05'),
             
-            array('payment_gateway_id' => '9','name' => 'Pagadito USD','alias' => 'payment-method-pagadito-usd-automatic','currency_code' => 'USD','currency_symbol' => '$','image' => 'seeder/pagadito.webp','min_limit' => '1.00000000','max_limit' => '1000.00000000','percent_charge' => '1.00000000','fixed_charge' => '1.00000000','rate' => '1.00000000','created_at' => '2024-01-08 04:11:48','updated_at' => '2024-01-08 04:12:21'),
+            array('payment_gateway_id' => '9','name' => 'Pagadito USD','alias' => 'payment-method-pagadito-usd-automatic','currency_code' => 'USD','currency_symbol' => '$','image' => 'seeder/pagadito.webp','min_limit' => '1.00000000','max_limit' => '1000.00000000','percent_charge' => '2.00000000','fixed_charge' => '1.00000000','rate' => '37675.20000000','created_at' => '2024-01-08 04:11:48','updated_at' => '2024-01-08 04:12:21'),
 
             array('payment_gateway_id' => '10','name' => 'JazzCash PKR','alias' => 'payment-method-jazzcash-pkr-manual','currency_code' => 'PKR','currency_symbol' => 'Rs','image' => NULL,'min_limit' => '1.00000000','max_limit' => '10000.00000000','percent_charge' => '3.00000000','fixed_charge' => '1.00000000','rate' => '289.38000000','created_at' => '2023-08-14 18:13:11','updated_at' => '2023-08-14 18:13:11'),
         

@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Traits\PaymentGateway\Flutterwave;
 use App\Traits\PaymentGateway\PerfectMoney;
 use App\Models\Admin\PaymentGatewayCurrency;
+use App\Traits\PaymentGateway\PagaditoTrait;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Validation\ValidationException;
 use App\Notifications\User\BuyCryptoMailNotification;
@@ -36,7 +37,7 @@ use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
 
 class PaymentGateway {
 
-    use Paypal, Gpay, CoinGate, QRPay, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney;
+    use Paypal, Gpay, CoinGate, QRPay, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney,PagaditoTrait;
 
     protected $request_data;
     protected $output;
@@ -323,6 +324,7 @@ class PaymentGateway {
         }
 
         $distributeMethod = $this->output['distribute'];
+        
         if(!method_exists($this,$distributeMethod)) throw new Exception("Something went wrong! Please try again.");
         return $this->$distributeMethod($output);
     }
@@ -420,6 +422,9 @@ class PaymentGateway {
                     break;
             case PaymentGatewayConst::PERFECT_MONEY:
                         return $response['PAYMENT_ID'] ?? "";
+                        break;
+            case PaymentGatewayConst::PAGADITO:
+                        return $response['param1'] ?? "";
                         break;
             default:
                 throw new Exception("Oops! Gateway not registered in getToken method");

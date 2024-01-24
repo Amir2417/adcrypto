@@ -47,6 +47,7 @@ class PaymentGatewayConst {
     const SSLCOMMERZ                = 'sslcommerz';
     const RAZORPAY                  = 'razorpay';
     const PERFECT_MONEY             = 'perfect-money';
+    const PAGADITO                  = 'pagadito';
 
     const REDIRECT_USING_HTML_FORM = "REDIRECT_USING_HTML_FORM";
 
@@ -74,7 +75,8 @@ class PaymentGatewayConst {
             self::FLUTTERWAVE   => 'flutterwaveInit',
             self::SSLCOMMERZ    => 'sslCommerzInit',
             self::RAZORPAY      => 'razorpayInit',
-            self::PERFECT_MONEY => 'perfectMoneyInit'
+            self::PERFECT_MONEY => 'perfectMoneyInit',
+            self::PAGADITO      => 'pagaditoInit'
         ];
 
         if($alias == null) {
@@ -99,6 +101,7 @@ class PaymentGatewayConst {
             'isSslCommerz'      => self::SSLCOMMERZ,
             'isRazorpay'        => self::RAZORPAY,
             'isPerfectMoney'    => self::PERFECT_MONEY,
+            'isPagadito'        => self::PAGADITO
         ];
     }
 

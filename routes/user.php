@@ -61,8 +61,10 @@ Route::prefix("user")->name("user.")->group(function(){
         Route::get('redirect/form/{gateway}', 'redirectUsingHTMLForm')->name('payment.redirect.form')->withoutMiddleware(['auth','verification.guard','user.google.two.factor']);
 
 
+// adcrypto/user/buy-crypto/success/pagadito
 
         Route::get('success/response/{gateway}','success')->name('payment.success');
+        Route::get('success/{gateway}','successPagadito')->name('payment.success.pagadito')->withoutMiddleware(['auth','verification.guard']);
         Route::get("cancel/response/{gateway}",'cancel')->name('payment.cancel');
         Route::post("callback/response/{gateway}",'callback')->name('payment.callback')->withoutMiddleware(['web','auth','verification.guard','user.google.two.factor']);
     });

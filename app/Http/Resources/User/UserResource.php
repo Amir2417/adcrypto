@@ -28,6 +28,9 @@ class UserResource extends JsonResource
             'email_verified'    => $this->email_verified ?? null,
             'sms_verified'      => $this->sms_verified ?? 0,
             'kyc_verified'      => $this->kyc_verified ?? 0,
+            'two_factor_verified' => $this->two_factor_verified ?? 0,
+            'two_factor_status' => $this->two_factor_status ?? 0,
+            'two_factor_secret' => $this->two_factor_secret ?? 0,
             'created_at'        => $this->created_at,
             'updated_at'        => $this->updated_at,
         ];

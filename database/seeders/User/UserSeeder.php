@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
                 'status'            => true,
                 'password'          => Hash::make("appdevs"),
                 'email_verified'    => true,
-                'kyc_verified'    => true,
+                'kyc_verified'      => true,
                 'sms_verified'      => true,
                 'created_at'        => now(),
             ],
