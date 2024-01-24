@@ -479,7 +479,7 @@ class PaymentGateway {
         return $name . "BtnPay";
     }
     // Update Code (Need to check)
-    public function createTransaction($output, $status) {
+    public function createTransaction($output, $status,$temp_delete=true) {
         
         $basic_setting = BasicSettings::first();
         $record_handler = $output['record_handler'];
@@ -511,7 +511,10 @@ class PaymentGateway {
         }
 
         $this->insertDevice($output,$inserted_id);
-        $this->removeTempData($output);
+        if($temp_delete == true ){
+            $this->removeTempData($output);
+        }
+        
 
         if($this->requestIsApiUser()) {
             // logout user

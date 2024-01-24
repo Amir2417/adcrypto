@@ -320,7 +320,7 @@ trait Razorpay  {
 
                 if(!$this->searchWithReferenceInTransaction($reference)) {
                     try{
-                        $this->createTransaction($output, global_const()::STATUS_CONFIRM_PAYMENT);
+                        $this->createTransaction($output, global_const()::STATUS_CONFIRM_PAYMENT,false);
                     }catch(Exception $e) {
                         throw new Exception($e->getMessage());
                     }
@@ -396,7 +396,7 @@ logger("temp_data".$temp_data);
                 $this->updateWalletBalance($output);
             }else {
                 // create new transaction with success
-                $this->createTransaction($output, $status);
+                $this->createTransaction($output, $status,false);
             }
             logger("Transaction Created Successfully ::");
         }
