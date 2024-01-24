@@ -338,33 +338,34 @@ trait Razorpay  {
      */
     public function razorpayCallbackResponse($response_data, $gateway)
     {
-        
+        logger("Start");
         $entity = $response_data['entity'] ?? false;
         $event  = $response_data['event'] ?? false;
 
         if($entity == "event" && $event == "order.paid") { // order response event data is valid
             // get the identifier
             $token = $response_data['payload']['order']['entity']['receipt'] ?? "";
-
+logger("token".$token);
             $temp_data = TemporaryData::where('identifier', $token)->first();
-
+logger("temp_data".$temp_data);
             // if transaction is already exists need to update status, balance & response data
             $transaction = Transaction::where('callback_ref', $token)->first();
-
+            
             $status = global_const()::STATUS_CONFIRM_PAYMENT;
 
             if($temp_data) {
                 $gateway_currency_id = $temp_data->data->currency ?? null;
                 $gateway_currency = PaymentGatewayCurrency::find($gateway_currency_id);
+                
                 if($gateway_currency) {
 
-                    $requested_amount = $temp_data['data']->amount->requested_amount ?? 0;
+                    $requested_amount = $temp_data->data->amount->requested_amount ?? 0;
                     $validator_data = [
-                        $this->currency_input_name  => $transaction->data->user_record,
+                        $this->currency_input_name  => $temp_data->data->user_record,
                     ];
 
                     $get_wallet_model = PaymentGatewayConst::registerWallet()[$temp_data->data->creator_guard];
-                    $user_wallet = $get_wallet_model::find($temp_data->data->wallet_id);
+                    $user_wallet = $get_wallet_model::find($temp_data->data->wallet->wallet_id);
                     $this->predefined_user_wallet = $user_wallet;
                     $this->predefined_guard = $user_wallet->user->modelGuardName();
                     $this->predefined_user = $user_wallet->user;

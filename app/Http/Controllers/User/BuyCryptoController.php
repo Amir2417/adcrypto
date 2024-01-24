@@ -315,7 +315,7 @@ class BuyCryptoController extends Controller
             $instance = PaymentGatewayHelper::init($temp_data)->type(PaymentGatewayConst::BUY_CRYPTO)->setProjectCurrency(PaymentGatewayConst::PROJECT_CURRENCY_MULTIPLE)->responseReceive();
             if($instance instanceof RedirectResponse) return $instance;
         }catch(Exception $e) {
-            return back()->with(['error' => [$e->getMessage()]]);
+            return redirect()->route("user.buy.crypto.index")->with(['error' => [$e->getMessage()]]);
         }
         return redirect()->route("user.buy.crypto.index")->with(['success' => ['Buy Crypto Successful.']]);
     }
@@ -408,7 +408,7 @@ class BuyCryptoController extends Controller
             
             Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
         }catch(Exception $e) {
-            
+            dd($e->getMessage());
             return redirect()->route('index');
         }
         return $this->success($request, $gateway);
