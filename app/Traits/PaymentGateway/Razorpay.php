@@ -338,6 +338,7 @@ trait Razorpay  {
      */
     public function razorpayCallbackResponse($response_data, $gateway)
     {
+        
         $entity = $response_data['entity'] ?? false;
         $event  = $response_data['event'] ?? false;
 
@@ -350,7 +351,7 @@ trait Razorpay  {
             // if transaction is already exists need to update status, balance & response data
             $transaction = Transaction::where('callback_ref', $token)->first();
 
-            $status = PaymentGatewayConst::STATUSSUCCESS;
+            $status = global_const()::STATUS_CONFIRM_PAYMENT;
 
             if($temp_data) {
                 $gateway_currency_id = $temp_data->data->currency ?? null;
@@ -359,8 +360,7 @@ trait Razorpay  {
 
                     $requested_amount = $temp_data['data']->amount->requested_amount ?? 0;
                     $validator_data = [
-                        $this->currency_input_name  => $gateway_currency->alias,
-                        $this->amount_input         => $requested_amount
+                        $this->currency_input_name  => $transaction->data->user_record,
                     ];
 
                     $get_wallet_model = PaymentGatewayConst::registerWallet()[$temp_data->data->creator_guard];
@@ -380,7 +380,7 @@ trait Razorpay  {
             $output['callback_ref']     = $token;
             $output['capture']          = $response_data;
 
-            if($transaction && $transaction->status != PaymentGatewayConst::STATUSSUCCESS) {
+            if($transaction && $transaction->status != global_const()::STATUS_CONFIRM_PAYMENT) {
 
                 $update_data                        = json_decode(json_encode($transaction->details), true);
                 $update_data['gateway_response']    = $response_data;
@@ -395,9 +395,9 @@ trait Razorpay  {
                 $this->updateWalletBalance($output);
             }else {
                 // create new transaction with success
-                $this->createTransaction($output, $status, false);
+                $this->createTransaction($output, $status);
             }
-
+            logger("Transaction Created Successfully ::");
         }
     }
 }

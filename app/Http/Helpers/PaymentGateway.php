@@ -718,6 +718,7 @@ class PaymentGateway {
         if($reference == PaymentGatewayConst::CALLBACK_HANDLE_INTERNAL) {
             $gateway = PaymentGatewayModel::gateway($gateway_name)->first();
             $callback_response_receive_method = $this->getCallbackResponseMethod($gateway);
+            
             return $this->$callback_response_receive_method($callback_data, $gateway);
         }
 
