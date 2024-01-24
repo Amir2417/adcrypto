@@ -329,9 +329,9 @@ class BuyCryptoController extends Controller
             Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
             try{
                 if(Transaction::where('callback_ref', $token)->exists()) {
-                    if(!$temp_data) return redirect()->route("user.transfer.money.payment.confirmed.page",$temp_data['data']->transaction_id)->with(['success' => [__('Transaction request sended successfully!')]]);
+                    if(!$temp_data) return redirect()->route("user.buy.crypto.index")->with(['success' => [__('Buy Crypto Successful.')]]);
                 }else {
-                    if(!$temp_data) return redirect()->route('frontend.index')->with(['error' => [__("transaction_record")]]);
+                    if(!$temp_data) return redirect()->route('index')->with(['error' => [__("transaction_record")]]);
                 }
 
                 $update_temp_data = json_decode(json_encode($temp_data->data),true);
@@ -344,7 +344,7 @@ class BuyCryptoController extends Controller
             }catch(Exception $e) {
                 return back()->with(['error' => [$e->getMessage()]]);
             }
-            return redirect()->route("user.buy.crypto.index")->with(['success' => [__('Successfully Transfer Money')]]);
+            return redirect()->route("user.buy.crypto.index")->with(['success' => [__('Buy Crypto Successful.')]]);
         }elseif($temp_data->data->creator_guard =='api'){
             $creator_table = $temp_data->data->creator_table ?? null;
             $creator_id = $temp_data->data->creator_id ?? null;
@@ -360,7 +360,7 @@ class BuyCryptoController extends Controller
             try{
                 if(!$temp_data) {
                     if(Transaction::where('callback_ref',$token)->exists()) {
-                        return Response::success([__('Transaction request sended successfully!')],[],400);
+                        return Response::success([__('Buy Crypto Successful.')],[],400);
                     }else {
                         return Response::error([__('transaction_record')],[],400);
                     }
@@ -377,13 +377,8 @@ class BuyCryptoController extends Controller
             }catch(Exception $e) {
                 return Response::error([$e->getMessage()],[],500);
             }
-            return Response::success([__('Successfully Transfer Money')],[
-                'transaction_trx'     => $temp_data['data']->transaction_id??''
-            ],200);
-
+            return Response::success([__('Buy Crypto Successful.')],200);
         }
-
-
 
     }
     /**
