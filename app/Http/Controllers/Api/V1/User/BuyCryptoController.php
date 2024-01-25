@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Traits\PaymentGateway\Gpay;
 use App\Http\Controllers\Controller;
+use App\Models\Admin\PaymentGateway;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
@@ -72,11 +73,12 @@ class BuyCryptoController extends Controller
         });
 
         
-        $payment_gateway    = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
-            $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
-            $gateway->where('status', 1);
-        })->get();
-
+        // $payment_gateway    = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
+        //     $gateway->where('slug', PaymentGatewayConst::payment_method_slug());
+        //     $gateway->where('status', 1);
+        // })->get();
+        $payment_gateway    = PaymentGateway::paymentMethod()->active()->get();
+        $payment_gateway->makeHidden(['credentials','created_at','input_fields','last_edit_by','updated_at','supported_currencies','env','slug','title','alias','code']);
         $image_paths = [
             'base_url'         => url("/"),
             'path_location'    => files_asset_path_basename("currency-flag"),
