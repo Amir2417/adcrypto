@@ -118,9 +118,7 @@ class BuyCryptoController extends Controller
             $wallet_currency    = $validated['sender_currency'];
             $amount             = $validated['amount'];
 
-            $user_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($wallet_currency) {
-                $q->where("id",$wallet_currency)->active();
-            })->active()->first();
+            $user_wallet  = UserWallet::with(['currency'])->auth()->where("id",$wallet_currency)->first();
             
             
             if(!$user_wallet){
@@ -208,9 +206,7 @@ class BuyCryptoController extends Controller
             $wallet_currency    = $validated['sender_currency'];
             $amount             = $validated['amount'];
 
-            $user_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($wallet_currency) {
-                $q->where("id",$wallet_currency)->active();
-            })->active()->first();
+            $user_wallet  = UserWallet::with(['currency'])->auth()->where("id",$wallet_currency)->first();
 
             if(!$user_wallet){
                 return Response::error(['Wallet Not Found!'],[],404);
