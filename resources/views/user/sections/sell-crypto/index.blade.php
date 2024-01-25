@@ -246,8 +246,8 @@
         $('.payment-method-rate').val(paymentMethodRate);
         $('.payment-method-min-amount').val(paymentMinAmount);
         $('.payment-method-max-amount').val(paymentMaxAmount);
-        $('.payment-method-fixed-charge').val(fixedCharge);
-        $('.payment-method-percent-charge').val(percentCharge);
+        $('.payment-method-fixed-charge').val(paymentFixedCharge);
+        $('.payment-method-percent-charge').val(paymentPercentCharge);
         $('.currency-rate').val(currencyRate);
         $('.currency-code').text(currencyCode);
     }

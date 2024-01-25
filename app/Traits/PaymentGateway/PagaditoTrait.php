@@ -90,7 +90,7 @@ trait PagaditoTrait {
 
             $Pagadito->enable_pending_payments();
             $getUrls = (object)$Pagadito->exec_trans($Pagadito->get_rs_code());
-            
+           
             if($getUrls->code == "PG1002" ){
                 $parts = parse_url($getUrls->value);
                 parse_str($parts['query'], $query);
