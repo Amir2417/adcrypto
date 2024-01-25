@@ -317,8 +317,7 @@
                             </div>
                             <div class="col-xl-12 col-lg-12 form-group">
                                 @include('admin.components.form.input',[
-                                    'label'         => __('Amount'),
-                                    'label_after'   => "<span>*</span>",
+                                    'label'         => __('Amount').'*',
                                     'name'          => 'amount',
                                     'value'         => old("amount"),
                                     'class'         => "number-input",

@@ -338,16 +338,16 @@ trait Razorpay  {
      */
     public function razorpayCallbackResponse($response_data, $gateway)
     {
-        logger("Start");
+        
         $entity = $response_data['entity'] ?? false;
         $event  = $response_data['event'] ?? false;
 
         if($entity == "event" && $event == "order.paid") { // order response event data is valid
             // get the identifier
             $token = $response_data['payload']['order']['entity']['receipt'] ?? "";
-logger("token".$token);
+
             $temp_data = TemporaryData::where('identifier', $token)->first();
-logger("temp_data".$temp_data);
+
             // if transaction is already exists need to update status, balance & response data
             $transaction = Transaction::where('callback_ref', $token)->first();
             
@@ -398,7 +398,7 @@ logger("temp_data".$temp_data);
                 // create new transaction with success
                 $this->createTransaction($output, $status,false);
             }
-            logger("Transaction Created Successfully ::");
+            logger("Transaction Created Successfully");
         }
     }
 }
