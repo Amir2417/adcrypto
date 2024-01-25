@@ -1883,13 +1883,6 @@ input::placeholder, textarea::placeholder {
   color: #343a40;
 }
 
-/* textarea {
-  display: block;
-  width: 100%;
-  display: block;
-  min-height: 220px;
-} */
-
 input,
 select,
 textarea {
