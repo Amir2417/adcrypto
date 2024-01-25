@@ -206,7 +206,8 @@
     //get network function
     function getNetwork(currency,currencyCode){
         var getNetworkURL   = "{{ setRoute('user.buy.crypto.get.currency.networks') }}";
-        $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){    
+        $.post(getNetworkURL,{currency:currency,_token:"{{ csrf_token() }}"},function(response){ 
+            
             var networkOption = '';
             if(response.data.currency.networks.length > 0){
                 $.each(response.data.currency.networks,function(index,item){

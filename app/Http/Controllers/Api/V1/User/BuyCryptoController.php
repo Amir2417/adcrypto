@@ -146,9 +146,10 @@ class BuyCryptoController extends Controller
                 return Response::error(['Please follow the transaction limit.'],[],404);
             }
             $fixed_charge   = $payment_gateway_currency->fixed_charge;
-            $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
+            $convert_amount = $amount * $rate;
+            $percent_charge = ($convert_amount / 100) * $payment_gateway_currency->percent_charge;
             $total_charge   = $fixed_charge + $percent_charge;
-            $payable_amount = ($amount * $rate) + $total_charge;
+            $payable_amount = $convert_amount + $total_charge;;
             $validated['identifier']    = Str::uuid();
             $data                       = [
                 'type'                  => PaymentGatewayConst::BUY_CRYPTO,
@@ -235,9 +236,10 @@ class BuyCryptoController extends Controller
                 return Response::error(['Please follow the transaction limit.'],[],404);
             }
             $fixed_charge   = $payment_gateway_currency->fixed_charge;
-            $percent_charge = ($amount / 100) * $payment_gateway_currency->percent_charge;
+            $convert_amount = $amount * $rate;
+            $percent_charge = ($convert_amount / 100) * $payment_gateway_currency->percent_charge;
             $total_charge   = $fixed_charge + $percent_charge;
-            $payable_amount = ($amount * $rate) + $total_charge;
+            $payable_amount = $convert_amount + $total_charge;
             
             $validated['identifier']    = Str::uuid();
             $data                       = [
@@ -296,11 +298,9 @@ class BuyCryptoController extends Controller
         }catch(Exception $e) {
             return Response::error([$e->getMessage()],[],500);
         }
-
         if($instance instanceof RedirectResponse === false && isset($instance['gateway_type']) && $instance['gateway_type'] == PaymentGatewayConst::MANUAL) {
             return Response::error([__('Can\'t submit manual gateway in automatic link')],[],400);
         }
-
         return Response::success([__('Payment gateway response successful')],[
             'redirect_url'          => $instance['redirect_url'],
             'redirect_links'        => $instance['redirect_links'],
@@ -312,7 +312,6 @@ class BuyCryptoController extends Controller
         try{
             $token = PaymentGatewayHelper::getToken($request->all(),$gateway);
             $temp_data = TemporaryData::where("identifier",$token)->first();
-
             if(!$temp_data) {
                 if(Transaction::where('callback_ref',$token)->exists()) {
                     return Response::success([__('Transaction request sended successfully!')],[],400);
@@ -320,7 +319,6 @@ class BuyCryptoController extends Controller
                     return Response::error([__('Transaction failed. Record didn\'t saved properly. Please try again')],[],400);
                 }
             }
-
             $update_temp_data = json_decode(json_encode($temp_data->data),true);
             $update_temp_data['callback_data']  = $request->all();
             $temp_data->update([
@@ -331,13 +329,9 @@ class BuyCryptoController extends Controller
 
             if($instance instanceof RedirectResponse) return $instance;
         }catch(Exception $e) {
-            
             return Response::error([$e->getMessage()],[],500);
         }
-        
-        return Response::success(["Payment successful, please go back your app"],200);
-
-        
+        return Response::success(["Payment successful, please go back your app"],200);   
     }
     /**
      * Method for buy crypto cancel
