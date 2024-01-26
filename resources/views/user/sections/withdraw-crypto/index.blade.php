@@ -99,13 +99,13 @@
                         $('.exist').removeClass('text--danger');
                     }
                     var walletRate     = response['data'].currency.rate;
-                    console.log(walletRate);
+
                     var walletCode     = response['data'].currency.code;
                     var senderRate     = selectedValue().senderRate;
                     var senderBaseRate = senderRate /senderRate;
                     var senderCode     = selectedValue().senderCurrency;
                     var rate           = walletRate / senderRate;
-                    console.log(senderRate,rate);
+                    
                     $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(senderBaseRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
 
                     $('.exist').text(`Valid Address for transaction.`).addClass('text--success');

@@ -27,7 +27,7 @@ class ExchangeCryptoController extends Controller
      */
     public function index(){
         $page_title         = "- Exchange Crypto";
-        $currencies         = UserWallet::auth()->with(['currency'])->get();
+        $currencies         = UserWallet::auth()->with(['currency'])->orderBy('id')->get();
         $transaction_fees   = TransactionSetting::where('slug','exchange')->first();
         
         return view('user.sections.exchange-crypto.index',compact(

@@ -46,6 +46,7 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <label class="exist text-start"></label>
                                 <code class="d-block mt-10 available-balance"></code>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
@@ -104,23 +105,31 @@
         });
         $(document).on('click','.max-amount',function(){
             var walletMaxBalance    = selectedVariable().senderWalletBalance;
+            if(walletMaxBalance <= 0){
+                $('.exist').text('Insufficient Balance').addClass('text--danger');
+            }else{
+                var senderCurrency      = selectedVariable().senderCurrency;
+                var senderRate          = selectedVariable().senderRate;
+                var receiverRate        = selectedVariable().receiverRate;
+                var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
+                var percentCharge       = '{{ $transaction_fees->percent_charge }}';
+                var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
+                var fixedChargeCalc     = parseFloat(fixedCharge) * senderRate;
+                var percentChargeCalc   = (walletMaxBalance / 100) * percentCharge;
+                var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
+                if(walletMaxBalance <= totalCharge){
+                    $('.exist').text('Insufficient Balance').addClass('text--danger');
+                }else{
+                    var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
+                    var sendAmount          = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
+                    var amount              = $("input[name=send_amount]").val();
 
-            var senderCurrency      = selectedVariable().senderCurrency;
-            var senderRate          = selectedVariable().senderRate;
-            var receiverRate        = selectedVariable().receiverRate;
-            var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
-            var percentCharge       = '{{ $transaction_fees->percent_charge }}';
-            var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
-            var fixedChargeCalc     = parseFloat(fixedCharge) * exchangeRate;
-            var percentChargeCalc   = (walletMaxBalance / 100) * percentCharge;
-            var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
+                    amountCalculation(amount);
+                    chargeCalculation(amount);
+                }
+                
+            }
             
-            var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
-            var sendAmount          = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
-            var amount              = $("input[name=send_amount]").val();
-
-            amountCalculation(amount);
-            chargeCalculation(amount);
         });
         $(".send-amount").keyup(function(){
             var amount              = $(this).val();
@@ -173,7 +182,7 @@
                 var receiveAmount = $(".receive-money").val(); 
                 return receiveAmount;     
             }
-            console.log(amount);
+            
             var senderRate          = selectedVariable().senderRate;
             var receiverRate        = selectedVariable().receiverRate;
             var exchangeRate        = parseFloat(receiverRate) / parseFloat(senderRate);
@@ -193,7 +202,7 @@
             var fixedChargeCalc     = parseFloat(fixedCharge) * senderRate;
             var percentChargeCalc   = (amount / 100) * percentCharge;
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
-
+           
             $(".charges").html("Network Fees :" + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
         }
         
