@@ -63,6 +63,26 @@ class WithdrawCryptoController extends Controller
         ],200);
     }
     /**
+     * Method for check valid wallet address
+     */
+    public function checkWalletAddress(Request $request){
+        $validator      = Validator::make($request->all(),[
+            'wallet_address'    => 'required',
+        ]);
+        if($validator->fails()) return Response::error($validator->errors()->all(),[]);
+        $validated = $validator->validate();
+        $user               = UserWallet::auth()->where('public_address',$validated['wallet_address'])->first();
+        if($user) return Response::error(['Can\'t withdraw/request to your own'],[],404);
+        $receiver_address   = UserWallet::with(['currency'])->where('public_address',$validated['wallet_address'])->first();
+        
+        if(!$receiver_address) return Response::error(['Receiver address not found'],[],404);
+        return Response::success(['Wallet Address is valid.'],[
+            'wallet_address'    => $receiver_address->public_address,
+            'rate'              => $receiver_address->currency->rate,
+            'code'              => $receiver_address->currency->code,
+        ],200);
+    }
+    /**
      * Method for store withdraw crypto information
      */
     public function store(Request $request){

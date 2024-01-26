@@ -80,6 +80,7 @@ Route::prefix("user")->name("api.user.")->group(function(){
         //withdraw crypto 
         Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->middleware(['kyc.verification.guard'])->group(function(){
             Route::get('index','index');
+            Route::get('check-wallet-address','checkWalletAddress');
             Route::post('store','store');
             Route::post('confirm','confirm');
         });
