@@ -83,7 +83,7 @@
                                 <label>{{ __("Crypto Address") }}<span>*</span></label>
                                 <div class="input-group">
                                     <input type="text" class="form--control" name="wallet_address" id="cryptoAddress" placeholder="{{ __("Enter or Paste Address") }}...">
-                                    <div class="input-group-text" id="paste-address" onclick="pasteClipboard()"><i class="las la-paste"></i></div>
+                                    <div class="input-group-text" id="paste-address"><i class="las la-paste"></i></div>
                                 </div>
                             </div>
                             <div class="col-xl-6 col-lg-6 form-group">
@@ -144,25 +144,21 @@
         });
     });
 </script>
-
-
 <script>
-    function pasteClipboard() {
-        
-
-        navigator.clipboard.readText()
-        .then(function(textFromClipboard) {
-          console.log(textFromClipboard);
-          $("#myInput").val(textFromClipboard);
+    document.getElementById('paste-address').addEventListener('click', function (event) {
+   
+      
+      event.preventDefault();
+      
+      navigator.clipboard.readText()
+        .then((text) => {
+         
+          document.getElementById('cryptoAddress').value = text;
         })
-        .catch(function(err) {
-            console.log('Failed to read clipboard contents: ');
-            console.error('Failed to read clipboard contents: ', err);
+        .catch((err) => {
+          console.error('Failed to read clipboard data', err);
         });
-    }
-
-    $("#pasteButton").click(pasteClipboard);
-
+    });
 </script>
 
 <script>
@@ -270,7 +266,6 @@
         if(currency == '' || currency == null){
             return false;
         }
-        console.log(data);
         //pass the currency as parameter to get network
         getNetwork(currency,currencyCode);
         $('.sender_currency').val(currency);

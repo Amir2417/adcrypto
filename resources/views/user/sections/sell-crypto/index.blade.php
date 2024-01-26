@@ -140,24 +140,7 @@
 </script>
 
 
-<script>
-    function pasteClipboard() {
-        
 
-        navigator.clipboard.readText()
-        .then(function(textFromClipboard) {
-          console.log(textFromClipboard);
-          $("#myInput").val(textFromClipboard);
-        })
-        .catch(function(err) {
-            console.log('Failed to read clipboard contents: ');
-            console.error('Failed to read clipboard contents: ', err);
-        });
-    }
-
-    $("#pasteButton").click(pasteClipboard);
-
-</script>
 
 <script>
     $(document).on('click','#custom-option',function(){

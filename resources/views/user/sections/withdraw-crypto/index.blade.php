@@ -51,8 +51,8 @@
                             <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Wallet Address") }}<span>*</span></label>
                                 <div class="input-group">
-                                    <input type="text" class="form--control checkAddress" name="wallet_address" placeholder="{{ __("Enter or Paste Address") }}...">
-                                    <div class="input-group-text"><i class="las la-paste"></i></div>
+                                    <input type="text" class="form--control checkAddress" name="wallet_address" id="cryptoAddress" placeholder="{{ __("Enter or Paste Address") }}...">
+                                    <div class="input-group-text" id="paste-address"><i class="las la-paste"></i></div>
                                     
                                 </div>
                                 <label class="exist text-start"></label>
@@ -75,6 +75,22 @@
 </div>
 @endsection
 @push('script')
+    <script>
+        document.getElementById('paste-address').addEventListener('click', function (event) {
+    
+        
+        event.preventDefault();
+        
+        navigator.clipboard.readText()
+            .then((text) => {
+            
+            document.getElementById('cryptoAddress').value = text;
+            })
+            .catch((err) => {
+            console.error('Failed to read clipboard data', err);
+            });
+        });
+    </script>
     <script>
         $('.checkAddress').on('keyup',function(e){
             var url = '{{ route('user.withdraw.crypto.check.address.exist') }}';
