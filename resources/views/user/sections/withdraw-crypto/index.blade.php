@@ -79,11 +79,15 @@
         $('.checkAddress').on('keyup',function(e){
             var url = '{{ route('user.withdraw.crypto.check.address.exist') }}';
             var value = $(this).val();
+            $('.exist').text('');
+            $('.exchange-box').addClass('d-none');
+            
             var token = '{{ csrf_token() }}';
             if ($(this).attr('name') == 'wallet_address') {
                 var data = {wallet_address:value,_token:token}
 
             }
+            
             $.post(url,data,function(response) {
                 if(response.own){
                     if($('.exist').hasClass('text--success')){
@@ -118,14 +122,12 @@
                     if($('.exist').hasClass('text--success')){
                         $('.exist').removeClass('text--success');
                     }
-                    
                     $('.exchange-rate').html('');
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
                     $('.withdraw').attr('disabled',true);
                     $('.exchange-box').removeClass('d-none');
                     return false
                 }
-
             });
         });
         $(document).ready(function () {
@@ -134,6 +136,11 @@
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();
+            var checkAddress = $('.checkAddress').val();
+            if(checkAddress == null || checkAddress == ''){
+                localStorage.removeItem("exchangeCode");
+                localStorage.removeItem("exchangeRate");
+            }
             getPreview();
             getExchangePreview();
             chargeCalculation(amount);
@@ -149,6 +156,7 @@
             var walletBalance       = selectedValue().senderBalance;
             if(walletBalance <= 0){
                 $('.wallet-amount-balance').text('Insufficient Balance').addClass('text--danger');
+                
             }else{
                 var senderRate          = selectedValue().senderRate;
                 var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
@@ -158,17 +166,14 @@
                 var totalCharge         = fixedChargeCalc + percentChargeCalc;
                 if(walletBalance <= totalCharge){
                     $('.wallet-amount-balance').text('Insufficient Balance').addClass('text--danger');
+                    
                 }else{
                     var amount              = parseFloat(walletBalance) - parseFloat(totalCharge);
                     $('.wallet-amount-balance').text('').removeClass('text--danger');
-                    $('.exchange-box').removeClass('d-none');
                     $(".amount").val(amount);
                     chargeCalculation(amount);
                 }
-                
             }
-            
-
         });
 
         // function for preview
