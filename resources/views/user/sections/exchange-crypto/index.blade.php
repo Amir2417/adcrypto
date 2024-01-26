@@ -104,6 +104,7 @@
             amountCalculation(amount);
         });
         $(document).on('click','.max-amount',function(){
+            $(".send-amount").val('');
             var walletMaxBalance    = selectedVariable().senderWalletBalance;
             if(walletMaxBalance <= 0){
                 $('.exist').text('Insufficient Balance').addClass('text--danger');
