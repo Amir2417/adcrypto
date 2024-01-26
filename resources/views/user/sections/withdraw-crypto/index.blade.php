@@ -30,7 +30,7 @@
                                     <code class="d-block text-center exchange-rate"></code>
                                 </div>
                             </div>
-                            <div class="col-xl-4 col-lg-5 form-group">
+                            <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Amount") }}<span>*</span></label>
                                 <div class="input-group max">
                                     <input type="text" class="form--control amount number-input" name="amount" placeholder="{{ __("Enter Amount") }}...">
@@ -45,9 +45,10 @@
                                         @endforeach
                                     </select>
                                 </div>
+                                <label class="wallet-amount-balance text-start"></label>
                                 <code class="d-block mt-10 available-balance"></code>
                             </div>
-                            <div class="col-xl-8 col-lg-7 form-group">
+                            <div class="col-xl-6 col-lg-6 form-group">
                                 <label>{{ __("Wallet Address") }}<span>*</span></label>
                                 <div class="input-group">
                                     <input type="text" class="form--control checkAddress" name="wallet_address" placeholder="{{ __("Enter or Paste Address") }}...">
@@ -144,17 +145,29 @@
 
         // max amount get
         $(document).on('click','.max-amount',function(){
+            $(".amount").val('');
             var walletBalance       = selectedValue().senderBalance;
-            var senderRate          = selectedValue().senderRate;
-            var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
-            var percentCharge       = '{{ $transaction_fees->percent_charge }}';
-            var fixedChargeCalc     = fixedCharge * senderRate;
-            var percentChargeCalc   = (walletBalance / 100) * percentCharge;
-            var totalCharge         = fixedChargeCalc + percentChargeCalc;
-            var amount              = parseFloat(walletBalance) - parseFloat(totalCharge);
-            $('.exchange-box').removeClass('d-none');
-            $(".amount").val(amount);
-            chargeCalculation(amount);
+            if(walletBalance <= 0){
+                $('.wallet-amount-balance').text('Insufficient Balance').addClass('text--danger');
+            }else{
+                var senderRate          = selectedValue().senderRate;
+                var fixedCharge         = '{{ $transaction_fees->fixed_charge }}';
+                var percentCharge       = '{{ $transaction_fees->percent_charge }}';
+                var fixedChargeCalc     = fixedCharge * senderRate;
+                var percentChargeCalc   = (walletBalance / 100) * percentCharge;
+                var totalCharge         = fixedChargeCalc + percentChargeCalc;
+                if(walletBalance <= totalCharge){
+                    $('.wallet-amount-balance').text('Insufficient Balance').addClass('text--danger');
+                }else{
+                    var amount              = parseFloat(walletBalance) - parseFloat(totalCharge);
+                    $('.wallet-amount-balance').text('').removeClass('text--danger');
+                    $('.exchange-box').removeClass('d-none');
+                    $(".amount").val(amount);
+                    chargeCalculation(amount);
+                }
+                
+            }
+            
 
         });
 

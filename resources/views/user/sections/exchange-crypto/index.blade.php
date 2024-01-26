@@ -124,7 +124,7 @@
                     var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
                     var sendAmount          = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
                     var amount              = $("input[name=send_amount]").val();
-
+                    $('.exist').text('').removeClass('text--danger');
                     amountCalculation(amount);
                     chargeCalculation(amount);
                 }
