@@ -2,9 +2,9 @@
 
 namespace App\Http\Middleware\Admin;
 
-use App\Providers\Admin\BasicSettingsProvider;
 use Closure;
 use Illuminate\Http\Request;
+use App\Providers\Admin\BasicSettingsProvider;
 
 class MailGuard
 {

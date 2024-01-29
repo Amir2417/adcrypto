@@ -2,11 +2,10 @@
 
 namespace App\Http\Middleware\Admin;
 
-use App\Constants\AdminRoleConst;
 use Closure;
 use Illuminate\Http\Request;
+use App\Constants\AdminRoleConst;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
 
 class RoleGuard
 {

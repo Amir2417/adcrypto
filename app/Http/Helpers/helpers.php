@@ -23,7 +23,6 @@ use Intervention\Image\Facades\Image;
 use App\Constants\PaymentGatewayConst;
 use Buglinjo\LaravelWebp\Facades\Webp;
 use App\Models\Admin\AdminNotification;
-
 use App\Providers\Admin\CurrencyProvider;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use App\Providers\Admin\BasicSettingsProvider;
@@ -256,7 +255,7 @@ function upload_files_from_path_dynamic($files_path, $destination_path, $old_fil
 
             $store_file_name = $file_name . ".webp";
             try {
-                // dd($save_path);
+                
                 if ($file_extension != "webp") {
                     $webp = Webp::make($file_instance)->save($save_path . "/" . $store_file_name);
                     array_push($output_files_name, $store_file_name);
@@ -361,7 +360,7 @@ function get_storage_image($image_name, $path_type = null, $image_type = null, $
             $image_link = $image_path . "/" . $image_name;
 
             if (file_exists(storage_path($image_link))) {
-                // if(file_exists(public_path($image_link))) {
+                
                 $image = asset($image_link);
             }
         }
@@ -643,7 +642,7 @@ function upload_files_from_path_static($files_path, $destination_path, $old_file
             $store_file_name = $file_name . ".webp";
             try {
                 if ($file_extension != "webp") {
-                    // dd($save_path);
+                   
                     $webp = Webp::make($file_instance)->save($save_path . "/" . $store_file_name);
                     array_push($output_files_name, $store_file_name);
                 } else {
@@ -651,7 +650,7 @@ function upload_files_from_path_static($files_path, $destination_path, $old_file
                     array_push($output_files_name, $file_base_name);
                 }
             } catch (Exception $e) {
-                // dd($e);
+               
                 return back()->with(['error' => ['Something went wrong! Failed to upload file.']]);
             }
         } else { // IF Other Files
@@ -978,8 +977,7 @@ function auth_admin_incomming_permission()
 {
     $incomming_access = Route::currentRouteName();
     $auth_admin_permissions = auth_admin_permissions();
-    // dd($auth_admin_permissions);
-    // dd(permission_protected());
+   
     if (auth_is_super_admin() == true) return true;
     if (!in_array($incomming_access, permission_protected())) return true;
     if (in_array($incomming_access, $auth_admin_permissions)) return true;

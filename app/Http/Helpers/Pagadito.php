@@ -94,8 +94,7 @@ class Pagadito {
             if($this->get_rs_code() == "PG1002"){
                 //get pay url.
                 return $this->response;
-                // header("Location: ".urldecode($this->get_rs_value()));
-                // exit();
+               
             }
             else{
                 return false;

@@ -1892,6 +1892,13 @@ textarea {
   color: #343a40;
 }
 
+textarea {
+  display: block;
+  width: 100%;
+  display: block;
+  min-height: 220px;
+}
+
 label {
   font-size: 14px;
   font-weight: 500;

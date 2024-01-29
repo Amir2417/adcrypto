@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\UserWallet;
-use Illuminate\Http\Request;
 use App\Models\Admin\Network;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\CurrencyHasNetwork;

@@ -11,12 +11,10 @@ use App\Models\SupportTicket;
 use App\Http\Helpers\Response;
 use App\Models\Admin\BlogCategory;
 use Illuminate\Support\Facades\DB;
-use App\Constants\NotificationConst;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Constants\SupportTicketConst;
 use App\Constants\PaymentGatewayConst;
-use App\Models\Admin\AdminNotification;
 use App\Providers\Admin\BasicSettingsProvider;
 use Pusher\PushNotifications\PushNotifications;
 

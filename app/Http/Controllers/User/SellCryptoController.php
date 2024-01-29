@@ -86,7 +86,6 @@ class SellCryptoController extends Controller
             $validated          = $validator->validate();
             $amount             = $validated['amount'];
             $wallet_currency    = $validated['sender_currency'];
-            $wallet_type        = $validated['wallet_type'];
             
             $user_wallet        = UserWallet::auth()->whereHas("currency",function($q) use($wallet_currency) {
                 $q->where("currency_id",$wallet_currency)->active();

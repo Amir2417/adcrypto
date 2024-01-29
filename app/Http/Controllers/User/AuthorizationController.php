@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use Exception;
 use Carbon\Carbon;
-use App\Models\UserKycData;
 use Illuminate\Http\Request;
 use App\Constants\GlobalConst;
 use App\Models\Admin\SetupKyc;

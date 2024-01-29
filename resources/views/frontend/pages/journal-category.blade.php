@@ -34,7 +34,6 @@
                         <div class="blog-content">
                            
                             <span class="date"><i class="las la-calendar"></i> {{ \Carbon\Carbon::parse($item->created_at)->format('F j, Y') }}</span>
-                            <span class="date"><i class="las la-calendar"></i> {{ $item->created_at }}</span>
                             <h5 class="title"><a href="{{ setRoute('journal.details',$item->slug) }}">{{ Str::words($item->data->language->$app_local->title ?? "","5","...") }}</a></h5>
                         </div>
                     </div>

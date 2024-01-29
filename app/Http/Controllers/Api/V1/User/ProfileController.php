@@ -219,7 +219,4 @@ class ProfileController extends Controller
 
         return Response::success(['Google 2FA Updated Successfully!'],[],200);
     }
-
-    
-
 }

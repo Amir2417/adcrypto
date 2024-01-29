@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\User;
 
 use Exception;
-use App\Models\User;
 use App\Models\UserWallet;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
@@ -11,7 +10,6 @@ use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
-use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;

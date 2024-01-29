@@ -4,6 +4,7 @@ namespace App\Http\Controllers\User;
 
 use Exception;
 use App\Models\User;
+use App\Models\UserWallet;
 use App\Mail\UserRegister;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
@@ -15,7 +16,6 @@ use App\Models\UserPasswordReset;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Mail\UserForgotPasswordCode;
-use App\Models\UserWallet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -39,9 +39,7 @@ class UserController extends Controller
 
         $agent = new Agent();
 
-        // $mac = exec('getmac');
-        // $mac = explode(" ", $mac);
-        // $mac = array_shift($mac);
+        
         $mac = "";
 
         $data = [
@@ -91,15 +89,13 @@ class UserController extends Controller
                 $this->createLoginLogs($user);
                 // Create wallet for user
                 foreach ($activeCurrency as $currency) {
-                    // dd($currency->code);
-                    // $walletCheck = UserWallet::where('user_id', $user->id)->where('currency_id', $currency->id)->where('currency_code', $currency->code)->count();
+                    
                     $walletCheck = UserWallet::where('user_id', $user->id)->where('currency_id', $currency->id)->count();
                     if ($walletCheck == 0) {
                         $wallet = new UserWallet();
                         $wallet->user_id = auth()->user()->id;
                         $wallet->currency_id =  $currency->id;
                         $wallet->balance = 0;
-                        // $wallet->currency_code = $currency->code;
                         $wallet->save();
                     }
                 }

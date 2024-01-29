@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers\User\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Models\Admin\Currency;
-use App\Providers\Admin\BasicSettingsProvider;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Auth\Events\Registered;
-use App\Models\User;
-use App\Models\UserWallet;
-use App\Traits\User\RegisteredUsers;
 use Exception;
+use App\Models\User;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\Controller;
+use App\Traits\User\RegisteredUsers;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
+use App\Providers\Admin\BasicSettingsProvider;
+use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller

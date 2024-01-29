@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 use App\Providers\Admin\BasicSettingsProvider;
 use App\Traits\User\RegisteredUsers;
-
 use App\Http\Resources\User\UserResource;
 use Illuminate\Support\Facades\DB;
 use App\Notifications\User\Auth\SendAuthorizationCode;

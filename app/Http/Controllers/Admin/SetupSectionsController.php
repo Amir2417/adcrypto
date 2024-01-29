@@ -37,7 +37,7 @@ class SetupSectionsController extends Controller
                 'view'          => "bannerView",
                 'update'        => "bannerUpdate",
             ],
-            'security'            => [
+            'security'          => [
                 'view'          => "securityView",
                 'update'        => "securityUpdate",
                 'itemStore'     => "securityItemStore",
@@ -65,7 +65,7 @@ class SetupSectionsController extends Controller
                 'itemUpdate'    => "statisticItemUpdate",
                 'itemDelete'    => "statisticItemDelete"
             ],
-            'call-to-action'            => [
+            'call-to-action'    => [
                 'view'          => "callToActionView",
                 'update'        => "callToActionUpdate",
             ],
@@ -73,43 +73,43 @@ class SetupSectionsController extends Controller
                 'view'          => "footerView",
                 'update'        => "footerUpdate"
             ],
-            'news-letter' =>[
-                'view'            => "newsLetterView",
-                'update'          => "newsLetterUpdate",    
+            'news-letter'       =>[
+                'view'          => "newsLetterView",
+                'update'        => "newsLetterUpdate",    
             ],
-            'about'      => [
+            'about'             => [
                 'view'          => "aboutView",
                 'update'        => "aboutUpdate",
             ],
-            'faq'         => [
-                'view'            => "faqView",
-                'update'          => "faqUpdate",
-                'itemStore'       => "faqItemStore",
-                'itemUpdate'      => "faqItemUpdate",
-                'itemDelete'      => "faqItemDelete",
+            'faq'               => [
+                'view'          => "faqView",
+                'update'        => "faqUpdate",
+                'itemStore'     => "faqItemStore",
+                'itemUpdate'    => "faqItemUpdate",
+                'itemDelete'    => "faqItemDelete",
             ],
-            'service'         => [
-                'view'            => "serviceView",
-                'update'          => "serviceUpdate",
-                'itemStore'       => "serviceItemStore",
-                'itemUpdate'      => "serviceItemUpdate",
-                'itemDelete'      => "serviceItemDelete",
+            'service'           => [
+                'view'          => "serviceView",
+                'update'        => "serviceUpdate",
+                'itemStore'     => "serviceItemStore",
+                'itemUpdate'    => "serviceItemUpdate",
+                'itemDelete'    => "serviceItemDelete",
             ],
-            'blog'        => [
-                'view'       => "blogView",
-                'update'     => "blogUpdate",
+            'blog'              => [
+                'view'          => "blogView",
+                'update'        => "blogUpdate",
             ],
-            'contact'      => [
+            'contact'           => [
                 'view'          => "contactView",
                 'update'        => "contactUpdate",
             ], 
-            'login'        => [
-                'view'       => "loginView",
-                'update'     => "loginUpdate",
+            'login'             => [
+                'view'          => "loginView",
+                'update'        => "loginUpdate",
             ],
-            'register'        => [
-                'view'       => "registerView",
-                'update'     => "registerUpdate",
+            'register'          => [
+                'view'          => "registerView",
+                'update'        => "registerUpdate",
             ],
         ];
 
@@ -762,8 +762,6 @@ class SetupSectionsController extends Controller
             'item_title_edit'     => "required|string|max:2555",
         ];
 
-        
-
         $slug    = Str::slug(SiteSectionConst::DOWNLOAD_APP_SECTION);
         $section = SiteSections::getData($slug)->first();
         if(!$section) return back()->with(['error' => ['Section not found!']]);
@@ -1227,7 +1225,7 @@ class SetupSectionsController extends Controller
         $data['language']      = $this->contentValidate($request,$basic_field_name);
         $update_data['key']    = $slug;
         $update_data['value']  = $data;
-        // dd($update_data);
+     
         try{
             SiteSections::updateOrCreate(['key'=>$slug],$update_data);
         }catch(Exception $e){

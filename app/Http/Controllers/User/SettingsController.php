@@ -10,7 +10,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -29,7 +28,6 @@ class SettingsController extends Controller
     }
     public function profileUpdate(Request $request, $username)
     {
-        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'first_name' => 'required|string',
             'last_name'  => 'required|string',
@@ -43,7 +41,7 @@ class SettingsController extends Controller
         ]);
         $validated = $validator->validate();
         $user = User::where('username', $username)->firstOrFail();
-        // dd($user);
+        
         if ($request->hasfile('image')) {
             $image = $request->file('image');
             $imageName  = Str::uuid() . '.' . $image->getClientOriginalExtension();
@@ -54,7 +52,7 @@ class SettingsController extends Controller
 
             $imageName = $user->image;
         }
-        // dd($imageName);
+       
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->mobile = $request->mobile;
@@ -63,7 +61,7 @@ class SettingsController extends Controller
         $user->update();
 
         $userProife = UserProfile::where('user_id', $user->id)->firstOrFail();
-        // dd($userProife);
+        
         $userProife->country = $request->country;
         $userProife->state = $request->state ?? null;
         $userProife->city = $request->city ?? null;

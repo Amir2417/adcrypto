@@ -2,10 +2,10 @@
 
 namespace App\Http\Middleware\Admin;
 
-use App\Constants\AdminRoleConst;
-use App\Models\Admin\AdminRole;
 use Closure;
 use Illuminate\Http\Request;
+use App\Models\Admin\AdminRole;
+use App\Constants\AdminRoleConst;
 
 class RoleDeleteGuard
 {

@@ -16,7 +16,6 @@ use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
-use App\Models\Admin\PaymentGateway;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Constants\PaymentGatewayConst;
@@ -409,7 +408,6 @@ class BuyCryptoController extends Controller
             
             Auth::guard($temp_data->data->creator_guard)->loginUsingId($temp_data->data->creator_id);
         }catch(Exception $e) {
-            dd($e->getMessage());
             return redirect()->route('index');
         }
         return $this->success($request, $gateway);
@@ -722,7 +720,5 @@ class BuyCryptoController extends Controller
             return redirect()->route('user.buy.crypto.index')->with(['error' => [$e->getMessage()]]);
         }
     }
-
-
 
 }

@@ -3,22 +3,16 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Exception;
-use App\Models\Admin\Area;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use App\Models\Admin\AppSettings;
-use App\Models\Admin\ParlourList;
 use App\Models\Admin\SiteSections;
 use App\Constants\SiteSectionConst;
 use App\Models\Admin\BasicSettings;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\AppOnboardScreens;
-use App\Models\Admin\ParlourHasService;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Admin\ParlourListHasSchedule;
 
 class SettingController extends Controller
 {

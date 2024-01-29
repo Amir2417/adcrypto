@@ -205,7 +205,6 @@ class ExchangeCryptoController extends Controller
             $record->delete();
 
         }catch(Exception $e){
-            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return redirect()->route('user.exchange.crypto.index')->with(['success' => ['Exchange Crypto Successful.']]);       

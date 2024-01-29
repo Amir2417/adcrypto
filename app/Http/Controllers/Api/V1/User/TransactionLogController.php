@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api\V1\User;
 
 use App\Models\Transaction;
-use Illuminate\Http\Request;
 use App\Http\Helpers\Response;
 use App\Http\Controllers\Controller;
 use App\Constants\PaymentGatewayConst;

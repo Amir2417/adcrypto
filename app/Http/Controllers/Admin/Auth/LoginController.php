@@ -29,22 +29,6 @@ class LoginController extends Controller
     }
 
 
-    // /**
-    //  * Get the login username to be used by the controller.
-    //  *
-    //  * @return string
-    //  */
-    // public function username($request)
-    // {
-    //     $credential = $request->credential;
-    //     if(!filter_var($credential, FILTER_VALIDATE_EMAIL)) {
-    //         $request->merge(['username' => $credential]);
-    //         return "username";
-    //     }
-    //     $request->merge(['email' => $credential]);
-    //     return "email";
-    // }
-
     /**
      * Validate the user login request.
      *
@@ -93,9 +77,6 @@ class LoginController extends Controller
 
         $agent = new Agent();
 
-        // $mac = exec('getmac');
-        // $mac = explode(" ",$mac);
-        // $mac = array_shift($mac);
         $mac = "";
 
         $data = [

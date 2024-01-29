@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('blog_categories', function (Blueprint $table) {
             $table->id();
             $table->string('slug');
-            $table->string('name');
+            $table->text('name');
             $table->boolean('status')->default(true);
             $table->timestamps();
         });

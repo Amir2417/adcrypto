@@ -5,7 +5,6 @@ namespace App\Http\Controllers\User;
 use Exception;
 use App\Models\SupportChat;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\SupportTicket;
 use App\Http\Helpers\Response;

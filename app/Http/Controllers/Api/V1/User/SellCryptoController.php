@@ -8,7 +8,6 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
-use App\Models\Admin\Network;
 use App\Models\TemporaryData;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
@@ -32,8 +31,7 @@ class SellCryptoController extends Controller
     /**
      * Method for store buy crypto index
      */
-    public function index(Request $request){
-        $user                           = auth()->user();
+    public function index(){
         $wallet_type                    = ['Inside Wallet','Outside Wallet'];
         $currencies                     = Currency::where('status',true)->orderBy('id')->get()->map(function($data){
             $networks                   = CurrencyHasNetwork::where('currency_id',$data->id)->get()->map(function($item){

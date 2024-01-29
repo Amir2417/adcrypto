@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\Admin\NotificationEvent;
 use Exception;
 use App\Models\Admin\Admin;
 use Illuminate\Http\Request;
@@ -82,8 +81,7 @@ class PushNotificationController extends Controller
 
         $methodDristribute = [
             'pusher'        => "sendNotificationWithPusher",
-            // 'firebase'      => "sendNotificationWithFirebase",
-            // 'one-signal'    => "sendNotificationWithOneSignal",
+            
         ];
 
         if(!array_key_exists($saved_method,$methodDristribute)) {

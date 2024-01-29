@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin\SiteSections;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Validator;
 
 class CookieController extends Controller

@@ -7,8 +7,6 @@ use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use App\Models\TemporaryData;
-use App\Constants\GlobalConst;
-use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
@@ -18,7 +16,6 @@ use App\Traits\PaymentGateway\Tatum;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\PaymentGateway\Paypal;
 use App\Traits\PaymentGateway\Stripe;
-use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Route;
 use App\Constants\PaymentGatewayConst;
 use App\Traits\PaymentGateway\CoinGate;
@@ -421,11 +418,11 @@ class PaymentGateway {
                     return $response['token'] ?? "";
                     break;
             case PaymentGatewayConst::PERFECT_MONEY:
-                        return $response['PAYMENT_ID'] ?? "";
-                        break;
+                    return $response['PAYMENT_ID'] ?? "";
+                    break;
             case PaymentGatewayConst::PAGADITO:
-                        return $response['param1'] ?? "";
-                        break;
+                    return $response['param1'] ?? "";
+                    break;
             default:
                 throw new Exception("Oops! Gateway not registered in getToken method");
         }

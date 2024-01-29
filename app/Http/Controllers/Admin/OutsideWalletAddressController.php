@@ -6,7 +6,6 @@ use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\Admin\Network;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
 use App\Http\Controllers\Controller;
@@ -22,7 +21,7 @@ class OutsideWalletAddressController extends Controller
      * @return view
      */
     public function index(){
-        $page_title         = "Outside Wallet Payment Receiving Address";
+        $page_title         = "Outside Wallet Address";
         $outside_wallets    = OutsideWalletAddress::with(['currency','network'])->orderBy('id','desc')->get();
 
         return view('admin.sections.outside-wallet.index',compact(
@@ -189,7 +188,6 @@ class OutsideWalletAddressController extends Controller
         try{
             $data->update($validated);
         }catch(Exception $e){
-            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
         return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet Updated successfully.']]);

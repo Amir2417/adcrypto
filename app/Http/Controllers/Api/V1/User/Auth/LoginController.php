@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api\V1\User\Auth;
 use Exception;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Constants\GlobalConst;
 use App\Http\Helpers\Response;
 use App\Models\UserAuthorization;
 use App\Traits\User\LoggedInUsers;

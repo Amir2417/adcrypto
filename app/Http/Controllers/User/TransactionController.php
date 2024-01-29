@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\User;
 
-use Exception;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Http\Helpers\Response;

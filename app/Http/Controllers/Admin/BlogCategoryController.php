@@ -10,7 +10,6 @@ use App\Models\Admin\Language;
 use App\Constants\LanguageConst;
 use App\Models\Admin\BlogCategory;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Validator;
 
 class BlogCategoryController extends Controller
@@ -100,7 +99,7 @@ class BlogCategoryController extends Controller
             'target'         =>'required|string',
         ]);
         $basic_field_name = [
-            'name'  => "required|string|max:255",
+            'name'  => "required",
         ];
 
         $category   = BlogCategory::where('id',$request->target)->first();
@@ -114,6 +113,7 @@ class BlogCategoryController extends Controller
             ];
             $category->update($update_value);
         }catch(Exception $e){
+            dd($e->getMessage());
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
         return back()->with(['success' => ['Blog Category Updated Successfully.']]);
