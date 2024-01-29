@@ -1899,6 +1899,11 @@ textarea {
   min-height: 220px;
 }
 
+.select2-search__field{
+  min-height: 20px !important;
+  line-height: 20px !important;
+}
+
 label {
   font-size: 14px;
   font-weight: 500;
