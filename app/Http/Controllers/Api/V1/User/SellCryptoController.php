@@ -481,9 +481,7 @@ class SellCryptoController extends Controller
         if(!$data) return Response::error(['Data not found!'],[],404);
         $send_wallet  = $data->data->sender_wallet->wallet_id;
         
-        $sender_wallet  = UserWallet::auth()->whereHas("currency",function($q) use ($send_wallet) {
-            $q->where("id",$send_wallet)->active();
-        })->active()->first();
+        $sender_wallet  = UserWallet::auth()->where("id",$send_wallet)->first();
         if($data->data->sender_wallet->type == global_const()::INSIDE_WALLET){
             $available_balance  = $sender_wallet->balance - $data->data->total_payable;
             $status             = global_const()::STATUS_CONFIRM_PAYMENT;
