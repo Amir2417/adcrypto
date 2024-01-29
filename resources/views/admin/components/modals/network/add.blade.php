@@ -26,7 +26,7 @@
                                 'value'         => old('name'),
                             ])
                         </div>
-                        <div class="col-xxl-12 col-xl-12 col-lg-12 form-group">
+                        <div class="col-xl-12 col-lg-12 form-group">
                             <label>{{ __("Arrival Time") }}*</label>
                             <div class="input-group">
                                 <input type="text" class="form--control number-input" placeholder="{{ __("Write Arrival Time") }}..." name="arrival_time">
