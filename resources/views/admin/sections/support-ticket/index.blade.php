@@ -82,5 +82,8 @@
 @endsection
 
 @push('script')
-    
+<!-- apexcharts js -->
+<script src="{{ asset('public/backend/js/apexcharts.js') }}"></script>
+<!-- chart js -->
+<script src="{{ asset('public/backend/js/chart.js') }}"></script> 
 @endpush
