@@ -458,10 +458,17 @@ class SellCryptoController extends Controller
             $temp_data->update($data);
         }catch(Exception $e){
             return Response::error(['Something went wrong! Please try again.'],[],404);
-        }              
+        }  
+        $image_paths = [
+            'base_url'         => url("/"),
+            'path_location'    => files_asset_path_basename("kyc-files"),
+            'default_image'    => files_asset_path_basename("default"),
+
+        ];         
         return Response::success([__("Sell Crypto Store Successfully using Outside Wallet.")],[
             'data'                      => $temp_data,
-            'details'                   => json_decode($temp_data->data->details)
+            'details'                   => json_decode($temp_data->data->details),
+            'image_paths'               => $image_paths
         ],200);
     }
     /**
