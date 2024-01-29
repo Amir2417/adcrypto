@@ -70,7 +70,7 @@
 
                                         <div class="form-group">
                                             @include('admin.components.form.input',[
-                                                'label'     => __("Heading")."(".__('For Separate Heading color use '|' sing to divide').")"."*",
+                                                'label'     => __("Heading")."(".__("For Separate Heading color use '|' sing to divide").")"."*",
                                                 'name'      => $lang_code . "_heading",
                                                 'placeholder'=> __('Heading').'...',
                                                 'value'     => old($lang_code . "_heading",$data->value->language->$lang_code->heading ?? "")
