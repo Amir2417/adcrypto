@@ -21,7 +21,7 @@
     <div class="dashboard-area">
         <div class="dashboard-item-area">
             <div class="row">
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xxxl-4 col-xxl-3 col-xl-3 col-lg-6 col-md-6 col-sm-12 mb-15">
+                <div class="col-xxxl-4 col-xxl-4 col-xl-4 col-lg-6 col-md-6 col-sm-12 mb-15">
                     <div class="dashbord-item">
                         <div class="dashboard-content">
                             <div class="left">
@@ -147,7 +147,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xxxl-6 col-xxl-3 col-xl-6 col-lg-6 mb-15">
+            <div class="col-xxl-6 col-xl-6 col-lg-6 mb-15">
                 <div class="chart-wrapper">
                     <div class="chart-area-header">
                         <h5 class="title">{{ __("User Analytics") }}</h5>
