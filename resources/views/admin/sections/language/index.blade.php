@@ -54,6 +54,7 @@
                         <tr>
                             <th>{{ __("Name") }}</th>
                             <th>{{ __("Code") }}</th>
+                            <th>{{ __("Direction") }}</th>
                             <th>{{ __("Status") }}</th>
                             <th></th>
                         </tr>
@@ -63,6 +64,7 @@
                             <tr data-item="{{ $item->editData }}">
                                 <td>{{ $item->name }}</td>
                                 <td>{{ $item->code }}</td>
+                                <td class="text-uppercase">{{ $item->dir }}</td>
                                 <td>
                                     @include('admin.components.form.switcher',[
                                         'name'          => 'status',

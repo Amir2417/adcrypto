@@ -2,16 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use App\Models\Admin\BasicSettings;
+use Exception;
 use App\Models\User;
 use App\Models\Admin\Currency;
-use App\Models\Admin\Extension;
-use App\Providers\Admin\BasicSettingsProvider;
 use App\Models\Admin\Language;
+use App\Models\Admin\Extension;
 use App\Models\UserSupportTicket;
+use App\Models\Admin\BasicSettings;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\ServiceProvider;
 use App\Providers\Admin\CurrencyProvider;
-use Exception;
+use App\Providers\Admin\BasicSettingsProvider;
 
 class CustomServiceProvider extends ServiceProvider
 {
@@ -22,7 +23,7 @@ class CustomServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->startingPoint();
     }
 
     /**
@@ -53,6 +54,13 @@ class CustomServiceProvider extends ServiceProvider
             });
         }catch(Exception $e) {
             //
+        }
+    }
+
+    public function startingPoint() {
+        if(env('PURCHASE_CODE','') == null) {
+            Config::set('starting-point.status',true);
+            Config::set('starting-point.point','/project/install/welcome');
         }
     }
 }

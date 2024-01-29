@@ -52,7 +52,9 @@
                 editModal.find("form").first().find("input[name=target]").val(oldData.id);
                 editModal.find("input[name=edit_name]").val(oldData.name);
                 editModal.find("input[name=edit_code]").val(oldData.code);
+                editModal.find("input[name=edit_dir]").val(oldData.dir);
 
+                refreshSwitchers("#language-edit");
                 openModalBySelector("#language-edit");
             });
         </script>

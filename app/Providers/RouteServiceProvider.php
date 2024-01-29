@@ -59,6 +59,8 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('api')
                     ->prefix('api/v1')
                     ->group(base_path('routes/api/v1/global.php'));
+
+            $this->mapInstallerRoute();
         });
     }
 
@@ -72,5 +74,18 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+    }
+
+
+    /**
+     * Configure/Place installer routes.
+     *
+     * @return void
+     */
+    protected function mapInstallerRoute() {
+        if(file_exists(base_path('resources/installer/src/routes/web.php'))) {
+            Route::middleware('web')
+                ->group(base_path('resources/installer/src/routes/web.php'));
+        }
     }
 }

@@ -461,6 +461,7 @@ class SellCryptoController extends Controller
         }              
         return Response::success([__("Sell Crypto Store Successfully using Outside Wallet.")],[
             'data'                      => $temp_data,
+            'details'                   => json_decode($temp_data->data->details)
         ],200);
     }
     /**

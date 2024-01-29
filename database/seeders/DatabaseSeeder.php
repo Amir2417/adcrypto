@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        //fresh
+        // fresh
         // $this->call([
         //     AdminSeeder::class,
         //     RoleSeeder::class,
@@ -58,7 +58,7 @@ class DatabaseSeeder extends Seeder
         //     OutsideWalletAddressSeeder::class
         // ]);
 
-        // demo
+        // // demo
         $this->call([
             AdminSeeder::class,
             RoleSeeder::class,

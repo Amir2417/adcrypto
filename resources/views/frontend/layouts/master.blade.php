@@ -17,7 +17,7 @@
     @include('partials.header-asset')
     @stack('css')
 </head>
-<body>
+<body class="{{ get_default_language_dir() }}">
 
 
     

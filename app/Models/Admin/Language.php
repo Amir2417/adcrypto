@@ -32,6 +32,7 @@ class Language extends Model
             'id'        => $this->id,
             'name'      => $this->name,
             'code'      => $this->code,
+            'dir'       => $this->dir,
         ];
 
         return json_encode($data);
