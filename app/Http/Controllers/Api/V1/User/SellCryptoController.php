@@ -45,6 +45,16 @@ class SellCryptoController extends Controller
                     'arrival_time'      => $item->network->arrival_time
                 ];
             });
+
+            $wallet                     = UserWallet::auth()->where('currency_id',$data->id)->get()->map(function($item){
+                return [
+                    'id'                => $item->id,
+                    'user_id'           => $item->user_id,
+                    'currency_id'       => $item->currency_id,
+                    'public_address'    => $item->public_address,
+                    'balance'           => $item->balance
+                ];
+            });
             
             return [
                 'id'                    => $data->id,
@@ -54,11 +64,9 @@ class SellCryptoController extends Controller
                 'flag'                  => $data->flag,
                 'rate'                  => $data->rate,
                 'networks'              => $networks,
+                'wallet'                => $wallet
             ];
         });
-
-        
-        $user_wallet        = UserWallet::where('user_id',$user->id)->get();
         $payment_gateway    = PaymentGatewayCurrency::whereHas('gateway', function ($gateway) {
             $gateway->where('slug', PaymentGatewayConst::money_out_slug());
             $gateway->where('status', 1);
@@ -82,9 +90,8 @@ class SellCryptoController extends Controller
 
         return Response::success([__("Sell Crypto Data")],[
             'wallet_type'                   => $wallet_type,
-            'outside_wallet_address'        => $outside_wallet_address,
             'currencies'                    => $currencies,
-            'user_wallet'                   => $user_wallet,
+            'outside_wallet_address'        => $outside_wallet_address,
             'payment_gateway'               => $payment_gateway,
             'currency_image_paths'          => $image_paths,
             'payment_image_paths'           => $payment_image_paths,
