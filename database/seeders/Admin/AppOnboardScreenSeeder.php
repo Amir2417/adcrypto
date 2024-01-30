@@ -4,7 +4,6 @@ namespace Database\Seeders\Admin;
 
 use Illuminate\Database\Seeder;
 use App\Models\Admin\AppOnboardScreens;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class AppOnboardScreenSeeder extends Seeder
 {

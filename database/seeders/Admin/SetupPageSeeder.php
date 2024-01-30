@@ -3,9 +3,7 @@
 namespace Database\Seeders\Admin;
 
 use App\Models\Admin\SetupPage;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Str;
 
 class SetupPageSeeder extends Seeder
 {

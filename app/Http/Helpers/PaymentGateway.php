@@ -10,8 +10,6 @@ use App\Models\TemporaryData;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
-use App\Traits\PaymentGateway\Gpay;
-use App\Traits\PaymentGateway\QRPay;
 use App\Traits\PaymentGateway\Tatum;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\PaymentGateway\Paypal;
@@ -34,7 +32,7 @@ use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
 
 class PaymentGateway {
 
-    use Paypal, Gpay, CoinGate, QRPay, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney,PagaditoTrait;
+    use Paypal, CoinGate, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney,PagaditoTrait;
 
     protected $request_data;
     protected $output;

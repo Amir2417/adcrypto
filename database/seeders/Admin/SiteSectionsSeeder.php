@@ -3,10 +3,7 @@
 namespace Database\Seeders\Admin;
 
 use App\Models\Admin\SiteSections;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Constants\SiteSectionConst;
-use Illuminate\Support\Str;
 
 class SiteSectionsSeeder extends Seeder
 {

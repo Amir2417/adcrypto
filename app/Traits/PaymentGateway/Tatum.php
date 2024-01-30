@@ -5,7 +5,6 @@ namespace App\Traits\PaymentGateway;
 use Exception;
 use Illuminate\Support\Str;
 use App\Models\TemporaryData;
-use App\Constants\GlobalConst;
 use App\Models\Admin\CryptoAsset;
 use Illuminate\Support\Facades\DB;
 use App\Http\Helpers\PaymentGateway;

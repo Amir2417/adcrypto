@@ -5,7 +5,6 @@ namespace App\Notifications\Admin;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class WithdrawCryptoRejectMailNotification extends Notification

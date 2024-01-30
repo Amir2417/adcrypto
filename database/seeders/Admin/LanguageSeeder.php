@@ -4,7 +4,6 @@ namespace Database\Seeders\Admin;
 
 use App\Models\Admin\Language;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class LanguageSeeder extends Seeder
 {

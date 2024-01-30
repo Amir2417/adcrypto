@@ -146,6 +146,7 @@ class SettingController extends Controller
             return [
                 'id'            => $data->id,
                 'message'       => $data->message,
+                'created_at'    => $data->created_at
             ]; 
         });
         return Response::success([__('Notification Data Fetch Successfuly.')],[

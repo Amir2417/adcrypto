@@ -4,7 +4,6 @@ namespace Database\Seeders\Admin;
 
 use App\Models\Admin\Currency;
 use App\Models\Admin\CurrencyHasNetwork;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CurrencySeeder extends Seeder

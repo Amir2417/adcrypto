@@ -257,10 +257,7 @@
                                         'title'     => __("Onboard Screen"),
                                         'route'     => "admin.app.settings.onboard.screens",
                                     ],
-                                    [
-                                        'title'     => __("App URLs"),
-                                        'route'     => "admin.app.settings.urls", 
-                                    ],
+                                    
                                 ],
                             ],
                         ],

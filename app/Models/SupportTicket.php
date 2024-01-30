@@ -38,12 +38,7 @@ class SupportTicket extends Model
             'foreign'   => "",
         ];
 
-        if(get_auth_guard() == 'agent') {
-            $data = [
-                'class'     => Agent::class,
-                'foreign'   => "agent_id",
-            ];
-        }else if(get_auth_guard() == 'web') {
+        if(get_auth_guard() == 'web') {
             $data = [
                 'class'     => User::class,
                 'foreign'   => "user_id",
@@ -61,9 +56,7 @@ class SupportTicket extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function agent() {
-        return $this->belongsTo(Agent::class);
-    }
+    
 
     public function getCreatorAttribute() {
         if($this->type == SupportTicketConst::TYPE_USER) {

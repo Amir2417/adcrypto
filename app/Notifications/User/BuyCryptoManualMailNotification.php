@@ -5,7 +5,6 @@ namespace App\Notifications\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Carbon;
 use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
 class BuyCryptoManualMailNotification extends Notification

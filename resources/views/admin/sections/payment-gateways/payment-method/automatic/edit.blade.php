@@ -26,7 +26,6 @@
 @endsection
 
 @section('content')
-{{-- @dd($gateway->isTatum($gateway)) --}}
     <form action="{{ setRoute('admin.payment.gateway.update',['payment-method','automatic',$gateway->alias]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method("PUT")
@@ -217,7 +216,7 @@
         }
 
         function generateInputName(currency,keyword) {
-            // return "gateway_currency['"+currency+"']['"+keyword+"']";
+           
             return 'gateway_currency['+currency+']['+keyword+']';
         }
     </script>

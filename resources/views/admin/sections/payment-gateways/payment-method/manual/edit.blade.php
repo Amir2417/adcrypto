@@ -280,8 +280,3 @@
     </form>
 @endsection
 
-@push('script')
-    <script>
-
-    </script>
-@endpush

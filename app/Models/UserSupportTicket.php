@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Constants\SupportTicketConst;
-use App\Models\Admin\Admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

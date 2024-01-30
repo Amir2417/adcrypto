@@ -113,7 +113,7 @@
                             @endif
                         </li>
                         <li>{{ __("Remark") }} <span>{{ $transaction->remark ?? 'N/A' }}</span></li>
-                        @if ($transaction->reject_reason != null)
+                        @if ($transaction->status == global_const()::STATUS_REJECT)
                         <li>{{ __("Reject Reason") }} <span>{{ $transaction->reject_reason ?? 'N/A' }}</span></li>
                         @endif
                     </ul>

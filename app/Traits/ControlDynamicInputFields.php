@@ -2,9 +2,6 @@
 
 namespace App\Traits;
 
-use App\Models\Admin\Currency;
-use App\Models\UserWallet;
-use Exception;
 
 trait ControlDynamicInputFields {
     protected $file_store_location = "kyc-files";

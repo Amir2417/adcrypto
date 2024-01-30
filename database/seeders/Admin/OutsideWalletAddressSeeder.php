@@ -3,7 +3,6 @@
 namespace Database\Seeders\Admin;
 
 use App\Models\Admin\OutsideWalletAddress;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class OutsideWalletAddressSeeder extends Seeder

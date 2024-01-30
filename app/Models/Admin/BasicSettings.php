@@ -26,7 +26,5 @@ class BasicSettings extends Model
     ];
 
 
-    public function mailConfig() {
-        
-    }
+   
 }

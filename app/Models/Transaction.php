@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
 use App\Models\Admin\PaymentGateway;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Admin\PaymentGatewayCurrency;

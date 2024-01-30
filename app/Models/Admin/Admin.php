@@ -2,7 +2,6 @@
 
 namespace App\Models\Admin;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Constants\AdminRoleConst;
 use App\Notifications\Admin\Auth\ResetPassword;

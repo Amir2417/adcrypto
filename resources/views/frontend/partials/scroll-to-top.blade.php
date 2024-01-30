@@ -3,7 +3,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 <a href="#" class="scrollToTop">
     <i class="las la-angle-up"></i>
-    <small>top</small>
+    <small>{{ __("top") }}</small>
 </a>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     End Scroll-To-Top
