@@ -143,6 +143,11 @@
 
 
 <script>
+    var minAmountText   = "{{ __('Min Amount') }}";
+    var maxAmountText   = "{{ __('Max Amount') }}";
+    var limitText       = "{{ __('Limit') }}";
+    var rateText        = "{{ __('Rate') }}";
+    var networkFeesText        = "{{ __('Network Fees') }}";
     $(document).on('click','#custom-option',function(){
         var selectedCurrency = JSON.parse(currencySelectActiveItem("input[name=sender_currency]"))
         var currency         = selectedCurrency.id;
@@ -220,11 +225,11 @@
         var amount              = $('.amount').val();
         var percentCharge      = (amount / 100) * paymentPercentCharge;
         var totalCharge         = fixedCharge + percentCharge;
-        $('.min-amount').text('Min Amount :' + totalMinAmount.toFixed(10) + " " + currencyCode);
-        $('.max-amount').text('Max Amount :' + totalMaxAmount.toFixed(10) + " " + currencyCode);
-        $('.charge').text('Network Fees :' + totalCharge.toFixed(10) + " " + currencyCode);
+        $('.min-amount').text(minAmountText + ': ' + totalMinAmount.toFixed(10) + " " + currencyCode);
+        $('.max-amount').text(maxAmountText + ': ' + totalMaxAmount.toFixed(10) + " " + currencyCode);
+        $('.charge').text(networkFeesText + ': ' + totalCharge.toFixed(10) + " " + currencyCode);
         var exchangeRate        = parseFloat(paymentMethodRate) / parseFloat(currencyRate);
-        $('.exchange-rate').text("Rate :" + " " + "1" + " " + currencyCode + " " + "=" + " " + exchangeRate.toFixed(10) + " " + paymentMethodCode);
+        $('.exchange-rate').text(rateText + ': ' + " " + "1" + " " + currencyCode + " " + "=" + " " + exchangeRate.toFixed(10) + " " + paymentMethodCode);
         $('.payment-method-code').val(paymentMethodCode);
         $('.payment-method-rate').val(paymentMethodRate);
         $('.payment-method-min-amount').val(paymentMinAmount);

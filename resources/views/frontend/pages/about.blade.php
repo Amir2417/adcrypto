@@ -13,9 +13,7 @@
 @endpush
 
 @section('content') 
-@include('frontend.partials.header',[
-    'class'     => "two",
-])
+
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start About
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->

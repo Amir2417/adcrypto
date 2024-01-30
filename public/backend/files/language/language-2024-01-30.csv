@@ -12,11 +12,11 @@ Send Message,Send Message,Enviar mensaje,أرسل رسالة
 Enter Name,Enter Name,Ingrese su nombre,أدخل الاسم
 Enter Email,Enter Email,Ingrese correo electrónico,أدخل البريد الإلكتروني
 Write Here,Write Here,Escribe aquí,اكتب هنا
-Contact Request successfully send!,Contact Request successfully send!,¡Contacto Solicitud de contactar con éxito!,طلب الاتصال بنجاح إرسال!
+Contact Request successfully send!,Contact Request successfully send!,¡Contacto Solicitud de contacto con éxito!,طلب الاتصال بنجاح إرسال!
 Subscription successful!,Subscription successful!,Suscripción exitosa!,اشتراك ناجح!
 Language Switch to English,Language Switch to English,El idioma cambia al inglés,تحول اللغة إلى اللغة الإنجليزية
 Language Switch to Spanish,Language Switch to Spanish,El idioma cambia al español,تحول اللغة إلى الإسبانية
-Language Switch to Arabic,Language Switch to Arabic,Idioma cambia al árabe,تحول اللغة إلى اللغة العربية
+Language Switch to Arabic,Language Switch to Arabic,El idioma cambia al árabe,تحول اللغة إلى اللغة العربية
 Enter Password,Enter Password,Introducir la contraseña,أدخل كلمة المرور
 Forgot Password?,Forgot Password?,¿Has olvidado tu contraseña?,هل نسيت كلمة السر؟
 Login Now,Login Now,Inicia sesión ahora,تسجيل الدخول الآن
@@ -39,8 +39,8 @@ Didn't get the code?,Didn't get the code?,¿No obtuvo el código?,لم تحصل 
 Resend,Resend,Revender,إعادة إرسال
 Mail Resend Success!,Mail Resend Success!,Correo de reiniciar el éxito!,البريد إعادة تقديم النجاح!
 Please verify your mail address. Check your mail inbox to get verification code,Please verify your mail address. Check your mail inbox to get verification code,Verifique su dirección de correo. Verifique su bandeja de entrada de correo para obtener el código de verificación,يرجى التحقق من عنوان البريد الخاص بك. تحقق من صندوق البريد الخاص بك للحصول على رمز التحقق
-Account successfully verified,Account successfully verified,Cuenta verificada con éxito,تم التحقق من الحساب بنجاح
-Reset Your Forgotten Password?,Reset Your Forgotten Password?,Restablecer su contraseña olvidada?,أعد تعيين كلمة المرور المنسية؟
+Account successfully verified,Account successfully verified,Cuenta verificada con éxito,الحساب تم التحقق منه بنجاح
+Reset Your Forgotten Password?,Reset Your Forgotten Password?,Restablecer su contraseña olvidada?,أعد ضبط كلمة المرور المنسية؟
 Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,Take control of your account by resetting your password. Our password recovery page guides you through the necessary steps to securely reset your password.,Tome el control de su cuenta restableciendo su contraseña. Nuestra página de recuperación de contraseña lo guía a través de los pasos necesarios para restablecer de forma segura su contraseña.,تحكم في حسابك عن طريق إعادة تعيين كلمة المرور الخاصة بك. توجهك صفحة استرداد كلمة المرور الخاصة بنا من خلال الخطوات اللازمة لإعادة تعيين كلمة المرور الخاصة بك بشكل آمن.
 Send OTP,Send OTP,Enviar OTP,إرسال OTP
 Verification code sent to your email address.,Verification code sent to your email address.,Código de verificación enviado a su dirección de correo electrónico.,تم إرسال رمز التحقق إلى عنوان بريدك الإلكتروني.
@@ -50,7 +50,7 @@ Enter New Password,Enter New Password,Ingrese nueva clave,أدخل كلمة مر
 Enter Confirm Password,Enter Confirm Password,Ingrese Confirmar contraseña,أدخل تأكيد كلمة المرور
 Reset,Reset,Reiniciar,إعادة ضبط
 Password reset success. Please login with new password.,Password reset success. Please login with new password.,El éxito de restablecimiento de contraseña. Inicie sesión con una nueva contraseña.,إعادة تعيين كلمة المرور النجاح. يرجى تسجيل الدخول بكلمة مرور جديدة.
-My Wallets,My Wallets,Mis billeteras,محافظتي
+My Wallets,My Wallets,Mis billeteras,محافظ
 View More,View More,Ver más,عرض المزيد
 Buy Crypto Chart,Buy Crypto Chart,Comprar gráfico criptográfico,شراء مخطط التشفير
 Sell Crypto Chart,Sell Crypto Chart,Vender gráfico de cifrado,بيع مخطط التشفير
@@ -97,10 +97,10 @@ Enter Number,Enter Number,Ingresar número,أدخل رقم
 Profile successfully updated!,Profile successfully updated!,Perfil actualizado con éxito!,تم تحديث الملف الشخصي بنجاح!
 Password successfully updated,Password successfully updated,Contraseña actualizada correctamente,تم تحديث كلمة المرور بنجاح
 The password must be at least 6 characters.,The password must be at least 6 characters.,La contraseña debe tener al menos 6 caracteres.,يجب أن تكون كلمة المرور 6 أحرف على الأقل.
-Current password didn\'t match,Current password didn\'t match,La contraseña actual no coincidía,كلمة المرور الحالية لم تتطابق
+Current password didn\'t match,Current password didn\'t match,La contraseña actual no coincidía,كلمة المرور الحالية لم تطابق
 Something went wrong! Please try again,Something went wrong! Please try again,¡Algo salió mal! Inténtalo de nuevo,هناك خطأ ما! حاول مرة اخرى
 The firstname field is required.,The firstname field is required.,Se requiere el campo Nombre FirstName.,حقل الاسم الأول مطلوب.
-The lastname field is required.,The lastname field is required.,Se requiere el campo LastName.,حقل اسم LastName مطلوب.
+The lastname field is required.,The lastname field is required.,Se requiere el campo LastName.,مطلوب حقل الاسم الأخير.
 The current password field is required.,The current password field is required.,Se requiere el campo de contraseña actual.,حقل كلمة المرور الحالي مطلوب.
 The password field is required.,The password field is required.,Se requiere el campo de contraseña.,حقل كلمة المرور مطلوب.
 The name field is required.,The name field is required.,Se requiere el campo de nombre.,حقل الاسم مطلوب.
@@ -132,7 +132,7 @@ Enter Amount,Enter Amount,Ingresar la cantidad,أدخل المبلغ
 Payment Method,Payment Method,Método de pago,طريقة الدفع او السداد
 Continue,Continue,Continuar,يكمل
 The amount field is required.,The amount field is required.,Se requiere el campo de la cantidad.,حقل المبلغ مطلوب.
-Wallet not found!,Wallet not found!,Billetera no encontrada!,لم يتم العثور على محفظة!
+Wallet not found!,Wallet not found!,¡Billetera no encontrada!,لم يتم العثور على محفظة!
 Payment Method not found!,Payment Method not found!,¡Método de pago no encontrado!,طريقة الدفع لم يتم العثور عليها!
 Please follow the transaction limit.,Please follow the transaction limit.,Siga el límite de transacción.,يرجى اتباع حد المعاملة.
 Buy Crypto Preview,Buy Crypto Preview,Comprar una vista previa de Crypto,شراء معاينة التشفير
@@ -158,10 +158,10 @@ Qr Code,Qr Code,Código QR,رمز الاستجابة السريعة
 Payment Received Successfully!,Payment Received Successfully!,¡Pago recibido con éxito!,تم استلام الدفع بنجاح!
 Txn Hash,Txn Hash,TXN Hash,تجزئة TXN
 Preview_WEB,Preview_WEB,Preview_web,معاينة
-Exchange Rate_WEB,Exchange Rate_WEB,Tipo de cambio_web,سعر الصرف
+Exchange Rate_WEB,Exchange Rate_WEB,Tasa de cambio_web,سعر الصرف
 Fees_WEB,Fees_WEB,Tarifas_web,الرسوم
-Total Payable_WEB,Total Payable_WEB,Total PAGABLE_WEB,إجمالي payable_web
-You Will Get_WEB,You Will Get_WEB,Gette_web,سوف get_web
+Total Payable_WEB,Total Payable_WEB,TOTAL PAGABLE_WEB,إجمالي payable_web
+You Will Get_WEB,You Will Get_WEB,Gette_web,سوف تحصل _web
 Transaction hash is required for verify,Transaction hash is required for verify,Se requiere hash de transacción para verificar,تجزئة المعاملة مطلوبة للتحقق
 Transaction hash is not valid! Please input a valid hash,Transaction hash is not valid! Please input a valid hash,¡La transacción hash no es válida! Ingrese un hash válido,تجزئة المعاملة غير صالحة! الرجاء إدخال تجزئة صالحة
 Insufficient amount added. Please contact with system administrator,Insufficient amount added. Please contact with system administrator,Cantidad insuficiente agregada. Póngase en contacto con el administrador del sistema,المبلغ غير الكافي المضافة. يرجى الاتصال بمسؤول النظام
@@ -308,7 +308,7 @@ How Its Work Section,How Its Work Section,Cómo su sección de trabajo,كيف ق
 Download App Section,Download App Section,Descargar la sección de aplicaciones,تنزيل قسم التطبيق
 Statistic Section,Statistic Section,Sección estadística,قسم الإحصاء
 Call To Action Section,Call To Action Section,Sección de llamada a la acción,قسم دعوة إلى الإجراءات
-Footer Section,Footer Section,Sección de pies,قسم تذييل
+Footer Section,Footer Section,Sección de fútbol,قسم تذييل
 News Letter Section,News Letter Section,Sección de la carta de noticias,قسم الرسائل الإخبارية
 About Section,About Section,Acerca de la sección,حول القسم
 Faq Section,Faq Section,Sección de preguntas frecuentes,قسم الأسئلة الشائعة
@@ -369,7 +369,7 @@ The arrival time field is required.,The arrival time field is required.,Se requi
 The coin field is required.,The coin field is required.,Se requiere el campo de la moneda.,حقل العملة مطلوب.
 Network already exists,Network already exists,La red ya existe,شبكة موجودة بالفعل
 Network Added Successfully,Network Added Successfully,Red agregada con éxito,أضافت الشبكة بنجاح
-The edit_coin field is required.,The edit_coin field is required.,Se requiere el campo edit_coin.,حقل EDIT_Coin مطلوب.
+The edit_coin field is required.,The edit_coin field is required.,Se requiere el campo edit_coin.,حقل edit_coin مطلوب.
 The edit_name field is required.,The edit_name field is required.,Se requiere el campo edit_name.,حقل EDIT_NAME مطلوب.
 The edit_arrival_time field is required.,The edit_arrival_time field is required.,Se requiere el campo edit_arrival_time.,حقل edit_arrival_time مطلوب.
 Network updated successfully!,Network updated successfully!,Network actualizada con éxito!,تم تحديث الشبكة بنجاح!
@@ -392,7 +392,7 @@ Currency status updated successfully!,Currency status updated successfully!,¡Es
 Currency not found!,Currency not found!,¡Moneda no encontrada!,العملة لم يتم العثور عليها!
 The currency name field is required.,The currency name field is required.,Se requiere el campo Nombre de la moneda.,حقل اسم العملة مطلوب.
 The currency code field is required.,The currency code field is required.,Se requiere el campo de código de divisas.,حقل رمز العملة مطلوب.
-The currency symbol field is required.,The currency symbol field is required.,Se requiere el campo de símbolo de moneda.,مطلوب حقل رمز العملة.
+The currency symbol field is required.,The currency symbol field is required.,Se requiere el campo de símbolo de divisas.,مطلوب حقل رمز العملة.
 The currency rate field is required.,The currency rate field is required.,Se requiere el campo de tasa de divisas.,حقل معدل العملة مطلوب.
 The currrency option field is required.,The currrency option field is required.,Se requiere el campo de la opción Currrency.,مطلوب حقل خيار العملات.
 Image file upload faild!,Image file upload faild!,Archivo de imagen Carga Faild!,ملف الصورة تحميل فشل!
@@ -407,7 +407,7 @@ currency?,currency?,¿divisa?,عملة؟
 Withdraw Crypto Charges,Withdraw Crypto Charges,Retirar cargos criptográficos,سحب رسوم التشفير
 Exchange Crypto Charges,Exchange Crypto Charges,Intercambiar cargos criptográficos,تبادل رسوم التشفير
 Charges,Charges,Cargos,رسوم
-Fixed Charge,Fixed Charge,Cargo fijo,تهمة ثابتة
+Fixed Charge,Fixed Charge,Cargo fijo,شحنة ثابتة
 Percent Charge,Percent Charge,Porcentaje de cargo,تكلفة في المئة
 Range,Range,Rango,يتراوح
 Minimum Amount,Minimum Amount,Monto minimo,الحد الأدنى للمبلغ
@@ -416,7 +416,7 @@ Transaction charge not found!,Transaction charge not found!,¡Cargo por transacc
 Charge Updated Successfully!,Charge Updated Successfully!,¡Cargo actualizado con éxito!,تم تحديث الرسوم بنجاح!
 Outside Wallet Address,Outside Wallet Address,Dirección de billetera exterior,عنوان المحفظة الخارجية
 Add Outside Wallet Address,Add Outside Wallet Address,Agregar dirección de billetera exterior,أضف عنوان المحفظة الخارجية
-Currency Name,Currency Name,Nombre de la moneda,اسم العملة
+Currency Name,Currency Name,Nombre de moneda,اسم العملة
 P. Address,P. Address,P. Dirección,P. العنوان
 this Outside Wallet?,this Outside Wallet?,esta billetera exterior?,هذه المحفظة الخارجية؟
 Option,Option,Opción,خيار
@@ -432,7 +432,7 @@ Field Name,Field Name,Nombre del campo,اسم الحقل
 Data fetch successfully,Data fetch successfully,Los datos obtienen con éxito,جلب البيانات بنجاح
 The currency field is required.,The currency field is required.,Se requiere el campo de divisas.,حقل العملة مطلوب.
 The public address field is required.,The public address field is required.,Se requiere el campo de la dirección pública.,حقل العنوان العام مطلوب.
-Outside Address already exists!,Outside Address already exists!,¡La dirección exterior ya existe!,عنوان خارج موجود بالفعل!
+Outside Address already exists!,Outside Address already exists!,¡La dirección exterior ya existe!,العنوان الخارجي موجود بالفعل!
 Outside wallet created successfully.,Outside wallet created successfully.,Fuera de la billetera creada con éxito.,خلق محفظة خارجية بنجاح.
 Outside Wallet Edit,Outside Wallet Edit,Edición de billetera exterior,تحرير المحفظة الخارجية
 Collect Data,Collect Data,Recolectar datos,اجمع بيانات
@@ -447,8 +447,8 @@ Outside Wallet status updated successfully!,Outside Wallet status updated succes
 Required,Required,Requerido,مطلوب
 Confirm Buy Crypto Logs,Confirm Buy Crypto Logs,Confirmar comprar registros de cifrado,تأكيد شراء سجلات التشفير
 Pending Buy Crypto Logs,Pending Buy Crypto Logs,Pendiente comprar registros de cifrado,في انتظار شراء سجلات التشفير
-All Buy Crypto Logs,All Buy Crypto Logs,Todos compran registros de cifrado,جميع شراء سجلات التشفير
-Rejected Buy Crypto Logs,Rejected Buy Crypto Logs,Rechazados Comprar registros de cifrado,رفض شراء سجلات التشفير
+All Buy Crypto Logs,All Buy Crypto Logs,Todos compran registros de cifrado,كل شراء سجلات التشفير
+Rejected Buy Crypto Logs,Rejected Buy Crypto Logs,Rechazado Comprar registros de cifrado,رفض شراء سجلات التشفير
 Buy Crypto Log Details,Buy Crypto Log Details,Comprar detalles de registro de cifrado,شراء تفاصيل سجل التشفير
 Sender Information,Sender Information,Información del remitente,معلومات المرسل
 Wallet Name,Wallet Name,Nombre de billetera,اسم المحفظة
@@ -476,14 +476,14 @@ Rejected Exchange Crypto Logs,Rejected Exchange Crypto Logs,Registros de cripto 
 All Sell Crypto Logs,All Sell Crypto Logs,Todos venden registros de cifrado,جميع بيع سجلات التشفير
 Confirm Sell Crypto Logs,Confirm Sell Crypto Logs,Confirmar vender registros de cifrado,تأكيد بيع سجلات التشفير
 Sell Crypto Log Details,Sell Crypto Log Details,Vender detalles del registro de cifrado,بيع تفاصيل سجل التشفير
-Pending Sell Crypto Logs,Pending Sell Crypto Logs,Pendiente vender registros de cifrado,معلق بيع سجلات التشفير
-Rejected Sell Crypto Logs,Rejected Sell Crypto Logs,Rechazados Vender registros de cifrado,تم رفض بيع سجلات التشفير
+Pending Sell Crypto Logs,Pending Sell Crypto Logs,Pendiente vender registros de cifrado,معلقة بيع سجلات التشفير
+Rejected Sell Crypto Logs,Rejected Sell Crypto Logs,Rechazado Vender registros de cifrado,تم رفض بيع سجلات التشفير
 All Withdraw Crypto Logs,All Withdraw Crypto Logs,Todos los registros de cifrado retiran,كل سجلات السحب المشفرة
 Confirm Withdraw Crypto Logs,Confirm Withdraw Crypto Logs,Confirmar retirar registros de cifrado,تأكيد سحب سجلات التشفير
 Withdraw Crypto Log Details,Withdraw Crypto Log Details,Retirar detalles del registro de cifrado,سحب تفاصيل سجل التشفير
 Wallet Code,Wallet Code,Código de billetera,رمز المحفظة
 Pending Withdraw Crypto Logs,Pending Withdraw Crypto Logs,Pendiente retirar registros criptográficos,في انتظار سحب سجلات التشفير
-Rejected Withdraw Crypto Logs,Rejected Withdraw Crypto Logs,Retiros rechazados Registros de cifrado,رفض سحب سجلات التشفير
+Rejected Withdraw Crypto Logs,Rejected Withdraw Crypto Logs,Rechazos de retiro de criptografía rechazada,رفض سحب سجلات التشفير
 Transaction Status updated successfully,Transaction Status updated successfully,Estado de transacción actualizado correctamente,تم تحديث حالة المعاملة بنجاح
 Transaction Rejected successfully,Transaction Rejected successfully,Transacción rechazada con éxito,رفضت المعاملة بنجاح
 Action,Action,Acción,فعل
@@ -497,7 +497,7 @@ Login as Member,Login as Member,Iniciar sesión como miembro,تسجيل الدخ
 Email Logs,Email Logs,Registros de correo electrónico,سجلات البريد الإلكتروني
 Last Login,Last Login,Último acceso,آخر تسجيل دخول
 Information of User,Information of User,Información del usuario,معلومات المستخدم
-2FA Verification,2FA Verification,VERIFICACIÓN 2FA,2FA التحقق
+2FA Verification,2FA Verification,Verificación de 2FA,2FA التحقق
 Email Verification,Email Verification,verificacion de email,تأكيد بواسطة البريد الالكتروني
 User Status,User Status,Estatus de usuario,حالة المستخدم
 Banned,Banned,Prohibido,محظور
@@ -590,7 +590,7 @@ Favicon (Light Version),Favicon (Light Version),Favicon (versión ligera),Favico
 Favicon (Dark Version),Favicon (Dark Version),Favicon (versión oscura),Favicon (نسخة مظلمة)
 Basic setting not found! Please run database seeder,Basic setting not found! Please run database seeder,Configuración básica no encontrada! Ejecute un semiller de base de datos,الإعداد الأساسي لم يتم العثور عليه! الرجاء تشغيل قاعدة البيانات بذور
 No changes to update.,No changes to update.,No hay cambios en la actualización.,لا توجد تغييرات للتحديث.
-Image assets updated successfully!,Image assets updated successfully!,¡Activos de imagen actualizados con éxito!,أصول الصورة تحديث بنجاح!
+Image assets updated successfully!,Image assets updated successfully!,¡Activos de imagen actualizados con éxito!,تم تحديث أصول الصورة بنجاح!
 Search Engine Optimization (SEO),Search Engine Optimization (SEO),Optimización de motores de búsqueda (SEO),تحسين محرك البحث (SEO)
 Thumbnail Image,Thumbnail Image,Imagen en miniatura,صورة مصغرة
 Social Title,Social Title,Título social,العنوان الاجتماعي
@@ -605,7 +605,7 @@ Splash screen updated successfully!,Splash screen updated successfully!,¡Pantal
 Android App URL,Android App URL,URL de la aplicación Android,Android App URL
 iOS App URL,iOS App URL,URL de la aplicación iOS,IOS APP URL
 The url title field is required.,The url title field is required.,Se requiere el campo de título de URL.,حقل عنوان عنوان URL مطلوب.
-The android url field is required.,The android url field is required.,Se requiere el campo URL de Android.,مطلوب حقل url Android.
+The android url field is required.,The android url field is required.,Se requiere el campo URL de Android.,حقل عنوان URL Android مطلوب.
 URL settings updated successfully!,URL settings updated successfully!,Configuración de URL actualizada con éxito!,تحديث إعدادات URL بنجاح!
 Add New Screen,Add New Screen,Agregar nueva pantalla,أضف شاشة جديدة
 Sub Title,Sub Title,Subtítulo,العنوان الفرعي
@@ -647,7 +647,7 @@ Language deleted successfully!,Language deleted successfully!,Lenguaje eliminado
 Language updated successfully!,Language updated successfully!,¡Lenguaje actualizado con éxito!,تم تحديث اللغة بنجاح!
 Opps! Language not found!,Opps! Language not found!,¡Opps! ¡Lenguaje no encontrado!,أوس! اللغة لم يتم العثور عليها!
 File does not exists.,File does not exists.,El archivo no existe.,الملف لا يوجد.
-Language Keywords of English,Language Keywords of English,Palabras clave del idioma del inglés,الكلمات الرئيسية للغة للغة الإنجليزية
+Language Keywords of English,Language Keywords of English,Palabras clave del idioma del inglés,كلمات اللغة الرئيسية للغة الإنجليزية
 Email Send Method,Email Send Method,Método de envío de correo electrónico,طريقة إرسال البريد الإلكتروني
 Send Mail,Send Mail,Enviar correo,ارسل بريد
 Host,Host,Anfitrión,يستضيف
@@ -673,7 +673,7 @@ Button Image,Button Image,Imagen de botón,زر الصورة
 Section Title,Section Title,Sección de título,عنوان القسم
 Heading,Heading,Título,عنوان
 For Separate Heading color use '|' sing to divide,For Separate Heading color use '|' sing to divide,Para el uso de color de encabezado separado '|' cantar para dividir,لاستخدام لون العنوان المنفصل '|' الغناء للتقسيم
-Sub Heading,Sub Heading,Subtítulos,العنوان الفرعي
+Sub Heading,Sub Heading,Subtendente,العنوان الفرعي
 Button Name,Button Name,Nombre del botón,اسم الزر
 Button Link,Button Link,Enlace de botón,رابط زر
 Section updated successfully!,Section updated successfully!,Sección actualizada con éxito!,تم تحديث القسم بنجاح!
@@ -714,9 +714,9 @@ New Blog Create,New Blog Create,Nuevo blog crea,مدونة جديدة إنشاء
 Add Tags,Add Tags,Agregar etiquetas,اضف اشارة
 Blog Edit Page,Blog Edit Page,Página de edición de blog,صفحة تحرير المدونة
 Blog Categories,Blog Categories,Categorías de blogs,فئات المدونة
-Add Blog Category,Add Blog Category,Añadir categoría de blog,أضف فئة المدونة
+Add Blog Category,Add Blog Category,Añadir categoría de blog,إضافة فئة المدونة
 Edit Blog Category,Edit Blog Category,Editar categoría de blog,تحرير فئة المدونة
-Category added successfully.,Category added successfully.,Categoría agregada con éxito.,وأضاف الفئة بنجاح.
+Category added successfully.,Category added successfully.,Categoría agregada con éxito.,أضافت الفئة بنجاح.
 Category status updated successfully!,Category status updated successfully!,Estado de categoría actualizado con éxito!,تحديث حالة الفئة بنجاح!
 Blog Category Updated Successfully.,Blog Category Updated Successfully.,Categoría de blog actualizada con éxito.,تم تحديث فئة المدونة بنجاح.
 Category successfully deleted.,Category successfully deleted.,Categoría eliminada con éxito.,تم حذف الفئة بنجاح.
@@ -743,7 +743,7 @@ Useful link status updated successfully!,Useful link status updated successfully
 Website Subscribers,Website Subscribers,Suscriptores del sitio web,مشتركي الموقع
 Send Mail to All,Send Mail to All,Enviar correo a todos,أرسل البريد إلى الجميع
 Send mail to all subscribers,Send mail to all subscribers,Enviar correo a todos los suscriptores,أرسل بريدًا إلى جميع المشتركين
-Reply sended successfully!,Reply sended successfully!,¡Respuesta enviada con éxito!,رد تم إرساله بنجاح!
+Reply sended successfully!,Reply sended successfully!,Respuesta enviada con éxito!,رد أرسل بنجاح!
 Automatic Payment Method,Automatic Payment Method,Método de pago automático,طريقة الدفع التلقائي
 Gateway,Gateway,Puerta,بوابة
 Supported Currency,Supported Currency,Moneda compatible,العملة المدعومة
@@ -785,11 +785,11 @@ ex: USD,ex: USD,Ej: USD,على سبيل المثال: USD
 ex: $,ex: $,Ej: $,على سبيل المثال: $
 Manual Payment Method Edit,Manual Payment Method Edit,Método de pago manual editar,تحرير طريقة الدفع اليدوي
 Manual Payment Method Create,Manual Payment Method Create,Método de pago manual Crear,طريقة الدفع اليدوي
-Money Out Add,Money Out Add,Money Out Agregar,أموال إضافة
+Money Out Add,Money Out Add,Dinero fuera agregado,أموال إضافة
 Money Out Edit,Money Out Edit,Dinero fuera editar,المال خارج تحرير
 Browser Push Notification Configuration,Browser Push Notification Configuration,Configuración de notificación de push del navegador,تكوين إشعار دفع المتصفح
 Method,Method,Método,طريقة
-Select Method,Select Method,Método de selección,حدد الطريقة
+Select Method,Select Method,Seleccionar método,حدد الطريقة
 Primary key,Primary key,Clave primaria,المفتاح الأساسي
 Instance ID,Instance ID,ID de instancia,معرف مثيل
 Broadcasting/ Internal Notification Configuration,Broadcasting/ Internal Notification Configuration,Configuración de transmisión/ notificación interna,تكوين الإذاعة/ الإخطار الداخلي
@@ -808,7 +808,7 @@ Policy Link,Policy Link,Enlace de política,رابط السياسة
 Cookie information updated successfully!,Cookie information updated successfully!,¡Información de cookies actualizada con éxito!,تم تحديث معلومات ملفات تعريف الارتباط بنجاح!
 App Name,App Name,Nombre de la aplicación,اسم التطبيق
 App Environment,App Environment,Entorno de aplicaciones,بيئة التطبيق
-App Debug,App Debug,Depurar la aplicación,تصحيح التطبيق
+App Debug,App Debug,Depurar la aplicación,App Debug
 App Mode,App Mode,Modo de aplicación,وضع التطبيق
 Database Connection,Database Connection,Conexión de base de datos,اتصال قاعدة البيانات
 Database Host,Database Host,Host de base de datos,مضيف قاعدة البيانات
@@ -838,19 +838,23 @@ Select Language,Select Language,Seleccione el idioma,اختار اللغة
 Mail From Address,Mail From Address,Correo desde la dirección,البريد من العنوان
 Min Sidebar Color,Min Sidebar Color,Min Color de la barra lateral,لون الشريط الجانبي
 Sidebar Color,Sidebar Color,Color de la barra lateral,لون الشريط الجانبي
-Topbar Color,Topbar Color,Color topbar,لون الشفر
+Topbar Color,Topbar Color,Color topbar,لون الشريط
 Layout Mode,Layout Mode,Modo de diseño,وضع التصميم
-Total Buy Crypto Transactions,Total Buy Crypto Transactions,Total de compra de transacciones criptográficas,إجمالي شراء المعاملات التشفير
+Total Buy Crypto Transactions,Total Buy Crypto Transactions,Total de compra de transacciones criptográficas,إجمالي شراء معاملات التشفير
 Convert Amount,Convert Amount,Convierta la cantidad,تحويل المبلغ
 You cannot exchange crypto using the same wallet,You cannot exchange crypto using the same wallet,No puedes intercambiar cripto usando la misma billetera,لا يمكنك تبادل التشفير باستخدام نفس المحفظة
-Basic Settings Data Fetch Successfully.,Basic Settings Data Fetch Successfully.,Los datos de configuración básica obtienen correctamente.,إعدادات الإعدادات الأساسية جلب بنجاح.
+Basic Settings Data Fetch Successfully.,Basic Settings Data Fetch Successfully.,Configuración básica Los datos obtienen éxito.,إعدادات الإعدادات الأساسية جلب بنجاح.
 Language data fetch successfully!,Language data fetch successfully!,¡Los datos del idioma obtienen con éxito!,جلب بيانات اللغة بنجاح!
 Notification Data Fetch Successfuly.,Notification Data Fetch Successfuly.,Los datos de notificación obtienen éxito.,بيانات الإخطار جلبت ناجحة.
-Country List Fetch Successfully!,Country List Fetch Successfully!,¡Lista de país para obtener con éxito!,القائمة الريفية جلب بنجاح!
-Netwok Name,Netwok Name,Nombre de netwok,اسم Netwok
+Country List Fetch Successfully!,Country List Fetch Successfully!,"¡Lista de país, obtenga con éxito!",القائمة الريفية جلب بنجاح!
 Active Ticket,Active Ticket,Boleto activo,تذكرة نشطة
 Solved Ticket,Solved Ticket,Boleto resuelto,تذكرة حل
 Pending Ticket,Pending Ticket,Boleto pendiente,تذكرة معلقة
 All Ticket,All Ticket,Todo el boleto,كل التذاكر
 Outside Address already exists in selected currency and network!,Outside Address already exists in selected currency and network!,¡Ya existe una dirección exterior en moneda y red seleccionadas!,يوجد بالفعل العنوان الخارجي في العملة والشبكة المختارة!
 Outside Public Address already exists!,Outside Public Address already exists!,¡Ya existe una dirección pública fuera!,عنوان عام خارج موجود بالفعل!
+Min Amount,Min Amount,Mínimo,مبلغ دقيقة
+Max Amount,Max Amount,Cantidad máxima,كمية كحد أقصى
+Limit,Limit,Límite,حد
+Transactions Overview,Transactions Overview,Descripción general de las transacciones,نظرة عامة على المعاملات
+Available Balance,Available Balance,Saldo disponible,الرصيد المتوفر

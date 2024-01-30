@@ -23,6 +23,7 @@ class SupportTicketController extends Controller
     {
         $page_title = "All Ticket";
         $support_tickets = SupportTicket::orderByDesc("id")->get();
+     
         return view('admin.sections.support-ticket.index', compact(
             'page_title',
             'support_tickets',

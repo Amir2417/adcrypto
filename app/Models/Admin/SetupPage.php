@@ -12,7 +12,9 @@ class SetupPage extends Model
     protected $guarded = ['id'];
 
     protected $casts = [
-        'title'   => 'string',
-        'details' => 'object'
+        'title'         => 'string',
+        'details'       => 'object',
+        'menu_active'   => 'object',
+        'block_routes'   => 'object',
     ];
 }

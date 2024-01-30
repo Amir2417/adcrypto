@@ -846,11 +846,15 @@
     "Language data fetch successfully!",
     "Notification Data Fetch Successfully.",
     "Country List Fetch Successfully!",
-    "Netwok Name",
     "Active Ticket",
     "Solved Ticket",
     "Pending Ticket",
     "All Ticket",
     "Outside Address already exists in selected currency and network!",
-    "Outside Public Address already exists!"
+    "Outside Public Address already exists!",
+    "Min Amount",
+    "Max Amount",
+    "Limit",
+    "Transactions Overview",
+    "Available Balance"
 ]

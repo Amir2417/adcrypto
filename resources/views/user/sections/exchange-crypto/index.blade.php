@@ -92,6 +92,14 @@
         });
     </script>
     <script>
+        var minAmountText           = "{{ __('Min Amount') }}";
+        var maxAmountText           = "{{ __('Max Amount') }}";
+        var limitText               = "{{ __('Limit') }}";
+        var rateText                = "{{ __('Rate') }}";
+        var networkFeesText         = "{{ __('Network Fees') }}";
+        var availableBalanceText    = "{{ __('Available Balance') }}";
+        var ExchangeRateText        = "{{ __('Exchange Rate') }}";
+        var insufficientBalanceText        = "{{ __('Sorry! Insufficient Balance.') }}";
         $("select[name=sender_wallet]").change(function(){
             var amount      = $("input[name=send_amount]").val();
             getExchangePreview();
@@ -107,7 +115,7 @@
             $(".send-amount").val('');
             var walletMaxBalance    = selectedVariable().senderWalletBalance;
             if(walletMaxBalance <= 0){
-                $('.exist').text('Insufficient Balance').addClass('text--danger');
+                $('.exist').text(insufficientBalanceText).addClass('text--danger');
             }else{
                 var senderCurrency      = selectedVariable().senderCurrency;
                 var senderRate          = selectedVariable().senderRate;
@@ -119,7 +127,7 @@
                 var percentChargeCalc   = (walletMaxBalance / 100) * percentCharge;
                 var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
                 if(walletMaxBalance <= totalCharge){
-                    $('.exist').text('Insufficient Balance').addClass('text--danger');
+                    $('.exist').text(insufficientBalanceText).addClass('text--danger');
                 }else{
                     var deductAmount        = parseFloat(walletMaxBalance) - parseFloat(totalCharge);
                     var sendAmount          = $(".send-amount").val(parseFloat(deductAmount).toFixed(2));
@@ -173,8 +181,8 @@
             var totalMaxLimit       = maxLimit * senderRate;
 
             $(".exchange-rate").html("1" + " " + senderCurrency + " " + "=" + " " + parseFloat(exchangeRate).toFixed(6) + " " + receiverCurrency);
-            $(".available-balance").html("Available Balance " + parseFloat(walletBalance).toFixed(8) + " " + senderCurrency);
-            $(".limit").html("Limit : " + parseFloat(totalMinLimit).toFixed(8) + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(8) + " " + senderCurrency);
+            $(".available-balance").html(availableBalanceText + ': ' + parseFloat(walletBalance).toFixed(8) + " " + senderCurrency);
+            $(".limit").html(limitText + ': ' + parseFloat(totalMinLimit).toFixed(8) + " " + "-" + " " + parseFloat(totalMaxLimit).toFixed(8) + " " + senderCurrency);
         }
 
         //amount Calculation
@@ -204,7 +212,7 @@
             var percentChargeCalc   = (amount / 100) * percentCharge;
             var totalCharge         = parseFloat(fixedChargeCalc) + parseFloat(percentChargeCalc);
            
-            $(".charges").html("Network Fees :" + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
+            $(".charges").html(networkFeesText + ': ' + parseFloat(totalCharge).toFixed(8) + " " + senderCurrency);
         }
         
     </script>

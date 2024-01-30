@@ -46,7 +46,7 @@
                                     <h5 class="title">{{ __("Available Network") }}</h5>
                                     <ul class="dashbord-item-details-list">
                                         @foreach ($network_names ?? [] as $item)
-                                            <li>{{ __("Netwok Name") }} <span>{{ $item ?? '' }}</span></li>
+                                            <li>{{ __("Network Name") }} <span>{{ $item ?? '' }}</span></li>
                                         @endforeach
                                     </ul>
                                 </div>

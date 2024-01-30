@@ -5,7 +5,7 @@
 
 
 @section('content')
-<div class="contact-section ptb-120">
+<div class="privacy-section section--bg ptb-120">
     <div class="container">
         <p>{!! $link->content->language?->$app_local?->content ?? "" !!}</p>
     </div>

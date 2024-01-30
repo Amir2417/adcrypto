@@ -8,8 +8,8 @@
                         <i class="las la-arrow-up"></i>
                     </div>
                     <div class="dashboard-list-user-content">
-                        <h4 class="title">{{ $item->type ?? '' }} <span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></h4>
-                        <span class="sub-title text--danger">{{ $item->details->data->sender_wallet->type ?? '' }} <span class="badge badge--warning ms-2">
+                        <h4 class="title">{{ __($item->type) ?? '' }} <span>{{ $item->details->data->sender_wallet->name ?? '' }}</span></h4>
+                        <span class="sub-title text--danger">{{ __($item->details->data->sender_wallet->type) ?? '' }} <span class="badge badge--warning ms-2">
                             @if ($item->status == global_const()::STATUS_PENDING)
                                 <span>{{ __("Pending") }}</span>
                             @elseif ($item->status == global_const()::STATUS_CONFIRM_PAYMENT)

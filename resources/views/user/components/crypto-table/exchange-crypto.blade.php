@@ -8,7 +8,7 @@
                             <i class="las la-arrow-up"></i>
                         </div>
                         <div class="dashboard-list-user-content">
-                            <h4 class="title">{{ $item->type ?? '' }} <span>{{ $item->details->data->sender_wallet->name ?? '' }} ({{ $item->details->data->sender_wallet->code ?? '' }})</span></h4>
+                            <h4 class="title">{{ __($item->type) ?? '' }} <span>{{ $item->details->data->sender_wallet->name ?? '' }} ({{ $item->details->data->sender_wallet->code ?? '' }})</span></h4>
                             <span class="sub-title text--danger">{{ __("Sent") }} 
                                 <span class="badge badge--warning ms-2">
                                     @if ($item->status == global_const()::STATUS_PENDING)

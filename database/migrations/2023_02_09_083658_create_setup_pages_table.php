@@ -18,8 +18,12 @@ return new class extends Migration
             $table->string('slug',250)->unique()->nullable();
             $table->string("title",255)->nullable();
             $table->string("url",255)->nullable();
+            $table->text("menu_active")->nullable();
+            $table->text("block_routes")->nullable();
+            $table->string("route_name",250)->nullable();
             $table->unsignedBigInteger("last_edit_by")->nullable();
             $table->boolean("status")->default(true);
+            $table->boolean('default')->default(false);
             $table->timestamps();
 
             $table->foreign("last_edit_by")->references("id")->on("admins")->onDelete("cascade")->onUpdate("cascade");

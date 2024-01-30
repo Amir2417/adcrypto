@@ -37,8 +37,8 @@
 <div class="main-section-wrapper">
 
     @php
-        $class = "";
-        if(!Route::is("index")) {
+        $class = "two";
+        if(Route::is("index")) {
             $class = "";
         }
     @endphp 

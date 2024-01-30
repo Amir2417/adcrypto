@@ -1,10 +1,10 @@
 @php
-    $menues = DB::table('setup_pages')->where('status', 1)->get();
+    $menues = App\Models\Admin\SetupPage::where('status',true)->get();
 @endphp
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     Start Header
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-<header class="header-section {{ $class ?? "" }}">
+<header class="header-section {{ $class ?? "two" }}">
     <div class="header">
         <div class="header-bottom-area">
             <div class="container">
@@ -22,9 +22,10 @@
                             <ul class="navbar-nav main-menu ms-auto me-auto">
                                 @foreach ($menues as $item)
                                     @php
-                                        $title = $item->title ?? "";
+                                        $title          = $item->title ?? "";
+                                        $menu_active    = $item->menu_active ?? [];
                                     @endphp
-                                    <li><a href="{{ url($item->url) }}" class=" @if($current_url == url($item->url)) active @endif ">{{ __($title) }}</a></li>
+                                    <li><a href="{{ url($item->url) }}" class=" @if(in_array(Route::currentRouteName(),$menu_active)) active @endif ">{{ __($title) }}</a></li>
                                 @endforeach
                             </ul>
                             <div class="header-language">

@@ -100,6 +100,7 @@ class SupportTicket extends Model
 
     public function getStringStatusAttribute() {
         $status = $this->status;
+        
         $data = [
             'class' => "",
             'value' => "",
@@ -112,7 +113,7 @@ class SupportTicket extends Model
         }else if($status == SupportTicketConst::DEFAULT) {
             $data = [
                 'class'     => "badge badge--warning",
-                'value'     => "Pending",
+                'value'     => "Default",
             ];
         }else if($status == SupportTicketConst::PENDING) {
             $data = [

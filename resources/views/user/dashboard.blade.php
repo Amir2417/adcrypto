@@ -175,7 +175,7 @@
 
         },
         title: {
-            text: 'Transactions Overview',
+            text: "{{ __('Transactions Overview') }}",
             floating: true,
             offsetY: 330,
             align: 'center',
@@ -190,15 +190,15 @@
 
     var options = {
         series: [{
-        name: 'Buy Crypto',
+        name: "{{ __('Buy Crypto') }}",
         color: "#00ABB3",
         data: chartData
         }, {
-        name: 'Sell Crypto',
+        name: "{{ __('Sell Crypto') }}",
         color: "#0194FC",
         data: sellData
         }, {
-        name: 'Withdraw Crypto',
+        name: "{{ __('Withdraw Crypto') }}",
         color: "#cdbb71",
         data: withdrawData
         }],
