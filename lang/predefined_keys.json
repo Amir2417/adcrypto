@@ -1105,5 +1105,7 @@
     "appLAvailableNetwork",
     "appLDisable",
     "appLNoDataFound",
-    "top"
+    "top",
+    "Please verify your KYC information before any transactional action.",
+    "Verify Now."
 ]

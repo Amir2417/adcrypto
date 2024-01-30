@@ -30,7 +30,6 @@ class AdminSeeder extends Seeder
 
         Admin::insert($data);
 
-        // Admin::factory()->times(200)->create();
 
     }
 }
