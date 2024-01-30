@@ -107,6 +107,8 @@ class SettingController extends Controller
         });
         $privacy_policy = UsefulLink::where('type',global_const()::USEFUL_LINK_PRIVACY_POLICY)->first();
         $privacy_policy_link = route('link',$privacy_policy->slug);
+        $about_page_link   = route('about');
+        $contact_page_link   = route('contact');
         //basic image path
         $basic_image_path   = [
             'base_url'      => url('/'),
