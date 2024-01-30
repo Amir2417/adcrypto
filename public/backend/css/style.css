@@ -4657,6 +4657,11 @@ body.dark-min-sidebar .header-link {
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
 }
+@media only screen and (max-width: 1500px) {
+  .user-profile-list-three li {
+    margin-bottom: 10px;
+  }
+}
 @media only screen and (max-width: 991px) {
   .user-profile-list-three li {
     border-radius: 999px;
