@@ -226,8 +226,8 @@ class PaymentGateway {
         }
 
         $fixed_charge_calc = $fixed_charges;
-        
-        $percent_charge_calc = ($amount / 100 ) * $percent_charges;
+        $convert_amount = $amount * $sender_currency_rate;
+        $percent_charge_calc = ($convert_amount / 100 ) * $percent_charges;
 
         $total_charge = $fixed_charge_calc + $percent_charge_calc;
         
@@ -246,7 +246,7 @@ class PaymentGateway {
                 'fixed_charge'              => $fixed_charge_calc,
                 'percent_charge'            => $percent_charge_calc,
                 'total_charge'              => $total_charge,
-                'total_amount'              => $amount + $total_charge,
+                'total_amount'              => $convert_amount + $total_charge,
                 'exchange_rate'             => $exchange_rate,
                 'will_get'                  => $will_get,
                 'default_currency'          => get_default_currency_code(),
