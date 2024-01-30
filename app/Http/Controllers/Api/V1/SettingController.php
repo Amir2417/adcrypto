@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Support\Str;
 use App\Http\Helpers\Response;
 use App\Models\Admin\Currency;
+use App\Models\Admin\UsefulLink;
 use App\Models\UserNotification;
 use App\Models\Admin\AppSettings;
 use App\Models\Admin\SiteSections;
@@ -104,7 +105,8 @@ class SettingController extends Controller
 
             ];
         });
-
+        $privacy_policy = UsefulLink::where('type',global_const()::USEFUL_LINK_PRIVACY_POLICY)->first();
+        $privacy_policy_link = route('link',$privacy_policy->slug);
         //basic image path
         $basic_image_path   = [
             'base_url'      => url('/'),
@@ -130,6 +132,7 @@ class SettingController extends Controller
             'basic_settings'    => $basic_settings,
             'login'             => $login,
             'register'          => $register,
+            'privacy_policy_link'=> $privacy_policy_link,
             'splash_screen'     => $splash_screen,
             'onboard_screen'    => $onboard_screen,
             'basic_image_path'  => $basic_image_path,
