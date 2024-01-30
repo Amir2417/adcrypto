@@ -135,6 +135,8 @@ class SettingController extends Controller
             'login'             => $login,
             'register'          => $register,
             'privacy_policy_link'=> $privacy_policy_link,
+            'about_page_link'=> $about_page_link,
+            'contact_page_link'=> $contact_page_link,
             'splash_screen'     => $splash_screen,
             'onboard_screen'    => $onboard_screen,
             'basic_image_path'  => $basic_image_path,
