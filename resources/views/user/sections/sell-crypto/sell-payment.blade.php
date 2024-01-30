@@ -167,6 +167,8 @@
 
         throwMessage('success', ["Copied: " + copyText]);
     });
+
+    //copy amount
     $('#copy-amount').on('click',function(){
         var copyText = document.getElementById("payable-amount").textContent;
 

@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TrxSettingsController;
-use App\Http\Controllers\Admin\AddMoneyController;
 use App\Http\Controllers\Admin\AdminCareController;
 use App\Http\Controllers\Admin\AppOnboardScreensController;
 use App\Http\Controllers\Admin\AppSettingsController;
@@ -19,7 +18,6 @@ use App\Http\Controllers\Admin\CryptoAssetController;
 use App\Http\Controllers\Admin\ExchangeCryptoLogController;
 use App\Http\Controllers\Admin\ExtensionsController;
 use App\Http\Controllers\Admin\LanguageController;
-use App\Http\Controllers\Admin\MoneyOutController;
 use App\Http\Controllers\Admin\NetworkController;
 use App\Http\Controllers\Admin\OutsideWalletAddressController;
 use App\Http\Controllers\Admin\PaymentGatewayCurrencyController;
@@ -168,21 +166,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('search','search')->name("search");
     });
 
-    // Add Money Logs
-    Route::controller(AddMoneyController::class)->prefix('add-money')->name('add.money.')->group(function () {
-        Route::get('index', 'index')->name('index');
-        Route::get('pending', 'pending')->name('pending');
-        Route::get('complete', 'complete')->name('complete');
-        Route::get('canceled', 'canceled')->name('canceled');
-    });
-
-    // Money Out Logs
-    Route::controller(MoneyOutController::class)->prefix('money-out')->name('money.out.')->group(function () {
-        Route::get('index', 'index')->name('index');
-        Route::get('pending', 'pending')->name('pending');
-        Route::get('complete', 'complete')->name('complete');
-        Route::get('canceled', 'canceled')->name('canceled');
-    });
+ 
 
     // User Care Section
     Route::controller(UserCareController::class)->prefix('users')->name('users.')->group(function () {
@@ -253,8 +237,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::controller(AppSettingsController::class)->group(function () {
             Route::get('splash-screen', 'splashScreen')->name('splash.screen');
             Route::put('splash-screen/update', 'splashScreenUpdate')->name('splash.screen.update');
-            Route::get('urls', 'urls')->name('urls');
-            Route::put('urls/update', 'urlsUpdate')->name('urls.update');
         });
 
         Route::controller(AppOnboardScreensController::class)->name('onboard.')->group(function () {
@@ -284,7 +266,6 @@ Route::prefix('admin')->name('admin.')->group(function () {
     // Setup Email Section
     Route::controller(SetupEmailController::class)->prefix('setup-email')->name('setup.email.')->group(function () {
         Route::get('config', 'configuration')->name('config');
-        // Route::get('template/default', 'defaultTemplate')->name('template.default');
         Route::put('config/update', 'update')->name('config.update');
         Route::post('test-mail/send','sendTestMail')->name('test.mail.send')->middleware('mail');
     });

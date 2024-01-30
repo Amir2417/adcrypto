@@ -862,3 +862,248 @@ Confirm Payment,Confirm Payment,Confirmar pago,تأكيد الدفع
 Canceled,Canceled,Cancelado,ألغيت
 Reject,Reject,Rechazar,يرفض
 Delayed,Delayed,Demorado,تأخير
+appLAppName,Adcrypto,Adcrypto,adcrypto
+appLAppVersion,1.0.0,1.0.0,1.0.0
+appLBuyCrypto,Buy Crypto,Comprar cripto,شراء التشفير
+appLSellCrypto,Sell Crypto,Vender cripto,بيع التشفير
+appLWithdrawCrypto,Withdraw Crypto,Retirar cripto,سحب التشفير
+appLExchangeCrypto,Exchange Crypto,Intercambiar cripto,تبادل التشفير
+appLInsideWallet,Inside Wallet,Billetera interior,داخل المحفظة
+appLOutsideWallet,Outside Wallet,Billetera exterior,محفظة خارجية
+appLSelectNetwork,Select Network,Seleccione la red,اختر شبكة
+appLSelectCoin,Select Coin,Seleccionar moneda,حدد عملة
+appLSelectPaymentMethod,Select Payment Method,Seleccionar método de pago,اختار طريقة الدفع
+appLPaymentMethod,Payment Method,Método de pago,طريقة الدفع او السداد
+appLEnterAmount,Enter Amount,Ingresar la cantidad,أدخل المبلغ
+appLUSDT,USDT,USDT,USDT
+appLMinAmount,Min Amount:,Minto Men:,كمية دقيقة:
+appLMaxAmount,Max Amount:,Cantidad máxima:,الحد الأقصى المبلغ:
+appLRate,Rate:,Tasa:,معدل:
+appLContinueBtn,Continue,Continuar,يكمل
+appLCryptoAddress,Crypto Address,Dirección criptográfica,عنوان التشفير
+appLEnterOrPasteAddress,Enter Or Paste Address,Ingrese o pegue la dirección,أدخل أو لصق العنوان
+appLPreview,Preview,Avance,معاينة
+appLEnteredAmount,Entered Amount,Cantidad ingresada,تم إدخال المبلغ
+appLWalletType,Wallet Type,Tipo de billetera,نوع المحفظة
+appLNetwork,Network,Red,شبكة
+appLCoin,Coin,Moneda,عملة
+appLPaymentGateway,Payment Gateway,Pasarela,بوابة الدفع
+appLWalletAddress,Wallet Address,Dirección de la billetera,عنوان محفظة
+appLPaymentProofSummary,Payment Proof Summary,Resumen de la prueba de pago,ملخص دليل الدفع
+appLTrx,TRX,TRX,TRX
+appLScreenShot,Screenshot,Captura de pantalla,لقطة شاشة
+appLFromCryptoAddress,From Crypto Address,De la dirección criptográfica,من عنوان التشفير
+appLReceivingMethodSummary,Receiving Method Summary,Recibiendo resumen del método,استلام ملخص طريقة
+appLBankName,Bank Name,Nombre del banco,اسم البنك
+appLBankBranch,Bank Branch,Sucursal bancaria,فرع بنك
+appLSelectReceivingMethod,Select Receiving Method,Seleccione el método de recepción,حدد طريقة الاستلام
+appLReceivingMethod,Receiving Method,Método de recepción,استلام طريقة
+appLMax,Max,Máximo,الأعلى
+appLPaymentProof,Payment Proof,Prueba de pago,دليل الدفع
+appLEnterHere,Enter Here,Entre aquí,أدخل هنا
+appLReceivingMethodInformation,Receiving Method Information,Recibir información sobre el método,استلام معلومات طريقة
+appLBankAccNumber,Bank Account Number,Número de cuenta bancaria,رقم الحساب المصرفي
+appLBranch,Branch,Rama,فرع
+appLWithdrawCryptoExchangeRate,1 USD = 0.00001 USDT,1 USD = 0.00001 USDT,1 دولار أمريكي = 0.00001 USDT
+appLLimit,Limit:,Límite:,حد:
+appLNetworkCharge,Network Charge:,Cargo de red:,رسوم الشبكة:
+appLNetworkFees,Network Fees:,Tarifas de red:,رسوم الشبكة:
+appLBuyCryptoNetworkCharge,0.57 USDT,0.57 USDT,0.57 USDT
+appLNetworkChargeText,Network Charge,Cargo de red,رسوم الشبكة
+appLExchangeCryptoExchangeRate,1 ETH = 0.00001 BTC,1 eth = 0.00001 BTC,1 ETH = 0.00001 BTC
+appLExchangeFrom,Exchange From,Intercambiar desde,تبادل من
+appLExchangeTo,Exchange To,Intercambiar,تبادل ل
+appLUploadImage,upload Image,cargar imagen,تحميل الصور
+appLFromWallet,From Wallet,De la billetera,من محفظة
+appLToWallet,To Wallet,A la billetera,إلى محفظة
+appLBuyCryptoCongratulationSubtitle,Your crypto has been successfully purchased. Thanks for using AdCrypto.,Su criptografía ha sido comprada con éxito. Gracias por usar Adcrypto.,تم شراء التشفير الخاص بك بنجاح. شكرا لاستخدام adcrypto.
+appLWithdrawCryptoCongratulationSubtitle,Your crypto has been successfully withdraw. Thanks for using AdCrypto.,Su criptografía se ha retirado con éxito. Gracias por usar Adcrypto.,لقد تم سحب التشفير الخاص بك بنجاح. شكرا لاستخدام adcrypto.
+appLExchangeCryptoCongratulationSubtitle,Your crypto has been successfully exchange. Thanks for using AdCrypto.,Tu criptografía ha sido intercambiado con éxito. Gracias por usar Adcrypto.,لقد تم تبادل التشفير الخاص بك بنجاح. شكرا لاستخدام adcrypto.
+appLPleaseFillOutTheField,Please Fill Out The Field,Por favor complete el campo,يرجى ملء الحقل
+appLPleaseAcceptTermsAndConditions,Please Accept Terms And Conditions,Acepte términos y condiciones,يرجى قبول الشروط والأحكام
+appLSignIn,Sign In,Iniciar sesión,تسجيل الدخول
+appLSignUp,Sign Up,Inscribirse,اشتراك
+appLUserNameOrEmailAddress,Username Or Email Address,Nombre de usuario o dirección de correo electrónico,اسم المستخدم أو البريد الالكتروني
+appLPassword,Password,Contraseña,كلمة المرور
+appLForgetPassword,Forget Password,Contraseña olvidada,ننسى كلمة المرور
+appLGetStarted,Get Started,Empezar,البدء
+appLEmailAddress,Email Address,Dirección de correo electrónico,عنوان البريد الإلكتروني
+appLEnterTheOTPCodeSendTo,Enter The OTP Code Sent to,Ingrese el código OTP enviado a,أدخل رمز OTP المرسلة إلى
+appLVerifiedCode,Verified Code,Código verificado,رمز التحقق
+appLSubmit,Submit,Entregar,يُقدِّم
+appLOTPVerification,OTP Verification,Verificación OTP,التحقق من OTP
+appLEmailVerification,Email Verification,verificacion de email,تأكيد بواسطة البريد الالكتروني
+appLResend,Resend,Revender,إعادة إرسال
+appLResendCode,Resend Code,Reenviar codigo,أعد إرسال الرمز
+appLNewPassword,New Password,Nueva contraseña,كلمة المرور الجديدة
+appLConfirmPassword,Confirm Password,confirmar Contraseña,تأكيد كلمة المرور
+appLEnter,Enter,Ingresar,يدخل
+appLResetPassword,Reset Password,Restablecer la contraseña,إعادة تعيين كلمة المرور
+appLCongratulation,Congratulations,Felicidades,تهانينا
+appLCreateAccount,Create Account,Crear una cuenta,إنشاء حساب
+appLFirstName,First Name,Nombre de pila,الاسم الأول
+appLLastName,Last Name,Apellido,اسم العائلة
+appLOkay,Okay,Bueno,تمام
+appLTransfer,TRANSFER,TRANSFERIR,تحويل
+appLHome,HOME,HOGAR,بيت
+appLProfile,PROFILE,PERFIL,حساب تعريفي
+appLAddMoney,Add Money,Agregar dinero,إضافة المال
+appLMoneyOut,Money Out,Apagarse,لم يبقى اي من المال
+appLExchange,Exchange,Intercambio,تبادل
+appLRequest,Request,Pedido,طلب
+appLRecentTransaction,Recent Transaction,Transacción reciente,المعاملة الأخيرة
+appLNotification,Notification,Notificación,إشعار
+appLMyInvoice,My Invoice,Mi factura,فاتورتي
+appLMyVoucher,My Voucher,Mi cupón,قسيم
+appLTransactionLog,Transaction Log,Registro de transacciones,سجل المعاملات
+appLTwoFASecurity,2FA Security,2FA SEGURIDAD,2FA الأمن
+appLChangePassword,Change Password,Cambiar la contraseña,تغيير كلمة المرور
+appLAmount,Amount,Cantidad,كمية
+appLPreviewScreen,Preview Screen,Pantalla previa,شاشة المعاينة
+appLExchangeRate,Exchange Rate,Tipo de cambio,سعر الصرف
+appLBuyCryptoExchangeRate,1.00 USD - 1.000K USDT,1.00 USD - 1.000k USDT,1.00 دولار أمريكي - 1.000K USDT
+appLTotalFeesAndCharges,Total Fees & Charges,Tarifas y cargos totales,إجمالي الرسوم والرسوم
+appLWillGet,Will Get,Obtendrá,سوف تحصل
+appLTotalPayableAmount,Total Payable Amount,Monto total por pagar,إجمالي المبلغ المستحق
+appLConfirm,Confirm,Confirmar,يتأكد
+appLValidUser,Valid Address for transaction.,Dirección válida para la transacción.,عنوان صالح للمعاملة.
+appLInvalidUser,Wallet Address doesnt exists.,La dirección de la billetera no existe.,عنوان المحفظة لا يوجد.
+appLMoneyExchange,Money Exchange,Cambio de dinero,حوالة نقدية
+appLFrom,From,De,من
+appLTo,To,A,ل
+appLRequestMoney,Request Money,Pedir dinero,طلب المال
+appLRemarks,Remarks,Observaciones,ملاحظات
+appLOptional,Optional,Opcional,خياري
+appLShareRequestMoney,Share Request Money,Solicitar dinero para compartir dinero,مشاركة طلب المال
+appLShare,Share,Compartir,يشارك
+appLMoneyTransfer,Money Transfer,Transferencia de dinero,تحويل المال
+appLAvailableBalance,Available Balance,Saldo disponible,الرصيد المتوفر
+appLReceiver,Receiver,Receptor,المتلقي
+appLProfileLabel,Profile,Perfil,حساب تعريفي
+appLFullName,Full Name,Nombre completo,الاسم الكامل
+appLCountry,Country,País,دولة
+appLMobileNumber,Mobile Number,Número de teléfono móvil,رقم الهاتف المحمول
+appLState,State,Estado,ولاية
+appLCity,City,Ciudad,مدينة
+appLZipCode,Zip Code,Código postal,الرمز البريدي
+appLAddress,Address,DIRECCIÓN,عنوان
+appLUpdate,Update,Actualizar,تحديث
+appLPaid,Paid,Pagado,مدفوع
+appLSent,Sent,Enviado,مرسل
+appLUnPaid,UnPaid,No pagado,غير مدفوع الأجر
+appLInvoiceNumber,Invoice Number,Número de factura,رقم الفاتورة
+appLInvoiceDate,Invoice Date,Fecha de la factura,تاريخ الفاتورة
+appLCurrency,Currency,Divisa,عملة
+appLPickGoods,Pick Goods,Seleccionar artículos,اختر البضائع
+appLTrickGoods,Trick Goods,Artículos de truco,خدعة البضائع
+appLTotalBill,Total Bill,Cuenta total,إجمالي الفاتورة
+appLCreateInvoice,Create Invoice,Crear factura,إنشاء فاتورة
+appLInvoiceTo,Invoice To,Factura,فاتورة إلى
+appLBillingAddress,Billing Address,Dirección de Envio,عنوان وصول الفواتير
+appLNotes,Notes,Notas,ملحوظات
+appLItemDetails,Item Details,detalles del artículo,تفاصيل العنصر
+appLClientName,Client Name,nombre del cliente,اسم العميل
+appLAddNew,Add New,Agregar nuevo,اضف جديد
+appLItemName,Item Name,Nombre del árticulo,اسم العنصر
+appLVoucher,Voucher,Vale,فاتورة
+appLRedeem,Redeem,Canjear,يسترد
+appLUsed,Used,Usado,مستخدم
+appLNotUsed,Not Used,No utilizado,غير مستعمل
+appLName,Name,Nombre,اسم
+appLEmail,Email,Correo electrónico,بريد إلكتروني
+appLPhone,Phone,Teléfono,هاتف
+appLFeesAndCharge,Fees & Charge,Tarifas y cargo,الرسوم والشحن
+appLStatus,Status,Estado,حالة
+appLCode,Code,Código,شفرة
+appLCreateVoucher,Create Voucher,Crear cupón,إنشاء قسيمة
+appLConfirmRedeem,Confirm Redeem,Confirmar redimir,تأكيد الاسترداد
+appLRedeemCode,Redeem Code,Canjear código,استرداد رمز
+appLAddMoneyLog,Add Money Log,Agregar registro de dinero,أضف سجل الأموال
+appLMoneyOutLog,Money Out Log,Money Out Log,سجل الأموال
+appLRequestLog,Request Log,Registro de solicitud,طلب سجل
+appLEnable2faSecurity,Enable 2FA Security,Habilitar la seguridad de 2FA,تمكين 2FA الأمن
+appLSendVerificationCode,Send Verification Code,Envíe el código de verificación,إرسال رمز التحقق
+appLOldPassword,Old Password,Contraseña anterior,كلمة المرور القديمة
+appLIndividual,Individual,Individual,فردي
+appLBusiness,Business,Negocio,عمل
+appLMiddleName,Middle Name,Segundo nombre,الاسم الأوسط
+appLUserName,Username,Nombre de usuario,اسم المستخدم
+appLPostalCode,Postal Code,Código Postal,رمز بريدي
+appLCompanyName,Company Name,nombre de empresa,اسم الشركة
+appLGender,Gender,Género,جنس
+appLDateOfBirth,Date of Birth,Fecha de nacimiento,تاريخ الميلاد
+appLNationality,Nationality,Nacionalidad,جنسية
+appLMyReceipt,My Receipt,Mi recibo,إيصالي
+appLTotalExchangedAmount,Total Exchanged Amount,Cantidad total intercambiada,إجمالي المبلغ المتبادل
+appLConvertedAmount,Converted Amount,Cantidad convertida,المبلغ المحول
+appLRequestedAmount,Requested Amount,Monto requerido,الكمية المطلوبة
+appLEnterOldPassword,Enter Old Password,Ingrese la contraseña antigua,أدخل كلمة المرور القديمة
+appLOnboardTitleOne,Make Your,Haz tu,اصنع لك
+appLOnboardTitleTwo,Crypto,Cripto,تشفير
+appLOnboardTitleThree,Transaction,Transacción,عملية
+appLOnboardSubTitle,Buy and Sales 100+ Cryptocurrencies with 20+ flat currencies market using bank transfers or your credit/debit card in your exchange type bitcoin established token area.,Compra y ventas más de 100 criptomonedas con más de 20 más de 20 monedas planas.,شراء ومبيعات 100 عملات Cryptocurrency مع 20+ سوق العملات المسطحة باستخدام التحويلات المصرفية أو بطاقة الائتمان/الخصم الخاص بك في منطقة رمز البيتكوين نوع التبادل الخاص بك.
+appLSwipeToGetStarted,Swipe to Get Started,Deslice para comenzar,انتقد للبدء
+appLSignInSubtitle,Please input your email and password and Sign In to your account to get access to your dashboard.,Ingrese su correo electrónico y contraseña e inicie sesión en su cuenta para obtener acceso a su tablero.,يرجى إدخال بريدك الإلكتروني وكلمة المرور وتسجيل الدخول إلى حسابك للوصول إلى لوحة القيادة الخاصة بك.
+appLEnterEmailAddress,Enter Email Address,Introducir la dirección de correo electrónico,أدخل عنوان البريد الالكتروني
+appLEnterPassword,Enter Password,Introducir la contraseña,أدخل كلمة المرور
+appLForgotPassword,Forgot Password?,¿Has olvidado tu contraseña?,هل نسيت كلمة السر؟
+appLEnterYourEmailToResetPassword,Please enter your registered email address for reset your password.,Ingrese su dirección de correo electrónico registrada para restablecer su contraseña.,الرجاء إدخال عنوان بريدك الإلكتروني المسجل لإعادة تعيين كلمة المرور الخاصة بك.
+appLForgotPasswordSecondary,Forgot Password,Has olvidado tu contraseña,هل نسيت كلمة السر
+appLDoNotHaveAnAccount,Don’t have an account?,¿No tienes una cuenta?,ليس لديك حساب؟
+appLEnterVerificationCodeTextOne,Enter the otp verification code. Which one did we send to,Ingrese el código de verificación OTP. A cuál enviamos,أدخل رمز التحقق من OTP. أي واحد أرسلنا إليه
+appLEnterVerificationCodeTextTwo,to reset your account.,Para restablecer su cuenta.,لإعادة ضبط حسابك.
+appLDidNotGetCode,Did not get any OTP code?,¿No obtuvo ningún código OTP?,لم تحصل على أي رمز OTP؟
+appLEnterNewPassword,Enter New Password,Ingrese nueva clave,أدخل كلمة مرور جديدة
+appLEnterConfirmPassword,Enter Confirm Password,Ingrese Confirmar contraseña,أدخل تأكيد كلمة المرور
+appLResetPasswordCongratulationSubtitle,Your password has been reset successfully. Sign In again now.,Su contraseña se ha restablecido correctamente. Inicie sesión de nuevo ahora.,تم إعادة تعيين كلمة المرور الخاصة بك بنجاح. تسجيل الدخول مرة أخرى الآن.
+appLSignInNow,Sign In Now,Regístrate,قم بتسجيل دخولك الآن
+appLGoToHome,Go To Home,Ir a casa,اذهب إلى المنزل
+appLBackToHome,Back To Home,De vuelta a casa,العودة إلى المنزل
+appLSignUpSubtitle,Please input your details and register to your account to get access to your dashboard.,Ingrese sus datos y regístrese en su cuenta para obtener acceso a su tablero.,يرجى إدخال التفاصيل الخاصة بك والتسجيل في حسابك للوصول إلى لوحة القيادة الخاصة بك.
+appLEnterFirstName,Enter First Name,Ingrese el nombre,أدخل الاسم الأول
+appLEnterLastName,Enter Last name,Introduzca el apellido,إدخال اسم آخر
+appLIHaveAgreedWith,I have agreed with,He estado de acuerdo con,لقد وافقت مع
+appLTermsOfUse,Terms Of Use & Privacy Policy,Términos de uso y política de privacidad,شروط الاستخدام وسياسة الخصوصية
+appLAlreadyHaveAnAccount,Already have an account?,¿Ya tienes una cuenta?,هل لديك حساب؟
+appLEnterSignUpVerificationCodeTextTwo,to verified your account.,para verificar su cuenta.,للتحقق من حسابك.
+appLSignUpCongratulationSubtitle,Your account has been verified successfully. Thanks for using AdCrypto.,Su cuenta ha sido verificada con éxito. Gracias por usar Adcrypto.,تم التحقق من حسابك بنجاح. شكرا لاستخدام adcrypto.
+appLUpdateProfile,Update Profile,Actualización del perfil,تحديث الملف
+appLPhoneNumber,Phone Number,Número de teléfono,رقم التليفون
+appLEnterCity,Enter City,Entrar en la ciudad,أدخل المدينة
+appLEnterState,Enter State,Ingrese el estado,إدخال الدولة
+appLEnterAddress,Enter Address,Ingresa la direccion,أدخل العنوان
+appLEnterZipCode,Enter ZipCode,Ingresa tu código postal,أدخل الرمز البريدي
+appLBuyLog,Buy Log,Comprar registro,شراء السجل
+appLSellLog,Sell Log,Vender registro,بيع سجل
+appLWithdrawLog,Withdraw Log,Retirar el registro,سحب السجل
+appLExchangeLog,Exchange Log,Registro de intercambio,سجل التبادل
+appLSettings,Settings,Ajustes,إعدادات
+appLHelpCenter,Help Center,Centro de ayuda,مركز المساعدة
+appLPrivacyAndPolicy,Privacy & Policy,Política de privacidad,سياسة الخصوصية
+appLAboutUs,About Us,Sobre nosotros,معلومات عنا
+appLSignOut,Sign Out,Desconectar,خروج
+appLSignOutMessage,Do You Want To Sign Out From Your Account?,¿Quieres cerrar la sesión de tu cuenta?,هل تريد تسجيل الخروج من حسابك؟
+appLBuy,Buy,Comprar,يشتري
+appLSell,Sell,Vender,يبيع
+appLWithdraw,Withdraw,Retirar,ينسحب
+appLChangeLanguage,Change Language,Cambiar idioma,تغيير اللغة
+appLDeleteAccount,Delete Account,Borrar cuenta,حذف الحساب
+appLDeleteAccountMessage,Do You Want To Delete Account?,¿Quieres eliminar la cuenta?,هل تريد حذف الحساب؟
+appLCancel,Cancel,Cancelar,يلغي
+appLReject,Reject,Rechazar,يرفض
+appLDelete,Delete,Borrar,يمسح
+appLEnableTwoFASecurity,Enable 2FA Security,Habilitar la seguridad de 2FA,تمكين 2FA الأمن
+appLEnableTwoFASecuritySubtitle,We’ll ask for a verification code via your security method if we notice a sign in from an unrecognized device or browser. Enable your 2FA Security,Pediremos un código de verificación a través de su método de seguridad si notamos un inicio de sesión desde un dispositivo o navegador no reconocido. Habilite su seguridad de 2FA,سنطلب رمز التحقق من خلال طريقة الأمان الخاصة بك إذا لاحظنا تسجيل الدخول من جهاز أو متصفح غير معترف به. تمكين أمان 2FA الخاص بك
+appLEnable,Enable,Permitir,يُمكَِن
+appLTransactionType,Transaction Type,tipo de transacción,نوع المعاملة
+appLSelectIDType,Select ID Type,Seleccionar tipo de identificación,حدد نوع المعرف
+appLUpload,Upload,Subir,رفع
+appLVerified,Verified,Verificado,تم التحقق
+appLPending,Pending,Pendiente,قيد الانتظار
+appLKycForm,KYC Form,Forma kyc,شكل KYC
+appLViewAll,View All,Ver todo,عرض الكل
+appLAllWallet,All Wallet,Toda la billetera,كل محفظة
+appLAvailableNetwork,Available Network,Red disponible,الشبكة المتاحة
+appLDisable,Disable,Desactivar,إبطال
+appLNoDataFound,No transactions found. Keep monitoring wisely,No se encontraron transacciones. Sigue monitoreando sabiamente,لم يتم العثور على معاملات. استمر في المراقبة بحكمة
+top,No transactions found. Keep monitoring wisely,No se encontraron transacciones. Sigue monitoreando sabiamente,لم يتم العثور على معاملات. استمر في المراقبة بحكمة
