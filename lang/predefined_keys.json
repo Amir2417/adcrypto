@@ -856,5 +856,9 @@
     "Max Amount",
     "Limit",
     "Transactions Overview",
-    "Available Balance"
+    "Available Balance",
+    "Confirm Payment",
+    "Canceled",
+    "Reject",
+    "Delayed"
 ]
