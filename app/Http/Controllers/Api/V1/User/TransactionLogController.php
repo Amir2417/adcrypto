@@ -39,7 +39,8 @@ class TransactionLogController extends Controller
                 'submit_url'                => $submit_url,
                 'requirements'              => $data->details->payment_info->requirements ?? [],
                 'reject_reason'             => $data->reject_reason,
-                'status'                    => $data->status
+                'status'                    => $data->status,
+                'created_at'                => $data->created_at,
             ];
             
         });
@@ -70,7 +71,8 @@ class TransactionLogController extends Controller
                 'remark'                    => $data->remark,
                 'details'                   => $data->details,
                 'reject_reason'             => $data->reject_reason,
-                'status'                    => $data->status
+                'status'                    => $data->status,
+                'created_at'                => $data->created_at,
             ];
         });
         return Response::success([__("Withdraw Crypto Transaction Logs")],[
@@ -100,7 +102,8 @@ class TransactionLogController extends Controller
                 'remark'                    => $data->remark,
                 'details'                   => $data->details,
                 'reject_reason'             => $data->reject_reason,
-                'status'                    => $data->status
+                'status'                    => $data->status,
+                'created_at'                => $data->created_at,
             ];
         });
         return Response::success([__("Exchange Crypto Transaction Logs")],[
@@ -132,7 +135,8 @@ class TransactionLogController extends Controller
                 'details'                   => json_decode($data->details->data->details),
                 'data'                      => $data->details->data,
                 'reject_reason'             => $data->reject_reason,
-                'status'                    => $data->status
+                'status'                    => $data->status,
+                'created_at'                => $data->created_at,
             ];
         });
         return Response::success([__("Sell Crypto Transaction Logs")],[

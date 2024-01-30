@@ -1606,6 +1606,14 @@ option {
   border: 2px solid #5a5278;
 }
 
+.fileholder-file-title{
+  color: #ffffff !important;
+}
+
+.fileholder-file-total-size, .fileholder-file-total-loaded, .fileholder-file-loaded-percentage{
+  color: #ffffff !important;
+}
+
 .file-holder-wrapper {
   width: 100%;
 }
@@ -2824,6 +2832,11 @@ option {
 .body-overlay.active {
   visibility: visible;
 }
+@media only screen and (max-width: 1199px) {
+  .body-overlay.show {
+    visibility: visible;
+  }
+}
 
 /*--------------------------------------------------------------
     [ ## Introduction ]
@@ -2847,6 +2860,7 @@ option {
       -ms-flex-pack: center;
           justify-content: center;
   min-height: 100vh;
+  padding: 80px 0;
   z-index: 2;
   background-color: #142B57;
   background: -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(#142B57), color-stop(transparent), color-stop(#05060a), to(transparent));
@@ -2858,6 +2872,11 @@ option {
     padding-bottom: 130px;
   }
 }
+@media only screen and (max-width: 991px) {
+  .banner-section .row{
+    flex-direction: column-reverse;
+  }
+}
 .banner-section .banner-element {
   position: absolute;
   top: 0;
@@ -2867,9 +2886,9 @@ option {
 .banner-section .banner-thumb img {
   max-width: initial;
 }
-@media only screen and (max-width: 991px) {
+@media only screen and (max-width: 1800px) {
   .banner-section .banner-thumb img {
-    display: none;
+    width: 100%;
   }
 }
 .banner-section .banner-content-wrapper {
@@ -5011,8 +5030,8 @@ option {
   -ms-touch-action: auto;
   touch-action: auto;
   overflow-y: auto;
-  max-height: 72vh;
-  min-height: 72vh;
+  max-height: 70vh;
+  min-height: 70vh;
   padding: 30px 15px;
 }
 .chat-container .media > * {
@@ -5650,6 +5669,11 @@ option {
 .blog-item.details .blog-thumb {
   height: 400px;
 }
+@media only screen and (max-width: 991px) {
+  .blog-item.details .blog-thumb {
+    height: 250px;
+  }
+}
 .blog-item.details .blog-content .title {
   margin-bottom: 10px;
 }
@@ -5759,6 +5783,14 @@ option {
 .single-popular-item .popular-item-content .title {
   margin-bottom: 0;
 }
+@media only screen and (max-width: 575px) {
+  .single-popular-item .popular-item-content .title {
+    font-size: 14px;
+  }
+  .single-popular-item .popular-item-content .date {
+    font-size: 12px;
+  }
+}
 .single-popular-item .popular-item-content .title a {
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
@@ -5807,6 +5839,13 @@ option {
   height: 40px;
   line-height: 40px;
   padding-left: 18px;
+}
+@media only screen and (max-width: 991px) {
+  .header-language .nice-select {
+    width: auto;
+    float: left;
+    margin-right: 15px;
+  }
 }
 .header-language .nice-select .current {
   color: #ffffff;
@@ -6157,4 +6196,5 @@ option {
 .rtl .sidebar-menu .sidebar-menu-item.sidebar-dropdown a::after{
   right: auto;
   left: 25px;
+  content: '\f104';
 }

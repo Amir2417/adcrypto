@@ -19,7 +19,7 @@
     <!-- nice select css -->
     <link rel="stylesheet" href="{{ asset('public/backend/css/nice-select.css') }}">
     <!-- select2 css -->
-    <link rel="stylesheet" href="{{ asset('public/backend/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/backend/css/select2.css') }}">
     <!-- rte css -->
     <link rel="stylesheet" href="{{ asset('public/backend/css/rte_theme_default.css') }}">
     <!-- main style css link -->
@@ -62,7 +62,7 @@
 <!-- nice select js -->
 <script src="{{ asset('public/backend/js/jquery.nice-select.js') }}"></script>
 <!-- select2 js -->
-<script src="{{ asset('public/backend/js/select2.min.js') }}"></script>
+<script src="{{ asset('public/backend/js/select2.js') }}"></script>
 <!-- rte js -->
 <script src="{{ asset('public/backend/js/rte.js') }}"></script>
 <!-- rte plugins js -->
