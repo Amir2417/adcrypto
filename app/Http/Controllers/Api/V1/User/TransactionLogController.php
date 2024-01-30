@@ -14,7 +14,7 @@ class TransactionLogController extends Controller
      */
     public function buyLog(){
         $status_code    = [1 => 'Pending',2 => 'STATUS_CONFIRM_PAYMENT', 3 => 'STATUS_CANCEL',4 => 'STATUS_REJECT'];
-        $buy_log     = Transaction::where('type',PaymentGatewayConst::BUY_CRYPTO)->get()->map(function($data){
+        $buy_log     = Transaction::auth()->where('type',PaymentGatewayConst::BUY_CRYPTO)->get()->map(function($data){
             if($data->currency->gateway->isTatum($data->currency->gateway) && $data->status == global_const()::STATUS_PENDING){
                 $submit_url     = route('api.user.buy.crypto.payment.crypto.confirm',$data->trx_id); 
             }else{
@@ -54,7 +54,7 @@ class TransactionLogController extends Controller
      */
     public function withdrawLog(){
         $status_code    = [1 => 'Pending',2 => 'STATUS_CONFIRM_PAYMENT', 3 => 'STATUS_CANCEL',4 => 'STATUS_REJECT'];
-        $withdraw_log       = Transaction::where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->get()->map(function($data){
+        $withdraw_log       = Transaction::auth()->where('type',PaymentGatewayConst::WITHDRAW_CRYPTO)->get()->map(function($data){
             return [
                 'id'                        => $data->id,
                 'type'                      => $data->type,
@@ -85,7 +85,7 @@ class TransactionLogController extends Controller
      */
     public function exchangeLog(){
         $status_code    = [1 => 'Pending',2 => 'STATUS_CONFIRM_PAYMENT', 3 => 'STATUS_CANCEL',4 => 'STATUS_REJECT'];
-        $exchange_log       = Transaction::where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->get()->map(function($data){
+        $exchange_log       = Transaction::auth()->where('type',PaymentGatewayConst::EXCHANGE_CRYPTO)->get()->map(function($data){
             
             return [
                 'id'                        => $data->id,
@@ -116,7 +116,7 @@ class TransactionLogController extends Controller
      */
     public function sellLog(){
         $status_code    = [1 => 'Pending',2 => 'STATUS_CONFIRM_PAYMENT', 3 => 'STATUS_CANCEL',4 => 'STATUS_REJECT'];
-        $sell_log       = Transaction::where('type',PaymentGatewayConst::SELL_CRYPTO)->get()->map(function($data){
+        $sell_log       = Transaction::auth()->where('type',PaymentGatewayConst::SELL_CRYPTO)->get()->map(function($data){
             
             return [
                 'id'                        => $data->id,
