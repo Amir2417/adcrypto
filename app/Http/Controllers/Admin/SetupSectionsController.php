@@ -372,8 +372,12 @@ class SetupSectionsController extends Controller
         $language_wise_data = array_map(function($language){
             return replace_array_key($language,'_edit');
         },$language_wise_data);
-        
+        $validator  = Validator::make($request->all(),[
+            'icon_edit'              => "required|string",
+        ]);
+        $validated = $validator->validate();
         $section_values['items'][$request->target]['language'] = $language_wise_data;
+        $section_values['items'][$request->target]['icon'] = $validated['icon_edit'];
 
         try{
             $section->update([

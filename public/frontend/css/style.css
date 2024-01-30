@@ -533,7 +533,7 @@ blockquote .quote-icon {
 }
 
 .section--bg {
-  background-color: var(--primary-color); !important;
+  background-color: var(--primary-color) !important;
 }
 
 .bg--gray {
@@ -3252,6 +3252,7 @@ option {
   background-color: #142B57;
   padding: 40px 30px;
   border-radius: 5px;
+  height: 100%;
   -webkit-transition: all 0.5s;
   transition: all 0.5s;
 }
@@ -3486,6 +3487,7 @@ option {
   border-radius: 5px;
   overflow: hidden;
   z-index: 2;
+  height: 100%;
   -webkit-transition: all 0.7s ease 0s;
   transition: all 0.7s ease 0s;
 }
@@ -4959,6 +4961,7 @@ option {
 }
 
 .card-header-user-area {
+  width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4984,6 +4987,7 @@ option {
 .card-header-user-area .card-header-user-content .sub-title {
   font-size: 12px;
   font-weight: 500;
+  word-break: break-all;
 }
 
 .support-card-wrapper {
@@ -5606,6 +5610,7 @@ option {
   border-radius: 5px;
   overflow: hidden;
   z-index: 2;
+  height: 100%;
   -webkit-transition: all 0.7s ease 0s;
   transition: all 0.7s ease 0s;
 }
