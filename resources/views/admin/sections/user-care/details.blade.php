@@ -190,7 +190,7 @@
                     <div class="col-xl-6 col-lg-6 form-group">
                         <label>{{ __("Phone Number") }}</label>
                         <div class="input-group">
-                            <input type="text" class="form--control" placeholder="{{ __("Write Here") }}..." name="mobile" value="{{ old('mobile',$user->mobile) }}">
+                            <input type="text" class="form--control" placeholder="{{ __("Write Here") }}..." name="mobile" value="{{ old('mobile',$user->full_mobile) }}">
                         </div>
                         @error("mobile")
                             <span class="invalid-feedback d-block" role="alert">
