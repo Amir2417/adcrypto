@@ -1971,6 +1971,10 @@ option {
      object-fit: cover;
   margin-right: 20px;
 }
+.rtl .custom-select-list .custom-option img{
+  margin-right: 0;
+  margin-left: 20px;
+}
 .custom-select-list .custom-option .custom-country {
   -ms-flex-preferred-size: 100%;
       flex-basis: 100%;
@@ -3936,6 +3940,15 @@ option {
   margin-top: -10px;
 }
 
+@media only screen and (max-width: 991px) {
+  .otp-form {
+    text-align: center;
+    margin: -5px;
+    margin-bottom: 20px;
+    margin-top: -10px;
+  }
+}
+
 .otp {
   width: 52px;
   height: 50px;
@@ -3945,16 +3958,29 @@ option {
   border-radius: 3px;
   background-color: transparent;
 }
-@media only screen and (max-width: 520px) {
-  .otp {
+@media only screen and (max-width: 991px) {
+  .otp{
     width: 45px;
     height: 45px;
+    margin: 5px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .otp {
+    width: 40px;
+    height: 40px;
+  }
+}
+@media only screen and (max-width: 420px) {
+  .otp {
+    width: 35px;
+    height: 35px;
+    margin: 3px;
   }
 }
 @media only screen and (max-width: 375px) {
   .otp {
-    width: 40px;
-    height: 40px;
+    margin: 0;
   }
 }
 .otp:focus {
@@ -4513,6 +4539,9 @@ option {
   height: 38px;
   border-radius: 5px;
   overflow: hidden;
+}
+.header-user-wrapper .header-user-thumb a{
+  height: 100%;
 }
 .header-user-wrapper .header-user-thumb img {
   width: 100%;
@@ -6197,4 +6226,13 @@ option {
   right: auto;
   left: 25px;
   content: '\f104';
+}
+.rtl .sidebar-menu .sidebar-menu-item.active a::after{
+  -webkit-transform: rotate(-90deg);
+    transform: rotate(-90deg);
+}
+.rtl .close{
+  right: auto !important;
+  left: 10px;
+  width: auto;
 }

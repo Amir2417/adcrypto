@@ -21,7 +21,7 @@
                 @foreach ($support_ticket->attachments as $key => $item)
                     <li>{{ __("Attachments") }} - {{ $key + 1 }} : 
                         <span class="text--danger">
-                            <a href="{{ files_asset_path('support-attachment') . "/" . $item->attachment }}">
+                            <a href="{{ setRoute('file.download',['support-attachment',$item->attachment]) }}">
                                 {{ Str::words($item->attachment_info->original_base_name ?? "", 5, '...' . $item->attachment_info->extension ?? "" ) }}
                             </a>
                         </span>
