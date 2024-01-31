@@ -21,7 +21,7 @@
     <div class="table-area">
         <div class="table-wrapper">
             <div class="table-header">
-                <h5 class="title">{{ ("Outside Wallet Payment Receiving Address") }}</h5>
+                <h5 class="title">{{ __("Outside Wallet Payment Receiving Address") }}</h5>
                 @include('admin.components.link.custom',[
                     'text'          => __("Add Outside Wallet Address"),
                     'class'         => 'btn btn--base',
