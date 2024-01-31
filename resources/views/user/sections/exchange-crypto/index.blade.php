@@ -38,7 +38,7 @@
                                     <select class="form--control nice-select" name="sender_wallet">
                                         @foreach ($currencies as $item)
                                             <option 
-                                            value="{{ $item->currency->id }}"
+                                            value="{{ $item->id }}"
                                                 data-balance="{{ $item->balance }}"
                                                 data-rate="{{ $item->currency->rate }}"
                                                 data-code="{{ $item->currency->code }}"
@@ -56,7 +56,7 @@
                                     <select class="form--control nice-select" name="receiver_currency">
                                         @foreach ($reciever_currencies as $item)
                                             <option 
-                                            value="{{ $item->currency->id }}"
+                                            value="{{ $item->id }}"
                                             data-code="{{ $item->currency->code }}"
                                             data-rate="{{ $item->currency->rate }}"
                                             data-balance="{{ $item->balance }}"
