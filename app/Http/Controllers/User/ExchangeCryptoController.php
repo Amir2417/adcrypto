@@ -60,9 +60,7 @@ class ExchangeCryptoController extends Controller
         if($sender_wallet == $receiver_wallet ){
             return back()->with(['error' => ['You cannot exchange crypto using the same wallet']]);
         }
-        $send_wallet        = UserWallet::auth()->whereHas("currency",function($q) use ($sender_wallet) {
-            $q->where("id",$sender_wallet)->active();
-        })->active()->first();
+        $send_wallet        = UserWallet::auth()->where("id",$sender_wallet)->first();
         
         if(!$send_wallet){
             return back()->with(['error' => ['Sender Wallet not found!']]);
@@ -71,9 +69,7 @@ class ExchangeCryptoController extends Controller
         if($send_amount > $send_wallet->balance){
             return back()->with(['error' => ['Sorry! Insufficient Balance.']]);
         }
-        $receive_wallet     = UserWallet::auth()->whereHas("currency",function($q) use ($receiver_wallet) {
-            $q->where("id",$receiver_wallet)->active();
-        })->active()->first();
+        $receive_wallet     = UserWallet::auth()->where("id",$receiver_wallet)->first();
         
         if(!$receive_wallet){
             return back()->with(['error' => ['Receiver Wallet not found!']]);
