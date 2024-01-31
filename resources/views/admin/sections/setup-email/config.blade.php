@@ -80,7 +80,6 @@
                         @include('admin.components.form.input',[
                             'label'     => __("username")."*",
                             'name'      => 'username',
-                            'class'     => 'text-capitalize',
                             'value'     => old('username',$email_config->username ?? ""),
                         ])
                     </div>
