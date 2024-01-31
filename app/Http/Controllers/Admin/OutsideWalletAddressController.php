@@ -193,7 +193,7 @@ class OutsideWalletAddressController extends Controller
         return redirect()->route('admin.outside.wallet.index')->with(['success' => ['Outside wallet Updated successfully.']]);
     }
     /**
-     * Method for delete coin
+     * Method for delete Outside Wallet
      * @param string
      * @param \Illuminate\Http\Request $request
      */

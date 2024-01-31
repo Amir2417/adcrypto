@@ -104,6 +104,7 @@
             var url = '{{ route('user.withdraw.crypto.check.address.exist') }}';
             var value = $(this).val();
             $('.exist').text('');
+            
             $('.exchange-box').addClass('d-none');
             
             var token = '{{ csrf_token() }}';
@@ -149,7 +150,6 @@
                     $('.exchange-rate').html('');
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
                     $('.withdraw').attr('disabled',true);
-                    $('.exchange-box').removeClass('d-none');
                     return false
                 }
             });
