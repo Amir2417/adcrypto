@@ -28,12 +28,14 @@ class ExchangeCryptoController extends Controller
     public function index(){
         $page_title         = "- Exchange Crypto";
         $currencies         = UserWallet::auth()->with(['currency'])->orderBy('id')->get();
+        $reciever_currencies         = UserWallet::auth()->with(['currency'])->orderBy('id','desc')->get();
         $transaction_fees   = TransactionSetting::where('slug','exchange')->first();
         
         return view('user.sections.exchange-crypto.index',compact(
             'page_title',
             'currencies',
-            'transaction_fees'
+            'transaction_fees',
+            'reciever_currencies'
         ));
     }
     /**

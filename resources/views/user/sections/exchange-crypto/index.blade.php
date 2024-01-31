@@ -54,7 +54,7 @@
                                 <div class="input-group max">
                                     <input type="text" class="form--control receive-money" name="receive_money" placeholder="{{ __("Enter Amount") }}...">
                                     <select class="form--control nice-select" name="receiver_currency">
-                                        @foreach ($currencies as $item)
+                                        @foreach ($reciever_currencies as $item)
                                             <option 
                                             value="{{ $item->currency->id }}"
                                             data-code="{{ $item->currency->code }}"
