@@ -548,7 +548,7 @@ class SellCryptoController extends Controller
                 'title'     => "Sell Crypto",
                 'wallet'    => $data->data->sender_wallet->name,
                 'code'      => $data->data->sender_wallet->code,
-                'amount'    => $data->data->amount,
+                'amount'    => doubleval($data->data->amount),
                 'status'    => global_const()::STATUS_PENDING,
                 'success'   => "Successfully Request Send."
             ],
