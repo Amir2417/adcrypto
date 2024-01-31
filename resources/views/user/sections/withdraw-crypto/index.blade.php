@@ -105,8 +105,6 @@
             var value = $(this).val();
             $('.exist').text('');
             
-            $('.exchange-box').addClass('d-none');
-            
             var token = '{{ csrf_token() }}';
             if ($(this).attr('name') == 'wallet_address') {
                 var data = {wallet_address:value,_token:token}
@@ -121,7 +119,6 @@
                     $('.exchange-rate').html('');
                     $('.exist').addClass('text--danger').text(response.own);
                     $('.withdraw').attr('disabled',true);
-                    $('.exchange-box').removeClass('d-none');
                     return false
                 }
                 if(response['data'] != null){
@@ -142,12 +139,11 @@
                     localStorage.setItem('exchangeRate', rate);
                     localStorage.setItem('exchangeCode', walletCode);
                     $('.withdraw').attr('disabled',false);
-                    $('.exchange-box').removeClass('d-none');
                 } else {
                     if($('.exist').hasClass('text--success')){
                         $('.exist').removeClass('text--success');
                     }
-                    $('.exchange-rate').html('');
+                    $('.exchange-rate').html('Exchange Rate');
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
                     $('.withdraw').attr('disabled',true);
                     return false
@@ -156,7 +152,7 @@
         });
         $(document).ready(function () {
             getPreview();
-            $('.exchange-box').addClass('d-none');
+            $('.exchange-rate').html('Exchange Rate');
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();
