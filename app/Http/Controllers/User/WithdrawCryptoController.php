@@ -69,7 +69,7 @@ class WithdrawCryptoController extends Controller
 
         $validated          = $validator->validate();
         $amount             = $validated['amount'];
-        $sender_wallet      = UserWallet::with(['currency'])->where('id',$validated['sender_wallet'])->first();
+        $sender_wallet      = UserWallet::auth()->with(['currency'])->where('id',$validated['sender_wallet'])->first();
         if(!$sender_wallet) return back()->with(['error' => ['Wallet not found']]);
 
         $user               = UserWallet::auth()->where('public_address',$validated['wallet_address'])->first();
@@ -163,6 +163,7 @@ class WithdrawCryptoController extends Controller
         $trx_id             = generateTrxString("transactions","trx_id","WC",8);
         $wallet_id          = $data->data->sender_wallet->id;
         $sender_wallet      = UserWallet::auth()->where("id",$wallet_id)->first();
+        dd($sender_wallet);
         $receiver_wallet    = UserWallet::where('public_address',$data->data->receiver_wallet->address)->first();
         $available_balance  = $sender_wallet->balance - $data->data->payable_amount;
 

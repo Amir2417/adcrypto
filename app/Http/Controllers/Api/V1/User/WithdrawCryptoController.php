@@ -95,7 +95,7 @@ class WithdrawCryptoController extends Controller
 
         $validated          = $validator->validate();
         $amount             = $validated['amount'];
-        $sender_wallet      = UserWallet::with(['currency'])->where('id',$validated['sender_wallet'])->first();
+        $sender_wallet      = UserWallet::auth()->with(['currency'])->where('id',$validated['sender_wallet'])->first();
         if(!$sender_wallet) return Response::error(['Wallet not found!'],[],404);
         
         $user               = UserWallet::auth()->where('public_address',$validated['wallet_address'])->first();
@@ -121,33 +121,33 @@ class WithdrawCryptoController extends Controller
             return Response::error(['Please follow the transaction limit!'],[],404);
         }
         
-        $fixed_charge           = $transaction_fees->fixed_charge * $sender_wallet->currency->rate;
-        $percent_charge         = $transaction_fees->percent_charge;
-        $percent_charge_calc    = ($amount / 100) * $percent_charge;
-        $total_charge           = $fixed_charge + $percent_charge_calc;
-        $payable_amount         = $amount + $total_charge;
-        $will_get_amount        = $amount * $exchange_rate;
+        $fixed_charge               = $transaction_fees->fixed_charge * $sender_wallet->currency->rate;
+        $percent_charge             = $transaction_fees->percent_charge;
+        $percent_charge_calc        = ($amount / 100) * $percent_charge;
+        $total_charge               = $fixed_charge + $percent_charge_calc;
+        $payable_amount             = $amount + $total_charge;
+        $will_get_amount            = $amount * $exchange_rate;
        
         if($payable_amount > $sender_wallet->balance){
             return Response::error(['Insufficient Balance!'],[],404);
         }
 
-        $data                   = [
-            'type'              => PaymentGatewayConst::WITHDRAW_CRYPTO,
-            'identifier'        => Str::uuid(),
-            'data'              => [
-                'sender_wallet' => [
-                    'id'        => $sender_wallet->id,
-                    'name'      => $sender_wallet->currency->name,
-                    'code'      => $sender_wallet->currency->code,
-                    'rate'      => $sender_wallet->currency->rate,
+        $data                       = [
+            'type'                  => PaymentGatewayConst::WITHDRAW_CRYPTO,
+            'identifier'            => Str::uuid(),
+            'data'                  => [
+                'sender_wallet'     => [
+                    'id'            => $sender_wallet->id,
+                    'name'          => $sender_wallet->currency->name,
+                    'code'          => $sender_wallet->currency->code,
+                    'rate'          => $sender_wallet->currency->rate,
                 ],
                 'receiver_wallet'   => [
                     'address'       => $receiver_address->public_address,
                     'code'          => $receiver_address->currency->code,
                     'rate'          => $receiver_address->currency->rate,
                 ],
-                'amount'            => $amount,
+                'amount'            => floatval($amount),
                 'fixed_charge'      => $fixed_charge,
                 'percent_charge'    => $percent_charge_calc,
                 'total_charge'      => $total_charge,
