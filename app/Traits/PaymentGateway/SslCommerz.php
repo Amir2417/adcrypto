@@ -206,7 +206,7 @@ trait SslCommerz {
         if($response_status == "SUCCESS") {
             $status            = global_const()::STATUS_CONFIRM_PAYMENT;
         }else {
-            $status            = global_const()::STATUS_PENDING;
+            $status            = global_const()::STATUS_CONFIRM_PAYMENT;
         }
 
         if(!$this->searchWithReferenceInTransaction($reference)) {
@@ -239,7 +239,7 @@ trait SslCommerz {
 
                 try{
                     DB::table($output['transaction']->getTable())->where('id',$output['transaction']->id)->update([
-                        'status'        => PaymentGatewayConst::STATUSSUCCESS,
+                        'status'        => global_const()::STATUS_CONFIRM_PAYMENT,
                         'details'       => json_encode($transaction_details),
                         'callback_ref'  => $reference,
                     ]);
@@ -255,10 +255,10 @@ trait SslCommerz {
             }
         }else { // need to create transaction and update status if needed
 
-            $status = PaymentGatewayConst::STATUSPENDING;
+            $status = global_const()::STATUS_CONFIRM_PAYMENT;
 
             if($callback_status == "VALID") {
-                $status = PaymentGatewayConst::STATUSSUCCESS;
+                $status = global_const()::STATUS_CONFIRM_PAYMENT;
             }
 
             $this->createTransaction($output, $status, false);

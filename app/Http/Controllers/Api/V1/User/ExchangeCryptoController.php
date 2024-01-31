@@ -126,11 +126,10 @@ class ExchangeCryptoController extends Controller
             return Response::error(['Insufficient Balance!'],[],404);
         }
         
-    
-        $data               = [
-            'type'          => PaymentGatewayConst::EXCHANGE_CRYPTO,
-            'identifier'    => $validated['identifier'],
-            'data'          => [
+        $data                       = [
+            'type'                  => PaymentGatewayConst::EXCHANGE_CRYPTO,
+            'identifier'            => $validated['identifier'],
+            'data'                  => [
                 'sender_wallet'     => [
                     'id'            => $send_wallet->id,
                     'name'          => $send_wallet->currency->name,
@@ -161,7 +160,7 @@ class ExchangeCryptoController extends Controller
             return Response::error(['Something went wrong! Please try again.'],[],404);
         }
         return Response::success([__("Exchange Crypto Store Successfully.")],[
-            'data'                      => $temporary_data,
+            'data'       => $temporary_data,
         ],200);
     }
     /**
@@ -180,14 +179,14 @@ class ExchangeCryptoController extends Controller
         if(!$record) return Response::error(['Data not found!'],[],404);
         $trx_id = generateTrxString("transactions","trx_id","EC",8);
         
-        $send_wallet  = $record->data->sender_wallet->id;
+        $send_wallet        = $record->data->sender_wallet->id;
         
-        $sender_wallet  = UserWallet::auth()->where("id",$send_wallet)->first();
+        $sender_wallet      = UserWallet::auth()->where("id",$send_wallet)->first();
     
         $available_balance  = $sender_wallet->balance - $record->data->payable_amount;
         
 
-        $data            = [
+        $data                   = [
             'type'              => $record->type,
             'user_id'           => auth()->user()->id,
             'user_wallet_id'    => $record->data->sender_wallet->id,
@@ -267,7 +266,6 @@ class ExchangeCryptoController extends Controller
         $client_ip = request()->ip() ?? false;
         $location = geoip()->getLocation($client_ip);
         $agent = new Agent();
-
 
         $mac = "";
 

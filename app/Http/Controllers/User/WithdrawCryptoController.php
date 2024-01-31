@@ -117,7 +117,7 @@ class WithdrawCryptoController extends Controller
                     'code'          => $receiver_address->currency->code,
                     'rate'          => $receiver_address->currency->rate,
                 ],
-                'amount'            => $amount,
+                'amount'            => floatval($amount),
                 'fixed_charge'      => $fixed_charge,
                 'percent_charge'    => $percent_charge_calc,
                 'total_charge'      => $total_charge,

@@ -14,7 +14,6 @@ use App\Models\Admin\Currency;
 use App\Models\UserNotification;
 use Illuminate\Support\Facades\DB;
 use App\Models\Admin\BasicSettings;
-use App\Traits\PaymentGateway\Gpay;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
@@ -511,7 +510,7 @@ class BuyCryptoController extends Controller
                 'payment'   => $data->details->data->payment_method->name,
                 'wallet'    => $data->details->data->wallet->name,
                 'code'      => $data->details->data->wallet->code,
-                'amount'    => $data->amount,
+                'amount'    => doubleval($data->amount),
                 'success'   => "Successfully Added."
             ],
         ]);
@@ -558,31 +557,7 @@ class BuyCryptoController extends Controller
 
         $data['available'] = false;
         $data['additional_fields']  = [];
-        if(Gpay::isGpay($gateway)) {
-            $gpay_bank_list = Gpay::getBankList();
-            if($gpay_bank_list == false) return Response::error(['Gpay bank list server response failed! Please try again'],[],500);
-            $data['available']  = true;
-
-            $gpay_bank_list_array = json_decode(json_encode($gpay_bank_list),true);
-
-            $gpay_bank_list_array = array_map(function ($array){
-                
-                $data['name']       = $array['short_name_by_gpay'];
-                $data['value']      = $array['gpay_bank_code'];
-
-                return $data;
         
-            }, $gpay_bank_list_array);
-
-            $data['additional_fields'][] = [
-                'type'      => "select",
-                'label'     => "Select Bank",
-                'title'     => "Select Bank",
-                'name'      => "bank",
-                'values'    => $gpay_bank_list_array,
-            ];
-
-        }
 
         return Response::success([__('Request response fetch successfully!')],$data,200);
     }

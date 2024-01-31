@@ -589,7 +589,7 @@ class BuyCryptoController extends Controller
                 'payment'   => $data->details->data->payment_method->name,
                 'wallet'    => $data->details->data->wallet->name,
                 'code'      => $data->details->data->wallet->code,
-                'amount'    => $data->amount,
+                'amount'    => doubleval($data->amount),
                 'success'   => "Successfully Added."
             ],
         ]);

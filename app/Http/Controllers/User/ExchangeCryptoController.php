@@ -123,7 +123,7 @@ class ExchangeCryptoController extends Controller
                     'balance'       => $receive_wallet->balance,
                 ],
                 'exchange_rate'     => $exchange_rate,
-                'sending_amount'    => $send_amount,
+                'sending_amount'    => floatval($send_amount),
                 'fixed_charge'      => $fixed_charge,
                 'percent_charge'    => $percent_charge,
                 'total_charge'      => $total_charge,

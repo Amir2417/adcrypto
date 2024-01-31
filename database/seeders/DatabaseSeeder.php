@@ -22,6 +22,7 @@ use Database\Seeders\Admin\SiteSectionsSeeder;
 use Database\Seeders\Admin\BasicSettingsSeeder;
 use Database\Seeders\Admin\PaymentGatewaySeeder;
 use Database\Seeders\Admin\AppOnboardScreenSeeder;
+use Database\Seeders\Admin\FreshBasicSettingsSeeder;
 use Database\Seeders\Admin\TransactionSettingSeeder;
 use Database\Seeders\Admin\OutsideWalletAddressSeeder;
 
@@ -39,7 +40,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             RoleSeeder::class,
             TransactionSettingSeeder::class,
-            BasicSettingsSeeder::class,
+            FreshBasicSettingsSeeder::class,
             AppOnboardScreenSeeder::class,
             SetupSeoSeeder::class,
             AppSettingsSeeder::class,
