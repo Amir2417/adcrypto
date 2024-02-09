@@ -239,7 +239,7 @@ class ExchangeCryptoController extends Controller
                 'wallet'    => $record->data->sender_wallet->name,
                 'code'      => $record->data->sender_wallet->code,
                 'amount'    => doubleval($record->data->sending_amount),
-                'status'    => global_const()::STATUS_PENDING,
+                'status'    => global_const()::STATUS_CONFIRM_PAYMENT,
                 'success'   => "Successfully Request Send."
             ],
         ]);

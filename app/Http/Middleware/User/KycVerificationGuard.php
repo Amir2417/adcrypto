@@ -5,6 +5,7 @@ namespace App\Http\Middleware\User;
 use Closure;
 use Illuminate\Http\Request;
 use App\Constants\GlobalConst;
+use App\Http\Helpers\Response;
 use App\Providers\Admin\BasicSettingsProvider;
 
 class KycVerificationGuard
@@ -26,9 +27,13 @@ class KycVerificationGuard
                 if($user->kyc_verified == GlobalConst::PENDING) {
                     $smg = "Your KYC information is pending. Please wait for admin confirmation.";
                 }
+                if(request()->expectsJson()) {
+                    return Response::error([$smg],[],400);
+                }
                 if(auth()->guard("web")->check()) {
                     return redirect()->route("user.authorize.kyc")->with(['warning' => [$smg]]);
                 }
+                
             }
         }
         return $next($request);
