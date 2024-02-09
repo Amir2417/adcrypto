@@ -42,10 +42,10 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
 
         //buy crypto 
-        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->middleware(['kyc.verification.guard'])->name('buy.crypto.')->group(function(){
+        Route::controller(BuyCryptoController::class)->prefix('buy-crypto')->name('buy.crypto.')->group(function(){
             Route::get('index','index');
-            Route::post('store','store');
-            Route::post('submit','submit');
+            Route::post('store','store')->middleware(['kyc.verification.guard']);
+            Route::post('submit','submit')->middleware(['kyc.verification.guard']);
             
              // POST Route For Unauthenticated Request
             Route::post('success/response/{gateway}', 'postSuccess')->name('payment.success')->withoutMiddleware(['auth:api','verification.guard','kyc.verification.guard','user.google.two.factor']);
@@ -69,26 +69,26 @@ Route::prefix("user")->name("api.user.")->group(function(){
         });
         
         //sell crypto 
-        Route::controller(SellCryptoController::class)->prefix('sell-crypto')->middleware(['kyc.verification.guard'])->group(function(){
+        Route::controller(SellCryptoController::class)->prefix('sell-crypto')->group(function(){
             Route::get('index','index');
-            Route::post('store','store');
-            Route::post('payment-info-store','paymentInfoStore');
-            Route::post('sell-payment-store','sellPaymentStore');
-            Route::post('confirm','confirm');
+            Route::post('store','store')->middleware(['kyc.verification.guard']);
+            Route::post('payment-info-store','paymentInfoStore')->middleware(['kyc.verification.guard']);
+            Route::post('sell-payment-store','sellPaymentStore')->middleware(['kyc.verification.guard']);
+            Route::post('confirm','confirm')->middleware(['kyc.verification.guard']);
         });
 
         //withdraw crypto 
-        Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->middleware(['kyc.verification.guard'])->group(function(){
+        Route::controller(WithdrawCryptoController::class)->prefix('withdraw-crypto')->group(function(){
             Route::get('index','index');
             Route::get('check-wallet-address','checkWalletAddress');
-            Route::post('store','store');
-            Route::post('confirm','confirm');
+            Route::post('store','store')->middleware(['kyc.verification.guard']);
+            Route::post('confirm','confirm')->middleware(['kyc.verification.guard']);
         });
         //sell crypto 
-        Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->middleware(['kyc.verification.guard'])->group(function(){
+        Route::controller(ExchangeCryptoController::class)->prefix('exchange-crypto')->group(function(){
             Route::get('index','index');
-            Route::post('store','store');
-            Route::post('confirm','confirm');
+            Route::post('store','store')->middleware(['kyc.verification.guard']);
+            Route::post('confirm','confirm')->middleware(['kyc.verification.guard']);
         }); 
     });  
 });
