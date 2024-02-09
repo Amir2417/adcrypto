@@ -80,7 +80,6 @@ class ExchangeCryptoController extends Controller
         $receiver_wallet            = $validated['receiver_currency'];
         $validated['identifier']    = Str::uuid();
         if($sender_wallet == $receiver_wallet ){
-            
             return Response::error(['You cannot exchange crypto using the same wallet'],[],404);
         }
         $send_wallet        = UserWallet::auth()->where("id",$sender_wallet)->first();

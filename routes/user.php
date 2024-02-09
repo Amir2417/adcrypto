@@ -57,7 +57,7 @@ Route::prefix("user")->name("user.")->group(function(){
         //redirect with Btn Pay
         Route::get('redirect/btn/checkout/{gateway}', 'redirectBtnPay')->name('payment.btn.pay')->withoutMiddleware(['auth','verification.guard','kyc.verification.guard','user.google.two.factor']);
 
-        // redirect with HTML form route perfect money
+        // redirect with HTML form route 
         Route::get('redirect/form/{gateway}', 'redirectUsingHTMLForm')->name('payment.redirect.form')->withoutMiddleware(['auth','verification.guard','kyc.verification.guard','user.google.two.factor']);
 
         Route::get('success/response/{gateway}','success')->name('payment.success');

@@ -58,7 +58,7 @@
                                 'class'         => "form--control",
                                 'value'         => __("Write Here")."...",
                                 'name'          => "desc",
-                                'attribute'     => "data-limit=255",
+                                'attribute'     => "data-limit=500",
                                 'value'         => old('desc',$setup_seo->desc)
                             ])
                         </div>

@@ -23,7 +23,7 @@ class SetUpPageHandle
         $setup_page    = SetupPage::where('status',false)->where('route_name',$current_route_name)->first();
         if($setup_page){
             $block_routes = $setup_page->block_routes ?? []; 
-            dd($block_routes,$current_route_name); 
+           
             if(in_array($current_route_name,$block_routes)){
                 abort(404);
             }

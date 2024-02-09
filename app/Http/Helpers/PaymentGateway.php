@@ -22,7 +22,6 @@ use App\Providers\Admin\CurrencyProvider;
 use App\Traits\PaymentGateway\SslCommerz;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\PaymentGateway\Flutterwave;
-use App\Traits\PaymentGateway\PerfectMoney;
 use App\Models\Admin\PaymentGatewayCurrency;
 use App\Traits\PaymentGateway\PagaditoTrait;
 use Illuminate\Support\Facades\Notification;
@@ -32,7 +31,7 @@ use App\Models\Admin\PaymentGateway as PaymentGatewayModel;
 
 class PaymentGateway {
 
-    use Paypal, CoinGate, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PerfectMoney,PagaditoTrait;
+    use Paypal, CoinGate, Tatum, Stripe, Flutterwave, SslCommerz, Razorpay,PagaditoTrait;
 
     protected $request_data;
     protected $output;
@@ -414,9 +413,6 @@ class PaymentGateway {
                 break;
             case PaymentGatewayConst::SSLCOMMERZ:
                     return $response['token'] ?? "";
-                    break;
-            case PaymentGatewayConst::PERFECT_MONEY:
-                    return $response['PAYMENT_ID'] ?? "";
                     break;
             case PaymentGatewayConst::PAGADITO:
                     return $response['param1'] ?? "";

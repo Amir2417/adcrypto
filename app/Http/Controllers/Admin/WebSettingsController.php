@@ -187,7 +187,7 @@ class WebSettingsController extends Controller
         $validator = Validator::make($request->all(), [
             'image'         => 'nullable|image|mimes:png,jpg,webp,svg,jpeg',
             'title'         => 'required|string|max:120',
-            'desc'          => 'nullable|string|max:255',
+            'desc'          => 'nullable|string|max:500',
             'tags'          => 'nullable|array',
             'tags.*'        => 'nullable|string|max:30',
         ]);

@@ -413,7 +413,7 @@ class BuyCryptoController extends Controller
         return $this->success($request, $gateway);
     }
     /**
-     * Method for buy crypto redirect html form for perfect money
+     * Method for buy crypto redirect html form
      */
     public function redirectUsingHTMLForm(Request $request, $gateway)
     {

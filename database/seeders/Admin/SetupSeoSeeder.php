@@ -14,14 +14,10 @@ class SetupSeoSeeder extends Seeder
      */
     public function run()
     {
-        $data = [
-            'slug'          => "lorem_ipsum",
-            'title'         => "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            'desc'          => "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            'tags'          => ['Lorem','Ipsum'],
-            'last_edit_by'  => 1,
-        ];
+        $setup_seos = array(
+            array('id' => '1','slug' => 'adcrypto-seo','title' => 'adCrypto - Cryptocurrency Exchange and Buy Sell Full Solution','desc' => 'Unlock the gateway to your cryptocurrency business venture with adCrypto—a comprehensive solution tailored for entrepreneurs looking to embark on their crypto journey. Compatible with both Android and iOS platforms, adCrypto offers a seamless experience complemented by an intuitive website and efficient admin panels. Packed with essential features including a cryptocurrency exchange, buying and selling crypto, and smooth withdrawals','tags' => '["adcrypto"]','image' => 'seeder/seo.webp','last_edit_by' => '1','created_at' => '2024-01-30 07:32:06','updated_at' => '2024-01-31 12:41:07')
+        );
 
-        SetupSeo::firstOrCreate($data);
+        SetupSeo::insert($setup_seos);
     }
 }

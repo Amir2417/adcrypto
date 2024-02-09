@@ -27,7 +27,6 @@ trait Razorpay  {
 
         try{
             if($this->razorpay_btn_pay) {
-                // create link for btn pay
                 return $this->razorpayCreateLinkForBtnPay($output);
             }
             return $this->createRazorpayPaymentLink($output, $request_credentials);

@@ -113,7 +113,7 @@ class BlogCategoryController extends Controller
             ];
             $category->update($update_value);
         }catch(Exception $e){
-            dd($e->getMessage());
+         
             return back()->with(['error' => ['Something went wrong! Please try again']]);
         }
         return back()->with(['success' => ['Blog Category Updated Successfully.']]);

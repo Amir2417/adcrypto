@@ -182,7 +182,7 @@ class WithdrawCryptoController extends Controller
             'details'               => [
                 'data'              => $data->data
             ],
-            'status'                => global_const()::STATUS_PENDING,
+            'status'                => global_const()::STATUS_CONFIRM_PAYMENT,
             'created_at'            => now(),
         ];
 
