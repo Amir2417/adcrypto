@@ -247,7 +247,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
-                            'label'         => 'Email Verification',
+                            'label'         => __('Email Verification'),
                             'value'         => old('email_verified',$user->email_verified),
                             'name'          => "email_verified",
                             'options'       => [__('Verified') => 1, __('Unverified') => 0],
@@ -256,7 +256,7 @@
                     </div>
                     <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 form-group">
                         @include('admin.components.form.switcher', [
-                            'label'     => '2FA Verification',
+                            'label'     => __('2FA Verification'),
                             'value'     => old('two_factor_verified',$user->two_factor_verified),
                             'name'      => "two_factor_verified",
                             'options'   => [__('Verified') => 1, __('Unverified') => 0],

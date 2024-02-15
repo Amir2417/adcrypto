@@ -708,7 +708,6 @@ class BuyCryptoController extends Controller
 
         return back()->with(['success' => ['Payment Confirmation Success.']]);
     }
-    
     /**
      * Redirect Users for collecting payment via Button Pay (JS Checkout)
      */

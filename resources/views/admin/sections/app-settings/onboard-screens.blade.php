@@ -110,7 +110,7 @@
 
                 var actionRoute =  "{{ setRoute('admin.app.settings.onboard.screen.delete') }}";
                 var target      = oldData.target;
-                var message     = "Are you sure to <strong>delete</strong> this screen?";
+                var message     = "{{ __('Are you sure to') }} <strong>{{ __('delete') }}</strong> {{ __('this screen?') }}";
 
                 openDeleteModal(actionRoute,target,message);
             });

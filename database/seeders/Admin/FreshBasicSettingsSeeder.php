@@ -43,7 +43,7 @@ class FreshBasicSettingsSeeder extends Seeder
             'site_logo'             => 'seeder/logo-white.webp',
             'site_fav_dark'         => 'seeder/fav-icon.webp',
             'site_fav'              => 'seeder/fav-icon.webp',
-            'web_version'           => '1.0.0',
+            'web_version'           => '1.1.0',
         ];
 
         BasicSettings::firstOrCreate($data);
