@@ -30,7 +30,7 @@ class AppModeGuard
             if(!in_array($request_path,$ignore_routes)) {
                 if(env("APP_MODE") != 'live') {
                     if($request->expectsJson()) {
-                        return Response::error(['error' => ['Can\'t change anything for demo application.']]);
+                        return Response::error(['Can\'t change anything for demo application.'],[],400);
                     }
                     throw ValidationException::withMessages([
                         'unknown'   => 'Can\'t change anything for demo application.',

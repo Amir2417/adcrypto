@@ -88,7 +88,6 @@ trait Razorpay  {
        
         $data = $temp_data->data; // update the data variable 
         $order = $data->razorpay_order;
-
         $order_id                   = $order->id;
         $request_credentials        = $this->getRazorpayRequestCredentials($output);
         $output['order_id']         = $order_id;
