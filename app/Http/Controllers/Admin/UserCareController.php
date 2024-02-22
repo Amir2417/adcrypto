@@ -253,8 +253,11 @@ class UserCareController extends Controller
             'address'       => $validated['address'] ?? "",
         ];
        
-        $validated['mobile']            = remove_speacial_char($validated['mobile']);
-        $validated['full_mobile']       = $validated['mobile'];
+        if($validated['mobile'] == ''){
+            $validated['full_mobile']   = null;
+        }else{
+            $validated['full_mobile']   = remove_speacial_char($validated['mobile']);
+        }
 
         $user = User::where('username', $username)->first();
         if(!$user) return back()->with(['error' => ['Opps! User not exists']]);
