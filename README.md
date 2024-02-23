@@ -2,6 +2,8 @@
 Immediate Older Version : 1.0.0
 Current Version : 1.1.0
 
+Update Feature
+1. Perfect Money payment gateway added.
 
 Please User Those Command On Your Terminal To Update Full System
 .
