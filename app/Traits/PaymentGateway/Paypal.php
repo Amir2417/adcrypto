@@ -44,10 +44,12 @@ trait Paypal
             foreach($response['links'] as $item) {
                 if($item['rel'] == "approve") {
                     $this->paypalJunkInsert($response);
+                    
                     if(request()->expectsJson()) {
                         $this->output['redirection_response']   = $response;
                         $this->output['redirect_links']         = $response['links'];
                         $this->output['redirect_url']           = $item['href'];
+                        
                         return $this->get();
                         break;
                     }

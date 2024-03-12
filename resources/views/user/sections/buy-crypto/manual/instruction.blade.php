@@ -25,6 +25,7 @@
                 <form class="row g-4 submit-form" method="POST" action="{{ setRoute('user.buy.crypto.manual.submit',$token) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
+                        <p>{!! $gateway->desc !!}</p>
                         @include('user.components.payment-gateway.generate-dy-input',['input_fields' => array_reverse($gateway->input_fields)])
                     </div>
 

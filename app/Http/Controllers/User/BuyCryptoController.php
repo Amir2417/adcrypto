@@ -283,6 +283,7 @@ class BuyCryptoController extends Controller
         }catch(Exception $e){
             return back()->with(['error' => [$e->getMessage()]]);
         }
+        
         return $instance;
     }
     /**

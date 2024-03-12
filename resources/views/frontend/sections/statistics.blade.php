@@ -33,7 +33,7 @@
                                                 <h3 class="odo-title odometer" data-odometer-final="{{ $counter_value->number }}">0</h3>
                                                 <h3 class="title">{{ $counter_value->unit }}</h3>
                                             </div>
-                                            <p>{{ $item->language->$app_local->title }}</p>
+                                            <p>{{ @$item->language->$app_local->title }}</p>
                                         </div>
                                     </div>
                                 </div>
