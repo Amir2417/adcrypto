@@ -57,7 +57,7 @@ class ExchangeCryptoMailNotification extends Notification
             ->line("Your exchange crypto request successful via ".$data->data->sender_wallet->name." , details of exchange crypto:")
             ->line("Request Amount: " . $data->data->sending_amount.' '. $data->data->sender_wallet->code)
             ->line("Fees & Charges: " . getAmount($data->data->total_charge).' '. $data->data->sender_wallet->code)
-            ->line("Will Get: " . getAmount($data->data->get_amount,2).' '. $data->data->sender_wallet->code)
+            ->line("Will Get: " . getAmount($data->data->get_amount,2).' '. $data->data->receiver_wallet->code)
             ->line("Total Payable Amount: " . getAmount($data->data->payable_amount,2).' '. $data->data->sender_wallet->code)
             ->line("Transaction Id: " .$trx_id)
             ->line("Date And Time: " .$dateTime)

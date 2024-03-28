@@ -92,14 +92,14 @@
         });
     </script>
     <script>
-        var minAmountText   = "{{ __('Min Amount') }}";
-        var maxAmountText   = "{{ __('Max Amount') }}";
-        var limitText       = "{{ __('Limit') }}";
-        var rateText        = "{{ __('Rate') }}";
-        var networkFeesText        = "{{ __('Network Fees') }}";
+        var minAmountText               = "{{ __('Min Amount') }}";
+        var maxAmountText               = "{{ __('Max Amount') }}";
+        var limitText                   = "{{ __('Limit') }}";
+        var rateText                    = "{{ __('Rate') }}";
+        var networkFeesText             = "{{ __('Network Fees') }}";
         var availableBalanceText        = "{{ __('Available Balance') }}";
-        var ExchangeRateText        = "{{ __('Exchange Rate') }}";
-        var insufficientBalanceText        = "{{ __('Sorry! Insufficient Balance.') }}";
+        var ExchangeRateText            = "{{ __('Exchange Rate') }}";
+        var insufficientBalanceText     = "{{ __('Sorry! Insufficient Balance.') }}";
         $('.checkAddress').on('keyup',function(e){
             var url = '{{ route('user.withdraw.crypto.check.address.exist') }}';
             var value = $(this).val();
@@ -133,9 +133,9 @@
                     var senderCode     = selectedValue().senderCurrency;
                     var rate           = walletRate / senderRate;
                     
-                    $('.exchange-rate').text("Exchange Rate :" + " " + parseFloat(senderBaseRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
+                    $('.exchange-rate').text(ExchangeRateText + " " + parseFloat(senderBaseRate) + " " + senderCode + " = " + parseFloat(rate) + " " + walletCode);
 
-                    $('.exist').text(`Valid Address for transaction.`).addClass('text--success');
+                    $('.exist').text(`{{ __("Valid Address for transaction.") }}`).addClass('text--success');
                     localStorage.setItem('exchangeRate', rate);
                     localStorage.setItem('exchangeCode', walletCode);
                     $('.withdraw').attr('disabled',false);
@@ -143,7 +143,7 @@
                     if($('.exist').hasClass('text--success')){
                         $('.exist').removeClass('text--success');
                     }
-                    $('.exchange-rate').html('Exchange Rate');
+                    $('.exchange-rate').html(ExchangeRateText);
                     $('.exist').text('Wallet Address doesn\'t  exists.').addClass('text--danger');
                     $('.withdraw').attr('disabled',true);
                     return false
@@ -152,7 +152,7 @@
         });
         $(document).ready(function () {
             getPreview();
-            $('.exchange-rate').html('Exchange Rate');
+            $('.exchange-rate').html(ExchangeRateText);
         });
         $('select[name=sender_wallet]').change(function(){
             var amount      = $('input[name=amount]').val();

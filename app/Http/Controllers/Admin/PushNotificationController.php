@@ -25,8 +25,8 @@ class PushNotificationController extends Controller
      */
     public function configuration()
     {
-        $page_title = "Setup Notification";
-        $push_notification = BasicSettingsProvider::get()->push_notification_config ?? null;
+        $page_title         = "Setup Notification";
+        $push_notification  = BasicSettingsProvider::get()->push_notification_config ?? null;
         $broadcast_config   = BasicSettingsProvider::get()->broadcast_config ?? null;
         return view('admin.sections.push-notification.config', compact(
             'page_title',

@@ -30,7 +30,7 @@
                     @include('admin.components.form.switcher',[
                         'label'     => __("Field Necessity")."*",
                         'name'      => "field_necessity[]",
-                        'options'   => ['Required' => "1",'Optional' => "0"],
+                        'options'   => [__('Required') => "1",__('Optional') => "0"],
                         'value'     => old("field_necessity[]","1"),
                     ])
                 </div>

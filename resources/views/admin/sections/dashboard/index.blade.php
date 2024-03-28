@@ -235,19 +235,19 @@
 
     var options = {
     series: [{
-    name: 'Buy Crypto',
+    name: '{{ __("Buy Crypto") }}',
     color: "#5A5278",
     data: chartData
     }, {
-    name: 'Sell Crypto',
+    name: '{{ __("Sell Crypto") }}',
     color: "#6F6593",
     data: sellData
     }, {
-    name: 'Withdraw Crypto',
+    name: '{{ __("Withdraw Crypto") }}',
     color: "#8075AA",
     data: withdrawData
     },{
-    name: 'Exchange Crypto',
+    name: '{{ __("Exchange Crypto") }}',
     color: "#8075AA",
     data: exchangeData
     }],
@@ -279,7 +279,7 @@
     },
     yaxis: {
     title: {
-        text: 'Total Transactions'
+        text: '{{ __("Total Transactions") }}'
     }
     },
     fill: {
@@ -307,7 +307,7 @@
         type: 'pie'
         },
         colors: ['#5A5278', '#6F6593', '#8075AA', '#A192D9'],
-        labels: ['Active', 'Banned', 'Unverified', 'All'],
+        labels: ['{{ __("Active") }}', '{{ __("Unverified") }}', '{{ __("Banned") }}', '{{ __("All") }}'],
         responsive: [{
         breakpoint: 1480,
         options: {

@@ -74,16 +74,7 @@
         </div>
         <nav>
             <ul class="pagination">
-                <li class="page-item disabled" aria-disabled="true">
-                    <span class="page-link" aria-hidden="true">&lsaquo;</span>
-                </li>
-                <li class="page-item active" aria-current="page"><span class="page-link">1</span></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#" rel="next" aria-label="Next &raquo;">&rsaquo;</a>
-                </li>
+                {{ get_paginate($support_tickets)}}
             </ul>
         </nav>
     </div>

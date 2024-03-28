@@ -26,15 +26,15 @@
                 <td>
                     @if ($item->roles->count() > 0)
                             @if ($item->isSuperAdmin())
-                                <span class="text--danger">{{ $item->getRolesString() }}</span>
+                                <span class="text--danger">{{ __($item->getRolesString()) }}</span>
                             @else
-                                <span class="text--primary">{{ $item->getRolesString() }}</span>
+                                <span class="text--primary">{{ __($item->getRolesString()) }}</span>
                             @endif
                     @endif
                 </td>
                 <td>
                     @if ($item->isSuperAdmin())
-                        <span class="badge badge--success">{{ $item->stringStatus }}</span>
+                        <span class="badge badge--success">{{ __($item->stringStatus) }}</span>
                     @else
                         @include('admin.components.form.switcher',[
                             'name'          => 'status',

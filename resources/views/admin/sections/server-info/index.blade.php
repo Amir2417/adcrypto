@@ -162,7 +162,7 @@
                                     <li><img src="{{ asset('public/backend/images/icon/timezone.png') }}" alt="timezone"></li>
                                 </ul>
                             </td>
-                            <td>{{ __("Timezone") }}</td>
+                            <td>{{ __("TimeZone") }}</td>
                             <td><span>{{ env("APP_TIMEZONE","Asia/Dhaka") }}</span></td>
                         </tr>
                     </tbody>

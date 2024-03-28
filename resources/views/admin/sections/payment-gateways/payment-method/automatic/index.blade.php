@@ -145,7 +145,7 @@
                                 <div class="col-xl-12 col-lg-12 form-group">
                                     <div class="custom-inner-card input-field-generator" data-source="add_money_automatic_gateway_credentials_field">
                                         <div class="card-inner-header">
-                                            <h6 class="title">{{ __("Genarate Fields") }}</h6>
+                                            <h6 class="title">{{ __("Generate Fields") }}</h6>
                                             <button type="button" class="btn--base add-row-btn"><i class="fas fa-plus"></i> {{ __("Add") }}</button>
                                         </div>
                                         <div class="card-inner-body">

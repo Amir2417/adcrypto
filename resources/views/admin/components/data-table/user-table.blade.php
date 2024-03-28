@@ -22,9 +22,9 @@
                 <td>{{ $item->full_mobile }}</td>
                 <td>
                     @if (Route::currentRouteName() == "admin.users.kyc.unverified")
-                        <span class="{{ $item->kycStringStatus->class }}">{{ $item->kycStringStatus->value }}</span>
+                        <span class="{{ $item->kycStringStatus->class }}">{{ __($item->kycStringStatus->value) }}</span>
                     @else
-                        <span class="{{ $item->stringStatus->class }}">{{ $item->stringStatus->value }}</span>
+                        <span class="{{ $item->stringStatus->class }}">{{ __($item->stringStatus->value) }}</span>
                     @endif
                 </td>
                 <td>

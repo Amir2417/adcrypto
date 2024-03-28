@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-lg-12 text-center">
                             <div class="account-item">
-                                <label>{{ __("Back To") }} <a href="{{ setRoute('index') }}">{{ __("Login") }}</a></label>
+                                <label>{{ __("Back To") }} <a href="{{ setRoute('user.login') }}">{{ __("Login") }}</a></label>
                             </div>
                         </div>
                     </div>

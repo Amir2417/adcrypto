@@ -67,7 +67,7 @@ class ProfileController extends Controller
         try{
             auth()->user()->update($validated);
         }catch(Exception $e) {
-            return back()->with(['error' => ['Something went wrong! Please try again']]);
+            return back()->with(['error' => ['Something went wrong! Please try again.']]);
         }
 
         return back()->with(['success' => ['Profile successfully updated!']]);

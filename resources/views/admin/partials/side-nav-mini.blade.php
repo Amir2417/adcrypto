@@ -1,12 +1,12 @@
 <div class="header mini-sidebar">
     <div class="header-top">
         <div class="header-version-area header-btn">
-            <button class="header-version-bar" title="Version">
+            <button class="header-version-bar" title="{{ __("Version") }}">
                 <i class="las la-moon"></i>
             </button>
         </div>
         <div class="header-search-area header-btn">
-            <button class="header-search-bar header-link" title="Search">
+            <button class="header-search-bar header-link" title="{{ __("Search") }}">
                 <i class="las la-search"></i>
             </button>
             <div class="header-search-wrapper">
@@ -18,7 +18,7 @@
             </div>
         </div>
         <div class="header-fullscreen-area header-btn">
-            <button class="header-fullscreen-bar header-link" title="Fullscreen">
+            <button class="header-fullscreen-bar header-link" title="{{ __("Fullscreen") }}">
                 <i class="fullscreen-open las la-compress" onclick="openFullscreen();"></i>
                 <i class="fullscreen-close las la-compress-arrows-alt" onclick="closeFullscreen();"></i>
             </button>
@@ -56,7 +56,7 @@
         </div>
         @if (admin_permission_by_name("admin.support.ticket.index"))
             <div class="header-support-area header-btn">
-                <button class="header-support-bar header-link" title="Support">
+                <button class="header-support-bar header-link" title="{{ __("Support") }}">
                     <i class="las la-headset"></i>
                     @if ($pending_ticket_count > 0)
                         <span class="bling-area">
@@ -99,12 +99,12 @@
     </div>
     <div class="header-bottom">
         <div class="header-settings-area header-btn">
-            <button class="header-settings-bar header-link" title="Settings">
+            <button class="header-settings-bar header-link" title="{{ __("Settings") }}">
                 <i class="las la-cog"></i>
             </button>
         </div>
         <div class="header-user-area header-btn">
-            <button class="header-user-bar header-link" title="Profile">
+            <button class="header-user-bar header-link" title="{{ __("Profile") }}">
                 <img src="{{ get_image(Auth::user()->image,'admin-profile','profile') }}" alt="user">
             </button>
             <div class="header-user-wrapper">

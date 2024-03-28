@@ -555,10 +555,12 @@ class PaymentGateway {
                 'callback_ref'                  => $output['callback_ref'] ?? null,
                 'created_at'                    => now(),
             ]);
-
-            if($status === global_const()::STATUS_CONFIRM_PAYMENT) {
-                $this->updateWalletBalance($output);
-            }
+            // if($data->data->wallet->type == global_const()::INSIDE_WALLET){
+                if($status === global_const()::STATUS_CONFIRM_PAYMENT) {
+                    $this->updateWalletBalance($output);
+                }
+            // }
+            
 
             DB::commit();
         }catch(Exception $e) {

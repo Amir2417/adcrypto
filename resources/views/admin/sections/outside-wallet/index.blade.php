@@ -42,9 +42,9 @@
                     <tbody>
                         @forelse ($outside_wallets as $item)
                             <tr data-item="{{ $item }}">
-                                <td>{{ $item->currency->name }}</td>
-                                <td>{{ $item->network->name }}</td>
-                                <td>{{ $item->public_address ?? '' }}</td>
+                                <td>{{ $item->currency->name ?? 'N/A' }}</td>
+                                <td>{{ $item->network->name ?? 'N/A' }}</td>
+                                <td>{{ $item->public_address ?? 'N/A' }}</td>
                                 <td>
                                     @include('admin.components.form.switcher',[
                                         'name'        => 'status',

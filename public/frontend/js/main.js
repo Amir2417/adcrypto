@@ -449,12 +449,6 @@ $('textarea').keydown(function (e) {
   }
 });
 
-$('textarea').keydown(function (e) {
-  const keyCode = e.which || e.keyCode;
-  if (keyCode === 13 && !e.shiftKey) {
-    e.preventDefault();
-  }
-});
 
 $(document).on("keyup",".number-input",function(){
   var pattern = /^[0-9]*\.?[0-9]*$/;

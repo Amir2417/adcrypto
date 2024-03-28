@@ -2,7 +2,7 @@
 <div class="support-profile-wrapper">
     <div class="support-profile-header">
         <div class="custom-check-group two mb-0">
-            <span class="{{ $support_ticket->stringStatus->class }}">{{ $support_ticket->stringStatus->value }}</span>
+            <span class="{{ $support_ticket->stringStatus->class }}">{{ __($support_ticket->stringStatus->value) }}</span>
         </div>
         <div class="chat-cross-btn">
             <i class="las la-times"></i>
